@@ -7,19 +7,70 @@
 //
 
 import UIKit
+import AVFoundation
+import AVKit
+
+let GLOBAL_CUSTOM_COLOR = UIColor(red: 0.0, green: 1.0, blue: 1.0, alpha: 1.0)
 
 class ViewController: UIViewController {
-
+    
+    @IBOutlet weak var executeButton: UIButton!
+    @IBOutlet weak var blurView: UIVisualEffectView!
+    @IBOutlet weak var outputView: UITextView!
+    @IBOutlet weak var percentageLabel: UILabel!
+    @IBOutlet weak var avPlayerPlaceholderView: UIImageView!
+    @IBOutlet weak var settingButton: UIButton!
+    @IBOutlet weak var infoButton: UIButton!
+    @IBOutlet weak var progress: KDCircularProgress!
+    
+    var avPlayerController: AVPlayerViewController!
+    var avPlayer: AVPlayer!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        configureSubViews()
+        
+        NSTimer.scheduledTimerWithTimeInterval(3.0, target: self, selector: "rateMeInTheThirdTime", userInfo: nil, repeats: false)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "showLabels", name: kVCWillDisappearNotification, object: nil)
     }
-
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        pauseVideo()
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        
+        avPlayer?.pause()
+        avPlayerPlaceholderView.subviews.first?.removeFromSuperview()
+        avPlayerController = nil
     }
-
-
+    
+    private func configureSubViews() {
+        // execute button
+        executeButton?.tintColor = GLOBAL_CUSTOM_COLOR
+        executeButton?.setImage(UIImage(named: "touch")?.imageWithRenderingMode(.AlwaysTemplate), forState: .Normal)
+        
+        let singleTap = UITapGestureRecognizer(target: self, action: "execute")
+        let multiTap  = UITapGestureRecognizer(target: self, action: "clear:")
+        let longPress = UILongPressGestureRecognizer(target: self, action: "clear:")
+        multiTap.numberOfTapsRequired = 2
+        
+        executeButton.addGestureRecognizer(singleTap)
+        executeButton.addGestureRecognizer(multiTap)
+        executeButton.addGestureRecognizer(longPress)
+        singleTap.requireGestureRecognizerToFail(multiTap)
+        singleTap.requireGestureRecognizerToFail(longPress)
+        
+        // setting button
+        settingButton.addTarget(self, action: "popoverSettingViewController", forControlEvents: .TouchUpInside)
+        
+        // info button
+        infoButton.addTarget(self, action: "popoverInfoViewController", forControlEvents: .TouchUpInside)
+        
+    }
 }
+
+
 

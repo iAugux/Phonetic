@@ -7,15 +7,22 @@
 //
 
 import UIKit
+import Contacts
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-
+    var contactStore = CNContactStore()
+    
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        // Override point for customization after application launch.
+        
+        application.statusBarStyle = .LightContent
+        window?.backgroundColor = UIColor.clearColor()
+        
+        requestAccess()
+
         return true
     }
 
