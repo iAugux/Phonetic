@@ -16,7 +16,7 @@ class PhoneticContacts {
     
     let contactStore = CNContactStore()
     let userDefaults = NSUserDefaults.standardUserDefaults()
-    let keysForFetching = [CNContactGivenNameKey, CNContactFamilyNameKey, CNContactPhoneticGivenNameKey, CNContactPhoneticFamilyNameKey]
+    let keysToFetch = [CNContactGivenNameKey, CNContactFamilyNameKey, CNContactPhoneticGivenNameKey, CNContactPhoneticFamilyNameKey]
     
     typealias ResultHandler = ((currentResult: String?, percentage: Int) -> Void)
     
@@ -30,11 +30,16 @@ class PhoneticContacts {
         
         dispatch_async(dispatch_get_global_queue(Int(QOS_CLASS_BACKGROUND.rawValue), 0)) {
             
+            // uncomment below if you want to remove all Simulator's Contacts first.
+            // self.removeAllContactsOfSimulator()
+            
+            self.insertNewContactsForSimulatorIfNeed(50)
+            
             var index = 1
             let count = self.contactsTotalCount()
             
             do {
-                try self.contactStore.enumerateContactsWithFetchRequest(CNContactFetchRequest(keysToFetch: self.keysForFetching), usingBlock: { (contact, _) -> Void in
+                try self.contactStore.enumerateContactsWithFetchRequest(CNContactFetchRequest(keysToFetch: self.keysToFetch), usingBlock: { (contact, _) -> Void in
                     if !contact.familyName.isEmpty || !contact.givenName.isEmpty {
                         let mutableContact = contact.mutableCopy() as! CNMutableContact
                         
@@ -92,7 +97,7 @@ class PhoneticContacts {
             let count = self.contactsTotalCount()
             
             do {
-                try self.contactStore.enumerateContactsWithFetchRequest(CNContactFetchRequest(keysToFetch: self.keysForFetching), usingBlock: { (contact, _) -> Void in
+                try self.contactStore.enumerateContactsWithFetchRequest(CNContactFetchRequest(keysToFetch: self.keysToFetch), usingBlock: { (contact, _) -> Void in
                     let mutableContact = contact.mutableCopy() as! CNMutableContact
                     
                     // modify Contact
@@ -128,6 +133,20 @@ class PhoneticContacts {
         }
     }
     
+    func contactsTotalCount() -> Int {
+        let predicate = CNContact.predicateForContactsInContainerWithIdentifier(contactStore.defaultContainerIdentifier())
+        
+        do {
+            let contacts = try self.contactStore.unifiedContactsMatchingPredicate(predicate, keysToFetch: keysToFetch)
+            return contacts.count
+        } catch {
+            #if DEBUG
+                NSLog("\(error)")
+            #endif
+            return 0
+        }
+    }
+    
     private func saveContact(contact: CNMutableContact) {
         let saveRequest = CNSaveRequest()
         saveRequest.updateContact(contact)
@@ -144,19 +163,6 @@ class PhoneticContacts {
         return min(100 * index / total, 100)
     }
     
-    private func contactsTotalCount() -> Int {
-        let predicate = CNContact.predicateForContactsInContainerWithIdentifier(contactStore.defaultContainerIdentifier())
-        
-        do {
-            let contacts = try self.contactStore.unifiedContactsMatchingPredicate(predicate, keysToFetch: keysForFetching)
-            return contacts.count
-        } catch {
-            #if DEBUG
-                NSLog("\(error)")
-            #endif
-            return 0
-        }
-    }
     
     /**
      Checking whether there is any Mandarin Latin. If yes, return true, otherwise return false
@@ -249,7 +255,7 @@ class PhoneticContacts {
         var tempString = str
         let specialCharacters = PolyphonicCharacters.SpecialCharacters
         let newCharacters     = PolyphonicCharacters.NewCharacters
-                
+        
         for (index, element) in specialCharacters.enumerate() {
             if tempString.containsString(element) {
                 tempString = tempString.stringByReplacingOccurrencesOfString(element, withString: newCharacters[index])
@@ -261,58 +267,3 @@ class PhoneticContacts {
     
 }
 
-// MARK: - Insert new contacts for simulator testing
-extension PhoneticContacts {
-    
-    private var needInsertNewContactsForTesting: Bool {
-        // just insert new contacts for simulator
-        guard Device.type() == .Simulator else { return false }
-        
-        // if there is more enough to test, return false
-        guard contactsTotalCount() < 60 else { return false }
-        
-        return true
-    }
-    
-    private func insertNewContactsForSimulatorIfNeed(mutableContact: CNMutableContact) {
-        #if DEBUG
-            
-            guard needInsertNewContactsForTesting else { return }
-            
-            mutableContact.familyName = generateRandomFamilyName()
-            mutableContact.givenName  = generateRandomGivenName()
-            
-            addNewContact(mutableContact)
-            
-        #endif
-        
-    }
-    
-    private func addNewContact(contact: CNMutableContact) {
-        let saveRequest = CNSaveRequest()
-        saveRequest.addContact(contact, toContainerWithIdentifier: nil)
-        do {
-            try self.contactStore.executeSaveRequest(saveRequest)
-        } catch {
-            #if DEBUG
-                NSLog("saving Contact failed ! - \(error)")
-            #endif
-        }
-    }
-    
-    private func generateRandomFamilyName() -> String {
-        let familyNames = ["赵", "钱", "孙", "李", "周", "吴", "郑", "王", "冯", "陈", "褚", "卫", "蒋", "沈", "韩", "杨", "吕", "曹", "沈", "单", "仇", "秘", "解", "折", "朴", "翟", "查", "盖", "万俟", "尉迟"]
-        
-        let index = Int(arc4random_uniform(UInt32(familyNames.count)))
-        return familyNames[index]
-    }
-    
-    private func generateRandomGivenName() -> String {
-        let givenNames = ["顺权", "恋萱", "丹凤", "凤铜", "绘葶", "清", "欣爱", "正烨", "恒", "芷涵", "金", "秋雁", "芸", "渲" ,"玟宣", "雨杰", "卓阳", "立", "煜沁", "泽世", "国龙", "鸢", "正兰", "广智", "美慧", "恺", "熙博", "珂"]
-
-        let index = Int(arc4random_uniform(UInt32(givenNames.count)))
-        return givenNames[index]
-    }
-    
-    
-}

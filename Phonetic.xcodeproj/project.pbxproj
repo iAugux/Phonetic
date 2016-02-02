@@ -18,6 +18,8 @@
 		B122926B1C59236F00F0F549 /* PhoneticContacts.swift in Sources */ = {isa = PBXBuildFile; fileRef = B122926A1C59236F00F0F549 /* PhoneticContacts.swift */; };
 		B124789E1C5F34C8006D1B62 /* Type.swift in Sources */ = {isa = PBXBuildFile; fileRef = B124789D1C5F34C8006D1B62 /* Type.swift */; };
 		B12478A01C5F4D30006D1B62 /* wave.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = B124789F1C5F4D30006D1B62 /* wave.mp4 */; };
+		B140CCF01C60FAD30078657A /* PhoneticContacts+GenerateNames.swift in Sources */ = {isa = PBXBuildFile; fileRef = B140CCEF1C60FAD30078657A /* PhoneticContacts+GenerateNames.swift */; };
+		B140CCF21C610E300078657A /* InfoAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B140CCF11C610E300078657A /* InfoAlertController.swift */; };
 		B15CB2A51C5B3C6C002694ED /* WaveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15CB2A41C5B3C6C002694ED /* WaveView.swift */; };
 		B15CB2A91C5B3CA4002694ED /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = B15CB2A71C5B3CA4002694ED /* index.html */; };
 		B15CB2AA1C5B3CA4002694ED /* three.min.js in Resources */ = {isa = PBXBuildFile; fileRef = B15CB2A81C5B3CA4002694ED /* three.min.js */; };
@@ -66,6 +68,8 @@
 		B122926A1C59236F00F0F549 /* PhoneticContacts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhoneticContacts.swift; sourceTree = "<group>"; };
 		B124789D1C5F34C8006D1B62 /* Type.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Type.swift; sourceTree = "<group>"; };
 		B124789F1C5F4D30006D1B62 /* wave.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = wave.mp4; sourceTree = "<group>"; };
+		B140CCEF1C60FAD30078657A /* PhoneticContacts+GenerateNames.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PhoneticContacts+GenerateNames.swift"; sourceTree = "<group>"; };
+		B140CCF11C610E300078657A /* InfoAlertController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoAlertController.swift; sourceTree = "<group>"; };
 		B15CB2A41C5B3C6C002694ED /* WaveView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WaveView.swift; sourceTree = "<group>"; };
 		B15CB2A71C5B3CA4002694ED /* index.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
 		B15CB2A81C5B3CA4002694ED /* three.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = three.min.js; sourceTree = "<group>"; };
@@ -165,9 +169,10 @@
 				B16CAB791C5E5DE900AF3D35 /* ViewController+Execution.swift */,
 				B1FF84E51C5BC7B70036F8AA /* ViewController+Popover.swift */,
 				B1B1CB621C5E25E300AD7E73 /* ViewController+Rate.swift */,
-				B1FF84DF1C5BC2590036F8AA /* BaseViewController.swift */,
 				B1FF84E11C5BC36C0036F8AA /* SettingViewController.swift */,
 				B1FF84E31C5BC3800036F8AA /* InfoViewController.swift */,
+				B1FF84DF1C5BC2590036F8AA /* BaseViewController.swift */,
+				B140CCF11C610E300078657A /* InfoAlertController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -186,8 +191,9 @@
 		B12292681C59185600F0F549 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				B122926A1C59236F00F0F549 /* PhoneticContacts.swift */,
 				B164CAB61C60B72C00AD7009 /* PolyphonicCharacters.swift */,
+				B122926A1C59236F00F0F549 /* PhoneticContacts.swift */,
+				B140CCEF1C60FAD30078657A /* PhoneticContacts+GenerateNames.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -359,8 +365,10 @@
 				B19686491C5C916C006F4614 /* GradientView.swift in Sources */,
 				B1159B721C59045800F16037 /* ViewController.swift in Sources */,
 				B1FF84E81C5BC9680036F8AA /* UIScreen+Extension.swift in Sources */,
+				B140CCF01C60FAD30078657A /* PhoneticContacts+GenerateNames.swift in Sources */,
 				B1FF84E41C5BC3800036F8AA /* InfoViewController.swift in Sources */,
 				B1159BBD1C5913F700F16037 /* TopMostViewController+Extension.swift in Sources */,
+				B140CCF21C610E300078657A /* InfoAlertController.swift in Sources */,
 				B1FF84E21C5BC36C0036F8AA /* SettingViewController.swift in Sources */,
 				B19686571C5CEE11006F4614 /* Version.swift in Sources */,
 				B196864F1C5CEDBE006F4614 /* OtherSettingView.swift in Sources */,
@@ -514,7 +522,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				INFOPLIST_FILE = Phonetic/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
