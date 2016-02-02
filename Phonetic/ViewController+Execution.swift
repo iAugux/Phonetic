@@ -94,6 +94,10 @@ extension ViewController {
     private func playVideo() {
         hideBlurVieWithAnimation(true)
         
+        // guarantee there is no audio playing in the background.
+        // e.g: Never pause your music. I don't want to bother you.
+        guard !AVAudioSession.sharedInstance().otherAudioPlaying else { return }
+        
         // enable animation or not
         let userDefaults = NSUserDefaults.standardUserDefaults()
         if userDefaults.valueForKey(kEnableAnimation) == nil {
@@ -108,7 +112,7 @@ extension ViewController {
             return
         }
         
-        // should playing now.
+        // should play now.
         if avPlayerController == nil {
             configureBackgroundVideo()
         }
