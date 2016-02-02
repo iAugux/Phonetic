@@ -18,6 +18,43 @@
 */
 
 struct PolyphonicCharacters {
-    static let SpecialCharacters = ["曾", "沈", "单", "仇", "秘", "解", "折", "朴", "翟", "查", "盖", "万俟", "尉迟"]
-    static let NewCharacters     = ["增", "审", "善", "球", "必", "谢", "蛇", "嫖", "宅", "渣", "哿", "莫奇", "玉迟"]
+    static let SpecialCharacters = ["重", "曾", "沈", "单", "仇", "秘", "解", "折", "朴", "翟", "查", "盖", "万俟", "尉迟"]
+    static let NewCharacters     = ["虫", "增", "审", "善", "球", "必", "谢", "蛇", "嫖", "宅", "渣", "哿", "莫奇", "玉迟"]
 }
+
+
+
+ /// Add following code to Xcode Playground and replace "重" with your new polyphonic character
+ /// to test whether the result is completely correct.
+ /// Note: guarantee the Pinyin Tone is also correct.
+
+/*
+
+import Foundation
+
+let characterForTesting = "重"
+
+func phonetic(str: String) -> String? {
+    
+    var source = str.mutableCopy()
+    
+    CFStringTransform(source as! CFMutableStringRef, nil, kCFStringTransformMandarinLatin, false)
+    
+    if !(source as! NSString).isEqualToString(str) {
+        if source.rangeOfString(" ").location != NSNotFound {
+            let phoneticParts = source.componentsSeparatedByString(" ")
+            
+            source = NSMutableString()
+            
+            for part in phoneticParts {
+                source.appendString(part)
+            }
+        }
+        return source as? String
+    }
+    return nil
+}
+
+phonetic(characterForTesting)
+
+*/
