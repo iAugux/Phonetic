@@ -21,6 +21,7 @@
 		B15CB2A51C5B3C6C002694ED /* WaveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15CB2A41C5B3C6C002694ED /* WaveView.swift */; };
 		B15CB2A91C5B3CA4002694ED /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = B15CB2A71C5B3CA4002694ED /* index.html */; };
 		B15CB2AA1C5B3CA4002694ED /* three.min.js in Resources */ = {isa = PBXBuildFile; fileRef = B15CB2A81C5B3CA4002694ED /* three.min.js */; };
+		B164CAB71C60B72C00AD7009 /* PolyphonicCharacters.swift in Sources */ = {isa = PBXBuildFile; fileRef = B164CAB61C60B72C00AD7009 /* PolyphonicCharacters.swift */; };
 		B16CAB7A1C5E5DE900AF3D35 /* ViewController+Execution.swift in Sources */ = {isa = PBXBuildFile; fileRef = B16CAB791C5E5DE900AF3D35 /* ViewController+Execution.swift */; };
 		B19686491C5C916C006F4614 /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B19686481C5C916C006F4614 /* GradientView.swift */; };
 		B196864D1C5CA9B7006F4614 /* UINavigationController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B196864C1C5CA9B7006F4614 /* UINavigationController+Extension.swift */; };
@@ -68,6 +69,7 @@
 		B15CB2A41C5B3C6C002694ED /* WaveView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WaveView.swift; sourceTree = "<group>"; };
 		B15CB2A71C5B3CA4002694ED /* index.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
 		B15CB2A81C5B3CA4002694ED /* three.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = three.min.js; sourceTree = "<group>"; };
+		B164CAB61C60B72C00AD7009 /* PolyphonicCharacters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PolyphonicCharacters.swift; sourceTree = "<group>"; };
 		B16CAB791C5E5DE900AF3D35 /* ViewController+Execution.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ViewController+Execution.swift"; sourceTree = "<group>"; };
 		B19686481C5C916C006F4614 /* GradientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 		B196864C1C5CA9B7006F4614 /* UINavigationController+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Extension.swift"; sourceTree = "<group>"; };
@@ -185,6 +187,7 @@
 			isa = PBXGroup;
 			children = (
 				B122926A1C59236F00F0F549 /* PhoneticContacts.swift */,
+				B164CAB61C60B72C00AD7009 /* PolyphonicCharacters.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -363,6 +366,7 @@
 				B196864F1C5CEDBE006F4614 /* OtherSettingView.swift in Sources */,
 				B124789E1C5F34C8006D1B62 /* Type.swift in Sources */,
 				B1FF84E01C5BC2590036F8AA /* BaseViewController.swift in Sources */,
+				B164CAB71C60B72C00AD7009 /* PolyphonicCharacters.swift in Sources */,
 				B196865B1C5D0535006F4614 /* AppIconImageView.swift in Sources */,
 				B1159BBF1C59140400F16037 /* AppDelegate+Extension.swift in Sources */,
 				B19686591C5CEEA6006F4614 /* UIView+Extension.swift in Sources */,

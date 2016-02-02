@@ -693,7 +693,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="iEH-fc-oSl">
-                                <rect key="frame" x="20" y="36" width="568" height="125"/>
+                                <rect key="frame" x="20" y="28" width="568" height="172"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vqV-fM-Eog">
                                         <rect key="frame" x="0.0" y="0.0" width="568" height="31"/>
@@ -773,6 +773,32 @@
                                             </mask>
                                         </variation>
                                     </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Eao-Fa-f0X">
+                                        <rect key="frame" x="0.0" y="141" width="568" height="31"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Upcase Pinyin" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eYJ-pR-4Xk">
+                                                <rect key="frame" x="0.0" y="0.0" width="519" height="31"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="p4B-Dv-DGi">
+                                                <rect key="frame" x="519" y="0.0" width="51" height="31"/>
+                                                <connections>
+                                                    <action selector="upcasePinyinSwitcherDidTap:" destination="OhV-Rm-opU" eventType="valueChanged" id="icW-VD-z53"/>
+                                                </connections>
+                                            </switch>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="210" id="9gs-GJ-fUW"/>
+                                            <constraint firstAttribute="height" constant="31" id="sIW-gy-iRP"/>
+                                        </constraints>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="9gs-GJ-fUW"/>
+                                            </mask>
+                                        </variation>
+                                    </stackView>
                                 </subviews>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="220" id="ggd-S6-heL"/>
@@ -786,7 +812,7 @@
                                 </variation>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="kEf-Ty-2zx">
-                                <rect key="frame" x="20" y="187" width="568" height="78"/>
+                                <rect key="frame" x="20" y="218" width="568" height="124.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="✪ Add Accent" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mxP-N0-BUA">
                                         <rect key="frame" x="0.0" y="0.0" width="568" height="13.5"/>
@@ -795,13 +821,13 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="     美 [ mei ] ➟ [ měi ]" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n6C-TH-Dfq">
-                                        <rect key="frame" x="0.0" y="19.5" width="568" height="12"/>
+                                        <rect key="frame" x="0.0" y="19" width="568" height="12"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="med-YP-yUw" userLabel="Separator">
-                                        <rect key="frame" x="0.0" y="37.5" width="568" height="3"/>
+                                        <rect key="frame" x="0.0" y="37" width="568" height="3"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="3" id="I5Y-yS-zxj"/>
                                         </constraints>
@@ -810,13 +836,34 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="✪ Fix Polyphone" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sB2-zT-AtD">
-                                        <rect key="frame" x="0.0" y="46.5" width="568" height="13.5"/>
+                                        <rect key="frame" x="0.0" y="46" width="568" height="13.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="     秘(bì)、单(shàn)、解(xiè) ..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uVy-je-IFV">
                                         <rect key="frame" x="0.0" y="66" width="568" height="12"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oYi-hc-iOT" userLabel="Separator">
+                                        <rect key="frame" x="0.0" y="84" width="568" height="3"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="3" id="E3o-fM-IsJ"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="✪ Upcase Pinyin" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NMq-vJ-CtO">
+                                        <rect key="frame" x="0.0" y="93" width="568" height="13.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="     [ Ye Zixuan ] ➟ [ Ye ZiXuan ]" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eAK-1G-Uea">
+                                        <rect key="frame" x="0.0" y="112" width="568" height="12"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -834,8 +881,8 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="kEf-Ty-2zx" firstAttribute="top" secondItem="iEH-fc-oSl" secondAttribute="bottom" constant="26" id="IH4-i2-QIA"/>
-                            <constraint firstItem="iEH-fc-oSl" firstAttribute="top" secondItem="9Ma-eR-S16" secondAttribute="bottom" constant="16" id="L4H-10-Q7U"/>
+                            <constraint firstItem="kEf-Ty-2zx" firstAttribute="top" secondItem="iEH-fc-oSl" secondAttribute="bottom" constant="18" id="IH4-i2-QIA"/>
+                            <constraint firstItem="iEH-fc-oSl" firstAttribute="top" secondItem="9Ma-eR-S16" secondAttribute="bottom" constant="8" id="L4H-10-Q7U"/>
                             <constraint firstItem="kEf-Ty-2zx" firstAttribute="leading" secondItem="gyZ-5r-BWz" secondAttribute="leading" constant="20" id="LUE-v1-hgd"/>
                             <constraint firstItem="iEH-fc-oSl" firstAttribute="leading" secondItem="gyZ-5r-BWz" secondAttribute="leadingMargin" id="gDu-2Y-ciy"/>
                             <constraint firstAttribute="trailing" secondItem="iEH-fc-oSl" secondAttribute="trailing" constant="12" id="vsg-1y-hCC"/>
@@ -848,6 +895,7 @@
                         <outlet property="addAccentSwitcher" destination="AsJ-Wb-HMk" id="MIK-4v-6iy"/>
                         <outlet property="enableAnimationSwitcher" destination="J2n-j4-zt2" id="UFU-DE-MpA"/>
                         <outlet property="fixPolyphonicCharSwitcher" destination="iFc-g6-FNT" id="HTw-Fg-ZJh"/>
+                        <outlet property="upcasePinyinSwitcher" destination="p4B-Dv-DGi" id="4ma-BO-rqg"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ip0-4a-nL3" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -12,9 +12,11 @@ import UIKit
 let kAddAccent         = "kAddAccent"
 let kEnableAnimation   = "kEnableAnimation"
 let kFixPolyphonicChar = "kFixPolyphonicChar"
+let kUpcasePinyin      = "kUpcasePinyin"
 
 let kAddAccentDefaultBool         = true
 let kFixPolyphonicCharDefaultBool = true
+let kUpcasePinyinDefaultBool      = false
 let kEnableAnimationDefaultBool   = Device.size() == Size.Screen3_5Inch ? false : true //Device.isLargerThanScreenSize(Size.Screen3_5Inch) ? true : false
 
 class SettingViewController: BaseViewController {
@@ -57,12 +59,26 @@ class SettingViewController: BaseViewController {
         }
     }
     
+    @IBOutlet weak var upcasePinyinSwitcher: UISwitch! {
+        didSet {
+            var isOn: Bool
+            if userDefaults.valueForKey(kUpcasePinyin) == nil {
+                isOn = kUpcasePinyinDefaultBool
+            } else {
+                isOn = userDefaults.boolForKey(kUpcasePinyin)
+            }
+            upcasePinyinSwitcher.on = isOn
+        }
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         enableAnimationSwitcher.onTintColor   = GLOBAL_CUSTOM_COLOR
         addAccentSwitcher.onTintColor         = GLOBAL_CUSTOM_COLOR
         fixPolyphonicCharSwitcher.onTintColor = GLOBAL_CUSTOM_COLOR
+        upcasePinyinSwitcher.onTintColor      = GLOBAL_CUSTOM_COLOR
     }
 
     override func didReceiveMemoryWarning() {
@@ -97,5 +113,13 @@ class SettingViewController: BaseViewController {
         userDefaults.synchronize()
     }
     
+    @IBAction func upcasePinyinSwitcherDidTap(sender: UISwitch) {
+        if sender.on {
+            userDefaults.setBool(true, forKey: kUpcasePinyin)
+        } else {
+            userDefaults.setBool(false, forKey: kUpcasePinyin)
+        }
+        userDefaults.synchronize()
+    }
 
 }

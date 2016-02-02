@@ -32,7 +32,7 @@ extension ViewController {
         
         // former: UITapGestureRecognizer.
         // the later: ensure be triggered at the beginning while long pressing, or there will be a warning at runtime.
-        guard gesture.isKindOfClass(UITapGestureRecognizer.classForCoder()) || gesture.state == .Began else { return }
+        guard gesture.isKindOfClass(UITapGestureRecognizer) || gesture.state == .Began else { return }
         
         let title             = NSLocalizedString("Warning!", comment: "UIAlertController - title")
         let message           = NSLocalizedString("Are you sure to clear all Mandarin Latin's phonetic keys?", comment: "UIAlertController - message")
@@ -155,7 +155,7 @@ extension ViewController {
         UIView.animateWithDuration(0.1, delay: 0.3, options: .CurveEaseInOut, animations: { () -> Void in
             self.outputView.alpha = 0
             }) { (_) -> Void in
-                self.outputView.text = NSLocalizedString("Completion", comment: "")
+                self.outputView.text = NSLocalizedString("Completed", comment: "")
                 UIView.animateWithDuration(1.5, delay: 0, options: .CurveEaseInOut, animations: { () -> Void in
                     self.outputView.alpha = 1
                     }, completion: { (_) -> Void in

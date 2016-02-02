@@ -15,6 +15,7 @@ class GradientView: UIView {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         
+        backgroundColor = UIColor.clearColor()
         addBlurEffect()
 //        configureGradientView(UIScreen.mainScreen().bounds)
     }

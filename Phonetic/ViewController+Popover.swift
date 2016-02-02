@@ -45,22 +45,30 @@ extension ViewController: UIPopoverPresentationControllerDelegate {
         static var popover: UIPopoverPresentationController?
         static var currentButton: PopoverButton?
         static let preferredContentWith: CGFloat = 220 //min(300, UIScreen.screenWidth() * 0.6)
-        static let preferredContentHeight: CGFloat = 260 //min(500, UIScreen.screenHeight() * 0.66)
+        
+        private static let preferredContentHeight: CGFloat = 260
+        private static let preferredMutableContentHeight = min(345, UIScreen.screenHeight() * 0.66)
+        
         static let preferredContentSize = CGSizeMake(preferredContentWith, preferredContentHeight)
+        static let preferredMutableContentSize = CGSizeMake(preferredContentWith, preferredMutableContentHeight)
     }
     
     // MARK: - fix size of popover view
     override func didRotateFromInterfaceOrientation(fromInterfaceOrientation: UIInterfaceOrientation) {
-
-        // fix popoverContent's size
-        Popover.popoverContent?.preferredContentSize = Popover.preferredContentSize
                 
-        // fix popover's source location
         if Popover.currentButton == .Info {
+            
+            // fix popoverContent's size
+            Popover.popoverContent?.preferredContentSize = Popover.preferredContentSize
+            
+            // fix popover's source location
             Popover.popover?.sourceRect = infoButton.frame
+            
         } else {
+            Popover.popoverContent?.preferredContentSize = Popover.preferredMutableContentSize
             Popover.popover?.sourceRect = settingButton.frame
         }
+        
         Popover.popover?.sourceRect.origin.y += 5
     }
     
@@ -73,6 +81,7 @@ extension ViewController: UIPopoverPresentationControllerDelegate {
         case .Info:
             guard let infoVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier(String(InfoViewController)) as? InfoViewController else { return }
             Popover.popoverContent = infoVC
+            Popover.popoverContent!.preferredContentSize = Popover.preferredContentSize
             
             Popover.currentButton = .Info
             titleLabel.text = NSLocalizedString("About", comment: "navigation item title - About")
@@ -81,6 +90,7 @@ extension ViewController: UIPopoverPresentationControllerDelegate {
         case .Setting:
             guard let settingVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier(String(SettingViewController)) as? SettingViewController else { return }
             Popover.popoverContent = settingVC
+            Popover.popoverContent!.preferredContentSize = Popover.preferredMutableContentSize
             
             Popover.currentButton = .Setting
             titleLabel.text = NSLocalizedString("Settings", comment: "navigation item title - Settings")
@@ -95,7 +105,6 @@ extension ViewController: UIPopoverPresentationControllerDelegate {
             nav.modalPresentationStyle = .Popover
             Popover.popover = nav.popoverPresentationController
             Popover.popover?.backgroundColor = UIColor(red:0.36, green:0.36, blue:0.36, alpha:1)
-            popoverContent.preferredContentSize = Popover.preferredContentSize
             Popover.popover?.delegate = self
             Popover.popover?.sourceView = view
             
