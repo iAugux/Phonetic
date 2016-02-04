@@ -30,10 +30,10 @@ class PhoneticContacts {
         
         dispatch_async(dispatch_get_global_queue(Int(QOS_CLASS_BACKGROUND.rawValue), 0)) {
             
-            // uncomment below if you want to remove all Simulator's Contacts first.
+            // uncomment the following line if you want to remove all Simulator's Contacts first.
             // self.removeAllContactsOfSimulator()
             
-            self.insertNewContactsForSimulatorIfNeed(50)
+            self.insertNewContactsForSimulatorIfNeeded(50)
             
             var index = 1
             let count = self.contactsTotalCount()
@@ -195,12 +195,12 @@ class PhoneticContacts {
         CFStringTransform(source as! CFMutableStringRef, nil, kCFStringTransformMandarinLatin, false)
         
         /// adding accents or not
-        if userDefaults.valueForKey(kAddAccent) == nil {
-            userDefaults.setBool(kAddAccentDefaultBool, forKey: kAddAccent)
+        if userDefaults.valueForKey(kUseTones) == nil {
+            userDefaults.setBool(kAddAccentDefaultBool, forKey: kUseTones)
             userDefaults.synchronize()
         }
         
-        if !userDefaults.boolForKey(kAddAccent) {
+        if !userDefaults.boolForKey(kUseTones) {
             CFStringTransform(source as! CFMutableStringRef, nil, kCFStringTransformStripCombiningMarks, false)
         }
         

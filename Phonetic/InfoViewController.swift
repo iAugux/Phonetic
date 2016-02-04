@@ -20,7 +20,7 @@ class InfoViewController: BaseViewController, SFSafariViewControllerDelegate {
         configureGithubImageView()
         configureVersionLabel()
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -44,7 +44,9 @@ class InfoViewController: BaseViewController, SFSafariViewControllerDelegate {
         dismissViewControllerAnimated(true) { () -> Void in
             let safariVC = SFSafariViewController(URL: NSURL(string: "https://github.com/iAugux/Phonetic")!)
             safariVC.delegate = self
-            UIApplication.topMostViewController()?.presentViewController(safariVC, animated: true, completion: nil)
+            UIApplication.topMostViewController()?.presentViewController(safariVC, animated: true, completion: {
+                UIApplication.sharedApplication().statusBarStyle = .Default
+            })
         }
     }
 

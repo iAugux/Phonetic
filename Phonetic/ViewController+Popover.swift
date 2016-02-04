@@ -75,7 +75,7 @@ extension ViewController: UIPopoverPresentationControllerDelegate {
     // MARK: - configure popover controller
     private func popoverPresentViewController(button: PopoverButton) {
         var rect: CGRect
-        let titleLabel = UILabel()
+        var title: String
         
         switch button {
         case .Info:
@@ -84,7 +84,7 @@ extension ViewController: UIPopoverPresentationControllerDelegate {
             Popover.popoverContent!.preferredContentSize = Popover.preferredContentSize
             
             Popover.currentButton = .Info
-            titleLabel.text = NSLocalizedString("About", comment: "navigation item title - About")
+            title = NSLocalizedString("About", comment: "navigation item title - About")
             rect = infoButton.frame
             
         case .Setting:
@@ -93,7 +93,7 @@ extension ViewController: UIPopoverPresentationControllerDelegate {
             Popover.popoverContent!.preferredContentSize = Popover.preferredMutableContentSize
             
             Popover.currentButton = .Setting
-            titleLabel.text = NSLocalizedString("Settings", comment: "navigation item title - Settings")
+            title = NSLocalizedString("Settings", comment: "navigation item title - Settings")
             rect = settingButton.frame
         }
         
@@ -107,13 +107,8 @@ extension ViewController: UIPopoverPresentationControllerDelegate {
             Popover.popover?.backgroundColor = UIColor(red:0.36, green:0.36, blue:0.36, alpha:1)
             Popover.popover?.delegate = self
             Popover.popover?.sourceView = view
-            
-            titleLabel.frame = nav.navigationBar.frame
-            titleLabel.frame.size.width = Popover.preferredContentWith
-            titleLabel.textAlignment = .Center
-            titleLabel.font = UIFont.boldSystemFontOfSize(17.0)
-            titleLabel.textColor = UIColor.whiteColor()
-            nav.navigationBar.addSubview(titleLabel)
+
+            configureCustomNavigationTitle(nav, title: title)
             
             rect.origin.y += 5
             Popover.popover?.sourceRect = rect
@@ -122,6 +117,19 @@ extension ViewController: UIPopoverPresentationControllerDelegate {
         }
     }
     
+    private func configureCustomNavigationTitle(nav: UINavigationController, title: String?) {
+        guard title != nil else { return }
+        
+        let titleLabel              = UILabel(frame: nav.navigationBar.frame)
+        titleLabel.text             = title
+        titleLabel.frame.size.width = Popover.preferredContentWith
+        titleLabel.textAlignment    = .Center
+        titleLabel.font             = UIFont.boldSystemFontOfSize(17.0)
+        titleLabel.textColor        = UIColor.whiteColor()
+        nav.navigationBar.addSubview(titleLabel)
+    }
+    
+    // MARK: - UIAdaptivePresentationControllerDelegate
     func adaptivePresentationStyleForPresentationController(controller: UIPresentationController) -> UIModalPresentationStyle {
         return .None
     }

@@ -13,7 +13,7 @@ import Contacts
 // MARK: - Insert random new contacts for simulator testing.
 extension PhoneticContacts {
     
-    func insertNewContactsForSimulatorIfNeed(numberOfContacts: Int) {
+    func insertNewContactsForSimulatorIfNeeded(numberOfContacts: Int) {
         #if DEBUG
             
             guard needInsertNewContactsForTesting else { return }

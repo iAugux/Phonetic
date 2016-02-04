@@ -39,6 +39,13 @@ class ViewController: UIViewController {
         pauseVideo()
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        // I modified the style while presenting a SFSafariViewController, so here should reset it.
+        UIApplication.sharedApplication().statusBarStyle = .LightContent
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         

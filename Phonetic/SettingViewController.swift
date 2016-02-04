@@ -9,7 +9,7 @@
 import UIKit
 
 
-let kAddAccent         = "kAddAccent"
+let kUseTones          = "kUseTones"
 let kEnableAnimation   = "kEnableAnimation"
 let kFixPolyphonicChar = "kFixPolyphonicChar"
 let kUpcasePinyin      = "kUpcasePinyin"
@@ -17,12 +17,13 @@ let kUpcasePinyin      = "kUpcasePinyin"
 let kAddAccentDefaultBool         = true
 let kFixPolyphonicCharDefaultBool = true
 let kUpcasePinyinDefaultBool      = false
-let kEnableAnimationDefaultBool   = Device.size() == Size.Screen3_5Inch ? false : true //Device.isLargerThanScreenSize(Size.Screen3_5Inch) ? true : false
+let kEnableAnimationDefaultBool   = Device.size() == Size.Screen3_5Inch ? false : true
 
 class SettingViewController: BaseViewController {
     
+    private var customBarButton: UIButton!
     private let userDefaults = NSUserDefaults.standardUserDefaults()
-
+    
     @IBOutlet weak var enableAnimationSwitcher: UISwitch! {
         didSet {
             var isOn: Bool
@@ -34,16 +35,16 @@ class SettingViewController: BaseViewController {
             enableAnimationSwitcher.on = isOn
         }
     }
-
-    @IBOutlet weak var addAccentSwitcher: UISwitch! {
+    
+    @IBOutlet weak var useTonesSwitcher: UISwitch! {
         didSet {
             var isOn: Bool
-            if userDefaults.valueForKey(kAddAccent) == nil {
+            if userDefaults.valueForKey(kUseTones) == nil {
                 isOn = kAddAccentDefaultBool
             } else {
-                isOn = userDefaults.boolForKey(kAddAccent)
+                isOn = userDefaults.boolForKey(kUseTones)
             }
-            addAccentSwitcher.on = isOn
+            useTonesSwitcher.on = isOn
         }
     }
     
@@ -74,18 +75,54 @@ class SettingViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         enableAnimationSwitcher.onTintColor   = GLOBAL_CUSTOM_COLOR
-        addAccentSwitcher.onTintColor         = GLOBAL_CUSTOM_COLOR
+        useTonesSwitcher.onTintColor          = GLOBAL_CUSTOM_COLOR
         fixPolyphonicCharSwitcher.onTintColor = GLOBAL_CUSTOM_COLOR
         upcasePinyinSwitcher.onTintColor      = GLOBAL_CUSTOM_COLOR
+        
+        configureCustomBarButtonItem()
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
+    private func configureCustomBarButtonItem() {
+        guard let navBar = navigationController?.navigationBar else { return }
+        
+        customBarButton = UIButton(type: .Custom)
+        customBarButton.frame = CGRectMake(0, 0, 33, navBar.frame.height)
+        customBarButton.tintColor = UIColor.whiteColor()
+        customBarButton.setImage(UIImage(named: "more")?.imageWithRenderingMode(.AlwaysTemplate), forState: .Normal)
+        customBarButton.center = navBar.center
+        customBarButton.frame.origin.x = 12.0
+        customBarButton.addTarget(self, action: "customBarButtonDidTap", forControlEvents: .TouchUpInside)
+        navBar.addSubview(customBarButton)
+    }
+    
+    func customBarButtonDidTap() {
+                
+        if UIDevice.currentDevice().userInterfaceIdiom == .Pad {
+            presentPopoverController()
+        } else {
+            // dismiss current view controller first.
+            dismissViewControllerAnimated(true) { () -> Void in
+                self.presentPopoverController()
+            }
+        }
+    }
+    
+    private func presentPopoverController() {
+        guard let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("AdditionalSettingsNavigationController") as? UINavigationController else { return }
+        
+        vc.modalPresentationStyle = .Popover
+        vc.popoverPresentationController?.sourceView = customBarButton
+        UIApplication.topMostViewController()?.presentViewController(vc, animated: true, completion: nil)
+    }
+    
+    // MARKS: - actions of UISwitch
     @IBAction func enableAnimationSwitcherDidTap(sender: UISwitch) {
         if sender.on {
             userDefaults.setBool(true, forKey: kEnableAnimation)
@@ -95,11 +132,11 @@ class SettingViewController: BaseViewController {
         userDefaults.synchronize()
     }
     
-    @IBAction func addAccentSwitcherDidTap(sender: UISwitch) {
+    @IBAction func useTonesSwitcherDidTap(sender: UISwitch) {
         if sender.on {
-            userDefaults.setBool(true, forKey: kAddAccent)
+            userDefaults.setBool(true, forKey: kUseTones)
         } else {
-            userDefaults.setBool(false, forKey: kAddAccent)
+            userDefaults.setBool(false, forKey: kUseTones)
         }
         userDefaults.synchronize()
     }
@@ -121,5 +158,5 @@ class SettingViewController: BaseViewController {
         }
         userDefaults.synchronize()
     }
-
+    
 }

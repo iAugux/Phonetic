@@ -147,7 +147,7 @@ extension ViewController {
             progress.angle       = 360
             percentageLabel.text = "100%"
             outputView.alpha     = 0
-            outputView.text      = "   " + NSLocalizedString("Progressing", comment: "") + "..."
+            outputView.text      = "   " + NSLocalizedString("Processing", comment: "") + "..."
             
             UIView.animateWithDuration(0.4, animations: { () -> Void in
                 self.outputView.alpha = 1

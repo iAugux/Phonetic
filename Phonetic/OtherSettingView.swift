@@ -41,8 +41,6 @@ class OtherSettingView: UIStackView, MFMailComposeViewControllerDelegate, SFSafa
             default: break
             }
         })
-        
-        
     }
     
     // MARK: - follow me on Twitter
@@ -60,7 +58,9 @@ class OtherSettingView: UIStackView, MFMailComposeViewControllerDelegate, SFSafa
         
         let safariVC = SFSafariViewController(URL: NSURL(string: "https://twitter.com/iAugux")!)
         safariVC.delegate = self
-        UIApplication.topMostViewController()?.presentViewController(safariVC, animated: true, completion: nil)
+        UIApplication.topMostViewController()?.presentViewController(safariVC, animated: true, completion: {
+            UIApplication.sharedApplication().statusBarStyle = .Default
+        })
     }
     
     // MARK: - Rate me
