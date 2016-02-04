@@ -48,11 +48,12 @@
 ## Thanks to
 * [`PhoneticContacts`](https://github.com/lexrus/PhoneticContacts) by `Lexrus` for heavy inspiration.
 
-* [`KDCircularProgress`](https://github.com/kaandedeoglu/KDCircularProgress)
-
 * [`Device`](https://github.com/Ekhoo/Device)
 
- 
+* [`DGElasticPullToRefresh`](https://github.com/gontovnik/DGElasticPullToRefresh)
+
+* [`KDCircularProgress`](https://github.com/kaandedeoglu/KDCircularProgress)
+
 ## License
 `Phonetic` is available under the MIT license. See the `LICENSE` file for more info.
 
