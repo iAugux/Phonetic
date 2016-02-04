@@ -1,7 +1,8 @@
 
 # Phonetic
 ![Language](https://img.shields.io/badge/language-Swift%202-orange.svg)
-![License](https://img.shields.io/github/license/iAugux/iBBS-Swift.svg?style=flat)
+![GitHub license](http://img.shields.io/github/license/mashape/apistatus.svg)
+[![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/iaugux)
 
 ####An iOS App to add phonetic keys with Pinyin for Chinese(SC & TC) names. Your Contacts will be sorted by alphabet automatically even under English System.
 
