@@ -1,7 +1,6 @@
 
 # Phonetic
 ![Language](https://img.shields.io/badge/language-Swift%202-orange.svg)
-![GitHub license](http://img.shields.io/github/license/mashape/apistatus.svg)
 [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/iaugux)
 
 ####An iOS App to add phonetic keys with Pinyin for Chinese(SC & TC) names. Your Contacts will be sorted by alphabet automatically even under English System.
@@ -56,6 +55,8 @@
 
 ## License
 `Phonetic` is available under the MIT license. See the `LICENSE` file for more info.
+
+`Please do NOT repackage and submit to App Store.`
 
 Copyright © 2016 iAugus
 
