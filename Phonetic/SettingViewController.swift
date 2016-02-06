@@ -24,7 +24,7 @@ class SettingViewController: BaseViewController {
     private var customBarButton: UIButton!
     private let userDefaults = NSUserDefaults.standardUserDefaults()
     
-    @IBOutlet weak var enableAnimationSwitcher: UISwitch! {
+    @IBOutlet weak var enableAnimationSwitch: UISwitch! {
         didSet {
             var isOn: Bool
             if userDefaults.valueForKey(kEnableAnimation) == nil {
@@ -32,11 +32,11 @@ class SettingViewController: BaseViewController {
             } else {
                 isOn = userDefaults.boolForKey(kEnableAnimation)
             }
-            enableAnimationSwitcher.on = isOn
+            enableAnimationSwitch.on = isOn
         }
     }
     
-    @IBOutlet weak var useTonesSwitcher: UISwitch! {
+    @IBOutlet weak var useTonesSwitch: UISwitch! {
         didSet {
             var isOn: Bool
             if userDefaults.valueForKey(kUseTones) == nil {
@@ -44,11 +44,11 @@ class SettingViewController: BaseViewController {
             } else {
                 isOn = userDefaults.boolForKey(kUseTones)
             }
-            useTonesSwitcher.on = isOn
+            useTonesSwitch.on = isOn
         }
     }
     
-    @IBOutlet weak var fixPolyphonicCharSwitcher: UISwitch! {
+    @IBOutlet weak var fixPolyphonicCharSwitch: UISwitch! {
         didSet {
             var isOn: Bool
             if userDefaults.valueForKey(kFixPolyphonicChar) == nil {
@@ -56,11 +56,11 @@ class SettingViewController: BaseViewController {
             } else {
                 isOn = userDefaults.boolForKey(kFixPolyphonicChar)
             }
-            fixPolyphonicCharSwitcher.on = isOn
+            fixPolyphonicCharSwitch.on = isOn
         }
     }
     
-    @IBOutlet weak var upcasePinyinSwitcher: UISwitch! {
+    @IBOutlet weak var upcasePinyinSwitch: UISwitch! {
         didSet {
             var isOn: Bool
             if userDefaults.valueForKey(kUpcasePinyin) == nil {
@@ -68,7 +68,7 @@ class SettingViewController: BaseViewController {
             } else {
                 isOn = userDefaults.boolForKey(kUpcasePinyin)
             }
-            upcasePinyinSwitcher.on = isOn
+            upcasePinyinSwitch.on = isOn
         }
     }
     
@@ -76,10 +76,10 @@ class SettingViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        enableAnimationSwitcher.onTintColor   = GLOBAL_CUSTOM_COLOR
-        useTonesSwitcher.onTintColor          = GLOBAL_CUSTOM_COLOR
-        fixPolyphonicCharSwitcher.onTintColor = GLOBAL_CUSTOM_COLOR
-        upcasePinyinSwitcher.onTintColor      = GLOBAL_CUSTOM_COLOR
+        enableAnimationSwitch.onTintColor   = GLOBAL_CUSTOM_COLOR
+        useTonesSwitch.onTintColor          = GLOBAL_CUSTOM_COLOR
+        fixPolyphonicCharSwitch.onTintColor = GLOBAL_CUSTOM_COLOR
+        upcasePinyinSwitch.onTintColor      = GLOBAL_CUSTOM_COLOR
         
         configureCustomBarButtonItem()
     }
@@ -124,7 +124,7 @@ class SettingViewController: BaseViewController {
     }
     
     // MARKS: - actions of UISwitch
-    @IBAction func enableAnimationSwitcherDidTap(sender: UISwitch) {
+    @IBAction func enableAnimationSwitchDidTap(sender: UISwitch) {
         if sender.on {
             userDefaults.setBool(true, forKey: kEnableAnimation)
         } else {
@@ -133,7 +133,7 @@ class SettingViewController: BaseViewController {
         userDefaults.synchronize()
     }
     
-    @IBAction func useTonesSwitcherDidTap(sender: UISwitch) {
+    @IBAction func useTonesSwitchDidTap(sender: UISwitch) {
         if sender.on {
             userDefaults.setBool(true, forKey: kUseTones)
         } else {
@@ -142,7 +142,7 @@ class SettingViewController: BaseViewController {
         userDefaults.synchronize()
     }
     
-    @IBAction func fixPolyphonicCharSwitcherDidTap(sender: UISwitch) {
+    @IBAction func fixPolyphonicCharSwitchDidTap(sender: UISwitch) {
         if sender.on {
             userDefaults.setBool(true, forKey: kFixPolyphonicChar)
         } else {
@@ -151,7 +151,7 @@ class SettingViewController: BaseViewController {
         userDefaults.synchronize()
     }
     
-    @IBAction func upcasePinyinSwitcherDidTap(sender: UISwitch) {
+    @IBAction func upcasePinyinSwitchDidTap(sender: UISwitch) {
         if sender.on {
             userDefaults.setBool(true, forKey: kUpcasePinyin)
         } else {

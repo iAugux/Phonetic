@@ -106,7 +106,7 @@ class PhoneticContacts {
             
             do {
                 try self.contactStore.enumerateContactsWithFetchRequest(CNContactFetchRequest(keysToFetch: self.keysToFetch), usingBlock: { (contact, _) -> Void in
-                    let mutableContact = contact.mutableCopy() as! CNMutableContact
+                    let mutableContact: CNMutableContact = contact.mutableCopy() as! CNMutableContact
                     
                     // modify Contact
                     /// only clear who has Mandarin Latin.
@@ -116,11 +116,14 @@ class PhoneticContacts {
                             mutableContact.setValue("", forKey: CNContactPhoneticFamilyNameKey)
                         }
                     }
+                    
                     if let given = mutableContact.valueForKey(CNContactGivenNameKey) as? String {
                         if self.antiPhonetic(given) {
                             mutableContact.setValue("", forKey: CNContactPhoneticGivenNameKey)
                         }
                     }
+                    
+                    self.removeNicknameIfNeeded(mutableContact)
                     
                     self.saveContact(mutableContact)
                     

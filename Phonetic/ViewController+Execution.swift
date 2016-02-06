@@ -161,10 +161,10 @@ extension ViewController {
             self.outputView.alpha = 0
             }) { (_) -> Void in
                 self.outputView.text = NSLocalizedString("Completed", comment: "")
-                UIView.animateWithDuration(1.5, delay: 0, options: .CurveEaseInOut, animations: { () -> Void in
-                    self.outputView.alpha = 1
+                UIView.animateWithDuration(1.2, delay: 0, options: .CurveEaseInOut, animations: { () -> Void in
+                    self.outputView.alpha = 0.8
                     }, completion: { (_) -> Void in
-                        UIView.animateWithDuration(1.5, delay: 1.5, options: .CurveEaseInOut, animations: { () -> Void in
+                        UIView.animateWithDuration(0.9, delay: 0.7, options: .CurveEaseInOut, animations: { () -> Void in
                             self.outputView.alpha = 0
                             }, completion: { (_) -> Void in
                                 self.outputView.text = ""

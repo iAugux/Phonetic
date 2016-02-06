@@ -32,6 +32,7 @@ class ViewController: UIViewController {
         
         NSTimer.scheduledTimerWithTimeInterval(3.0, target: self, selector: "rateMeInTheThirdTime", userInfo: nil, repeats: false)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "showLabels", name: kVCWillDisappearNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "popoverSettingViewController", name: kDismissedAdditionalSettingsVCNotification, object: nil)
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -75,6 +76,10 @@ class ViewController: UIViewController {
         
         // info button
         infoButton.addTarget(self, action: "popoverInfoViewController", forControlEvents: .TouchUpInside)
+        
+        // Preventing multiple buttons from being touched at the same time
+//        settingButton.exclusiveTouch = true
+//        infoButton.exclusiveTouch = true
         
     }
 }

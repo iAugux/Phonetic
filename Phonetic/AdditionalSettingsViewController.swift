@@ -12,10 +12,14 @@ import UIKit
 let kAdditionalSettingsStatus            = "kAdditionalSettingsStatus"
 let kEnableNickname                      = "kEnableNickname"
 let kOverwriteNickname                   = "kOverwriteNickname"
+let kKeepSettingsWindowOpen              = "kKeepSettingsWindowOpen"
 
 let kAdditionalSettingsStatusDefaultBool = true
 let kEnableNicknameDefaultBool           = true
 let kOverwriteNicknameDefaultBool        = false
+let kKeepSettingsWindowOpenDefaultBool   = false
+
+let kDismissedAdditionalSettingsVCNotification = "kDismissedAdditionalSettingsVCNotification"
 
 class AdditionalSettingsViewController: UITableViewController {
     
@@ -66,13 +70,9 @@ class AdditionalSettingsViewController: UITableViewController {
     
     // MARK: - UISwitch
     
-    @IBOutlet weak var statusLabel: UILabel! {
-        didSet {
-//            statusLabel.text = statusSwitcher.on ? on : off
-        }
-    }
+    @IBOutlet weak var statusLabel: UILabel!
     
-    @IBOutlet weak var statusSwitcher: UISwitch! {
+    @IBOutlet weak var statusSwitch: UISwitch! {
         didSet {
             var isOn: Bool
             if userDefaults.valueForKey(kAdditionalSettingsStatus) == nil {
@@ -80,13 +80,11 @@ class AdditionalSettingsViewController: UITableViewController {
             } else {
                 isOn = userDefaults.boolForKey(kAdditionalSettingsStatus)
             }
-            statusSwitcher.on = isOn
-            
-//            statusLabel.text = isOn ? on : off
+            statusSwitch.on = isOn
         }
     }
 
-    @IBOutlet weak var nicknameSwitcher: UISwitch! {
+    @IBOutlet weak var nicknameSwitch: UISwitch! {
         didSet {
             var isOn: Bool
             if userDefaults.valueForKey(kEnableNickname) == nil {
@@ -94,11 +92,11 @@ class AdditionalSettingsViewController: UITableViewController {
             } else {
                 isOn = userDefaults.boolForKey(kEnableNickname)
             }
-            nicknameSwitcher.on = isOn
+            nicknameSwitch.on = isOn
         }
     }
 
-    @IBOutlet weak var overwriteNicknameSwitcher: UISwitch! {
+    @IBOutlet weak var overwriteNicknameSwitch: UISwitch! {
         didSet {
             var isOn: Bool
             if userDefaults.valueForKey(kOverwriteNickname) == nil {
@@ -106,10 +104,29 @@ class AdditionalSettingsViewController: UITableViewController {
             } else {
                 isOn = userDefaults.boolForKey(kOverwriteNickname)
             }
-            overwriteNicknameSwitcher.on = isOn
+            overwriteNicknameSwitch.on = isOn
         }
     }
     
+    @IBOutlet weak var keepSettingWindowOpenSwitch: UISwitch! {
+        didSet {
+            var isOn: Bool
+            if userDefaults.valueForKey(kKeepSettingsWindowOpen) == nil {
+                isOn = kKeepSettingsWindowOpenDefaultBool
+            } else {
+                isOn = userDefaults.boolForKey(kKeepSettingsWindowOpen)
+            }
+            keepSettingWindowOpenSwitch.on = isOn
+        }
+    }
+    
+    private var keepSettingWindowOpen: Bool {
+        if userDefaults.valueForKey(kKeepSettingsWindowOpen) == nil {
+            userDefaults.setBool(kKeepSettingsWindowOpenDefaultBool, forKey: kAdditionalSettingsStatus)
+            userDefaults.synchronize()
+        }
+        return userDefaults.boolForKey(kKeepSettingsWindowOpen)
+    }
     
 }
 
@@ -125,19 +142,23 @@ extension AdditionalSettingsViewController {
         configureCustomBarButton()
         configureCustomTitleLabel()
         
-        statusSwitcher.onTintColor            = GLOBAL_CUSTOM_COLOR
-        nicknameSwitcher.onTintColor          = GLOBAL_CUSTOM_COLOR
-        overwriteNicknameSwitcher.onTintColor = GLOBAL_CUSTOM_COLOR
+        statusLabel.text                        = statusSwitch.on ? on : off
+        statusSwitch.onTintColor                = GLOBAL_CUSTOM_COLOR
+        nicknameSwitch.onTintColor              = GLOBAL_CUSTOM_COLOR
+        overwriteNicknameSwitch.onTintColor     = GLOBAL_CUSTOM_COLOR
+        keepSettingWindowOpenSwitch.onTintColor = GLOBAL_CUSTOM_COLOR
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        configurePullToDismissViewController(UIColor.clearColor(), fillColor: _color)
-
         blurBackgroundView = BlurImageView(frame: view.bounds)
         tableView.backgroundView = blurBackgroundView
         tableView.separatorColor = UIColor(red: 0.502, green: 0.502, blue: 0.502, alpha: 1.0)
 
+        configurePullToDismissViewController(UIColor.clearColor(), fillColor: _color, completionHandler: {
+            self.postDismissedNotificationIfNeeded()
+        })
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -160,10 +181,16 @@ extension AdditionalSettingsViewController {
     
 }
 
-// MARK: - actions of UISwitch
+// MARK: - Actions of UISwitch
 extension AdditionalSettingsViewController {
     
-    @IBAction func statusSwitcherDidTap(sender: UISwitch) {
+    @IBAction func statusSwitchDidTap(sender: UISwitch) {
+        
+        statusLabel.text = sender.on ? on : off
+
+        nicknameSwitch.enabled = sender.on
+        overwriteNicknameSwitch.enabled = sender.on
+        
         if sender.on {
             userDefaults.setBool(true, forKey: kAdditionalSettingsStatus)
         } else {
@@ -172,22 +199,52 @@ extension AdditionalSettingsViewController {
         userDefaults.synchronize()
     }
     
-    @IBAction func nicknameSwitcherDidTap(sender: UISwitch) {
+    @IBAction func nicknameSwitchDidTap(sender: UISwitch) {
         if sender.on {
             userDefaults.setBool(true, forKey: kEnableNickname)
+            
+            // enable `OverwriteNicknameSwitch` if needed
+            if overwriteNicknameSwitch.on {
+                overwriteNicknameSwitch.enabled = true
+            }
+            
         } else {
             userDefaults.setBool(false, forKey: kEnableNickname)
+            
+            // disable `OverwriteNicknameSwitch` if needed
+            if overwriteNicknameSwitch.on {
+                overwriteNicknameSwitch.enabled = false
+            }
         }
         userDefaults.synchronize()
     }
     
-    @IBAction func overwriteNicknameSwitcherDidTap(sender: UISwitch) {
+    @IBAction func overwriteNicknameSwitchDidTap(sender: UISwitch) {
         if sender.on {
             userDefaults.setBool(true, forKey: kOverwriteNickname)
+            
+            // Turn on `NicknameSwitch` with delay.
+            NSTimer.scheduledTimerWithTimeInterval(0.2, target: self, selector: "turnOnNicknameSwitchAutomatically", userInfo: nil, repeats: false)
+            
         } else {
             userDefaults.setBool(false, forKey: kOverwriteNickname)
         }
         userDefaults.synchronize()
+    }
+    
+    @IBAction func keepSettingWindowOpenSwitchDidTap(sender: UISwitch) {
+        if sender.on {
+            userDefaults.setBool(true, forKey: kKeepSettingsWindowOpen)
+        } else {
+            userDefaults.setBool(false, forKey: kKeepSettingsWindowOpen)
+        }
+        userDefaults.synchronize()
+    }
+
+    internal func turnOnNicknameSwitchAutomatically() {
+        if let _ = nicknameSwitch?.setOn(true, animated: true) {
+            userDefaults.setBool(true, forKey: kEnableNickname)
+        }
     }
     
 }
@@ -266,7 +323,26 @@ extension AdditionalSettingsViewController {
             }
         }
     }
+}
 
+// MARK: - Keep `SettingViewController` open after dismissing.
+extension AdditionalSettingsViewController {
+
+    private func postDismissedNotificationIfNeeded() {
+        // It is not necessary here, but I prefer to keep it.
+        guard UIDevice.currentDevice().userInterfaceIdiom != .Pad else { return }
+        
+        guard keepSettingWindowOpen else { return }
+        
+        NSNotificationCenter.defaultCenter().postNotificationName(kDismissedAdditionalSettingsVCNotification, object: nil)
+    }
+    
+    override func dismissViewController() {
+        dismissViewControllerAnimated(true) { () -> Void in
+            self.postDismissedNotificationIfNeeded()
+        }
+    }
+    
 }
 
 // MARK: - Scroll View Delegate
@@ -350,6 +426,20 @@ extension AdditionalSettingsViewController {
     override func tableView(tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {
         // change label's text color of Footer View
         (view as! UITableViewHeaderFooterView).textLabel?.textColor = UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1.0)
+    }
+    
+    override func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        // change label's text color of Header View
+        (view as! UITableViewHeaderFooterView).textLabel?.textColor = UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1.0)
+    }
+    
+}
+
+// MARK: - Feedback
+extension AdditionalSettingsViewController {
+    
+    @IBAction func feedback(sender: AnyObject) {
+        OtherSettingView.defaultSetting.sendMail()
     }
     
 }

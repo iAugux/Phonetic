@@ -12,6 +12,8 @@ import SafariServices
 
 class OtherSettingView: UIStackView, MFMailComposeViewControllerDelegate, SFSafariViewControllerDelegate {
     
+    static let defaultSetting = OtherSettingView()
+    
     var picker: MFMailComposeViewController?
     
     override func awakeFromNib() {
@@ -72,7 +74,7 @@ class OtherSettingView: UIStackView, MFMailComposeViewControllerDelegate, SFSafa
     }
     
     // MARK: - feedback with Mail
-    private func sendMail() {
+    func sendMail() {
         if MFMailComposeViewController.canSendMail() {
             picker = MFMailComposeViewController()
             picker?.mailComposeDelegate = self
