@@ -930,23 +930,23 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <view key="tableFooterView" contentMode="scaleToFill" id="rFS-Ty-wVw">
-                            <rect key="frame" x="0.0" y="355.5" width="600" height="177"/>
+                            <rect key="frame" x="0.0" y="356.5" width="600" height="177"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="More features will be listed here in future releases..." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9OQ-V1-0et">
-                                    <rect key="frame" x="20" y="49" width="564" height="16"/>
+                                    <rect key="frame" x="20" y="52" width="564" height="16"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="If you have ideas in mind, please send me your feedback. Thanks!" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lb0-Kj-twg">
-                                    <rect key="frame" x="20" y="77" width="564" height="16"/>
+                                    <rect key="frame" x="20" y="80" width="564" height="16"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GQ4-ND-o8R">
-                                    <rect key="frame" x="266" y="105" width="68" height="30"/>
+                                    <rect key="frame" x="266" y="108" width="68" height="30"/>
                                     <state key="normal" title="Feedback">
                                         <color key="titleColor" red="0.0" green="0.98937255144119263" blue="0.9991115927696228" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </state>
@@ -961,7 +961,7 @@
                                 <constraint firstItem="GQ4-ND-o8R" firstAttribute="centerX" secondItem="rFS-Ty-wVw" secondAttribute="centerX" id="AZ4-Pe-pHa"/>
                                 <constraint firstAttribute="trailing" secondItem="9OQ-V1-0et" secondAttribute="trailing" constant="16" id="D71-07-RXy"/>
                                 <constraint firstItem="Lb0-Kj-twg" firstAttribute="top" secondItem="9OQ-V1-0et" secondAttribute="bottom" constant="12" id="Hkf-dW-5I1"/>
-                                <constraint firstItem="9OQ-V1-0et" firstAttribute="top" secondItem="rFS-Ty-wVw" secondAttribute="top" constant="49" id="RDc-4p-sKJ"/>
+                                <constraint firstItem="9OQ-V1-0et" firstAttribute="top" secondItem="rFS-Ty-wVw" secondAttribute="top" constant="52" id="RDc-4p-sKJ"/>
                                 <constraint firstAttribute="trailing" secondItem="Lb0-Kj-twg" secondAttribute="trailing" constant="16" id="SnN-cG-tSJ"/>
                                 <constraint firstItem="9OQ-V1-0et" firstAttribute="leading" secondItem="rFS-Ty-wVw" secondAttribute="leading" constant="20" id="eqJ-VD-7iW"/>
                                 <constraint firstItem="GQ4-ND-o8R" firstAttribute="top" secondItem="Lb0-Kj-twg" secondAttribute="bottom" constant="12" id="pxJ-aO-ldw"/>
@@ -1096,7 +1096,7 @@
                             <tableViewSection headerTitle="User Interface Setting" footerTitle="Keep `Settings Window` open after dismissing `Additional Settings Window`" id="boQ-GG-Exe" userLabel="UI">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="44" id="aUH-Zn-KLv">
-                                        <rect key="frame" x="0.0" y="285" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="285.5" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="aUH-Zn-KLv" id="one-20-V15">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>

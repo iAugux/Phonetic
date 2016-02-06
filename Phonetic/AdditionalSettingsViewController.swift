@@ -122,7 +122,7 @@ class AdditionalSettingsViewController: UITableViewController {
     
     private var keepSettingWindowOpen: Bool {
         if userDefaults.valueForKey(kKeepSettingsWindowOpen) == nil {
-            userDefaults.setBool(kKeepSettingsWindowOpenDefaultBool, forKey: kAdditionalSettingsStatus)
+            userDefaults.setBool(kKeepSettingsWindowOpenDefaultBool, forKey: kKeepSettingsWindowOpen)
             userDefaults.synchronize()
         }
         return userDefaults.boolForKey(kKeepSettingsWindowOpen)
