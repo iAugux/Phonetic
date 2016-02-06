@@ -118,6 +118,7 @@ class SettingViewController: BaseViewController {
         guard let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("AdditionalSettingsNavigationController") as? UINavigationController else { return }
         
         vc.modalPresentationStyle = .Popover
+        vc.popoverPresentationController?.canOverlapSourceViewRect = true
         vc.popoverPresentationController?.sourceView = customBarButton
         UIApplication.topMostViewController()?.presentViewController(vc, animated: true, completion: nil)
     }

@@ -16,7 +16,7 @@ class InfoAlertController {
         dispatch_async(dispatch_get_main_queue()) { () -> Void in
             
             let alertController = UIAlertController(title: nil, message: info, preferredStyle: .Alert)
-            let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+            let cancelAction = UIAlertAction(title: "OK", style: .Cancel, handler: nil)
             alertController.addAction(cancelAction)
             UIApplication.topMostViewController()?.presentViewController(alertController, animated: true, completion: nil)
         }

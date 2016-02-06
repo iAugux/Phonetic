@@ -468,7 +468,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" editable="NO" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="dGi-DM-2sJ">
-                                <rect key="frame" x="66" y="38" width="468" height="25"/>
+                                <rect key="frame" x="66" y="43" width="468" height="25"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="25" id="W5X-GK-ryM"/>
@@ -478,10 +478,10 @@
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="wave_placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="LvG-ez-hoK">
-                                <rect key="frame" x="0.0" y="139" width="600" height="461"/>
+                                <rect key="frame" x="0.0" y="144" width="600" height="456"/>
                             </imageView>
                             <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="t0P-2l-GxZ" customClass="KDCircularProgress" customModule="Phonetic" customModuleProvider="target">
-                                <rect key="frame" x="265" y="81" width="70" height="70"/>
+                                <rect key="frame" x="265" y="86" width="70" height="70"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0%" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7ea-gB-6zc">
                                         <rect key="frame" x="26" y="28" width="17" height="14.5"/>
@@ -624,18 +624,18 @@
                                 </constraints>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S04-H3-kxG">
-                                <rect key="frame" x="554" y="38" width="25" height="25"/>
+                                <rect key="frame" x="544" y="38" width="35" height="35"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="25" id="lcV-cm-Sa4"/>
-                                    <constraint firstAttribute="width" constant="25" id="zfm-EW-DmX"/>
+                                    <constraint firstAttribute="height" constant="35" id="lcV-cm-Sa4"/>
+                                    <constraint firstAttribute="width" constant="35" id="zfm-EW-DmX"/>
                                 </constraints>
                                 <state key="normal" image="settings"/>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BY6-hs-E2l">
-                                <rect key="frame" x="21" y="38" width="25" height="25"/>
+                                <rect key="frame" x="21" y="38" width="35" height="35"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="25" id="1Uw-ie-Onl"/>
-                                    <constraint firstAttribute="width" constant="25" id="DSP-Kw-0mV"/>
+                                    <constraint firstAttribute="height" constant="35" id="1Uw-ie-Onl"/>
+                                    <constraint firstAttribute="width" constant="35" id="DSP-Kw-0mV"/>
                                 </constraints>
                                 <state key="normal" image="info"/>
                             </button>
@@ -924,23 +924,22 @@
         <scene sceneID="cd9-Rc-feb">
             <objects>
                 <tableViewController id="814-Dy-ps6" customClass="AdditionalSettingsViewController" customModule="Phonetic" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" allowsSelection="NO" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="1" id="8yX-SI-sd5">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" allowsSelection="NO" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="8yX-SI-sd5">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <sections>
-                            <tableViewSection id="XYB-eP-eKs" userLabel="Auto-Translate">
-                                <string key="footerTitle">When Auto-Translate is enabled, translation will be performed automatically while you pulling down Notification Center. Otherwise, or you need to manually translate in Notification Center.</string>
+                            <tableViewSection footerTitle="" id="XYB-eP-eKs" userLabel="Auto-Translate">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" tag="99999" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="44" id="2pn-tH-ydc">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="44" id="2pn-tH-ydc">
                                         <rect key="frame" x="0.0" y="99" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="2pn-tH-ydc" id="RuP-io-6xm">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Auto-Translate" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EqW-Dx-MRg">
-                                                    <rect key="frame" x="20" y="0.0" width="496" height="44"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Status" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EqW-Dx-MRg">
+                                                    <rect key="frame" x="16" y="0.0" width="474.5" height="44"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
@@ -951,33 +950,44 @@
                                                         <constraint firstAttribute="width" constant="49" id="jly-37-v36"/>
                                                         <constraint firstAttribute="height" constant="31" id="p5G-UI-SSj"/>
                                                     </constraints>
+                                                    <connections>
+                                                        <action selector="statusSwitcherDidTap:" destination="814-Dy-ps6" eventType="valueChanged" id="XIa-6D-zQc"/>
+                                                    </connections>
                                                 </switch>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="251" text="On" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UQ1-gf-Cd7">
+                                                    <rect key="frame" x="498.5" y="0.0" width="21.5" height="44"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="alP-kM-Gh6" firstAttribute="leading" secondItem="EqW-Dx-MRg" secondAttribute="trailing" constant="16" id="NRG-cQ-dSx"/>
                                                 <constraint firstItem="alP-kM-Gh6" firstAttribute="centerY" secondItem="RuP-io-6xm" secondAttribute="centerY" id="V0m-Te-KmY"/>
+                                                <constraint firstAttribute="bottom" secondItem="UQ1-gf-Cd7" secondAttribute="bottom" id="YX9-g8-xMx"/>
                                                 <constraint firstAttribute="bottom" secondItem="EqW-Dx-MRg" secondAttribute="bottom" id="ff9-m1-hVk"/>
-                                                <constraint firstItem="EqW-Dx-MRg" firstAttribute="leading" secondItem="RuP-io-6xm" secondAttribute="leading" constant="20" id="m1y-kJ-qyb"/>
+                                                <constraint firstItem="EqW-Dx-MRg" firstAttribute="leading" secondItem="RuP-io-6xm" secondAttribute="leading" constant="16" id="m1y-kJ-qyb"/>
+                                                <constraint firstItem="UQ1-gf-Cd7" firstAttribute="top" secondItem="RuP-io-6xm" secondAttribute="top" id="qrq-FE-mIo"/>
                                                 <constraint firstItem="EqW-Dx-MRg" firstAttribute="top" secondItem="RuP-io-6xm" secondAttribute="top" id="sqN-3Q-Sda"/>
+                                                <constraint firstItem="UQ1-gf-Cd7" firstAttribute="leading" secondItem="EqW-Dx-MRg" secondAttribute="trailing" constant="8" id="tt2-bK-hiP"/>
                                                 <constraint firstAttribute="trailing" secondItem="alP-kM-Gh6" secondAttribute="trailing" constant="19" id="w6i-2y-Hnc"/>
+                                                <constraint firstItem="alP-kM-Gh6" firstAttribute="leading" secondItem="UQ1-gf-Cd7" secondAttribute="trailing" constant="12" id="yzT-zO-8GB"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection id="9Mp-D6-ANl" userLabel="Auto-Translate">
-                                <string key="footerTitle">When Auto-Translate is enabled, translation will be performed automatically while you pulling down Notification Center. Otherwise, or you need to manually translate in Notification Center.</string>
+                            <tableViewSection footerTitle="e.g: Add a nickname key for `叶梓萱` with `YZX`. Then you can enter `YZX` to search the specific name. " id="9Mp-D6-ANl" userLabel="Auto-Translate">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" tag="99999" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="44" id="ZaY-9m-ycv">
-                                        <rect key="frame" x="0.0" y="193.5" width="600" height="44"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="44" id="ZaY-9m-ycv">
+                                        <rect key="frame" x="0.0" y="179" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ZaY-9m-ycv" id="NWe-FA-X9S">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Auto-Translate" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Buy-mD-J4T">
-                                                    <rect key="frame" x="20" y="0.0" width="496" height="44"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nickname for Quick Search" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Buy-mD-J4T">
+                                                    <rect key="frame" x="16" y="0.0" width="500" height="44"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
@@ -988,10 +998,13 @@
                                                         <constraint firstAttribute="width" constant="49" id="OWB-PK-scd"/>
                                                         <constraint firstAttribute="height" constant="31" id="uMD-e8-RkI"/>
                                                     </constraints>
+                                                    <connections>
+                                                        <action selector="nicknameSwitcherDidTap:" destination="814-Dy-ps6" eventType="valueChanged" id="xDx-Y1-5m1"/>
+                                                    </connections>
                                                 </switch>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="Buy-mD-J4T" firstAttribute="leading" secondItem="NWe-FA-X9S" secondAttribute="leading" constant="20" id="0JP-fu-PEg"/>
+                                                <constraint firstItem="Buy-mD-J4T" firstAttribute="leading" secondItem="NWe-FA-X9S" secondAttribute="leading" constant="16" id="0JP-fu-PEg"/>
                                                 <constraint firstAttribute="trailing" secondItem="dmh-zO-BEk" secondAttribute="trailing" constant="19" id="15M-lr-huG"/>
                                                 <constraint firstItem="dmh-zO-BEk" firstAttribute="centerY" secondItem="NWe-FA-X9S" secondAttribute="centerY" id="5x3-2L-avz"/>
                                                 <constraint firstItem="Buy-mD-J4T" firstAttribute="top" secondItem="NWe-FA-X9S" secondAttribute="top" id="Clk-zV-BlY"/>
@@ -1001,76 +1014,37 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     </tableViewCell>
-                                </cells>
-                            </tableViewSection>
-                            <tableViewSection id="O2V-3A-xf1" userLabel="Auto-Translate">
-                                <string key="footerTitle">When Auto-Translate is enabled, translation will be performed automatically while you pulling down Notification Center. Otherwise, or you need to manually translate in Notification Center.</string>
-                                <cells>
-                                    <tableViewCell clipsSubviews="YES" tag="99999" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="44" id="uGs-2n-JtD">
-                                        <rect key="frame" x="0.0" y="288" width="600" height="44"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="44" id="lzJ-YX-Yok">
+                                        <rect key="frame" x="0.0" y="223" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="uGs-2n-JtD" id="TiL-Ha-a3e">
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="lzJ-YX-Yok" id="129-kQ-lAm">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Auto-Translate" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qv8-DC-C3v">
-                                                    <rect key="frame" x="20" y="0.0" width="496" height="44"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Overwrite Existing Nicknames" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zOq-ls-6Q3">
+                                                    <rect key="frame" x="16" y="0.0" width="500" height="44"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pSt-DV-re7">
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="egb-PZ-nzd">
                                                     <rect key="frame" x="532" y="6" width="51" height="31"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="31" id="HZk-2N-t2Z"/>
-                                                        <constraint firstAttribute="width" constant="49" id="w89-iH-q25"/>
+                                                        <constraint firstAttribute="height" constant="31" id="6A9-YO-dAY"/>
+                                                        <constraint firstAttribute="width" constant="49" id="sac-mz-MM6"/>
                                                     </constraints>
+                                                    <connections>
+                                                        <action selector="overwriteNicknameSwitcherDidTap:" destination="814-Dy-ps6" eventType="valueChanged" id="r1m-xX-ZjI"/>
+                                                    </connections>
                                                 </switch>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="qv8-DC-C3v" firstAttribute="leading" secondItem="TiL-Ha-a3e" secondAttribute="leading" constant="20" id="3fz-eG-W2c"/>
-                                                <constraint firstItem="pSt-DV-re7" firstAttribute="leading" secondItem="qv8-DC-C3v" secondAttribute="trailing" constant="16" id="8fg-mj-HvI"/>
-                                                <constraint firstAttribute="trailing" secondItem="pSt-DV-re7" secondAttribute="trailing" constant="19" id="Jbd-Jn-hjJ"/>
-                                                <constraint firstItem="qv8-DC-C3v" firstAttribute="top" secondItem="TiL-Ha-a3e" secondAttribute="top" id="ean-Mi-ost"/>
-                                                <constraint firstItem="pSt-DV-re7" firstAttribute="centerY" secondItem="TiL-Ha-a3e" secondAttribute="centerY" id="jhB-fN-a7N"/>
-                                                <constraint firstAttribute="bottom" secondItem="qv8-DC-C3v" secondAttribute="bottom" id="ngw-4p-lcP"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                    </tableViewCell>
-                                </cells>
-                            </tableViewSection>
-                            <tableViewSection id="dqz-Af-CKL" userLabel="Auto-Translate">
-                                <string key="footerTitle">When Auto-Translate is enabled, translation will be performed automatically while you pulling down Notification Center. Otherwise, or you need to manually translate in Notification Center.</string>
-                                <cells>
-                                    <tableViewCell clipsSubviews="YES" tag="99999" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="44" id="bax-jv-Mx8">
-                                        <rect key="frame" x="0.0" y="382.5" width="600" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="bax-jv-Mx8" id="ZOo-kh-L0i">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Auto-Translate" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CZX-jZ-sIL">
-                                                    <rect key="frame" x="20" y="0.0" width="496" height="44"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mWS-Vk-dvT">
-                                                    <rect key="frame" x="532" y="6" width="51" height="31"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="31" id="KaO-tt-z6Z"/>
-                                                        <constraint firstAttribute="width" constant="49" id="Kjd-di-7hD"/>
-                                                    </constraints>
-                                                </switch>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="CZX-jZ-sIL" firstAttribute="top" secondItem="ZOo-kh-L0i" secondAttribute="top" id="GBH-aW-06Y"/>
-                                                <constraint firstItem="CZX-jZ-sIL" firstAttribute="leading" secondItem="ZOo-kh-L0i" secondAttribute="leading" constant="20" id="H9K-xa-HKO"/>
-                                                <constraint firstAttribute="trailing" secondItem="mWS-Vk-dvT" secondAttribute="trailing" constant="19" id="PkY-u7-mkj"/>
-                                                <constraint firstItem="mWS-Vk-dvT" firstAttribute="centerY" secondItem="ZOo-kh-L0i" secondAttribute="centerY" id="YLg-q5-plX"/>
-                                                <constraint firstAttribute="bottom" secondItem="CZX-jZ-sIL" secondAttribute="bottom" id="agi-fd-3al"/>
-                                                <constraint firstItem="mWS-Vk-dvT" firstAttribute="leading" secondItem="CZX-jZ-sIL" secondAttribute="trailing" constant="16" id="eQL-AO-twC"/>
+                                                <constraint firstItem="zOq-ls-6Q3" firstAttribute="top" secondItem="129-kQ-lAm" secondAttribute="top" id="VJg-vJ-ZmA"/>
+                                                <constraint firstItem="egb-PZ-nzd" firstAttribute="leading" secondItem="zOq-ls-6Q3" secondAttribute="trailing" constant="16" id="YV7-gl-6lR"/>
+                                                <constraint firstAttribute="trailing" secondItem="egb-PZ-nzd" secondAttribute="trailing" constant="19" id="aCu-ow-od0"/>
+                                                <constraint firstAttribute="bottom" secondItem="zOq-ls-6Q3" secondAttribute="bottom" id="cSw-B9-hBB"/>
+                                                <constraint firstItem="zOq-ls-6Q3" firstAttribute="leading" secondItem="129-kQ-lAm" secondAttribute="leading" constant="16" id="rdK-VX-p3g"/>
+                                                <constraint firstItem="egb-PZ-nzd" firstAttribute="centerY" secondItem="129-kQ-lAm" secondAttribute="centerY" id="vXZ-lc-Jbx"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -1084,6 +1058,13 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="UE9-7g-aRh"/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="nicknameSwitcher" destination="dmh-zO-BEk" id="pZN-uR-0a4"/>
+                        <outlet property="overwriteNicknameSwitcher" destination="egb-PZ-nzd" id="cRd-Gz-n9b"/>
+                        <outlet property="statusLabel" destination="UQ1-gf-Cd7" id="kR8-Vq-Ai2"/>
+                        <outlet property="statusSwitcher" destination="alP-kM-Gh6" id="xEt-e8-EEi"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="D2O-nL-XVJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

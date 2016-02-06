@@ -1,5 +1,5 @@
 //
-//  PhoneticContacts+GenerateNames.swift
+//  ContactsGenerator.swift
 //  Phonetic
 //
 //  Created by Augus on 2/2/16.

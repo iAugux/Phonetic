@@ -16,7 +16,7 @@ class PhoneticContacts {
     
     let contactStore = CNContactStore()
     let userDefaults = NSUserDefaults.standardUserDefaults()
-    let keysToFetch = [CNContactGivenNameKey, CNContactFamilyNameKey, CNContactPhoneticGivenNameKey, CNContactPhoneticFamilyNameKey]
+    let keysToFetch = [CNContactGivenNameKey, CNContactFamilyNameKey, CNContactPhoneticGivenNameKey, CNContactPhoneticFamilyNameKey, CNContactNicknameKey]
     
     typealias ResultHandler = ((currentResult: String?, percentage: Int) -> Void)
     
@@ -31,7 +31,7 @@ class PhoneticContacts {
         dispatch_async(dispatch_get_global_queue(Int(QOS_CLASS_BACKGROUND.rawValue), 0)) {
             
             // uncomment the following line if you want to remove all Simulator's Contacts first.
-            // self.removeAllContactsOfSimulator()
+//             self.removeAllContactsOfSimulator()
             
             self.insertNewContactsForSimulatorIfNeeded(50)
             
@@ -41,28 +41,36 @@ class PhoneticContacts {
             do {
                 try self.contactStore.enumerateContactsWithFetchRequest(CNContactFetchRequest(keysToFetch: self.keysToFetch), usingBlock: { (contact, _) -> Void in
                     if !contact.familyName.isEmpty || !contact.givenName.isEmpty {
-                        let mutableContact = contact.mutableCopy() as! CNMutableContact
+                        let mutableContact: CNMutableContact = contact.mutableCopy() as! CNMutableContact
                         
                         var phoneticFamilyResult = ""
                         var phoneticGivenResult  = ""
+                        var phoneticFamilyBrief  = ""
+                        var phoneticGivenBrief   = ""
                         
                         // modify Contact
                         if let family = mutableContact.valueForKey(CNContactFamilyNameKey) as? String {
                             if let phoneticFamily = self.phonetic(family, needFix: true) {
-                                mutableContact.setValue(phoneticFamily, forKey: CNContactPhoneticFamilyNameKey)
-                                phoneticFamilyResult = phoneticFamily
+                                mutableContact.setValue(phoneticFamily.value, forKey: CNContactPhoneticFamilyNameKey)
+                                phoneticFamilyResult = phoneticFamily.value
+                                phoneticFamilyBrief  = phoneticFamily.brief
                             }
                         }
+                        
                         if let given = mutableContact.valueForKey(CNContactGivenNameKey) as? String {
                             if let phoneticGiven = self.phonetic(given, needFix: false) {
-                                mutableContact.setValue(phoneticGiven, forKey: CNContactPhoneticGivenNameKey)
-                                phoneticGivenResult = phoneticGiven
+                                mutableContact.setValue(phoneticGiven.value, forKey: CNContactPhoneticGivenNameKey)
+                                phoneticGivenResult = phoneticGiven.value
+                                phoneticGivenBrief  = phoneticGiven.brief
                             }
                         }
+                        
+                        self.addNickNameIfNeeded(mutableContact, familyBrief: phoneticFamilyBrief, givenBrief: phoneticGivenBrief)
                         
                         self.saveContact(mutableContact)
                         
                         let result = phoneticFamilyResult + " " + phoneticGivenResult
+                        
                         dispatch_async(dispatch_get_main_queue(), { () -> Void in
                             handleResult(currentResult: result, percentage: self.currentPercentage(index, total: count))
                         })
@@ -182,40 +190,48 @@ class PhoneticContacts {
     }
     
     private func upcaseInitial(str: String) -> String {
-        var newStr = str
+        var tempStr = str
         if str.utf8.count > 0 {
-            newStr = (str as NSString).substringToIndex(1).uppercaseString.stringByAppendingString((str as NSString).substringFromIndex(1))
+            tempStr = (str as NSString).substringToIndex(1).uppercaseString.stringByAppendingString((str as NSString).substringFromIndex(1))
         }
-        return newStr
+        return tempStr
     }
     
-    private func phonetic(str: String, needFix: Bool) -> String? {
+    private func briefInitial(array: [String]) -> String {
+        guard array.count > 0 else { return "" }
+        
+        var tempStr = ""
+        for str in array {
+            if str.utf8.count > 0 {
+                tempStr += (str as NSString).substringToIndex(1).uppercaseString
+            }
+        }
+        
+        if useTones {
+            // remove tones
+            let copy = (tempStr as NSString).mutableCopy()
+            CFStringTransform(copy as! CFMutableString, nil, kCFStringTransformStripCombiningMarks, false)
+            return copy as! String
+        }
+        
+        return tempStr
+    }
+    
+    private func phonetic(str: String, needFix: Bool) -> Phonetic? {
         var source = needFix ? manaullyFixPolyphonicCharacters(str).mutableCopy() : str.mutableCopy()
         
         CFStringTransform(source as! CFMutableStringRef, nil, kCFStringTransformMandarinLatin, false)
-        
-        /// adding accents or not
-        if userDefaults.valueForKey(kUseTones) == nil {
-            userDefaults.setBool(kAddAccentDefaultBool, forKey: kUseTones)
-            userDefaults.synchronize()
-        }
-        
-        if !userDefaults.boolForKey(kUseTones) {
-            CFStringTransform(source as! CFMutableStringRef, nil, kCFStringTransformStripCombiningMarks, false)
-        }
+        CFStringTransform(source as! CFMutableStringRef, nil, kCFStringTransformStripCombiningMarks, useTones)
+
+        var brief: String
         
         if !(source as! NSString).isEqualToString(str) {
             if source.rangeOfString(" ").location != NSNotFound {
                 let phoneticParts = source.componentsSeparatedByString(" ")
                 source = NSMutableString()
-                
-                /// upcasing all Pinyin or not
-                if userDefaults.valueForKey(kUpcasePinyin) == nil {
-                    userDefaults.setBool(kUpcasePinyinDefaultBool, forKey: kUpcasePinyin)
-                    userDefaults.synchronize()
-                }
-                
-                if userDefaults.boolForKey(kUpcasePinyin) {
+                brief = briefInitial(phoneticParts)
+
+                if upcasePinyin {
                     
                     // upcase all words of First Name.   e.g:  Liu YiFei
                     for part in phoneticParts {
@@ -234,21 +250,19 @@ class PhoneticContacts {
                     }
                 }
                 
+            } else {
+                brief = briefInitial([source as! String])
             }
-            return upcaseInitial(source as! String).stringByReplacingOccurrencesOfString(" ", withString: "")
+            
+            let value = upcaseInitial(source as! String).stringByReplacingOccurrencesOfString(" ", withString: "")
+            return Phonetic(brief: brief, value: value)
         }
         return nil
     }
     
     private func manaullyFixPolyphonicCharacters(str: String) -> String {
         
-        /// fixing polyphonic character or not
-        if userDefaults.valueForKey(kFixPolyphonicChar) == nil {
-            userDefaults.setBool(kFixPolyphonicCharDefaultBool, forKey: kFixPolyphonicChar)
-            userDefaults.synchronize()
-        }
-        
-        if !userDefaults.boolForKey(kFixPolyphonicChar) {
+        if !fixPolyphonicCharacters {
             return str
         }
         
@@ -264,6 +278,33 @@ class PhoneticContacts {
         return tempString
     }
     
+}
+
+extension PhoneticContacts {
+    
+    private var upcasePinyin: Bool {
+        if userDefaults.valueForKey(kUpcasePinyin) == nil {
+            userDefaults.setBool(kUpcasePinyinDefaultBool, forKey: kUpcasePinyin)
+            userDefaults.synchronize()
+        }
+        return userDefaults.boolForKey(kUpcasePinyin)
+    }
+    
+    private var useTones: Bool {
+        if userDefaults.valueForKey(kUseTones) == nil {
+            userDefaults.setBool(kAddAccentDefaultBool, forKey: kUseTones)
+            userDefaults.synchronize()
+        }
+        return userDefaults.boolForKey(kUseTones)
+    }
+    
+    private var fixPolyphonicCharacters: Bool {
+        if userDefaults.valueForKey(kFixPolyphonicChar) == nil {
+            userDefaults.setBool(kFixPolyphonicCharDefaultBool, forKey: kFixPolyphonicChar)
+            userDefaults.synchronize()
+        }
+        return userDefaults.boolForKey(kFixPolyphonicChar)
+    }
     
 }
 

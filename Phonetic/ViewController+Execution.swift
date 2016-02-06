@@ -13,6 +13,14 @@ import AVKit
 
 extension ViewController {
     
+    private var enableAnimation: Bool {
+        if NSUserDefaults.standardUserDefaults().valueForKey(kEnableAnimation) == nil {
+            NSUserDefaults.standardUserDefaults().setBool(kEnableAnimationDefaultBool, forKey: kEnableAnimation)
+            NSUserDefaults.standardUserDefaults().synchronize()
+        }
+        return NSUserDefaults.standardUserDefaults().boolForKey(kEnableAnimation)
+    }
+    
     func execute() {
         initializeUI(true)
         
@@ -98,14 +106,7 @@ extension ViewController {
         // e.g: Never pause your music. I don't want to bother you.
         guard !AVAudioSession.sharedInstance().otherAudioPlaying else { return }
         
-        // enable animation or not
-        let userDefaults = NSUserDefaults.standardUserDefaults()
-        if userDefaults.valueForKey(kEnableAnimation) == nil {
-            userDefaults.setBool(kEnableAnimationDefaultBool, forKey: kEnableAnimation)
-            userDefaults.synchronize()
-        }
-        
-        guard userDefaults.boolForKey(kEnableAnimation) else {
+        guard enableAnimation else {
             // stop playing first if it's playing.
             avPlayer?.pause()
             avPlayerController = nil

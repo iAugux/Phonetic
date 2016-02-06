@@ -11,7 +11,7 @@ import UIKit
 
 extension UITableViewController {
     
-    func configurePullToDismissView(backgroundColor: UIColor, fillColor: UIColor) {
+    func configurePullToDismissViewController(backgroundColor: UIColor, fillColor: UIColor) {
         
         tableView?.dg_addPullToRefreshWithActionHandler({ [weak self] () -> Void in
  
@@ -29,7 +29,7 @@ extension UITableViewController {
 
 extension UIViewController {
     
-    func configurePullToDismissView(tableView tableView: UITableView?, backgroundColor: UIColor, fillColor: UIColor) {
+    func pullToDismissViewController(tableView tableView: UITableView?, backgroundColor: UIColor, fillColor: UIColor) {
                 
         tableView?.dg_addPullToRefreshWithActionHandler({ [weak self] () -> Void in
             
