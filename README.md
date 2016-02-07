@@ -42,7 +42,6 @@
 - Swift 2
 
 ## Video Preview
-</br>
 ##### On Youtube
 <div> 
 <a  href="https://youtu.be/337O4xr7Mj4"> <img src="https://raw.githubusercontent.com/iAugux/ProjectScreenshots/master/Phonetic/0.png"  width="272" height="480"/></a>
@@ -50,7 +49,6 @@
 
 </br>
 ##### Or [`Bilibili`](http://www.bilibili.com/video/av3775904/)
-</br>
 
 ## Screenshots
 
