@@ -11,17 +11,17 @@ import UIKit
 // MARK: - Popover view controller even on iPhones
 extension ViewController: UIPopoverPresentationControllerDelegate {
     
-    func popoverInfoViewController() {
+    internal func popoverInfoViewController() {
         popoverPresentViewController(PopoverButton.Info)
         hideLabels(true)
     }
     
-    func popoverSettingViewController() {
+    internal func popoverSettingViewController() {
         popoverPresentViewController(PopoverButton.Setting)
         hideLabels(true)
     }
     
-    func showLabels() {
+    internal func showLabels() {
         hideLabels(false)
     }
     
