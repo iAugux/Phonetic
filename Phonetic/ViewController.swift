@@ -23,8 +23,30 @@ class ViewController: UIViewController {
     @IBOutlet weak var infoButton: UIButton!
     @IBOutlet weak var progress: KDCircularProgress!
     
+    private var singleTap: UITapGestureRecognizer!
+    private var multiTap: UITapGestureRecognizer!
+    private var longPress: UILongPressGestureRecognizer!
+    private var swipeUp: UISwipeGestureRecognizer!
+    
+    private var cancelingAlertController: UIAlertController!
+    
     var avPlayerController: AVPlayerViewController!
     var avPlayer: AVPlayer!
+    
+    var isProcessing = false {
+        didSet {
+            settingButton?.enabled = !isProcessing
+            infoButton?.enabled = !isProcessing
+            executeButton?.enabled = !isProcessing
+            enableExecuteButtonGestures(!isProcessing)
+            
+            // dismiss alert controller if it's already done.
+            if !isProcessing {
+                cancelingAlertController?.dismissViewController()
+                cancelingAlertController = nil
+            }
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -60,10 +82,13 @@ class ViewController: UIViewController {
         executeButton?.tintColor = GLOBAL_CUSTOM_COLOR
         executeButton?.setImage(UIImage(named: "touch")?.imageWithRenderingMode(.AlwaysTemplate), forState: .Normal)
         
-        let singleTap = UITapGestureRecognizer(target: self, action: "execute")
-        let multiTap  = UITapGestureRecognizer(target: self, action: "clear:")
-        let longPress = UILongPressGestureRecognizer(target: self, action: "clear:")
+        singleTap = UITapGestureRecognizer(target: self, action: "execute")
+        multiTap  = UITapGestureRecognizer(target: self, action: "clear:")
+        longPress = UILongPressGestureRecognizer(target: self, action: "clear:")
         multiTap.numberOfTapsRequired = 2
+        
+        swipeUp = UISwipeGestureRecognizer(target: self, action: "cancelActions")
+        swipeUp.direction = .Up
         
         executeButton.addGestureRecognizer(singleTap)
         executeButton.addGestureRecognizer(multiTap)
@@ -81,6 +106,53 @@ class ViewController: UIViewController {
 //        settingButton.exclusiveTouch = true
 //        infoButton.exclusiveTouch = true
         
+    }
+    
+    private func enableExecuteButtonGestures(enable: Bool) {
+        
+        if !enable {
+            executeButton?.gestureRecognizers?.removeAll()
+            executeButton?.addGestureRecognizer(swipeUp)
+        } else {
+            executeButton?.removeGestureRecognizer(swipeUp)
+            executeButton?.addGestureRecognizer(singleTap)
+            executeButton?.addGestureRecognizer(multiTap)
+            executeButton?.addGestureRecognizer(longPress)
+        }
+    }
+    
+    internal func cancelActions() {
+        print("canceled")
+
+        UIView.animateWithDuration(0.5, delay: 0, options: .TransitionNone, animations: { () -> Void in
+            self.executeButton?.frame.origin.y -= 25
+            }) { (_) -> Void in
+              
+                UIView.animateWithDuration(0.5, delay: 0.3, options: .TransitionNone, animations: { () -> Void in
+                    self.executeButton?.frame.origin.y += 25
+                    }, completion: { _ -> Void in
+                        self.alertCanceling({ () -> Void in
+                            
+                        })
+                })
+        }
+    }
+    
+    private func alertCanceling(abortHandler: (() -> Void)) {
+        let title = NSLocalizedString("Abort", comment: "UIAlertController - title")
+        let message = NSLocalizedString("Processing... Are you sure to abort?", comment: "UIAlertController - message")
+        let cancelActionTitle = NSLocalizedString("Cancel", comment: "")
+        let okActionTitle = NSLocalizedString("Abort", comment: "")
+        
+        let cancelAction = UIAlertAction(title: cancelActionTitle, style: .Cancel, handler: nil)
+        let okAction = UIAlertAction(title: okActionTitle, style: .Default) { (_) -> Void in
+            abortHandler()
+        }
+        
+        cancelingAlertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+        cancelingAlertController.addAction(cancelAction)
+        cancelingAlertController.addAction(okAction)
+        UIApplication.topMostViewController()?.presentViewController(cancelingAlertController, animated: true, completion: nil)
     }
 }
 

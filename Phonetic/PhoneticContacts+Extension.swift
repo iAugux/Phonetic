@@ -15,31 +15,41 @@ extension PhoneticContacts {
      *  Search name by enter `WXD` (not case-sensitive), then following names will be listed by example.
      *  "王晓东"、"万孝德" ...
      */
-    func addNickNameIfNeeded(mutableContact: CNMutableContact, familyBrief: String, givenBrief: String) {
+    func addPhoneticMiddleNameIfNeeded(mutableContact: CNMutableContact, familyBrief: String, givenBrief: String) {
         
-        guard enableNickname else { return }
+        guard enableMiddleName else { return }
         
-        if let originalNickname = mutableContact.valueForKey(CNContactNicknameKey) as? String {
+        if let originalMiddleName = mutableContact.valueForKey(CNContactPhoneticMiddleNameKey) as? String {
 
-            let newNickname = familyBrief + givenBrief
+            let newMiddleName = "【" + familyBrief + givenBrief + "】"
 
-            if overwriteExistingNickname {
-                mutableContact.setValue(newNickname, forKey: CNContactNicknameKey)
+            if overwriteExistingMiddleName {
+                mutableContact.setValue(newMiddleName, forKey: CNContactPhoneticMiddleNameKey)
             } else {
-                if originalNickname.isEmpty {
-                    mutableContact.setValue(newNickname, forKey: CNContactNicknameKey)
+                if originalMiddleName.isEmpty {
+                    mutableContact.setValue(newMiddleName, forKey: CNContactPhoneticMiddleNameKey)
                 }
             }
         }
     }
     
-    func removeNicknameIfNeeded(mutableContact: CNMutableContact) {
+    func removePhoneticMiddleNameIfNeeded(mutableContact: CNMutableContact) {
+        
+        if let _ = mutableContact.valueForKey(CNContactPhoneticMiddleNameKey) as? String {
+            // TODO: - Do not remove original middle name if you entered before.
+            mutableContact.setValue("", forKey: CNContactPhoneticMiddleNameKey)
+        }
+    }
+    
+    func removePhoneticNicknameForTestFlightUsersToFixPreviousBug(mutableContact: CNMutableContact) {
+        
+        guard Config.appConfiguration == .TestFlight || Config.appConfiguration == .Debug else { return }
         
         if let _ = mutableContact.valueForKey(CNContactNicknameKey) as? String {
-            // TODO: - Do not remove original nickname you entered before.
             mutableContact.setValue("", forKey: CNContactNicknameKey)
         }
     }
+    
     
 }
 
@@ -53,26 +63,26 @@ extension PhoneticContacts {
         return userDefaults.boolForKey(kAdditionalSettingsStatus)
     }
     
-    private var enableNickname: Bool {
+    private var enableMiddleName: Bool {
         
         guard masterSwitchStatusIsOn else { return false }
         
-        if userDefaults.valueForKey(kEnableNickname) == nil {
-            userDefaults.setBool(kEnableNicknameDefaultBool, forKey: kEnableNickname)
+        if userDefaults.valueForKey(kEnableMiddleName) == nil {
+            userDefaults.setBool(kEnableMiddleNameDefaultBool, forKey: kEnableMiddleName)
             userDefaults.synchronize()
         }
-        return userDefaults.boolForKey(kEnableNickname)
+        return userDefaults.boolForKey(kEnableMiddleName)
     }
     
-    private var overwriteExistingNickname: Bool {
+    private var overwriteExistingMiddleName: Bool {
         
         guard masterSwitchStatusIsOn else { return false }
         
-        if userDefaults.valueForKey(kOverwriteNickname) == nil {
-            userDefaults.setBool(kOverwriteNicknameDefaultBool, forKey: kOverwriteNickname)
+        if userDefaults.valueForKey(kOverwriteMiddleName) == nil {
+            userDefaults.setBool(kOverwriteMiddleNameDefaultBool, forKey: kOverwriteMiddleName)
             userDefaults.synchronize()
         }
-        return userDefaults.boolForKey(kOverwriteNickname)
+        return userDefaults.boolForKey(kOverwriteMiddleName)
     }
     
 }

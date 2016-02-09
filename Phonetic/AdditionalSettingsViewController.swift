@@ -10,16 +10,20 @@ import UIKit
 
 
 let kAdditionalSettingsStatus            = "kAdditionalSettingsStatus"
-let kEnableNickname                      = "kEnableNickname"
-let kOverwriteNickname                   = "kOverwriteNickname"
+let kEnableMiddleName                    = "kEnableMiddleName"
+let kOverwriteMiddleName                 = "kOverwriteMiddleName"
 let kKeepSettingsWindowOpen              = "kKeepSettingsWindowOpen"
+let kForceOpenAnimation                  = "kForceOpenAnimation"
 
 let kAdditionalSettingsStatusDefaultBool = true
-let kEnableNicknameDefaultBool           = true
-let kOverwriteNicknameDefaultBool        = false
+let kEnableMiddleNameDefaultBool         = true
+let kOverwriteMiddleNameDefaultBool      = false
 let kKeepSettingsWindowOpenDefaultBool   = false
+let kForceOpenAnimationDefaultBool       = false
 
 let kDismissedAdditionalSettingsVCNotification = "kDismissedAdditionalSettingsVCNotification"
+
+let SWITCH_TINT_COLOR_FOR_UI_SETTINGS = UIColor(red: 0.4395, green: 0.8138, blue: 0.9971, alpha: 1.0)
 
 class AdditionalSettingsViewController: UITableViewController {
     
@@ -87,24 +91,36 @@ class AdditionalSettingsViewController: UITableViewController {
     @IBOutlet weak var nicknameSwitch: UISwitch! {
         didSet {
             var isOn: Bool
-            if userDefaults.valueForKey(kEnableNickname) == nil {
-                isOn = kEnableNicknameDefaultBool
+            if userDefaults.valueForKey(kEnableMiddleName) == nil {
+                isOn = kEnableMiddleNameDefaultBool
             } else {
-                isOn = userDefaults.boolForKey(kEnableNickname)
+                isOn = userDefaults.boolForKey(kEnableMiddleName)
             }
             nicknameSwitch.on = isOn
         }
     }
 
-    @IBOutlet weak var overwriteNicknameSwitch: UISwitch! {
+    @IBOutlet weak var overwriteMiddleNameSwitch: UISwitch! {
         didSet {
             var isOn: Bool
-            if userDefaults.valueForKey(kOverwriteNickname) == nil {
-                isOn = kOverwriteNicknameDefaultBool
+            if userDefaults.valueForKey(kOverwriteMiddleName) == nil {
+                isOn = kOverwriteMiddleNameDefaultBool
             } else {
-                isOn = userDefaults.boolForKey(kOverwriteNickname)
+                isOn = userDefaults.boolForKey(kOverwriteMiddleName)
             }
-            overwriteNicknameSwitch.on = isOn
+            overwriteMiddleNameSwitch.on = isOn
+        }
+    }
+    
+    @IBOutlet weak var forceOpenAnimationSwitch: UISwitch! {
+        didSet {
+            var isOn: Bool
+            if userDefaults.valueForKey(kForceOpenAnimation) == nil {
+                isOn = kForceOpenAnimationDefaultBool
+            } else {
+                isOn = userDefaults.boolForKey(kForceOpenAnimation)
+            }
+            forceOpenAnimationSwitch.on = isOn
         }
     }
     
@@ -145,8 +161,10 @@ extension AdditionalSettingsViewController {
         statusLabel.text                        = statusSwitch.on ? on : off
         statusSwitch.onTintColor                = GLOBAL_CUSTOM_COLOR
         nicknameSwitch.onTintColor              = GLOBAL_CUSTOM_COLOR
-        overwriteNicknameSwitch.onTintColor     = GLOBAL_CUSTOM_COLOR
-        keepSettingWindowOpenSwitch.onTintColor = GLOBAL_CUSTOM_COLOR
+        overwriteMiddleNameSwitch.onTintColor   = GLOBAL_CUSTOM_COLOR
+        
+        forceOpenAnimationSwitch.onTintColor    = SWITCH_TINT_COLOR_FOR_UI_SETTINGS
+        keepSettingWindowOpenSwitch.onTintColor = SWITCH_TINT_COLOR_FOR_UI_SETTINGS
     }
 
     override func viewDidLoad() {
@@ -189,7 +207,7 @@ extension AdditionalSettingsViewController {
         statusLabel.text = sender.on ? on : off
 
         nicknameSwitch.enabled = sender.on
-        overwriteNicknameSwitch.enabled = sender.on
+        overwriteMiddleNameSwitch.enabled = sender.on
         
         if sender.on {
             userDefaults.setBool(true, forKey: kAdditionalSettingsStatus)
@@ -201,33 +219,42 @@ extension AdditionalSettingsViewController {
     
     @IBAction func nicknameSwitchDidTap(sender: UISwitch) {
         if sender.on {
-            userDefaults.setBool(true, forKey: kEnableNickname)
+            userDefaults.setBool(true, forKey: kEnableMiddleName)
             
-            // enable `OverwriteNicknameSwitch` if needed
-            if overwriteNicknameSwitch.on {
-                overwriteNicknameSwitch.enabled = true
+            // enable `OverwriteMiddleNameSwitch` if needed
+            if overwriteMiddleNameSwitch.on {
+                overwriteMiddleNameSwitch.enabled = true
             }
             
         } else {
-            userDefaults.setBool(false, forKey: kEnableNickname)
+            userDefaults.setBool(false, forKey: kEnableMiddleName)
             
-            // disable `OverwriteNicknameSwitch` if needed
-            if overwriteNicknameSwitch.on {
-                overwriteNicknameSwitch.enabled = false
+            // disable `OverwriteMiddleNameSwitch` if needed
+            if overwriteMiddleNameSwitch.on {
+                overwriteMiddleNameSwitch.enabled = false
             }
         }
         userDefaults.synchronize()
     }
     
-    @IBAction func overwriteNicknameSwitchDidTap(sender: UISwitch) {
+    @IBAction func overwriteMiddleNameSwitchDidTap(sender: UISwitch) {
         if sender.on {
-            userDefaults.setBool(true, forKey: kOverwriteNickname)
+            userDefaults.setBool(true, forKey: kOverwriteMiddleName)
             
-            // Turn on `NicknameSwitch` with delay.
-            NSTimer.scheduledTimerWithTimeInterval(0.2, target: self, selector: "turnOnNicknameSwitchAutomatically", userInfo: nil, repeats: false)
+            // Turn on `MiddleNameSwitch` with delay.
+            NSTimer.scheduledTimerWithTimeInterval(0.2, target: self, selector: "turnOnMiddleNameSwitchAutomatically", userInfo: nil, repeats: false)
             
         } else {
-            userDefaults.setBool(false, forKey: kOverwriteNickname)
+            userDefaults.setBool(false, forKey: kOverwriteMiddleName)
+        }
+        userDefaults.synchronize()
+    }
+    
+    @IBAction func forceOpenAnimationSwitchDidTap(sender: UISwitch) {
+        if sender.on {
+            userDefaults.setBool(true, forKey: kForceOpenAnimation)
+        } else {
+            userDefaults.setBool(false, forKey: kForceOpenAnimation)
         }
         userDefaults.synchronize()
     }
@@ -241,9 +268,9 @@ extension AdditionalSettingsViewController {
         userDefaults.synchronize()
     }
 
-    internal func turnOnNicknameSwitchAutomatically() {
+    internal func turnOnMiddleNameSwitchAutomatically() {
         if let _ = nicknameSwitch?.setOn(true, animated: true) {
-            userDefaults.setBool(true, forKey: kEnableNickname)
+            userDefaults.setBool(true, forKey: kEnableMiddleName)
         }
     }
     

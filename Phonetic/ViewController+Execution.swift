@@ -21,16 +21,26 @@ extension ViewController {
         return NSUserDefaults.standardUserDefaults().boolForKey(kEnableAnimation)
     }
     
+    private var forceOpenAnimation: Bool {
+        if NSUserDefaults.standardUserDefaults().valueForKey(kForceOpenAnimation) == nil {
+            NSUserDefaults.standardUserDefaults().setBool(kForceOpenAnimationDefaultBool, forKey: kForceOpenAnimation)
+            NSUserDefaults.standardUserDefaults().synchronize()
+        }
+        return NSUserDefaults.standardUserDefaults().boolForKey(kForceOpenAnimation)
+    }
+    
     func execute() {
         initializeUI(true)
         
         PhoneticContacts.sharedInstance.execute({ () -> Void in
+            self.isProcessing = true
             self.playVideo()
             }, handleResult: { (currentResult, percentage) -> Void in
                 self.outputView.text = currentResult
                 self.percentageLabel.text = "\(percentage)%"
                 self.runProgressBar(false, percentage: percentage)
             }) { () -> Void in
+                self.isProcessing = false
                 self.avPlayer?.pause()
                 self.promoptCompletion()
         }
@@ -54,11 +64,13 @@ extension ViewController {
             self.initializeUI(false)
 
             PhoneticContacts.sharedInstance.clearMandarinLatinPhonetic({ () -> Void in
+                self.isProcessing = true
                 self.playVideo()
                 }, handleResult: { (currentResult, percentage) -> Void in
                     self.percentageLabel.text = "\(100 - percentage)%"
                     self.runProgressBar(true, percentage: percentage)
                 }, completionHandler: { () -> Void in
+                    self.isProcessing = false
                     self.avPlayer?.pause()
                     self.promoptCompletion()
             })
@@ -89,7 +101,7 @@ extension ViewController {
         avPlayerController                             = AVPlayerViewController()
         avPlayerController.player                      = avPlayer
         avPlayerController.view.frame                  = avPlayerPlaceholderView.bounds
-        avPlayerController.videoGravity                = AVLayerVideoGravityResizeAspectFill
+        avPlayerController.videoGravity                = AVLayerVideoGravityResize  //AVLayerVideoGravityResizeAspect
         avPlayerController.view.userInteractionEnabled = false
         avPlayerController.showsPlaybackControls       = false
         
@@ -104,7 +116,7 @@ extension ViewController {
         
         // guarantee there is no audio playing in the background.
         // e.g: Never pause your music. I don't want to bother you.
-        guard !AVAudioSession.sharedInstance().otherAudioPlaying else { return }
+        guard !AVAudioSession.sharedInstance().otherAudioPlaying && forceOpenAnimation else { return }
         
         guard enableAnimation else {
             // stop playing first if it's playing.
@@ -148,7 +160,7 @@ extension ViewController {
             progress.angle       = 360
             percentageLabel.text = "100%"
             outputView.alpha     = 0
-            outputView.text      = "   " + NSLocalizedString("Processing", comment: "") + "..."
+            outputView.text      = "  " + NSLocalizedString("Processing", comment: "") + "..."
             
             UIView.animateWithDuration(0.4, animations: { () -> Void in
                 self.outputView.alpha = 1

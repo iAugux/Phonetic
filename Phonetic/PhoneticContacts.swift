@@ -16,7 +16,18 @@ class PhoneticContacts {
     
     let contactStore = CNContactStore()
     let userDefaults = NSUserDefaults.standardUserDefaults()
-    let keysToFetch = [CNContactGivenNameKey, CNContactFamilyNameKey, CNContactPhoneticGivenNameKey, CNContactPhoneticFamilyNameKey, CNContactNicknameKey]
+    
+//    let keysToFetch = [CNContactGivenNameKey, CNContactFamilyNameKey, CNContactPhoneticGivenNameKey, CNContactPhoneticFamilyNameKey, CNContactPhoneticMiddleNameKey]
+    
+    // Temporarily fix a bug for TestFlight users
+    var keysToFetch: [String] {
+        var keys = [CNContactGivenNameKey, CNContactFamilyNameKey, CNContactPhoneticGivenNameKey, CNContactPhoneticFamilyNameKey, CNContactPhoneticMiddleNameKey]
+        
+        if Config.appConfiguration == .TestFlight || Config.appConfiguration == .Debug {
+            keys.append(CNContactNicknameKey)
+        }
+        return keys
+    }
     
     typealias ResultHandler = ((currentResult: String?, percentage: Int) -> Void)
     
@@ -34,6 +45,7 @@ class PhoneticContacts {
 //             self.removeAllContactsOfSimulator()
             
             self.insertNewContactsForSimulatorIfNeeded(50)
+//            self.insertNewContactsForDevice(100)
             
             var index = 1
             let count = self.contactsTotalCount()
@@ -65,7 +77,7 @@ class PhoneticContacts {
                             }
                         }
                         
-                        self.addNickNameIfNeeded(mutableContact, familyBrief: phoneticFamilyBrief, givenBrief: phoneticGivenBrief)
+                        self.addPhoneticMiddleNameIfNeeded(mutableContact, familyBrief: phoneticFamilyBrief, givenBrief: phoneticGivenBrief)
                         
                         self.saveContact(mutableContact)
                         
@@ -123,7 +135,9 @@ class PhoneticContacts {
                         }
                     }
                     
-                    self.removeNicknameIfNeeded(mutableContact)
+                    self.removePhoneticNicknameForTestFlightUsersToFixPreviousBug(mutableContact)
+                    
+                    self.removePhoneticMiddleNameIfNeeded(mutableContact)
                     
                     self.saveContact(mutableContact)
                     
@@ -138,7 +152,7 @@ class PhoneticContacts {
                     NSLog("fetching Contacts failed ! - \(error)")
                 #endif
             }
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in                
                 completionHandler()
             })
         }
@@ -163,7 +177,7 @@ class PhoneticContacts {
         saveRequest.updateContact(contact)
         do {
             try self.contactStore.executeSaveRequest(saveRequest)
-        } catch {
+        } catch {            
             #if DEBUG
                 NSLog("saving Contact failed ! - \(error)")
             #endif

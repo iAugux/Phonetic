@@ -10,31 +10,67 @@ import Foundation
 import Contacts
 
 
-// MARK: - Insert random new contacts for simulator testing.
+/** 
+ For safety, all of these functions will not work on Release Edition. If you do want to, please delete `#if DEBUG  #endif`. 
+ 
+ Be careful with your contacts on device. And use on your own risk.
+*/
+
+// MARK: - Insert new random contacts for simulator testing.
 extension PhoneticContacts {
     
-    func insertNewContactsForSimulatorIfNeeded(numberOfContacts: Int) {
+    // MARK: - Insert new contacts
+    
+    /**
+     While there are less than 30 contacts on simulator, it will automatically generate new contacts.
+    
+    - parameter numberOfContacts: Number of contacts you want to generate.
+    */
+    func insertNewContactsForSimulatorIfNeeded(numberOfContacts: UInt16) {
         #if DEBUG
             
+            guard numberOfContacts != 0 else { return }
             guard needInsertNewContactsForTesting else { return }
             
-            let alertController = InfoAlertController()
-            let info = "We will generate some new random contacts for your iOS Simulator to test first."
-            alertController.alert(info)
-            
-            for _ in 0..<numberOfContacts {
-                
-                let mutableContact = CNMutableContact()
-                
-                mutableContact.familyName = generateRandomFamilyName()
-                mutableContact.givenName  = generateRandomGivenName()
-                
-                addNewContact(mutableContact)
-            }
+            insertNewContacts(numberOfContacts)
             
         #endif
     }
     
+    /**
+     Generate new random contacts for simulstor.
+     
+     - parameter numberOfContacts: Number of contacts you want to generate.
+     */
+    func insertNewContactsForSimulator(numberOfContacts: UInt16) {
+        #if DEBUG
+            
+            guard numberOfContacts != 0 else { return }
+            
+            insertNewContacts(numberOfContacts)
+        
+        #endif
+    }
+    
+    /**
+     Generate new random contacts for Real Device.
+     Be careful with this, I bet you do not want to mess your important contacts on your device.
+     
+     - parameter numberOfContacts: Number of contacts you want to generate.
+     */
+    func insertNewContactsForDevice(numberOfContacts: UInt16) {
+        #if DEBUG
+            
+            guard Device.type() != .Simulator else { return }
+            guard numberOfContacts != 0 else { return }
+            
+            insertNewContactsWithMultiAlert(numberOfContacts)
+            
+        #endif
+    }
+    
+    
+    // MARK: - Remove all contacts
     func removeAllContactsOfSimulator() {
         #if DEBUG
             
@@ -58,11 +94,43 @@ extension PhoneticContacts {
                 #endif
             }
             
-            let alertController = InfoAlertController()
+            let alertController = AlertController()
             let info = "Removed all contacts of your iOS Simulator!"
-            alertController.alert(info)
-            
+            alertController.alert(info, completionHandler: nil)
+
         #endif
+    }
+    
+    private func insertNewContacts(numberOfContacts: UInt16) {
+        
+        let alertController = AlertController()
+        let info = "We will generate \(numberOfContacts) new random contacts for your iOS Simulator."
+        alertController.alert(info) { () -> Void in
+            self.generateAndInsert(numberOfContacts)
+        }
+    }
+    
+    private func insertNewContactsWithMultiAlert(numberOfContacts: UInt16) {
+        let alertController = AlertController()
+        let firstInfo = "We will generate \(numberOfContacts) new random contacts for your Device!"
+        let secondInfo = "Are you absolutely sure to do this, this will mess your contacts on your device!!!"
+        let thirdInfo = "Use on your own risk."
+        let multiItemsOfInfo = [firstInfo, secondInfo, thirdInfo]
+        alertController.multiAlerts(multiItemsOfInfo) { () -> Void in
+            self.generateAndInsert(numberOfContacts)
+        }
+    }
+    
+    private func generateAndInsert(numberOfContacts: UInt16) {
+        for _ in 0..<numberOfContacts {
+            
+            let mutableContact = CNMutableContact()
+            
+            mutableContact.familyName = self.generateRandomFamilyName()
+            mutableContact.givenName  = self.generateRandomGivenName()
+            
+            self.addNewContact(mutableContact)
+        }
     }
     
     private var needInsertNewContactsForTesting: Bool {

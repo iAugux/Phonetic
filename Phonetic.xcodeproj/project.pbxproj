@@ -27,7 +27,7 @@
 		B124789E1C5F34C8006D1B62 /* Type.swift in Sources */ = {isa = PBXBuildFile; fileRef = B124789D1C5F34C8006D1B62 /* Type.swift */; };
 		B12478A01C5F4D30006D1B62 /* wave.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = B124789F1C5F4D30006D1B62 /* wave.mp4 */; };
 		B140CCF01C60FAD30078657A /* ContactsGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B140CCEF1C60FAD30078657A /* ContactsGenerator.swift */; };
-		B140CCF21C610E300078657A /* InfoAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B140CCF11C610E300078657A /* InfoAlertController.swift */; };
+		B140CCF21C610E300078657A /* AlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B140CCF11C610E300078657A /* AlertController.swift */; };
 		B15CB2A51C5B3C6C002694ED /* WaveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15CB2A41C5B3C6C002694ED /* WaveView.swift */; };
 		B15CB2A91C5B3CA4002694ED /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = B15CB2A71C5B3CA4002694ED /* index.html */; };
 		B15CB2AA1C5B3CA4002694ED /* three.min.js in Resources */ = {isa = PBXBuildFile; fileRef = B15CB2A81C5B3CA4002694ED /* three.min.js */; };
@@ -35,6 +35,7 @@
 		B16942701C6211FB000D5BFE /* AdditionalSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B169426F1C6211FB000D5BFE /* AdditionalSettingsViewController.swift */; };
 		B16942721C622A7E000D5BFE /* BlurImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B16942711C622A7E000D5BFE /* BlurImageView.swift */; };
 		B16CAB7A1C5E5DE900AF3D35 /* ViewController+Execution.swift in Sources */ = {isa = PBXBuildFile; fileRef = B16CAB791C5E5DE900AF3D35 /* ViewController+Execution.swift */; };
+		B1878FD11C69CFDF00C3C3E3 /* AppConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1878FD01C69CFDF00C3C3E3 /* AppConfiguration.swift */; };
 		B1887A881C639AE900AD9BC2 /* DGElasticPullToRefreshConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1887A831C639AE900AD9BC2 /* DGElasticPullToRefreshConstants.swift */; };
 		B1887A891C639AE900AD9BC2 /* DGElasticPullToRefreshExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1887A841C639AE900AD9BC2 /* DGElasticPullToRefreshExtensions.swift */; };
 		B1887A8A1C639AE900AD9BC2 /* DGElasticPullToRefreshLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1887A851C639AE900AD9BC2 /* DGElasticPullToRefreshLoadingView.swift */; };
@@ -89,7 +90,7 @@
 		B124789D1C5F34C8006D1B62 /* Type.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Type.swift; sourceTree = "<group>"; };
 		B124789F1C5F4D30006D1B62 /* wave.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = wave.mp4; sourceTree = "<group>"; };
 		B140CCEF1C60FAD30078657A /* ContactsGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsGenerator.swift; sourceTree = "<group>"; };
-		B140CCF11C610E300078657A /* InfoAlertController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoAlertController.swift; sourceTree = "<group>"; };
+		B140CCF11C610E300078657A /* AlertController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertController.swift; sourceTree = "<group>"; };
 		B15CB2A41C5B3C6C002694ED /* WaveView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WaveView.swift; sourceTree = "<group>"; };
 		B15CB2A71C5B3CA4002694ED /* index.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
 		B15CB2A81C5B3CA4002694ED /* three.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = three.min.js; sourceTree = "<group>"; };
@@ -97,6 +98,7 @@
 		B169426F1C6211FB000D5BFE /* AdditionalSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdditionalSettingsViewController.swift; sourceTree = "<group>"; };
 		B16942711C622A7E000D5BFE /* BlurImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlurImageView.swift; sourceTree = "<group>"; };
 		B16CAB791C5E5DE900AF3D35 /* ViewController+Execution.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ViewController+Execution.swift"; sourceTree = "<group>"; };
+		B1878FD01C69CFDF00C3C3E3 /* AppConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppConfiguration.swift; sourceTree = "<group>"; };
 		B1887A831C639AE900AD9BC2 /* DGElasticPullToRefreshConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DGElasticPullToRefreshConstants.swift; sourceTree = "<group>"; };
 		B1887A841C639AE900AD9BC2 /* DGElasticPullToRefreshExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DGElasticPullToRefreshExtensions.swift; sourceTree = "<group>"; };
 		B1887A851C639AE900AD9BC2 /* DGElasticPullToRefreshLoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DGElasticPullToRefreshLoadingView.swift; sourceTree = "<group>"; };
@@ -178,6 +180,7 @@
 		B1215B251C65B7CF00519F36 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				B1878FD01C69CFDF00C3C3E3 /* AppConfiguration.swift */,
 				B1215B261C65B7CF00519F36 /* TopMostViewController+Extension.swift */,
 				B1215B271C65B7CF00519F36 /* UINavigationController+Extension.swift */,
 				B1215B281C65B7CF00519F36 /* UIScreen+Extension.swift */,
@@ -200,7 +203,7 @@
 				B169426F1C6211FB000D5BFE /* AdditionalSettingsViewController.swift */,
 				B1FF84E31C5BC3800036F8AA /* InfoViewController.swift */,
 				B1FF84DF1C5BC2590036F8AA /* BaseViewController.swift */,
-				B140CCF11C610E300078657A /* InfoAlertController.swift */,
+				B140CCF11C610E300078657A /* AlertController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -401,6 +404,7 @@
 				B1215B301C65B7CF00519F36 /* UIViewController+Extension.swift in Sources */,
 				B122926B1C59236F00F0F549 /* PhoneticContacts.swift in Sources */,
 				B16942721C622A7E000D5BFE /* BlurImageView.swift in Sources */,
+				B1878FD11C69CFDF00C3C3E3 /* AppConfiguration.swift in Sources */,
 				B1215B2D1C65B7CF00519F36 /* UINavigationController+Extension.swift in Sources */,
 				B19686551C5CEE11006F4614 /* Device.swift in Sources */,
 				B1B1CB631C5E25E300AD7E73 /* ViewController+Rate.swift in Sources */,
@@ -418,7 +422,7 @@
 				B1159B721C59045800F16037 /* ViewController.swift in Sources */,
 				B140CCF01C60FAD30078657A /* ContactsGenerator.swift in Sources */,
 				B1FF84E41C5BC3800036F8AA /* InfoViewController.swift in Sources */,
-				B140CCF21C610E300078657A /* InfoAlertController.swift in Sources */,
+				B140CCF21C610E300078657A /* AlertController.swift in Sources */,
 				B1887A8C1C639AE900AD9BC2 /* DGElasticPullToRefreshView.swift in Sources */,
 				B1FF84E21C5BC36C0036F8AA /* SettingViewController.swift in Sources */,
 				B1215B331C65B7EF00519F36 /* UIButton+Extension.swift in Sources */,
