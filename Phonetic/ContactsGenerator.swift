@@ -116,7 +116,7 @@ extension PhoneticContacts {
         let secondInfo = "Are you absolutely sure to do this, this will mess your contacts on your device!!!"
         let thirdInfo = "Use on your own risk."
         let multiItemsOfInfo = [firstInfo, secondInfo, thirdInfo]
-        alertController.multiAlerts(multiItemsOfInfo) { () -> Void in
+        alertController.multiAlertsWithOptions(multiItemsOfInfo) { () -> Void in
             self.generateAndInsert(numberOfContacts)
         }
     }
@@ -167,6 +167,7 @@ extension PhoneticContacts {
         }
     }
     
+    // Chinese names
     private func generateRandomFamilyName() -> String {
         let familyNames = ["赵", "钱", "孙", "李", "周", "吴", "郑", "王", "冯", "陈", "褚", "卫", "蒋", "沈", "韩", "杨", "吕", "曹", "沈", "单", "仇", "秘", "解", "折", "朴", "翟", "查", "盖", "万俟", "尉迟"]
         
@@ -181,5 +182,21 @@ extension PhoneticContacts {
         return givenNames[index]
     }
     
+    // TODO: - 
+    
+    // English names
+    private func generateRandomEnglishFamilyName() -> String {
+        let familyNames = ["Aaberg", "Bywater", "Cabana", "Eaddy", "Fabbri", "Gaa", "Hysmith", "Iaccarino", "Juve", "Kaatz", "Lytton", "Maag", "Naatz", "Paasch", "Thomas", "Swift", "Uber", "Vaca", "Waalkes", "Xander"]
+        
+        let index = Int(arc4random_uniform(UInt32(familyNames.count)))
+        return familyNames[index]
+    }
+    
+    private func generateRandomEnglishGivenName() -> String {
+        let givenNames = ["Augus", "Banu", "Alexia", "Betty", "Candice", "Delia", "Eileen", "Flora", "Frank", "Geoff", "Hale", "Ivan", "Jerry", "Kevin" ,"Larry", "Marcus", "Nikita", "Page", "Quincy", "Taylor", "Viola", "Zora"]
+        
+        let index = Int(arc4random_uniform(UInt32(givenNames.count)))
+        return givenNames[index]
+    }
     
 }

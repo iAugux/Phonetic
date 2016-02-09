@@ -29,9 +29,14 @@ class PhoneticContacts {
         return keys
     }
     
-    typealias ResultHandler = ((currentResult: String?, percentage: Int) -> Void)
+    var isProcessing    = false
+    private var aborted = false
     
-    func execute(handleAccessGranted: (() -> Void), handleResult:  ResultHandler, completionHandler: (() -> Void)) {
+    typealias ResultHandler = ((currentResult: String?, percentage: Int) -> Void)
+    typealias AccessGrantedHandler = (() -> Void)
+    typealias CompletionHandler = ((aborted: Bool) -> Void)
+    
+    func execute(handleAccessGranted: AccessGrantedHandler, handleResult:  ResultHandler, completionHandler: CompletionHandler) {
         AppDelegate().requestContactsAccess { (accessGranted) in
             guard accessGranted else { return }
             
@@ -39,19 +44,28 @@ class PhoneticContacts {
             handleAccessGranted()
         }
         
+        isProcessing = true
+        aborted      = !isProcessing
+        
+        // uncomment the following line if you want to remove all Simulator's Contacts first.
+//        self.removeAllContactsOfSimulator()
+        
+//        self.insertNewContactsForSimulatorIfNeeded(50)
+        self.insertNewContactsForDevice(100)
+        
         dispatch_async(dispatch_get_global_queue(Int(QOS_CLASS_BACKGROUND.rawValue), 0)) {
-            
-            // uncomment the following line if you want to remove all Simulator's Contacts first.
-//             self.removeAllContactsOfSimulator()
-            
-            self.insertNewContactsForSimulatorIfNeeded(50)
-//            self.insertNewContactsForDevice(100)
             
             var index = 1
             let count = self.contactsTotalCount()
             
             do {
                 try self.contactStore.enumerateContactsWithFetchRequest(CNContactFetchRequest(keysToFetch: self.keysToFetch), usingBlock: { (contact, _) -> Void in
+                    
+                    guard self.isProcessing else {
+                        self.aborted = true
+                        return
+                    }
+                    
                     if !contact.familyName.isEmpty || !contact.givenName.isEmpty {
                         let mutableContact: CNMutableContact = contact.mutableCopy() as! CNMutableContact
                         
@@ -96,20 +110,25 @@ class PhoneticContacts {
                 #endif
             }
             
+            self.isProcessing = false
+            
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                completionHandler()
+                completionHandler(aborted: self.aborted)
             })
         }
         
     }
     
-    func clearMandarinLatinPhonetic(handleAccessGranted: (() -> Void), handleResult: ResultHandler, completionHandler: (() -> Void)) {
+    func clearMandarinLatinPhonetic(handleAccessGranted: AccessGrantedHandler, handleResult: ResultHandler, completionHandler: CompletionHandler) {
         AppDelegate().requestContactsAccess { (accessGranted) in
             guard accessGranted else { return }
             
             // got the access...
             handleAccessGranted()
         }
+        
+        isProcessing = true
+        aborted = !isProcessing
         
         dispatch_async(dispatch_get_global_queue(Int(QOS_CLASS_BACKGROUND.rawValue), 0)) {
             
@@ -118,6 +137,12 @@ class PhoneticContacts {
             
             do {
                 try self.contactStore.enumerateContactsWithFetchRequest(CNContactFetchRequest(keysToFetch: self.keysToFetch), usingBlock: { (contact, _) -> Void in
+                    
+                    guard self.isProcessing else {
+                        self.aborted = true
+                        return
+                    }
+                    
                     let mutableContact: CNMutableContact = contact.mutableCopy() as! CNMutableContact
                     
                     // modify Contact
@@ -135,9 +160,9 @@ class PhoneticContacts {
                         }
                     }
                     
-                    self.removePhoneticNicknameForTestFlightUsersToFixPreviousBug(mutableContact)
-                    
                     self.removePhoneticMiddleNameIfNeeded(mutableContact)
+                    
+                    self.removePhoneticNicknameForTestFlightUsersToFixPreviousBug(mutableContact)
                     
                     self.saveContact(mutableContact)
                     
@@ -152,8 +177,11 @@ class PhoneticContacts {
                     NSLog("fetching Contacts failed ! - \(error)")
                 #endif
             }
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in                
-                completionHandler()
+            
+            self.isProcessing = false
+            
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                completionHandler(aborted: self.aborted)
             })
         }
     }
@@ -177,7 +205,7 @@ class PhoneticContacts {
         saveRequest.updateContact(contact)
         do {
             try self.contactStore.executeSaveRequest(saveRequest)
-        } catch {            
+        } catch {
             #if DEBUG
                 NSLog("saving Contact failed ! - \(error)")
             #endif
@@ -239,7 +267,7 @@ class PhoneticContacts {
         
         CFStringTransform(source as! CFMutableStringRef, nil, kCFStringTransformMandarinLatin, false)
         CFStringTransform(source as! CFMutableStringRef, nil, kCFStringTransformStripCombiningMarks, useTones)
-
+        
         var brief: String
         
         if !(source as! NSString).isEqualToString(str) {
@@ -247,7 +275,7 @@ class PhoneticContacts {
                 let phoneticParts = source.componentsSeparatedByString(" ")
                 source = NSMutableString()
                 brief = briefInitial(phoneticParts)
-
+                
                 if upcasePinyin {
                     
                     // upcase all words of First Name.   e.g:  Liu YiFei

@@ -21,12 +21,28 @@ extension ViewController {
         return NSUserDefaults.standardUserDefaults().boolForKey(kEnableAnimation)
     }
     
-    private var forceOpenAnimation: Bool {
-        if NSUserDefaults.standardUserDefaults().valueForKey(kForceOpenAnimation) == nil {
-            NSUserDefaults.standardUserDefaults().setBool(kForceOpenAnimationDefaultBool, forKey: kForceOpenAnimation)
+    private var forceEnableAnimation: Bool {
+        if NSUserDefaults.standardUserDefaults().valueForKey(kForceEnableAnimation) == nil {
+            NSUserDefaults.standardUserDefaults().setBool(kForceEnableAnimationDefaultBool, forKey: kForceEnableAnimation)
             NSUserDefaults.standardUserDefaults().synchronize()
         }
-        return NSUserDefaults.standardUserDefaults().boolForKey(kForceOpenAnimation)
+        return NSUserDefaults.standardUserDefaults().boolForKey(kForceEnableAnimation)
+    }
+    
+    private var shouldEnableAnimation: Bool {
+        if enableAnimation {
+            if forceEnableAnimation {
+                return true
+            }
+            // guarantee there is no audio playing in the background.
+            // e.g: Never pause your music. I don't want to bother you.
+            else if AVAudioSession.sharedInstance().otherAudioPlaying {
+                return false
+            } else {
+                return true
+            }
+        }
+        return false
     }
     
     func execute() {
@@ -39,10 +55,9 @@ extension ViewController {
                 self.outputView.text = currentResult
                 self.percentageLabel.text = "\(percentage)%"
                 self.runProgressBar(false, percentage: percentage)
-            }) { () -> Void in
-                self.isProcessing = false
+            }) { (aborted) -> Void in
                 self.avPlayer?.pause()
-                self.promoptCompletion()
+                self.promoptCompletion(aborted)
         }
     }
     
@@ -69,10 +84,9 @@ extension ViewController {
                 }, handleResult: { (currentResult, percentage) -> Void in
                     self.percentageLabel.text = "\(100 - percentage)%"
                     self.runProgressBar(true, percentage: percentage)
-                }, completionHandler: { () -> Void in
-                    self.isProcessing = false
+                }, completionHandler: { (aborted) -> Void in
                     self.avPlayer?.pause()
-                    self.promoptCompletion()
+                    self.promoptCompletion(aborted)
             })
         }
         
@@ -114,11 +128,7 @@ extension ViewController {
     private func playVideo() {
         hideBlurVieWithAnimation(true)
         
-        // guarantee there is no audio playing in the background.
-        // e.g: Never pause your music. I don't want to bother you.
-        guard !AVAudioSession.sharedInstance().otherAudioPlaying && forceOpenAnimation else { return }
-        
-        guard enableAnimation else {
+        guard shouldEnableAnimation else {
             // stop playing first if it's playing.
             avPlayer?.pause()
             avPlayerController = nil
@@ -152,6 +162,7 @@ extension ViewController {
     }
     
     private func initializeUI(executionCondition: Bool) {
+        progress.alpha = 1
         outputView.text = ""
         if executionCondition {
             progress.angle       = 0
@@ -168,20 +179,25 @@ extension ViewController {
         }
     }
     
-    private func promoptCompletion() {
+    private func promoptCompletion(aborted: Bool) {
+        
+        let text = aborted ? NSLocalizedString("Aborted", comment: "") : NSLocalizedString("Completed", comment: "")
+        
         UIView.animateWithDuration(0.1, delay: 0.3, options: .CurveEaseInOut, animations: { () -> Void in
             self.outputView.alpha = 0
             }) { (_) -> Void in
-                self.outputView.text = NSLocalizedString("Completed", comment: "")
+                self.outputView.text = text
                 UIView.animateWithDuration(1.2, delay: 0, options: .CurveEaseInOut, animations: { () -> Void in
                     self.outputView.alpha = 0.8
                     }, completion: { (_) -> Void in
                         UIView.animateWithDuration(0.9, delay: 0.7, options: .CurveEaseInOut, animations: { () -> Void in
                             self.outputView.alpha = 0
+                            self.progress.alpha = 0
                             }, completion: { (_) -> Void in
                                 self.outputView.text = ""
                                 self.outputView.alpha = 1
                                 self.hideBlurVieWithAnimation(false)
+                                self.isProcessing = false
                         })
                 })
         }

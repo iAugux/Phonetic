@@ -28,7 +28,7 @@ class ViewController: UIViewController {
     private var longPress: UILongPressGestureRecognizer!
     private var swipeUp: UISwipeGestureRecognizer!
     
-    private var cancelingAlertController: UIAlertController!
+    private var abortingAlertController: UIAlertController!
     
     var avPlayerController: AVPlayerViewController!
     var avPlayer: AVPlayer!
@@ -42,8 +42,8 @@ class ViewController: UIViewController {
             
             // dismiss alert controller if it's already done.
             if !isProcessing {
-                cancelingAlertController?.dismissViewController()
-                cancelingAlertController = nil
+                abortingAlertController?.dismissViewController()
+                abortingAlertController = nil
             }
         }
     }
@@ -87,7 +87,7 @@ class ViewController: UIViewController {
         longPress = UILongPressGestureRecognizer(target: self, action: "clear:")
         multiTap.numberOfTapsRequired = 2
         
-        swipeUp = UISwipeGestureRecognizer(target: self, action: "cancelActions")
+        swipeUp = UISwipeGestureRecognizer(target: self, action: "abortActions")
         swipeUp.direction = .Up
         
         executeButton.addGestureRecognizer(singleTap)
@@ -121,24 +121,22 @@ class ViewController: UIViewController {
         }
     }
     
-    internal func cancelActions() {
-        print("canceled")
-
-        UIView.animateWithDuration(0.5, delay: 0, options: .TransitionNone, animations: { () -> Void in
+    internal func abortActions() {
+        UIView.animateWithDuration(0.45, delay: 0, options: .TransitionNone, animations: { () -> Void in
             self.executeButton?.frame.origin.y -= 25
             }) { (_) -> Void in
               
-                UIView.animateWithDuration(0.5, delay: 0.3, options: .TransitionNone, animations: { () -> Void in
+                UIView.animateWithDuration(0.35, delay: 0.2, options: .TransitionNone, animations: { () -> Void in
                     self.executeButton?.frame.origin.y += 25
                     }, completion: { _ -> Void in
-                        self.alertCanceling({ () -> Void in
-                            
-                        })
+                        self.abortingAlert()
                 })
         }
     }
     
-    private func alertCanceling(abortHandler: (() -> Void)) {
+    private func abortingAlert() {
+        guard isProcessing else { return }
+        
         let title = NSLocalizedString("Abort", comment: "UIAlertController - title")
         let message = NSLocalizedString("Processing... Are you sure to abort?", comment: "UIAlertController - message")
         let cancelActionTitle = NSLocalizedString("Cancel", comment: "")
@@ -146,14 +144,16 @@ class ViewController: UIViewController {
         
         let cancelAction = UIAlertAction(title: cancelActionTitle, style: .Cancel, handler: nil)
         let okAction = UIAlertAction(title: okActionTitle, style: .Default) { (_) -> Void in
-            abortHandler()
+            PhoneticContacts.sharedInstance.isProcessing = false
         }
         
-        cancelingAlertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
-        cancelingAlertController.addAction(cancelAction)
-        cancelingAlertController.addAction(okAction)
-        UIApplication.topMostViewController()?.presentViewController(cancelingAlertController, animated: true, completion: nil)
+        abortingAlertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+        abortingAlertController.addAction(cancelAction)
+        abortingAlertController.addAction(okAction)
+        UIApplication.topMostViewController()?.presentViewController(abortingAlertController, animated: true, completion: nil)
     }
+    
+    
 }
 
 

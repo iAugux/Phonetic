@@ -13,13 +13,13 @@ let kAdditionalSettingsStatus            = "kAdditionalSettingsStatus"
 let kEnableMiddleName                    = "kEnableMiddleName"
 let kOverwriteMiddleName                 = "kOverwriteMiddleName"
 let kKeepSettingsWindowOpen              = "kKeepSettingsWindowOpen"
-let kForceOpenAnimation                  = "kForceOpenAnimation"
+let kForceEnableAnimation                = "kForceEnableAnimation"
 
 let kAdditionalSettingsStatusDefaultBool = true
 let kEnableMiddleNameDefaultBool         = true
 let kOverwriteMiddleNameDefaultBool      = false
 let kKeepSettingsWindowOpenDefaultBool   = false
-let kForceOpenAnimationDefaultBool       = false
+let kForceEnableAnimationDefaultBool     = false
 
 let kDismissedAdditionalSettingsVCNotification = "kDismissedAdditionalSettingsVCNotification"
 
@@ -115,10 +115,10 @@ class AdditionalSettingsViewController: UITableViewController {
     @IBOutlet weak var forceOpenAnimationSwitch: UISwitch! {
         didSet {
             var isOn: Bool
-            if userDefaults.valueForKey(kForceOpenAnimation) == nil {
-                isOn = kForceOpenAnimationDefaultBool
+            if userDefaults.valueForKey(kForceEnableAnimation) == nil {
+                isOn = kForceEnableAnimationDefaultBool
             } else {
-                isOn = userDefaults.boolForKey(kForceOpenAnimation)
+                isOn = userDefaults.boolForKey(kForceEnableAnimation)
             }
             forceOpenAnimationSwitch.on = isOn
         }
@@ -252,9 +252,9 @@ extension AdditionalSettingsViewController {
     
     @IBAction func forceOpenAnimationSwitchDidTap(sender: UISwitch) {
         if sender.on {
-            userDefaults.setBool(true, forKey: kForceOpenAnimation)
+            userDefaults.setBool(true, forKey: kForceEnableAnimation)
         } else {
-            userDefaults.setBool(false, forKey: kForceOpenAnimation)
+            userDefaults.setBool(false, forKey: kForceEnableAnimation)
         }
         userDefaults.synchronize()
     }

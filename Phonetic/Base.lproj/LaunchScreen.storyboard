@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" initialViewController="01J-lp-oVM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" initialViewController="01J-lp-oVM">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
@@ -18,10 +18,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="wave_placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="qh5-ZS-mbo">
-                                <rect key="frame" x="0.0" y="139" width="600" height="461"/>
+                                <rect key="frame" x="0.0" y="130" width="600" height="470"/>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="launch_screen_progress_placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="Lew-5y-IoI">
-                                <rect key="frame" x="265" y="81" width="70" height="70"/>
+                                <rect key="frame" x="265" y="72" width="70" height="70"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="70" id="0ur-OG-tqc"/>
                                     <constraint firstAttribute="height" constant="70" id="wfw-3H-fBm"/>
@@ -69,7 +69,7 @@
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="qh5-ZS-mbo" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" constant="139" id="EJd-48-Mt1"/>
+                            <constraint firstItem="qh5-ZS-mbo" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" constant="130" id="EJd-48-Mt1"/>
                             <constraint firstItem="qh5-ZS-mbo" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="Jwj-Jp-WkV"/>
                             <constraint firstItem="qh5-ZS-mbo" firstAttribute="bottom" secondItem="xb3-aO-Qok" secondAttribute="top" id="KuC-D6-ag8"/>
                             <constraint firstItem="qh5-ZS-mbo" firstAttribute="top" secondItem="Lew-5y-IoI" secondAttribute="bottom" constant="-12" id="Ljd-rs-159"/>
@@ -90,6 +90,6 @@
     <resources>
         <image name="launch_screen_phonetic_icon" width="85" height="73"/>
         <image name="launch_screen_progress_placeholder" width="46" height="46"/>
-        <image name="wave_placeholder" width="960" height="400"/>
+        <image name="wave_placeholder" width="426" height="240"/>
     </resources>
 </document>
