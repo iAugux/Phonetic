@@ -225,9 +225,10 @@ class PhoneticContacts {
      - returns: is there any Mandarin Latin
      */
     private func antiPhonetic(str: String) -> Bool {
-        for i in 0..<str.utf8.count {
-            let word = (str as NSString).characterAtIndex(i)
-            if word > 0x4e00 && word < 0x9fff {
+        let str = str as NSString
+        for i in 0..<str.length {
+            let word = str.characterAtIndex(i)
+            if word >= 0x4e00 && word <= 0x9fff {
                 return true
             }
         }
