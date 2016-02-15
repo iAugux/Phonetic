@@ -145,7 +145,7 @@ extension ViewController {
 
     private func hideBlurVieWithAnimation(hidden: Bool) {
         UIView.animateWithDuration(1.2, animations: { () -> Void in
-            self.blurView.alpha = hidden ? 0 : 1
+            self.blurView.alpha = hidden ? 0 : 0.97
         })
     }
     

@@ -105,7 +105,7 @@ class ViewController: UIViewController {
         // Preventing multiple buttons from being touched at the same time
 //        settingButton.exclusiveTouch = true
 //        infoButton.exclusiveTouch = true
-        
+                
     }
     
     private func enableExecuteButtonGestures(enable: Bool) {

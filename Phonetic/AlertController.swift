@@ -12,7 +12,7 @@ import CoreAudioKit
 
 class AlertController {
     
-    func alert(info: String, completionHandler: (() -> Void)?) {
+    class func alert(info: String, completionHandler: (() -> Void)?) {
         let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (_) -> Void in
             if let completion = completionHandler {
                 completion()
@@ -24,11 +24,11 @@ class AlertController {
         UIApplication.topMostViewController()?.presentViewController(alertController, animated: true, completion: nil)
     }
     
-    func multiAlertsWithOptions(multiItemsOfInfo: [String], completionHandler: (() -> Void)?) {
+    class func multiAlertsWithOptions(multiItemsOfInfo: [String], completionHandler: (() -> Void)?) {
         alertWithOptions(multiItemsOfInfo, completionHandler: completionHandler)
     }
     
-    private func alertWithOptions(multiItemsOfInfo: [String], completionHandler: (() -> Void)?) {
+    private class func alertWithOptions(multiItemsOfInfo: [String], completionHandler: (() -> Void)?) {
         dispatch_async(dispatch_get_main_queue()) { () -> Void in
             
             var tempInfoArray = multiItemsOfInfo

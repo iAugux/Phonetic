@@ -14,23 +14,31 @@ class PhoneticContacts {
     
     static let sharedInstance = PhoneticContacts()
     
+    var isProcessing = false
+
     let contactStore = CNContactStore()
     let userDefaults = NSUserDefaults.standardUserDefaults()
     
 //    let keysToFetch = [CNContactGivenNameKey, CNContactFamilyNameKey, CNContactPhoneticGivenNameKey, CNContactPhoneticFamilyNameKey, CNContactPhoneticMiddleNameKey]
     
-    // Temporarily fix a bug for TestFlight users
     var keysToFetch: [String] {
-        var keys = [CNContactGivenNameKey, CNContactFamilyNameKey, CNContactPhoneticGivenNameKey, CNContactPhoneticFamilyNameKey, CNContactPhoneticMiddleNameKey]
-        
+        var keys = [CNContactGivenNameKey, CNContactFamilyNameKey, CNContactPhoneticGivenNameKey, CNContactPhoneticFamilyNameKey]
+
+        // Temporarily fix a bug for TestFlight users
         if Config.appConfiguration == .TestFlight || Config.appConfiguration == .Debug {
             keys.append(CNContactNicknameKey)
         }
+        
+        if let CNContactQuickSearchKey = ContactKeyForQuickSearch {
+            if CNContactQuickSearchKey != keys.last {
+                keys.append(CNContactQuickSearchKey)
+            }
+        }
+        
+        keys.appendContentsOf(keysToFetchIfNeeded)
+        
         return keys
     }
-    
-    var isProcessing    = false
-    private var aborted = false
     
     typealias ResultHandler = ((currentResult: String?, percentage: Int) -> Void)
     typealias AccessGrantedHandler = (() -> Void)
@@ -45,13 +53,12 @@ class PhoneticContacts {
         }
         
         isProcessing = true
-        aborted      = !isProcessing
         
         // uncomment the following line if you want to remove all Simulator's Contacts first.
 //        self.removeAllContactsOfSimulator()
         
 //        self.insertNewContactsForSimulatorIfNeeded(50)
-        self.insertNewContactsForDevice(100)
+//        self.insertNewContactsForDevice(100)
         
         dispatch_async(dispatch_get_global_queue(Int(QOS_CLASS_BACKGROUND.rawValue), 0)) {
             
@@ -61,10 +68,7 @@ class PhoneticContacts {
             do {
                 try self.contactStore.enumerateContactsWithFetchRequest(CNContactFetchRequest(keysToFetch: self.keysToFetch), usingBlock: { (contact, _) -> Void in
                     
-                    guard self.isProcessing else {
-                        self.aborted = true
-                        return
-                    }
+                    guard self.isProcessing else { return }
                     
                     if !contact.familyName.isEmpty || !contact.givenName.isEmpty {
                         let mutableContact: CNMutableContact = contact.mutableCopy() as! CNMutableContact
@@ -91,7 +95,7 @@ class PhoneticContacts {
                             }
                         }
                         
-                        self.addPhoneticMiddleNameIfNeeded(mutableContact, familyBrief: phoneticFamilyBrief, givenBrief: phoneticGivenBrief)
+                        self.addPhoneticNameForQuickSearchIfNeeded(mutableContact, familyBrief: phoneticFamilyBrief, givenBrief: phoneticGivenBrief)
                         
                         self.saveContact(mutableContact)
                         
@@ -113,7 +117,7 @@ class PhoneticContacts {
             self.isProcessing = false
             
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                completionHandler(aborted: self.aborted)
+                completionHandler(aborted: !self.isProcessing)
             })
         }
         
@@ -128,7 +132,6 @@ class PhoneticContacts {
         }
         
         isProcessing = true
-        aborted = !isProcessing
         
         dispatch_async(dispatch_get_global_queue(Int(QOS_CLASS_BACKGROUND.rawValue), 0)) {
             
@@ -138,10 +141,7 @@ class PhoneticContacts {
             do {
                 try self.contactStore.enumerateContactsWithFetchRequest(CNContactFetchRequest(keysToFetch: self.keysToFetch), usingBlock: { (contact, _) -> Void in
                     
-                    guard self.isProcessing else {
-                        self.aborted = true
-                        return
-                    }
+                    guard self.isProcessing else { return }
                     
                     let mutableContact: CNMutableContact = contact.mutableCopy() as! CNMutableContact
                     
@@ -160,7 +160,7 @@ class PhoneticContacts {
                         }
                     }
                     
-                    self.removePhoneticMiddleNameIfNeeded(mutableContact)
+                    self.removePhoneticKeysIfNeeded(mutableContact)
                     
                     self.removePhoneticNicknameForTestFlightUsersToFixPreviousBug(mutableContact)
                     
@@ -181,7 +181,7 @@ class PhoneticContacts {
             self.isProcessing = false
             
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                completionHandler(aborted: self.aborted)
+                completionHandler(aborted: !self.isProcessing)
             })
         }
     }
@@ -190,7 +190,7 @@ class PhoneticContacts {
         let predicate = CNContact.predicateForContactsInContainerWithIdentifier(contactStore.defaultContainerIdentifier())
         
         do {
-            let contacts = try self.contactStore.unifiedContactsMatchingPredicate(predicate, keysToFetch: keysToFetch)
+            let contacts = try self.contactStore.unifiedContactsMatchingPredicate(predicate, keysToFetch: [CNContactGivenNameKey, CNContactFamilyNameKey])
             return contacts.count
         } catch {
             #if DEBUG
@@ -338,7 +338,7 @@ extension PhoneticContacts {
     
     private var useTones: Bool {
         if userDefaults.valueForKey(kUseTones) == nil {
-            userDefaults.setBool(kAddAccentDefaultBool, forKey: kUseTones)
+            userDefaults.setBool(kUseTonesDefaultBool, forKey: kUseTones)
             userDefaults.synchronize()
         }
         return userDefaults.boolForKey(kUseTones)

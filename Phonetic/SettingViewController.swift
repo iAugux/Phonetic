@@ -9,12 +9,12 @@
 import UIKit
 
 
-let kUseTones          = "kUseTones"
-let kEnableAnimation   = "kEnableAnimation"
-let kFixPolyphonicChar = "kFixPolyphonicChar"
-let kUpcasePinyin      = "kUpcasePinyin"
+let kUseTones                     = "kUseTones"
+let kEnableAnimation              = "kEnableAnimation"
+let kFixPolyphonicChar            = "kFixPolyphonicChar"
+let kUpcasePinyin                 = "kUpcasePinyin"
 
-let kAddAccentDefaultBool         = true
+let kUseTonesDefaultBool          = false
 let kFixPolyphonicCharDefaultBool = true
 let kUpcasePinyinDefaultBool      = false
 let kEnableAnimationDefaultBool   = Device.size() == Size.Screen3_5Inch ? false : true
@@ -26,49 +26,25 @@ class SettingViewController: BaseViewController {
     
     @IBOutlet weak var enableAnimationSwitch: UISwitch! {
         didSet {
-            var isOn: Bool
-            if userDefaults.valueForKey(kEnableAnimation) == nil {
-                isOn = kEnableAnimationDefaultBool
-            } else {
-                isOn = userDefaults.boolForKey(kEnableAnimation)
-            }
-            enableAnimationSwitch.on = isOn
+            enableAnimationSwitch.shouldSwitch(kEnableAnimation, defaultBool: kEnableAnimationDefaultBool)
         }
     }
     
     @IBOutlet weak var useTonesSwitch: UISwitch! {
         didSet {
-            var isOn: Bool
-            if userDefaults.valueForKey(kUseTones) == nil {
-                isOn = kAddAccentDefaultBool
-            } else {
-                isOn = userDefaults.boolForKey(kUseTones)
-            }
-            useTonesSwitch.on = isOn
+            useTonesSwitch.shouldSwitch(kUseTones, defaultBool: kUseTonesDefaultBool)
         }
     }
     
     @IBOutlet weak var fixPolyphonicCharSwitch: UISwitch! {
         didSet {
-            var isOn: Bool
-            if userDefaults.valueForKey(kFixPolyphonicChar) == nil {
-                isOn = kFixPolyphonicCharDefaultBool
-            } else {
-                isOn = userDefaults.boolForKey(kFixPolyphonicChar)
-            }
-            fixPolyphonicCharSwitch.on = isOn
+            fixPolyphonicCharSwitch.shouldSwitch(kFixPolyphonicChar, defaultBool: kFixPolyphonicCharDefaultBool)
         }
     }
     
     @IBOutlet weak var upcasePinyinSwitch: UISwitch! {
         didSet {
-            var isOn: Bool
-            if userDefaults.valueForKey(kUpcasePinyin) == nil {
-                isOn = kUpcasePinyinDefaultBool
-            } else {
-                isOn = userDefaults.boolForKey(kUpcasePinyin)
-            }
-            upcasePinyinSwitch.on = isOn
+            upcasePinyinSwitch.shouldSwitch(kUpcasePinyin, defaultBool: kUpcasePinyinDefaultBool)
         }
     }
     
@@ -93,11 +69,11 @@ class SettingViewController: BaseViewController {
         guard let navBar = navigationController?.navigationBar else { return }
         
         customBarButton = UIButton(type: .Custom)
-        customBarButton.frame = CGRectMake(0, 0, 33, navBar.frame.height)
+        customBarButton.frame = CGRectMake(0, 0, 25, 25)
         customBarButton.tintColor = UIColor.whiteColor()
-        customBarButton.setImage(UIImage(named: "more")?.imageWithRenderingMode(.AlwaysTemplate), forState: .Normal)
+        customBarButton.setImage(UIImage(named: "additional_settings")?.imageWithRenderingMode(.AlwaysTemplate), forState: .Normal)
         customBarButton.center = navBar.center
-        customBarButton.frame.origin.x = 12.0
+        customBarButton.frame.origin.x = 13.0
         customBarButton.addTarget(self, action: "customBarButtonDidTap", forControlEvents: .TouchUpInside)
         navBar.addSubview(customBarButton)
     }
@@ -123,40 +99,24 @@ class SettingViewController: BaseViewController {
         UIApplication.topMostViewController()?.presentViewController(vc, animated: true, completion: nil)
     }
     
-    // MARKS: - actions of UISwitch
+    // MARKS: - Actions of UISwitch
     @IBAction func enableAnimationSwitchDidTap(sender: UISwitch) {
-        if sender.on {
-            userDefaults.setBool(true, forKey: kEnableAnimation)
-        } else {
-            userDefaults.setBool(false, forKey: kEnableAnimation)
-        }
+        userDefaults.setBool(sender.on, forKey: kEnableAnimation)
         userDefaults.synchronize()
     }
     
     @IBAction func useTonesSwitchDidTap(sender: UISwitch) {
-        if sender.on {
-            userDefaults.setBool(true, forKey: kUseTones)
-        } else {
-            userDefaults.setBool(false, forKey: kUseTones)
-        }
+        userDefaults.setBool(sender.on, forKey: kUseTones)
         userDefaults.synchronize()
     }
     
     @IBAction func fixPolyphonicCharSwitchDidTap(sender: UISwitch) {
-        if sender.on {
-            userDefaults.setBool(true, forKey: kFixPolyphonicChar)
-        } else {
-            userDefaults.setBool(false, forKey: kFixPolyphonicChar)
-        }
+        userDefaults.setBool(sender.on, forKey: kFixPolyphonicChar)
         userDefaults.synchronize()
     }
     
     @IBAction func upcasePinyinSwitchDidTap(sender: UISwitch) {
-        if sender.on {
-            userDefaults.setBool(true, forKey: kUpcasePinyin)
-        } else {
-            userDefaults.setBool(false, forKey: kUpcasePinyin)
-        }
+        userDefaults.setBool(sender.on, forKey: kUpcasePinyin)
         userDefaults.synchronize()
     }
     

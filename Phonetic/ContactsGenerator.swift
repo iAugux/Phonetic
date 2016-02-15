@@ -94,29 +94,26 @@ extension PhoneticContacts {
                 #endif
             }
             
-            let alertController = AlertController()
             let info = "Removed all contacts of your iOS Simulator!"
-            alertController.alert(info, completionHandler: nil)
+            AlertController.alert(info, completionHandler: nil)
 
         #endif
     }
     
     private func insertNewContacts(numberOfContacts: UInt16) {
         
-        let alertController = AlertController()
         let info = "We will generate \(numberOfContacts) new random contacts for your iOS Simulator."
-        alertController.alert(info) { () -> Void in
+        AlertController.alert(info) { () -> Void in
             self.generateAndInsert(numberOfContacts)
         }
     }
     
     private func insertNewContactsWithMultiAlert(numberOfContacts: UInt16) {
-        let alertController = AlertController()
         let firstInfo = "We will generate \(numberOfContacts) new random contacts for your Device!"
         let secondInfo = "Are you absolutely sure to do this, this will mess your contacts on your device!!!"
         let thirdInfo = "Use on your own risk."
         let multiItemsOfInfo = [firstInfo, secondInfo, thirdInfo]
-        alertController.multiAlertsWithOptions(multiItemsOfInfo) { () -> Void in
+        AlertController.multiAlertsWithOptions(multiItemsOfInfo) { () -> Void in
             self.generateAndInsert(numberOfContacts)
         }
     }
