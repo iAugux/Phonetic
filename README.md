@@ -65,15 +65,17 @@
 </div>
 
 <div> 
-<img src="https://raw.githubusercontent.com/iAugux/ProjectScreenshots/master/Phonetic/3.png" width="272" height="480"/>
+<img src="https://raw.githubusercontent.com/iAugux/ProjectScreenshots/master/Phonetic/2.png" width="272" height="1045"/>
 </div>
 
 <div> 
-<img src="https://raw.githubusercontent.com/iAugux/ProjectScreenshots/master/Phonetic/2.png" width="272" height="480"/>
+<img src="https://raw.githubusercontent.com/iAugux/ProjectScreenshots/master/Phonetic/3.png" width="272" height="480"/>
 </div>
 
 ## Thanks to
 * [`PhoneticContacts`](https://github.com/lexrus/PhoneticContacts) by `Lexrus` for heavy inspiration.
+
+* [`BlurActionSheet`](https://github.com/iAugux/BlurActionSheet)
 
 * [`Device`](https://github.com/Ekhoo/Device)
 
