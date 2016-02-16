@@ -9,7 +9,7 @@
 import UIKit
 import SafariServices
 
-class InfoViewController: BaseViewController, SFSafariViewControllerDelegate {
+class InfoViewController: UIViewController, SFSafariViewControllerDelegate {
 
     @IBOutlet weak var versionLabel: UILabel!
     @IBOutlet weak var github: UIImageView!
@@ -19,6 +19,11 @@ class InfoViewController: BaseViewController, SFSafariViewControllerDelegate {
         
         configureGithubImageView()
         configureVersionLabel()
+    }
+    
+    override func viewDidDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
+        NSNotificationCenter.defaultCenter().postNotificationName(kVCWillDisappearNotification, object: nil)
     }
     
     override func didReceiveMemoryWarning() {

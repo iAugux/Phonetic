@@ -13,7 +13,9 @@ extension ViewController {
     
     func rateMeInTheThirdTime() {
         
-        let rateMe = "kRateMeOnAppStore"
+        guard let build = NSBundle.mainBundle().objectForInfoDictionaryKey(kCFBundleVersionKey as String) as? String else { return }
+
+        let rateMe = "kRateMeOnAppStore\(build)"
         let userDefaults = NSUserDefaults.standardUserDefaults()
         
         guard userDefaults.integerForKey(rateMe) < 4 else { return }    // never alert again

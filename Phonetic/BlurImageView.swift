@@ -14,24 +14,30 @@ class BlurImageView: UIImageView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
-        image = UIImage(named: "wave_placeholder")
-        contentMode = .ScaleAspectFill
-        
-        effectView = UIVisualEffectView(effect: UIBlurEffect(style: .Light))
-        effectView.frame = frame
-        effectView.alpha = 0.98
-        addSubview(effectView)
+
+        if effectView == nil {
+            configureViews()
+        }
     }
 
     required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: aDecoder)
+        configureViews()
     }
     
-    override func layoutIfNeeded() {
-        super.layoutIfNeeded()
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        effectView?.frame = bounds
+    }
+    
+    private func configureViews() {
+        image = UIImage(named: "wave_placeholder")
+        contentMode = .ScaleToFill
+        
+        effectView = UIVisualEffectView(effect: UIBlurEffect(style: .Light))
         effectView.frame = bounds
+        effectView.alpha = 0.98
+        insertSubview(effectView, atIndex: 0)
     }
-    
     
 }

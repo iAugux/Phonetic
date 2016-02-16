@@ -12,9 +12,7 @@ import SafariServices
 
 class OtherSettingView: UIStackView, MFMailComposeViewControllerDelegate, SFSafariViewControllerDelegate {
     
-    static let defaultSetting = OtherSettingView()
-    
-    var picker: MFMailComposeViewController?
+    private var picker: MFMailComposeViewController?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -22,7 +20,7 @@ class OtherSettingView: UIStackView, MFMailComposeViewControllerDelegate, SFSafa
         addGestureRecognizer(recognizer)
     }
     
-    func viewDidTap() {
+    internal func viewDidTap() {
         parentViewController?.dismissViewControllerAnimated(true, completion: { () -> Void in
             
             // simulate highlight
@@ -74,7 +72,7 @@ class OtherSettingView: UIStackView, MFMailComposeViewControllerDelegate, SFSafa
     }
     
     // MARK: - feedback with Mail
-    func sendMail() {
+    private func sendMail() {
         if MFMailComposeViewController.canSendMail() {
             picker = MFMailComposeViewController()
             picker?.mailComposeDelegate = self

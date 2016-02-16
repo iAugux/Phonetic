@@ -9,23 +9,27 @@
 import Contacts
 
 
-let kQuickSearchKey           = "kQuickSearchKey"
-let kAdditionalSettingsStatus = "kAdditionalSettingsStatus"
-let kEnableNickname           = "kEnableNickname"
-let kEnableCustomName         = "kEnableCustomName"
-let kOverwriteAlreadyExists   = "kOverwriteAlreadyExists"
-let kKeepSettingsWindowOpen   = "kKeepSettingsWindowOpen"
-let kForceEnableAnimation     = "kForceEnableAnimation"
+let kPhoneticFirstAndLastName            = "kPhoneticFirstAndLastName"
 
-let kEnableAllCleanPhonetic   = "kEnableAllCleanPhonetic"
-let kCleanPhoneticNickname    = "kCleanPhoneticNickname"
-let kCleanPhoneticMiddleName  = "kCleanPhoneticMiddleName"
-let kCleanPhoneticDepartment  = "kCleanPhoneticDepartment"
-let kCleanPhoneticCompany     = "kCleanPhoneticCompany"
-let kCleanPhoneticJobTitle    = "kCleanPhoneticJobTitle"
-let kCleanPhoneticPrefix      = "kCleanPhoneticPrefix"
-let kCleanPhoneticSuffix      = "kCleanPhoneticSuffix"
+let kQuickSearchKey                      = "kQuickSearchKey"
+let kAdditionalSettingsStatus            = "kAdditionalSettingsStatus"
+let kEnableNickname                      = "kEnableNickname"
+let kEnableCustomName                    = "kEnableCustomName"
+let kOverwriteAlreadyExists              = "kOverwriteAlreadyExists"
+let kKeepSettingsWindowOpen              = "kKeepSettingsWindowOpen"
+let kForceEnableAnimation                = "kForceEnableAnimation"
 
+let kEnableAllCleanPhonetic              = "kEnableAllCleanPhonetic"
+let kCleanPhoneticNickname               = "kCleanPhoneticNickname"
+let kCleanPhoneticMiddleName             = "kCleanPhoneticMiddleName"
+let kCleanPhoneticDepartment             = "kCleanPhoneticDepartment"
+let kCleanPhoneticCompany                = "kCleanPhoneticCompany"
+let kCleanPhoneticJobTitle               = "kCleanPhoneticJobTitle"
+let kCleanPhoneticPrefix                 = "kCleanPhoneticPrefix"
+let kCleanPhoneticSuffix                 = "kCleanPhoneticSuffix"
+
+
+let kPhoneticFirstAndLastNameDefaultBool = true
 
 let kAdditionalSettingsStatusDefaultBool = true
 let kEnableNicknameDefaultBool           = false

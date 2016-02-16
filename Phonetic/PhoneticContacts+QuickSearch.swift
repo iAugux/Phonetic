@@ -32,17 +32,7 @@ extension PhoneticContacts {
             }
         }
     }
-    
-    func removePhoneticNicknameForTestFlightUsersToFixPreviousBug(mutableContact: CNMutableContact) {
         
-        guard Config.appConfiguration == .TestFlight || Config.appConfiguration == .Debug else { return }
-        
-        if let _ = mutableContact.valueForKey(CNContactNicknameKey) as? String {
-            mutableContact.setValue("", forKey: CNContactNicknameKey)
-        }
-    }
-    
-    
 }
 
 extension PhoneticContacts {
@@ -91,33 +81,21 @@ extension PhoneticContacts {
 extension PhoneticContacts {
     
     internal var masterSwitchStatusIsOn: Bool {
-        if userDefaults.valueForKey(kAdditionalSettingsStatus) == nil {
-            userDefaults.setBool(kAdditionalSettingsStatusDefaultBool, forKey: kAdditionalSettingsStatus)
-            userDefaults.synchronize()
-        }
-        return userDefaults.boolForKey(kAdditionalSettingsStatus)
+        return userDefaults.getBool(kAdditionalSettingsStatus, defaultKeyValue: kAdditionalSettingsStatusDefaultBool)
     }
     
     private var enableNickname: Bool {
         
         guard masterSwitchStatusIsOn else { return false }
         
-        if userDefaults.valueForKey(kEnableNickname) == nil {
-            userDefaults.setBool(kEnableNicknameDefaultBool, forKey: kEnableNickname)
-            userDefaults.synchronize()
-        }
-        return userDefaults.boolForKey(kEnableNickname)
+        return userDefaults.getBool(kEnableNickname, defaultKeyValue: kEnableNicknameDefaultBool)
     }
     
     private var enableCustomName: Bool {
         
         guard masterSwitchStatusIsOn else { return false }
         
-        if userDefaults.valueForKey(kEnableCustomName) == nil {
-            userDefaults.setBool(kEnableCustomNameDefaultBool, forKey: kEnableCustomName)
-            userDefaults.synchronize()
-        }
-        return userDefaults.boolForKey(kEnableCustomName)
+        return userDefaults.getBool(kEnableCustomName, defaultKeyValue: kEnableCustomNameDefaultBool)
     }
     
     private var overwriteExistingName: Bool {
@@ -125,11 +103,7 @@ extension PhoneticContacts {
         guard masterSwitchStatusIsOn else { return false }
         guard enableNickname || enableCustomName else { return false }
         
-        if userDefaults.valueForKey(kOverwriteAlreadyExists) == nil {
-            userDefaults.setBool(kOverwriteAlreadyExistsDefaultBool, forKey: kOverwriteAlreadyExists)
-            userDefaults.synchronize()
-        }
-        return userDefaults.boolForKey(kOverwriteAlreadyExists)
+        return userDefaults.getBool(kOverwriteAlreadyExists, defaultKeyValue: kOverwriteAlreadyExistsDefaultBool)
     }
     
 }

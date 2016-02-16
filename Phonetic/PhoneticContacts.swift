@@ -14,25 +14,17 @@ class PhoneticContacts {
     
     static let sharedInstance = PhoneticContacts()
     
-    var isProcessing = false
-
     let contactStore = CNContactStore()
     let userDefaults = NSUserDefaults.standardUserDefaults()
     
-//    let keysToFetch = [CNContactGivenNameKey, CNContactFamilyNameKey, CNContactPhoneticGivenNameKey, CNContactPhoneticFamilyNameKey, CNContactPhoneticMiddleNameKey]
+    var isProcessing    = false
+    private var aborted = false
     
     var keysToFetch: [String] {
         var keys = [CNContactGivenNameKey, CNContactFamilyNameKey, CNContactPhoneticGivenNameKey, CNContactPhoneticFamilyNameKey]
-
-        // Temporarily fix a bug for TestFlight users
-        if Config.appConfiguration == .TestFlight || Config.appConfiguration == .Debug {
-            keys.append(CNContactNicknameKey)
-        }
         
         if let CNContactQuickSearchKey = ContactKeyForQuickSearch {
-            if CNContactQuickSearchKey != keys.last {
-                keys.append(CNContactQuickSearchKey)
-            }
+            keys.append(CNContactQuickSearchKey)
         }
         
         keys.appendContentsOf(keysToFetchIfNeeded)
@@ -53,6 +45,7 @@ class PhoneticContacts {
         }
         
         isProcessing = true
+        aborted      = !isProcessing
         
         // uncomment the following line if you want to remove all Simulator's Contacts first.
 //        self.removeAllContactsOfSimulator()
@@ -68,7 +61,10 @@ class PhoneticContacts {
             do {
                 try self.contactStore.enumerateContactsWithFetchRequest(CNContactFetchRequest(keysToFetch: self.keysToFetch), usingBlock: { (contact, _) -> Void in
                     
-                    guard self.isProcessing else { return }
+                    guard self.isProcessing else {
+                        self.aborted = true
+                        return
+                    }
                     
                     if !contact.familyName.isEmpty || !contact.givenName.isEmpty {
                         let mutableContact: CNMutableContact = contact.mutableCopy() as! CNMutableContact
@@ -81,7 +77,11 @@ class PhoneticContacts {
                         // modify Contact
                         if let family = mutableContact.valueForKey(CNContactFamilyNameKey) as? String {
                             if let phoneticFamily = self.phonetic(family, needFix: true) {
-                                mutableContact.setValue(phoneticFamily.value, forKey: CNContactPhoneticFamilyNameKey)
+                                
+                                if self.shouldEnablePhoneticFirstAndLastName {
+                                    mutableContact.setValue(phoneticFamily.value, forKey: CNContactPhoneticFamilyNameKey)
+                                }
+                                
                                 phoneticFamilyResult = phoneticFamily.value
                                 phoneticFamilyBrief  = phoneticFamily.brief
                             }
@@ -89,7 +89,11 @@ class PhoneticContacts {
                         
                         if let given = mutableContact.valueForKey(CNContactGivenNameKey) as? String {
                             if let phoneticGiven = self.phonetic(given, needFix: false) {
-                                mutableContact.setValue(phoneticGiven.value, forKey: CNContactPhoneticGivenNameKey)
+                                
+                                if self.shouldEnablePhoneticFirstAndLastName {
+                                    mutableContact.setValue(phoneticGiven.value, forKey: CNContactPhoneticGivenNameKey)
+                                }
+                                
                                 phoneticGivenResult = phoneticGiven.value
                                 phoneticGivenBrief  = phoneticGiven.brief
                             }
@@ -117,7 +121,7 @@ class PhoneticContacts {
             self.isProcessing = false
             
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                completionHandler(aborted: !self.isProcessing)
+                completionHandler(aborted: self.aborted)
             })
         }
         
@@ -132,6 +136,7 @@ class PhoneticContacts {
         }
         
         isProcessing = true
+        aborted = !isProcessing
         
         dispatch_async(dispatch_get_global_queue(Int(QOS_CLASS_BACKGROUND.rawValue), 0)) {
             
@@ -141,7 +146,10 @@ class PhoneticContacts {
             do {
                 try self.contactStore.enumerateContactsWithFetchRequest(CNContactFetchRequest(keysToFetch: self.keysToFetch), usingBlock: { (contact, _) -> Void in
                     
-                    guard self.isProcessing else { return }
+                    guard self.isProcessing else {
+                        self.aborted = true
+                        return
+                    }
                     
                     let mutableContact: CNMutableContact = contact.mutableCopy() as! CNMutableContact
                     
@@ -162,8 +170,6 @@ class PhoneticContacts {
                     
                     self.removePhoneticKeysIfNeeded(mutableContact)
                     
-                    self.removePhoneticNicknameForTestFlightUsersToFixPreviousBug(mutableContact)
-                    
                     self.saveContact(mutableContact)
                     
                     dispatch_async(dispatch_get_main_queue(), { () -> Void in
@@ -181,7 +187,7 @@ class PhoneticContacts {
             self.isProcessing = false
             
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                completionHandler(aborted: !self.isProcessing)
+                completionHandler(aborted: self.aborted)
             })
         }
     }
@@ -328,29 +334,26 @@ class PhoneticContacts {
 
 extension PhoneticContacts {
     
+    internal var shouldEnablePhoneticFirstAndLastName: Bool {
+        
+        guard DetectPreferredLanguage.isChineseLanguage else { return true }
+        
+        return userDefaults.getBool(kPhoneticFirstAndLastName, defaultKeyValue: kPhoneticFirstAndLastNameDefaultBool)
+    }
+    
     private var upcasePinyin: Bool {
-        if userDefaults.valueForKey(kUpcasePinyin) == nil {
-            userDefaults.setBool(kUpcasePinyinDefaultBool, forKey: kUpcasePinyin)
-            userDefaults.synchronize()
-        }
-        return userDefaults.boolForKey(kUpcasePinyin)
+        return userDefaults.getBool(kUpcasePinyin, defaultKeyValue: kUpcasePinyinDefaultBool)
     }
     
     private var useTones: Bool {
-        if userDefaults.valueForKey(kUseTones) == nil {
-            userDefaults.setBool(kUseTonesDefaultBool, forKey: kUseTones)
-            userDefaults.synchronize()
-        }
-        return userDefaults.boolForKey(kUseTones)
+        return userDefaults.getBool(kUseTones, defaultKeyValue: kUseTonesDefaultBool)
     }
     
     private var fixPolyphonicCharacters: Bool {
-        if userDefaults.valueForKey(kFixPolyphonicChar) == nil {
-            userDefaults.setBool(kFixPolyphonicCharDefaultBool, forKey: kFixPolyphonicChar)
-            userDefaults.synchronize()
-        }
-        return userDefaults.boolForKey(kFixPolyphonicChar)
+        return userDefaults.getBool(kFixPolyphonicChar, defaultKeyValue: kFixPolyphonicCharDefaultBool)
     }
+    
+    
     
 }
 

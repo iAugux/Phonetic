@@ -19,7 +19,9 @@ let kFixPolyphonicCharDefaultBool = true
 let kUpcasePinyinDefaultBool      = false
 let kEnableAnimationDefaultBool   = Device.size() == Size.Screen3_5Inch ? false : true
 
-class SettingViewController: BaseViewController {
+let kVCWillDisappearNotification  = "kVCWillDisappearNotification"
+
+class SettingViewController: UIViewController {
     
     private var customBarButton: UIButton!
     private let userDefaults = NSUserDefaults.standardUserDefaults()
@@ -60,6 +62,11 @@ class SettingViewController: BaseViewController {
         configureCustomBarButtonItem()
     }
     
+    override func viewDidDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
+        NSNotificationCenter.defaultCenter().postNotificationName(kVCWillDisappearNotification, object: nil)
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -91,7 +98,7 @@ class SettingViewController: BaseViewController {
     }
     
     private func presentPopoverController() {
-        guard let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("AdditionalSettingsNavigationController") as? UINavigationController else { return }
+        guard let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier(String(SettingsNavigationController)) as? SettingsNavigationController else { return }
         
         vc.modalPresentationStyle = .Popover
         vc.popoverPresentationController?.canOverlapSourceViewRect = true

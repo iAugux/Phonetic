@@ -84,42 +84,51 @@ extension PhoneticContacts {
 extension PhoneticContacts {
     
     private var shouldCleanPhoneticNicknameKeys: Bool {
-        return shouldCleanPhoneticKey(kCleanPhoneticNickname, defaultBool: kCleanPhoneticNicknameDefaultBool)
+        return shouldCleanPhoneticKey(kCleanPhoneticNickname, defaultKeyValue: kCleanPhoneticNicknameDefaultBool)
     }
     
     private var shouldCleanPhoneticMiddleNameKeys: Bool {
-        return shouldCleanPhoneticKey(kCleanPhoneticMiddleName, defaultBool: kCleanPhoneticMiddleNameDefaultBool)
+        return shouldCleanPhoneticKey(kCleanPhoneticMiddleName, defaultKeyValue: kCleanPhoneticMiddleNameDefaultBool)
     }
     
     private var shouldCleanPhoneticDepartmentKeys: Bool {
-        return shouldCleanPhoneticKey(kCleanPhoneticDepartment, defaultBool: kCleanPhoneticDepartmentDefaultBool)
+        return shouldCleanPhoneticKey(kCleanPhoneticDepartment, defaultKeyValue: kCleanPhoneticDepartmentDefaultBool)
     }
     
     private var shouldCleanPhoneticCompanyKeys: Bool {
-        return shouldCleanPhoneticKey(kCleanPhoneticCompany, defaultBool: kCleanPhoneticCompanyDefaultBool)
+        return shouldCleanPhoneticKey(kCleanPhoneticCompany, defaultKeyValue: kCleanPhoneticCompanyDefaultBool)
     }
     
     private var shouldCleanPhoneticJobTitleKeys: Bool {
-        return shouldCleanPhoneticKey(kCleanPhoneticJobTitle, defaultBool: kCleanPhoneticJobTitleDefaultBool)
+        return shouldCleanPhoneticKey(kCleanPhoneticJobTitle, defaultKeyValue: kCleanPhoneticJobTitleDefaultBool)
     }
     
     private var shouldCleanPhoneticPrefixKeys: Bool {
-        return shouldCleanPhoneticKey(kCleanPhoneticPrefix, defaultBool: kCleanPhoneticPrefixDefaultBool)
+        return shouldCleanPhoneticKey(kCleanPhoneticPrefix, defaultKeyValue: kCleanPhoneticPrefixDefaultBool)
     }
     
     private var shouldCleanPhoneticSuffixKeys: Bool {
-        return shouldCleanPhoneticKey(kCleanPhoneticSuffix, defaultBool: kCleanPhoneticSuffixDefaultBool)
+        return shouldCleanPhoneticKey(kCleanPhoneticSuffix, defaultKeyValue: kCleanPhoneticSuffixDefaultBool)
     }
     
-    private func shouldCleanPhoneticKey(key: String, defaultBool: Bool) -> Bool {
+    private func shouldCleanPhoneticKey(key: String, defaultKeyValue: Bool) -> Bool {
         
         guard masterSwitchStatusIsOn else { return false }
-        
-        if userDefaults.valueForKey(key) == nil {
-            userDefaults.setBool(defaultBool, forKey: key)
-            userDefaults.synchronize()
-        }
-        return userDefaults.boolForKey(key)
+
+        return userDefaults.getBool(key, defaultKeyValue: defaultKeyValue)
     }
+    
+}
+
+extension PhoneticContacts {
+    
+    //    func removePhoneticNicknameForTestFlightUsersToFixPreviousBug(mutableContact: CNMutableContact) {
+    //
+    //        guard Config.appConfiguration == .TestFlight || Config.appConfiguration == .Debug else { return }
+    //
+    //        if let _ = mutableContact.valueForKey(CNContactNicknameKey) as? String {
+    //            mutableContact.setValue("", forKey: CNContactNicknameKey)
+    //        }
+    //    }
     
 }

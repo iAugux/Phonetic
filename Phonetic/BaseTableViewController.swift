@@ -1,5 +1,5 @@
 //
-//  BaseNavigationController.swift
+//  BaseTableViewController.swift
 //  Phonetic
 //
 //  Created by Augus on 2/15/16.
@@ -8,18 +8,20 @@
 
 import UIKit
 
-class BaseNavigationController: UINavigationController {
+class BaseTableViewController: UITableViewController {
+    
+    private var blurBackgroundView: BlurImageView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        blurBackgroundView = BlurImageView(frame: view.bounds)
+        tableView.backgroundView = blurBackgroundView
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
 
 }

@@ -13,47 +13,19 @@ let kDismissedAdditionalSettingsVCNotification = "kDismissedAdditionalSettingsVC
 
 let SWITCH_TINT_COLOR_FOR_UI_SETTINGS = UIColor(red: 0.4395, green: 0.8138, blue: 0.9971, alpha: 1.0)
 
-class AdditionalSettingsViewController: UITableViewController {
+class AdditionalSettingsViewController: BaseTableViewController {
     
     @IBOutlet weak var quickSearchSelectionIndicator: UIImageView!
     @IBOutlet weak var quickSearchSelectionLabel: UILabel!
     
     private let userDefaults = NSUserDefaults.standardUserDefaults()
     
-    private let on           = NSLocalizedString("On", comment: "")
-    private let off          = NSLocalizedString("Off", comment: "")
-    private let _title       = NSLocalizedString("Additional Settings", comment: "UINavigationController title - Additional Settings")
-    
-    private let _color       = UIColor(red: 0.4, green: 0.4, blue: 0.4, alpha: 1.0)
-    private let _font        = UIFont.systemFontOfSize(17.0)
-    private let _textColor   = UIColor.whiteColor()
-    
+    private let on     = NSLocalizedString("On", comment: "")
+    private let off    = NSLocalizedString("Off", comment: "")
+    private let _title = NSLocalizedString("Additional Settings", comment: "SettingsNavigationController title - Additional Settings")
+
     private var blurBackgroundView: BlurImageView!
-    private var customBarButton: UIButton!
-    private var customTitleLabel: UILabel!
-    private var customStatusBar: UIView!
-    
     private var blurActionSheet: BlurActionSheet!
-    
-    private var shouldHideCustomBarButton: Bool {
-        // iPad
-        if UIDevice.currentDevice().userInterfaceIdiom == .Pad {
-            return true
-        }
-        
-        // 6(s) Plus or larger iPhones in the future (maybe).
-        if Device.isLargerThanScreenSize(Size.Screen4_7Inch) {
-            return UIDevice.currentDevice().orientation.isLandscape
-        }
-        
-        return false
-    }
-    
-    private var hideCustomBarButton = false {
-        didSet {
-            customBarButton?.hidden = hideCustomBarButton
-        }
-    }
     
     // MARK: - Deinit
     deinit {
@@ -66,6 +38,18 @@ class AdditionalSettingsViewController: UITableViewController {
     @IBOutlet weak var statusSwitch: UISwitch! {
         didSet {
             statusSwitch.shouldSwitch(kAdditionalSettingsStatus, defaultBool: kAdditionalSettingsStatusDefaultBool)
+        }
+    }
+    
+    // MARK: - Phonetic Contacts
+    @IBOutlet weak var phoneticFirstAndLastNameSwitch: UISwitch! {
+        didSet {
+            guard DetectPreferredLanguage.isChineseLanguage else {
+                phoneticFirstAndLastNameSwitch.on = true
+                return
+            }
+            
+            phoneticFirstAndLastNameSwitch.shouldSwitch(kPhoneticFirstAndLastName, defaultBool: kPhoneticFirstAndLastNameDefaultBool)
         }
     }
     
@@ -98,7 +82,6 @@ class AdditionalSettingsViewController: UITableViewController {
     
     
     // MARK: - Clean Phonetic Keys
-    
     @IBOutlet weak var enableAllCleanPhoneticSwitch: UISwitch! {
         didSet {
             enableAllCleanPhoneticSwitch.shouldSwitch(kEnableAllCleanPhonetic, defaultBool: kEnableAllCleanPhoneticDefaultBool)
@@ -175,58 +158,85 @@ extension AdditionalSettingsViewController {
     
     override func loadView() {
         super.loadView()
-        navigationController?.completelyTransparentBar()
-        navigationController?.navigationBar.backgroundColor = _color
-        navigationController?.navigationBar.tintColor = GLOBAL_CUSTOM_COLOR.darkerColor(0.9)
-        
-        configureCustomStatusBar()
-        configureCustomBarButtonIfNeeded()
-        configureCustomTitleLabel()
         configureQuickSearchSelectionViews()
         
-        statusLabel.text                          = statusSwitch.on ? on : off
-        statusSwitch.onTintColor                  = GLOBAL_CUSTOM_COLOR
-        nicknameSwitch.onTintColor                = GLOBAL_CUSTOM_COLOR
-        customNameSwitch.onTintColor              = GLOBAL_CUSTOM_COLOR
-        overwriteAlreadyExistsSwitch.onTintColor  = GLOBAL_CUSTOM_COLOR
+        statusLabel.text                           = statusSwitch.on ? on : off
+
+        phoneticFirstAndLastNameSwitch.onTintColor = GLOBAL_CUSTOM_COLOR
+
+        statusSwitch.onTintColor                   = GLOBAL_CUSTOM_COLOR
+        nicknameSwitch.onTintColor                 = GLOBAL_CUSTOM_COLOR
+        customNameSwitch.onTintColor               = GLOBAL_CUSTOM_COLOR
+        overwriteAlreadyExistsSwitch.onTintColor   = GLOBAL_CUSTOM_COLOR
+
+        enableAllCleanPhoneticSwitch.onTintColor   = GLOBAL_CUSTOM_COLOR
+        cleanPhoneticNicknameSwitch.onTintColor    = GLOBAL_CUSTOM_COLOR
+        cleanPhoneticMiddleNameSwitch.onTintColor  = GLOBAL_CUSTOM_COLOR
+        cleanPhoneticDepartmentSwitch.onTintColor  = GLOBAL_CUSTOM_COLOR
+        cleanPhoneticCompanySwitch.onTintColor     = GLOBAL_CUSTOM_COLOR
+        cleanPhoneticJobTitleSwitch.onTintColor    = GLOBAL_CUSTOM_COLOR
+        cleanPhoneticPrefixSwitch.onTintColor      = GLOBAL_CUSTOM_COLOR
+        cleanPhoneticSuffixSwitch.onTintColor      = GLOBAL_CUSTOM_COLOR
+
+        forceOpenAnimationSwitch.onTintColor       = SWITCH_TINT_COLOR_FOR_UI_SETTINGS
+        keepSettingWindowOpenSwitch.onTintColor    = SWITCH_TINT_COLOR_FOR_UI_SETTINGS
+
         
-        enableAllCleanPhoneticSwitch.onTintColor  = GLOBAL_CUSTOM_COLOR
-        cleanPhoneticNicknameSwitch.onTintColor   = GLOBAL_CUSTOM_COLOR
-        cleanPhoneticMiddleNameSwitch.onTintColor = GLOBAL_CUSTOM_COLOR
-        cleanPhoneticDepartmentSwitch.onTintColor = GLOBAL_CUSTOM_COLOR
-        cleanPhoneticCompanySwitch.onTintColor    = GLOBAL_CUSTOM_COLOR
-        cleanPhoneticJobTitleSwitch.onTintColor   = GLOBAL_CUSTOM_COLOR
-        cleanPhoneticPrefixSwitch.onTintColor     = GLOBAL_CUSTOM_COLOR
-        cleanPhoneticSuffixSwitch.onTintColor     = GLOBAL_CUSTOM_COLOR
+        phoneticFirstAndLastNameSwitch.enabled     = DetectPreferredLanguage.isChineseLanguage
         
-        forceOpenAnimationSwitch.onTintColor      = SWITCH_TINT_COLOR_FOR_UI_SETTINGS
-        keepSettingWindowOpenSwitch.onTintColor   = SWITCH_TINT_COLOR_FOR_UI_SETTINGS
-        
-        nicknameSwitch.enabled                    = statusSwitch.on
-        customNameSwitch.enabled                  = statusSwitch.on
-        overwriteAlreadyExistsSwitch.enabled      = statusSwitch.on && (nicknameSwitch.on || customNameSwitch.on)
-        
-        enableAllCleanPhoneticSwitch.enabled      = statusSwitch.on
-        cleanPhoneticNicknameSwitch.enabled       = statusSwitch.on
-        cleanPhoneticMiddleNameSwitch.enabled     = statusSwitch.on
-        cleanPhoneticDepartmentSwitch.enabled     = statusSwitch.on
-        cleanPhoneticCompanySwitch.enabled        = statusSwitch.on
-        cleanPhoneticJobTitleSwitch.enabled       = statusSwitch.on
-        cleanPhoneticPrefixSwitch.enabled         = statusSwitch.on
-        cleanPhoneticSuffixSwitch.enabled         = statusSwitch.on
+        nicknameSwitch.enabled                     = statusSwitch.on
+        customNameSwitch.enabled                   = statusSwitch.on
+        overwriteAlreadyExistsSwitch.enabled       = statusSwitch.on && (nicknameSwitch.on || customNameSwitch.on)
+
+        enableAllCleanPhoneticSwitch.enabled       = statusSwitch.on
+        cleanPhoneticNicknameSwitch.enabled        = statusSwitch.on
+        cleanPhoneticMiddleNameSwitch.enabled      = statusSwitch.on
+        cleanPhoneticDepartmentSwitch.enabled      = statusSwitch.on
+        cleanPhoneticCompanySwitch.enabled         = statusSwitch.on
+        cleanPhoneticJobTitleSwitch.enabled        = statusSwitch.on
+        cleanPhoneticPrefixSwitch.enabled          = statusSwitch.on
+        cleanPhoneticSuffixSwitch.enabled          = statusSwitch.on
         
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        blurBackgroundView = BlurImageView(frame: view.bounds)
-        tableView.backgroundView = blurBackgroundView
         tableView.separatorColor = UIColor(red: 0.502, green: 0.502, blue: 0.502, alpha: 1.0)
         
-        configurePullToDismissViewController(UIColor.clearColor(), fillColor: _color, completionHandler: {
-            self.postDismissedNotificationIfNeeded()
-        })
+        if let nav = navigationController as? SettingsNavigationController {
+            configurePullToDismissViewController(UIColor.clearColor(), fillColor: nav._color, completionHandler: {
+                self.postDismissedNotificationIfNeeded()
+            })
+        }
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
         
+        guard let nav = navigationController as? SettingsNavigationController else { return }
+        
+        nav.customTitleLabel?.text = _title
+        nav.configureCustomBarButtonIfNeeded()
+        nav.customBarButton?.alpha = 0
+        nav.customTitleLabel?.alpha = 0
+        
+        UIView.animateWithDuration(0.3, animations: { () -> Void in
+            nav.customBarButton?.alpha = 1
+            nav.customTitleLabel?.alpha = 1
+        })
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        guard let nav = navigationController as? SettingsNavigationController else { return }
+
+        UIView.animateWithDuration(0.3, delay: 0, options: .CurveEaseInOut, animations: { () -> Void in
+            nav.customBarButton?.alpha = 0
+            }) { (_) -> Void in
+                nav.customBarButton?.removeFromSuperview()
+                nav.customBarButton = nil
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -234,32 +244,6 @@ extension AdditionalSettingsViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        blurBackgroundView?.layoutIfNeeded()
-        fixCustomViewsFrameIfNeeded()
-        fixCustomStatusBarFrameIfNeeded()
-    }
-    
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        configureCustomBarButtonIfNeeded()
-        customBarButton?.alpha = 0
-        UIView.animateWithDuration(0.3, delay: 0, options: .CurveEaseInOut, animations: { () -> Void in
-            self.customBarButton?.alpha = 1
-            }) { (_) -> Void in
-        }
-    }
-    
-    override func viewWillDisappear(animated: Bool) {
-        super.viewWillDisappear(animated)
-        UIView.animateWithDuration(0.3, delay: 0, options: .CurveEaseInOut, animations: { () -> Void in
-            self.customBarButton?.alpha = 0
-            }) { (_) -> Void in
-                self.customBarButton?.removeFromSuperview()
-                self.customBarButton = nil
-        }
-    }
     
 }
 
@@ -271,24 +255,29 @@ extension AdditionalSettingsViewController {
         
         statusLabel.text = sender.on ? on : off
         
-        nicknameSwitch.enabled                = sender.on
-        customNameSwitch.enabled              = sender.on
-        overwriteAlreadyExistsSwitch.enabled  = sender.on
-        
-        enableAllCleanPhoneticSwitch.enabled  = sender.on
-        cleanPhoneticNicknameSwitch.enabled   = sender.on
-        cleanPhoneticMiddleNameSwitch.enabled = sender.on
-        cleanPhoneticDepartmentSwitch.enabled = sender.on
-        cleanPhoneticCompanySwitch.enabled    = sender.on
-        cleanPhoneticJobTitleSwitch.enabled   = sender.on
-        cleanPhoneticPrefixSwitch.enabled     = sender.on
-        cleanPhoneticSuffixSwitch.enabled     = sender.on
+        nicknameSwitch.enabled                 = sender.on
+        customNameSwitch.enabled               = sender.on
+        overwriteAlreadyExistsSwitch.enabled   = sender.on
+
+        enableAllCleanPhoneticSwitch.enabled   = sender.on
+        cleanPhoneticNicknameSwitch.enabled    = sender.on
+        cleanPhoneticMiddleNameSwitch.enabled  = sender.on
+        cleanPhoneticDepartmentSwitch.enabled  = sender.on
+        cleanPhoneticCompanySwitch.enabled     = sender.on
+        cleanPhoneticJobTitleSwitch.enabled    = sender.on
+        cleanPhoneticPrefixSwitch.enabled      = sender.on
+        cleanPhoneticSuffixSwitch.enabled      = sender.on
 
         userDefaults.setBool(sender.on, forKey: kAdditionalSettingsStatus)
         userDefaults.synchronize()
     }
     
-    
+    // MARK: - Phonetic Contacts
+    @IBAction func phoneticFirstAndLastNameSwitchDidTap(sender: UISwitch) {
+        userDefaults.setBool(sender.on, forKey: kPhoneticFirstAndLastName)
+        userDefaults.synchronize()
+    }
+
     // MARK: - Quick Search
     @IBAction func nicknameSwitchDidTap(sender: UISwitch) {
         
@@ -457,6 +446,12 @@ extension AdditionalSettingsViewController {
     
 }
 
+// MARK: - Should Enable Phonetic First & Last Name
+extension AdditionalSettingsViewController {
+    
+    
+}
+
 // MARK: - Configure Subviews
 extension AdditionalSettingsViewController {
     
@@ -469,68 +464,7 @@ extension AdditionalSettingsViewController {
         quickSearchSelectionLabel.userInteractionEnabled = true
         quickSearchSelectionLabel.text = NSLocalizedString("\(quickSearchKey) for Quick Search", comment: "")
     }
-    
-    private func configureCustomStatusBar() {
-        
-        guard UIDevice.currentDevice().userInterfaceIdiom != .Pad else { return }
-        
-        customStatusBar = UIView(frame: UIApplication.sharedApplication().statusBarFrame)
-        customStatusBar.backgroundColor = _color
-        
-        UIApplication.topMostViewController()?.view.addSubview(customStatusBar)
-    }
-    
-    private func configureCustomBarButtonIfNeeded() {
-        guard customBarButton == nil else { return }
-        
-        customBarButton = UIButton(type: .Custom)
-        customBarButton.setImage(UIImage(named: "close")?.imageWithRenderingMode(.AlwaysTemplate), forState: .Normal)
-        customBarButton.tintColor   = UIColor.whiteColor()
-        customBarButton.frame.size  = CGSizeMake(25, 25)
-        customBarButton.contentMode = .Center
-        customBarButton.addTarget(self, action: "dismissViewController", forControlEvents: .TouchUpInside)
-        
-        navigationController?.navigationBar.addSubview(customBarButton)
-        
-        hideCustomBarButton = shouldHideCustomBarButton
-    }
-    
-    private func configureCustomTitleLabel() {
-        guard let navigationBar = navigationController?.navigationBar else { return }
-        
-        customTitleLabel               = UILabel(frame: CGRectZero)
-        customTitleLabel.textAlignment = .Center
-        customTitleLabel.textColor     = _textColor
-        customTitleLabel.font          = _font
-        customTitleLabel.text          = _title
-        customTitleLabel.sizeToFit()
-        
-        navigationBar.addSubview(customTitleLabel)
-    }
-    
-    private func fixCustomStatusBarFrameIfNeeded() {
-        guard UIDevice.currentDevice().userInterfaceIdiom != .Pad else { return }
-        
-        if UIScreen.screenWidth() < UIScreen.screenHeight() {
-            customStatusBar?.frame = UIApplication.sharedApplication().statusBarFrame
-        } else {
-            customStatusBar?.frame = CGRectZero
-        }
-    }
-    
-    private func fixCustomViewsFrameIfNeeded() {
-        if let navigationBar = navigationController?.navigationBar {
-            customBarButton?.center = navigationBar.center
-            customBarButton?.frame.origin.x = 8.0
-            customTitleLabel?.center = navigationBar.center
-            
-            if UIScreen.screenWidth() < UIScreen.screenHeight() && UIDevice.currentDevice().userInterfaceIdiom != .Pad {
-                customBarButton?.frame.origin.y -= UIApplication.sharedApplication().statusBarFrame.height
-                customTitleLabel?.frame.origin.y -= UIApplication.sharedApplication().statusBarFrame.height
-            }
-        }
-    }
-    
+       
     private func setRotationAnimation(view: UIView, beginWithClockwise: Bool, clockwise: Bool, animated: Bool) {
         let rotationAnimation = CABasicAnimation(keyPath: "transform.rotation.z")
         
@@ -631,30 +565,32 @@ extension AdditionalSettingsViewController {
     
     private func prepareForDismissingViewController(prepared: Bool) {
         
+        guard let nav = navigationController as? SettingsNavigationController else { return }
+        
         if !prepared {
             UIView.animateWithDuration(0.3, delay: 0, options: .CurveEaseInOut, animations: { () -> Void in
-                self.customTitleLabel?.alpha = 0
+                nav.customTitleLabel?.alpha = 0
                 }, completion: { (_) -> Void in
                     
-                    self.customTitleLabel?.text      = self._title
-                    self.customTitleLabel?.font      = self._font
-                    self.customTitleLabel?.textColor = self._textColor
+                    nav.customTitleLabel?.text      = self._title
+                    nav.customTitleLabel?.font      = nav._font
+                    nav.customTitleLabel?.textColor = nav._textColor
             })
         }
         
         UIView.animateWithDuration(0.3, delay: 0.1, options: .CurveEaseInOut, animations: { () -> Void in
-            self.customTitleLabel?.alpha = prepared ? 0 : 1
-            self.customBarButton?.alpha = prepared ? 0 : 1
+            nav.customTitleLabel?.alpha = prepared ? 0 : 1
+            nav.customBarButton?.alpha = prepared ? 0 : 1
             }) { (_) -> Void in
                 
                 if prepared {
-                    self.customTitleLabel?.text      = NSLocalizedString("Pull Down to Dismiss", comment: "")
-                    self.customTitleLabel?.textColor = GLOBAL_CUSTOM_COLOR.colorWithAlphaComponent(0.8)
-                    self.customTitleLabel?.font      = UIFont.systemFontOfSize(12.0, weight: -1.0)
+                    nav.customTitleLabel?.text      = NSLocalizedString("Pull Down to Dismiss", comment: "")
+                    nav.customTitleLabel?.textColor = GLOBAL_CUSTOM_COLOR.colorWithAlphaComponent(0.8)
+                    nav.customTitleLabel?.font      = UIFont.systemFontOfSize(12.0, weight: -1.0)
                 }
                 
                 UIView.animateWithDuration(0.3, delay: 0.1, options: .CurveEaseInOut, animations: { () -> Void in
-                    self.customTitleLabel?.alpha = 1
+                    nav.customTitleLabel?.alpha = 1
                     }, completion: { (_) -> Void in
                         
                 })
@@ -667,10 +603,6 @@ extension AdditionalSettingsViewController {
 extension AdditionalSettingsViewController {
     
     override func willRotateToInterfaceOrientation(toInterfaceOrientation: UIInterfaceOrientation, duration: NSTimeInterval) {
-        // Optimized for 6(s) Plus
-        if Device.isEqualToScreenSize(Size.Screen5_5Inch) {
-            hideCustomBarButton = toInterfaceOrientation.isLandscape
-        }
         
         // FIXME: - After rotating, the position of current popover is not right.
         // Temporarily, I have to dismiss it first on iPad.
@@ -688,11 +620,7 @@ extension AdditionalSettingsViewController {
 extension AdditionalSettingsViewController: TableViewHeaderFooterViewWithButtonDelegate {
     
     func tableViewHeaderFooterViewWithButtonDidTap() {
-        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("HelpManualViewController") as? UIViewController {
-            print("bbb")
-            // HelpManualNavigationController
-            
-//            UIApplication.topMostViewController()?.presentViewController(vc, animated: true, completion: nil)
+        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier(String(HelpManualViewController)) as? HelpManualViewController {            
             navigationController?.pushViewController(vc, animated: true)
         }
     }
@@ -719,14 +647,17 @@ extension AdditionalSettingsViewController {
         var headerTitle: String?
         
         switch section {
-        case 1:
-            headerTitle = NSLocalizedString("Quick Search", comment: "Table view header title")
+        case 0:
+            headerTitle = NSLocalizedString("Phonetic Contacts", comment: "Table view header title")
             
         case 2:
-            headerTitle = NSLocalizedString("Clean Phonetic Keys", comment: "Table view header title")
+            headerTitle = NSLocalizedString("Quick Search", comment: "Table view header title")
             
         case 3:
-            headerTitle = NSLocalizedString("User Interface Setting", comment: "Table view header title")
+            headerTitle = NSLocalizedString("Clean Phonetic Keys", comment: "Table view header title")
+            
+        case 4:
+            headerTitle = NSLocalizedString("User Interface Settings", comment: "Table view header title")
             
         default: break
         }
@@ -739,16 +670,19 @@ extension AdditionalSettingsViewController {
         var footerTitle: String?
         
         switch section {
-        case 1:
-            footerTitle = NSLocalizedString("e.g: Add a phonetic Nickname / \(quickSearchKey) key for `叶梓萱` with `YZX`. Then you can enter `YZX` to search the specific name. ", comment: "Table view footer title")
+        case 0:
+            footerTitle = NSLocalizedString("If the device language is not Chinese, the switch will be forced open.", comment: "Table view footer title")
             
         case 2:
-            footerTitle = ""
+            footerTitle = NSLocalizedString("e.g: Add a phonetic Nickname / \(quickSearchKey) key for `叶梓萱` with `YZX`. Then you can enter `YZX` to search the specific name. ", comment: "Table view footer title")
             
         case 3:
-            footerTitle = NSLocalizedString("Enable animation even audio is playing in background.", comment: "Table view footer title")
+            footerTitle = NSLocalizedString("⚠️ Be Careful. All of the keys including you manually added before will be removed!", comment: "Table view footer title")
             
         case 4:
+            footerTitle = NSLocalizedString("Enable animation even audio is playing in background.", comment: "Table view footer title")
+            
+        case 5:
             footerTitle = NSLocalizedString("Keep `Settings Window` open after dismissing `Additional Settings Window`.", comment: "Table view footer title")
             
         default: break
@@ -775,15 +709,6 @@ extension AdditionalSettingsViewController {
     override func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         // change label's text color of Header View
         (view as! UITableViewHeaderFooterView).textLabel?.textColor = UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1.0)
-    }
-    
-}
-
-// MARK: - Feedback
-extension AdditionalSettingsViewController {
-    
-    @IBAction func feedback(sender: AnyObject) {
-        OtherSettingView.defaultSetting.sendMail()
     }
     
 }
