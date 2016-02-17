@@ -50,7 +50,7 @@ extension ViewController {
         
         PhoneticContacts.sharedInstance.execute({ () -> Void in
             self.isProcessing = true
-            self.playVideo()
+            self.playVideoIfNeeded()
             }, handleResult: { (currentResult, percentage) -> Void in
                 self.outputView.text = currentResult
                 self.percentageLabel.text = "\(percentage)%"
@@ -80,7 +80,7 @@ extension ViewController {
 
             PhoneticContacts.sharedInstance.clearMandarinLatinPhonetic({ () -> Void in
                 self.isProcessing = true
-                self.playVideo()
+                self.playVideoIfNeeded()
                 }, handleResult: { (currentResult, percentage) -> Void in
                     self.percentageLabel.text = "\(100 - percentage)%"
                     self.runProgressBar(true, percentage: percentage)
@@ -106,6 +106,24 @@ extension ViewController {
         avPlayer?.pause()
         hideBlurVieWithAnimation(false)
     }
+    
+    func playVideoIfNeeded() {
+        hideBlurVieWithAnimation(true)
+        
+        guard shouldEnableAnimation else {
+            // stop playing first if it's playing.
+            avPlayer?.pause()
+            avPlayerController = nil
+            return
+        }
+        
+        // should play now.
+        if avPlayerController == nil {
+            configureBackgroundVideo()
+        }
+        
+        avPlayer?.play()
+    }
 
     private func configureBackgroundVideo(){
         
@@ -125,27 +143,9 @@ extension ViewController {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "loopingVideo", name: AVPlayerItemDidPlayToEndTimeNotification, object: nil)
     }
     
-    private func playVideo() {
-        hideBlurVieWithAnimation(true)
-        
-        guard shouldEnableAnimation else {
-            // stop playing first if it's playing.
-            avPlayer?.pause()
-            avPlayerController = nil
-            return
-        }
-        
-        // should play now.
-        if avPlayerController == nil {
-            configureBackgroundVideo()
-        }
-        
-        avPlayer?.play()
-    }
-
     private func hideBlurVieWithAnimation(hidden: Bool) {
         UIView.animateWithDuration(1.2, animations: { () -> Void in
-            self.blurView.alpha = hidden ? 0 : 0.97
+            self.blurView?.alpha = hidden ? 0 : 0.97
         })
     }
     

@@ -114,8 +114,8 @@ class SettingsNavigationController: UINavigationController {
     private func fixCustomViewsFrameIfNeeded() {
         customBarButton?.center = navigationBar.center
         customBarButton?.frame.origin.x = 8.0
-        customTitleLabel?.sizeToFit()
         customTitleLabel?.center = navigationBar.center
+        customTitleLabel?.sizeToFit()
         
         if UIScreen.screenWidth() < UIScreen.screenHeight() && UIDevice.currentDevice().userInterfaceIdiom != .Pad {
             customBarButton?.frame.origin.y -= UIApplication.sharedApplication().statusBarFrame.height
