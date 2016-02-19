@@ -12,7 +12,7 @@ class HelpManualViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        navigationController?.navigationBar.tintColor = .whiteColor()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -36,7 +36,8 @@ class HelpManualViewController: UIViewController {
 //            UIApplication.sharedApplication().openURL(url)
 //        }
         
-        let str = "prefs:root=ACCOUNT_SETTINGS&path=CONTACTS/SHORT_NAME"
+        // TODO: - Is it possible to go to the direct destination?
+        let str = "prefs:root=ACCOUNT_SETTINGS&path="
         
         if let url = NSURL(string: str) {
             UIApplication.sharedApplication().openURL(url)
