@@ -1,0 +1,156 @@
+/* Class = "UILabel"; text = "Nickname for Quick Search"; ObjectID = "7Zz-a5-PCr"; */
+"7Zz-a5-PCr.text" = "昵称字段";
+
+/* Class = "UILabel"; text = "0%"; ObjectID = "7ea-gB-6zc"; */
+"7ea-gB-6zc.text" = "0%";
+
+/* Class = "UILabel"; text = "Feedback"; ObjectID = "9MY-ha-kA9"; */
+"9MY-ha-kA9.text" = "反馈";
+
+/* Class = "UITableViewSection"; footerTitle = "e.g: Add a phonetic middle name key for `叶梓萱` with `YZX`. Then you can enter `YZX` to search the specific name. "; ObjectID = "9Mp-D6-ANl"; */
+"9Mp-D6-ANl.footerTitle" = "比如：为 ”叶梓萱“ 添加 ”YZX“ 字段，直接输入 “YZX” 就可以快速搜索到联系人。";
+
+/* Class = "UITableViewSection"; headerTitle = "Quick Search"; ObjectID = "9Mp-D6-ANl"; */
+"9Mp-D6-ANl.headerTitle" = "快速搜索";
+
+/* Class = "UITableViewSection"; footerTitle = "Enable animation even audio is playing in background."; ObjectID = "9hg-Jy-A3S"; */
+"9hg-Jy-A3S.footerTitle" = "即使有音频在后台播放也开启动画。";
+
+/* Class = "UITableViewSection"; headerTitle = "User Interface Setting"; ObjectID = "9hg-Jy-A3S"; */
+"9hg-Jy-A3S.headerTitle" = "用户界面设置";
+
+/* Class = "UILabel"; text = "Enable All"; ObjectID = "9uX-tm-BEd"; */
+"9uX-tm-BEd.text" = "开启全部";
+
+/* Class = "UILabel"; text = "Use Tones"; ObjectID = "44u-fr-4OF"; */
+"44u-fr-4OF.text" = "使用音调";
+
+/* Class = "UILabel"; text = "Tap to Add Phonetic Keys"; ObjectID = "88h-HX-tVr"; */
+"88h-HX-tVr.text" = "点击添加拼音字段";
+
+/* Class = "UILabel"; text = "Follow us"; ObjectID = "517-qx-83L"; */
+"517-qx-83L.text" = "关注";
+
+/* Class = "UILabel"; text = "Version"; ObjectID = "AO5-Q6-lZ2"; */
+"AO5-Q6-lZ2.text" = "Version";
+
+/* Class = "UILabel"; text = "Middle Name for Quick Search"; ObjectID = "Buy-mD-J4T"; */
+"Buy-mD-J4T.text" = "中间名字段";
+
+/* Class = "UILabel"; text = "⬇︎"; ObjectID = "DwT-Qb-X56"; */
+"DwT-Qb-X56.text" = "⬇︎";
+
+/* Class = "UILabel"; text = "\"Nickname for Quick Search\" is highly recommended. But first you need  DISABLE  \"Prefer Nicknames\" by following steps below."; ObjectID = "EIf-G1-HVP"; */
+"EIf-G1-HVP.text" = "推荐使用“昵称字段”，首先需要按照以下步骤关闭“首选昵称”。";
+
+/* Class = "UILabel"; text = "Status"; ObjectID = "EqW-Dx-MRg"; */
+"EqW-Dx-MRg.text" = "状态";
+
+/* Class = "UILabel"; text = "Middle Name Phonetic Keys"; ObjectID = "FYS-C4-a9Y"; */
+"FYS-C4-a9Y.text" = "中间名字段";
+
+/* Class = "UITableViewSection"; footerTitle = "If the device language is not Chinese, the switch will be forced open."; ObjectID = "KMY-XD-2W9"; */
+"KMY-XD-2W9.footerTitle" = "如果设备的语言不是中文，开关将被强制打开。";
+
+/* Class = "UITableViewSection"; headerTitle = "Phonetic Contacts"; ObjectID = "KMY-XD-2W9"; */
+"KMY-XD-2W9.headerTitle" = "Phonetic Contacts";
+
+/* Class = "UILabel"; text = "✪ Upcase Pinyin"; ObjectID = "NMq-vJ-CtO"; */
+"NMq-vJ-CtO.text" = "✪ 拼音大写";
+
+/* Class = "UILabel"; text = "⬇︎"; ObjectID = "Oar-m2-ikQ"; */
+"Oar-m2-ikQ.text" = "⬇︎";
+
+/* Class = "UILabel"; text = "Keep Settings Window Open"; ObjectID = "Q4b-g6-2vP"; */
+"Q4b-g6-2vP.text" = "保持设置窗口开启";
+
+/* Class = "UILabel"; text = "⬇︎"; ObjectID = "QL3-2P-rln"; */
+"QL3-2P-rln.text" = "⬇︎";
+
+/* Class = "UILabel"; text = "Phonetic First & Last Name"; ObjectID = "RLV-Dq-gbJ"; */
+"RLV-Dq-gbJ.text" = "姓 & 名字段";
+
+/* Class = "UILabel"; text = "Mail, Contacts, Calendars"; ObjectID = "Rn2-9L-hlr"; */
+"Rn2-9L-hlr.text" = "邮件、通讯录、日历";
+
+/* Class = "UILabel"; text = "Job Title Phonetic Keys"; ObjectID = "S4U-eN-bqH"; */
+"S4U-eN-bqH.text" = "职位字段";
+
+/* Class = "UITableViewSection"; headerTitle = "Clean Phoneitc Keys"; ObjectID = "UKR-Wl-lLI"; */
+"UKR-Wl-lLI.headerTitle" = "清除通讯录字段";
+
+/* Class = "UILabel"; text = "On"; ObjectID = "UQ1-gf-Cd7"; */
+"UQ1-gf-Cd7.text" = "开";
+
+/* Class = "UILabel"; text = "Double Tap or Long Press to Revoke"; ObjectID = "VOa-VH-F2I"; */
+"VOa-VH-F2I.text" = "双击或长按撤销";
+
+/* Class = "UILabel"; text = "Enable Animation"; ObjectID = "bdE-R0-bwA"; */
+"bdE-R0-bwA.text" = "开启动画";
+
+/* Class = "UITableViewSection"; footerTitle = "Keep `Settings Window` open after dismissing `Additional Settings Window`."; ObjectID = "boQ-GG-Exe"; */
+"boQ-GG-Exe.footerTitle" = "“更多设置窗口”关闭后保持“设置窗口”开启。";
+
+/* Class = "UILabel"; text = "Nickname Phonetic Keys"; ObjectID = "cQ4-Cq-q6G"; */
+"cQ4-Cq-q6G.text" = "昵称字段";
+
+/* Class = "UILabel"; text = "     [ Ye Zixuan ] ➟ [ Ye ZiXuan ]"; ObjectID = "eAK-1G-Uea"; */
+"eAK-1G-Uea.text" = "     [ Ye Zixuan ] ➟ [ Ye ZiXuan ]";
+
+/* Class = "UILabel"; text = "Upcase Pinyin"; ObjectID = "eYJ-pR-4Xk"; */
+"eYJ-pR-4Xk.text" = "拼音大写";
+
+/* Class = "UILabel"; text = "Settings"; ObjectID = "fCb-u0-VlU"; */
+"fCb-u0-VlU.text" = "设置";
+
+/* Class = "UILabel"; text = "Force Enable Animation"; ObjectID = "ff8-9l-EEb"; */
+"ff8-9l-EEb.text" = "强制开启动画";
+
+/* Class = "UILabel"; text = "Prefer Nicknames"; ObjectID = "fj9-LG-qEs"; */
+"fj9-LG-qEs.text" = "首选昵称";
+
+/* Class = "UILabel"; text = "Rate me"; ObjectID = "gEM-Pg-4pD"; */
+"gEM-Pg-4pD.text" = "打分";
+
+/* Class = "UILabel"; text = "Fix Polyphone"; ObjectID = "hpx-Ht-cck"; */
+"hpx-Ht-cck.text" = "多音字纠错";
+
+/* Class = "UILabel"; text = "Completely Open-Source"; ObjectID = "hz3-L8-W7D"; */
+"hz3-L8-W7D.text" = "完全开源";
+
+/* Class = "UILabel"; text = "Suffix Phonetic Keys"; ObjectID = "kwm-EK-7jA"; */
+"kwm-EK-7jA.text" = "后缀字段";
+
+/* Class = "UILabel"; text = "Department Phonetic Keys"; ObjectID = "l5s-Xi-2B0"; */
+"l5s-Xi-2B0.text" = "部门字段";
+
+/* Class = "UILabel"; text = "✪ Use Tones"; ObjectID = "mxP-N0-BUA"; */
+"mxP-N0-BUA.text" = "✪ 使用音调";
+
+/* Class = "UILabel"; text = "     美 [ mei ] ➟ [ měi ]"; ObjectID = "n6C-TH-Dfq"; */
+"n6C-TH-Dfq.text" = "     美 [ mei ] ➟ [ měi ]";
+
+/* Class = "UILabel"; text = "iTranslator Widget"; ObjectID = "p61-8Y-T8f"; */
+"p61-8Y-T8f.text" = "iTranslator Widget";
+
+/* Class = "UILabel"; text = "Short Name"; ObjectID = "qTQ-7g-rad"; */
+"qTQ-7g-rad.text" = "短名称";
+
+/* Class = "UILabel"; text = "Developer's Another App"; ObjectID = "qhz-UL-UxW"; */
+"qhz-UL-UxW.text" = "开发者其他App";
+
+/* Class = "UILabel"; text = "Company Phonetic Keys"; ObjectID = "rEu-aC-4eu"; */
+"rEu-aC-4eu.text" = "公司字段";
+
+/* Class = "UILabel"; text = "✪ Fix Polyphone"; ObjectID = "sB2-zT-AtD"; */
+"sB2-zT-AtD.text" = "✪ 多音字纠错";
+
+/* Class = "UILabel"; text = "Prefix Phonetic Keys"; ObjectID = "sBb-Ic-5cD"; */
+"sBb-Ic-5cD.text" = "前缀字段";
+
+/* Class = "UILabel"; text = "     秘(bì)、单(shàn)、解(xiè) ..."; ObjectID = "uVy-je-IFV"; */
+"uVy-je-IFV.text" = "     秘(bì)、单(shàn)、解(xiè) ...";
+
+/* Class = "UILabel"; text = "Overwrite Already  Exists"; ObjectID = "zOq-ls-6Q3"; */
+"zOq-ls-6Q3.text" = "覆盖已有字段";
+

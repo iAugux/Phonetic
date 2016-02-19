@@ -11,7 +11,7 @@ import Contacts
 
 let kPhoneticFirstAndLastName            = "kPhoneticFirstAndLastName"
 
-let kQuickSearchKey                      = "kQuickSearchKey"
+let kQuickSearchKeyRawValue              = "kQuickSearchKeyRawValueRawValue"
 let kAdditionalSettingsStatus            = "kAdditionalSettingsStatus"
 let kEnableNickname                      = "kEnableNickname"
 let kEnableCustomName                    = "kEnableCustomName"
@@ -53,11 +53,11 @@ struct Phonetic {
     var value: String
 }
 
-enum QuickSearch: String {
+enum QuickSearch: Int {
     case MiddleName
-    case JobTitle
     case Department
     case Company
+    case JobTitle
     case Prefix
     case Suffix
     case Cancel
@@ -66,12 +66,12 @@ enum QuickSearch: String {
         switch self {
         case .MiddleName:
             return NSLocalizedString("Middle Name", comment: "")
-        case .JobTitle:
-            return NSLocalizedString("Job Title", comment: "")
         case .Department:
             return NSLocalizedString("Department", comment: "")
         case .Company:
             return NSLocalizedString("Company", comment: "")
+        case .JobTitle:
+            return NSLocalizedString("Job Title", comment: "")
         case .Prefix:
             return NSLocalizedString("Prefix", comment: "")
         case .Suffix:

@@ -44,29 +44,29 @@ extension PhoneticContacts {
         }
         
         if enableCustomName {
-            if userDefaults.valueForKey(kQuickSearchKey) == nil {
-                userDefaults.setValue(QuickSearch.MiddleName.key, forKey: kQuickSearchKey)
+            if userDefaults.valueForKey(kQuickSearchKeyRawValue) == nil {
+                userDefaults.setInteger(QuickSearch.MiddleName.rawValue, forKey: kQuickSearchKeyRawValue)
                 userDefaults.synchronize()
             }
             
-            if let quickSearchKey = userDefaults.stringForKey(kQuickSearchKey) {
+            if let quickSearchKey = userDefaults.valueForKey(kQuickSearchKeyRawValue) as? Int {
                 switch quickSearchKey {
-                case QuickSearch.MiddleName.key:
+                case QuickSearch.MiddleName.rawValue:
                     return CNContactPhoneticMiddleNameKey
                 
-                case QuickSearch.JobTitle.key:
+                case QuickSearch.JobTitle.rawValue:
                     return CNContactJobTitleKey
                     
-                case QuickSearch.Department.key:
+                case QuickSearch.Department.rawValue:
                     return CNContactDepartmentNameKey
                     
-                case QuickSearch.Company.key:
+                case QuickSearch.Company.rawValue:
                     return CNContactOrganizationNameKey
                     
-                case QuickSearch.Prefix.key:
+                case QuickSearch.Prefix.rawValue:
                     return CNContactNamePrefixKey
                     
-                case QuickSearch.Suffix.key:
+                case QuickSearch.Suffix.rawValue:
                     return CNContactNameSuffixKey
                     
                 default: return nil

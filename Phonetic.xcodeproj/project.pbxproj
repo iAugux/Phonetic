@@ -38,6 +38,7 @@
 		B16942701C6211FB000D5BFE /* AdditionalSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B169426F1C6211FB000D5BFE /* AdditionalSettingsViewController.swift */; };
 		B16942721C622A7E000D5BFE /* BlurImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B16942711C622A7E000D5BFE /* BlurImageView.swift */; };
 		B16CAB7A1C5E5DE900AF3D35 /* ViewController+Execution.swift in Sources */ = {isa = PBXBuildFile; fileRef = B16CAB791C5E5DE900AF3D35 /* ViewController+Execution.swift */; };
+		B16FEB2D1C779F6400FEB550 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B16FEB2F1C779F6400FEB550 /* Localizable.strings */; };
 		B1878FD11C69CFDF00C3C3E3 /* AppConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1878FD01C69CFDF00C3C3E3 /* AppConfiguration.swift */; };
 		B1887A881C639AE900AD9BC2 /* DGElasticPullToRefreshConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1887A831C639AE900AD9BC2 /* DGElasticPullToRefreshConstants.swift */; };
 		B1887A891C639AE900AD9BC2 /* DGElasticPullToRefreshExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1887A841C639AE900AD9BC2 /* DGElasticPullToRefreshExtensions.swift */; };
@@ -112,6 +113,11 @@
 		B169426F1C6211FB000D5BFE /* AdditionalSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdditionalSettingsViewController.swift; sourceTree = "<group>"; };
 		B16942711C622A7E000D5BFE /* BlurImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlurImageView.swift; sourceTree = "<group>"; };
 		B16CAB791C5E5DE900AF3D35 /* ViewController+Execution.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ViewController+Execution.swift"; sourceTree = "<group>"; };
+		B16FEB271C779F4400FEB550 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
+		B16FEB291C779F4E00FEB550 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Main.strings"; sourceTree = "<group>"; };
+		B16FEB2E1C779F6400FEB550 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
+		B16FEB301C779F6B00FEB550 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		B16FEB311C779F6C00FEB550 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		B1878FD01C69CFDF00C3C3E3 /* AppConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppConfiguration.swift; sourceTree = "<group>"; };
 		B1887A831C639AE900AD9BC2 /* DGElasticPullToRefreshConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DGElasticPullToRefreshConstants.swift; sourceTree = "<group>"; };
 		B1887A841C639AE900AD9BC2 /* DGElasticPullToRefreshExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DGElasticPullToRefreshExtensions.swift; sourceTree = "<group>"; };
@@ -280,6 +286,7 @@
 				B1159B731C59045800F16037 /* Main.storyboard */,
 				B1159B761C59045800F16037 /* Assets.xcassets */,
 				B1159B781C59045800F16037 /* LaunchScreen.storyboard */,
+				B16FEB2F1C779F6400FEB550 /* Localizable.strings */,
 				B1159B7B1C59045800F16037 /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -402,6 +409,8 @@
 			knownRegions = (
 				en,
 				Base,
+				"zh-Hans",
+				"zh-Hant",
 			);
 			mainGroup = B1159B631C59045800F16037;
 			productRefGroup = B1159B6D1C59045800F16037 /* Products */;
@@ -422,6 +431,7 @@
 				B1159B7A1C59045800F16037 /* LaunchScreen.storyboard in Resources */,
 				B15CB2AA1C5B3CA4002694ED /* three.min.js in Resources */,
 				B15CB2A91C5B3CA4002694ED /* index.html in Resources */,
+				B16FEB2D1C779F6400FEB550 /* Localizable.strings in Resources */,
 				B1159B771C59045800F16037 /* Assets.xcassets in Resources */,
 				B12478A01C5F4D30006D1B62 /* wave.mp4 in Resources */,
 				B1159B751C59045800F16037 /* Main.storyboard in Resources */,
@@ -518,6 +528,8 @@
 			isa = PBXVariantGroup;
 			children = (
 				B1159B741C59045800F16037 /* Base */,
+				B16FEB271C779F4400FEB550 /* zh-Hans */,
+				B16FEB291C779F4E00FEB550 /* zh-Hant */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -528,6 +540,16 @@
 				B1159B791C59045800F16037 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		B16FEB2F1C779F6400FEB550 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B16FEB2E1C779F6400FEB550 /* Base */,
+				B16FEB301C779F6B00FEB550 /* zh-Hans */,
+				B16FEB311C779F6C00FEB550 /* zh-Hant */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

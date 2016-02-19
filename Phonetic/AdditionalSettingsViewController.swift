@@ -73,11 +73,12 @@ class AdditionalSettingsViewController: BaseTableViewController {
     }
     
     private var quickSearchKey: String {
-        if userDefaults.valueForKey(kQuickSearchKey) == nil {
-            userDefaults.setValue(QuickSearch.MiddleName.key, forKey: kQuickSearchKey)
+        if userDefaults.valueForKey(kQuickSearchKeyRawValue) == nil {
+            userDefaults.setInteger(QuickSearch.MiddleName.rawValue, forKey: kQuickSearchKeyRawValue)
             userDefaults.synchronize()
         }
-        return userDefaults.stringForKey(kQuickSearchKey)!
+        let rawValue = userDefaults.integerForKey(kQuickSearchKeyRawValue)
+        return QuickSearch(rawValue: rawValue)?.key ?? QuickSearch(rawValue: 0)!.key
     }
     
     
@@ -462,7 +463,7 @@ extension AdditionalSettingsViewController {
         let recognizer = UITapGestureRecognizer(target: self, action: "alertActionSheetToChooseCustomKeyForQuickSearch")
         quickSearchSelectionLabel.addGestureRecognizer(recognizer)
         quickSearchSelectionLabel.userInteractionEnabled = true
-        quickSearchSelectionLabel.text = NSLocalizedString("\(quickSearchKey) for Quick Search", comment: "")
+        quickSearchSelectionLabel.text = String.localizedStringWithFormat(NSLocalizedString("%@ for Quick Search", comment: ""), quickSearchKey)
     }
        
     private func setRotationAnimation(view: UIView, beginWithClockwise: Bool, clockwise: Bool, animated: Bool) {
@@ -496,14 +497,11 @@ extension AdditionalSettingsViewController {
     internal func alertActionSheetToChooseCustomKeyForQuickSearch() {
         setRotationAnimation(quickSearchSelectionIndicator, beginWithClockwise: false, clockwise: false, animated: true)
         
-        let actionSheetTitles = [QuickSearch.MiddleName.key,
-            QuickSearch.Department.key,
-            QuickSearch.Company.key,
-            QuickSearch.JobTitle.key,
-            QuickSearch.Prefix.key,
-            QuickSearch.Suffix.key,
-            QuickSearch.Cancel.key
-        ]
+        var actionSheetTitles = [String]()
+        
+        for i in 0...QuickSearch.Cancel.rawValue {
+            actionSheetTitles.append(QuickSearch(rawValue: i)!.key)
+        }
         
         blurActionSheet = BlurActionSheet.showWithTitles(actionSheetTitles) { (index) -> Void in
             self.setRotationAnimation(self.quickSearchSelectionIndicator, beginWithClockwise: false, clockwise: true, animated: true)
@@ -511,9 +509,9 @@ extension AdditionalSettingsViewController {
             // action canceled
             guard (actionSheetTitles.count - 1) != index else { return }
             
-            NSUserDefaults.standardUserDefaults().setValue(actionSheetTitles[index], forKey: kQuickSearchKey)
+            NSUserDefaults.standardUserDefaults().setInteger(index, forKey: kQuickSearchKeyRawValue)
             if NSUserDefaults.standardUserDefaults().synchronize() {
-                self.quickSearchSelectionLabel.text = NSLocalizedString("\(actionSheetTitles[index]) for Quick Search", comment: "")
+                self.quickSearchSelectionLabel.text = String.localizedStringWithFormat(NSLocalizedString("%@ for Quick Search", comment: ""), actionSheetTitles[index])
             }
             self.tableView.reloadData()
         }
@@ -674,7 +672,7 @@ extension AdditionalSettingsViewController {
             footerTitle = NSLocalizedString("If the device language is not Chinese, the switch will be forced open.", comment: "Table view footer title")
             
         case 2:
-            footerTitle = NSLocalizedString("e.g: Add a phonetic Nickname / \(quickSearchKey) key for `叶梓萱` with `YZX`. Then you can enter `YZX` to search the specific name. ", comment: "Table view footer title")
+            footerTitle = String.localizedStringWithFormat(NSLocalizedString("e.g: Add a phonetic Nickname / %@ key for `叶梓萱` with `YZX`. Then you can enter `YZX` to search the specific name.", comment: "Table view footer title"), quickSearchKey)
             
         case 3:
             footerTitle = NSLocalizedString("⚠️ Be Careful. All of the keys including you manually added before will be removed!", comment: "Table view footer title")

@@ -1,0 +1,111 @@
+/* No comment provided by engineer. */
+"%@ for Quick Search" = "%@";
+
+/* UIAlertController - title */
+"Abort" = "中止";
+
+/* No comment provided by engineer. */
+"Aborted" = "中止";
+
+/* navigation item title - About */
+"About" = "关于";
+
+/* SettingsNavigationController title - Additional Settings */
+"Additional Settings" = "更多设置";
+
+/* UIAlertController - message */
+"Are you sure to clear all Mandarin Latin's phonetic keys?" = "确定清除所有中文拼音字段？";
+
+/* alert action - Cancel
+   UIAlertAction - title
+   UIAlertAction title - do not to clear phonetic keys */
+"Cancel" = "取消";
+
+/* Table view header title */
+"Clean Phonetic Keys" = "清除通讯录字段";
+
+/* UIAlertAction title - clear all phonetic keys */
+"Clear" = "清除";
+
+/* No comment provided by engineer. */
+"Company" = "公司字段";
+
+/* No comment provided by engineer. */
+"Completed" = "完成";
+
+/* No comment provided by engineer. */
+"Department" = "部门字段";
+
+/* Table view footer title */
+"Enable animation even audio is playing in background." = "即使有音频在后台播放也开启动画。";
+
+/* Navigation title */
+"Help Manual" = "帮助手册";
+
+/* Table view footer title */
+"If the device language is not Chinese, the switch will be forced open." = "如果设备的语言不是中文，开关将被强制打开。";
+
+/* alert view controller message */
+"If you like it, please rate me. Thanks!" = "如果你喜欢这个App，请给我打分。谢谢！";
+
+/* No comment provided by engineer. */
+"Job Title" = "职位字段";
+
+/* Table view footer title */
+"Keep `Settings Window` open after dismissing `Additional Settings Window`." = "“更多设置窗口”关闭后保持“设置窗口”开启。";
+
+/* No comment provided by engineer. */
+"Middle Name" = "中间名字段";
+
+/* No comment provided by engineer. */
+"Off" = "关";
+
+/* No comment provided by engineer. */
+"On" = "开";
+
+/* Table view header title */
+"Phonetic Contacts" = "Phonetic Contacts";
+
+/* UIAlertController message */
+"Please allow `Phonetic` to access your Contacts through the Settings." = "请通过设置允许“Phonetic”访问你的通讯录。";
+
+/* No comment provided by engineer. */
+"Prefix" = "前缀字段";
+
+/* No comment provided by engineer. */
+"Processing" = "正在处理中";
+
+/* UIAlertController - message */
+"Processing... Are you sure to abort?" = "正在处理中... 确定中止？";
+
+/* No comment provided by engineer. */
+"Pull Down to Dismiss" = "下拉关闭";
+
+/* Table view header title */
+"Quick Search" = "字段用于快速搜索";
+
+/* alert action - Rate */
+"Rate" = "打分";
+
+/* alert view controller title - rate me */
+"Rate ♡ Me" = "给我打分";
+
+/* navigation item title - Settings
+   UIAlertAction - title */
+"Settings" = "设置";
+
+/* No comment provided by engineer. */
+"Suffix" = "后缀字段";
+
+/* Table view header title */
+"User Interface Settings" = "用户界面设置";
+
+/* UIAlertController - title */
+"Warning!" = "警告！";
+
+/* Table view footer title */
+"e.g: Add a phonetic Nickname / %@ key for `叶梓萱` with `YZX`. Then you can enter `YZX` to search the specific name." = "比如：为 “叶梓萱” 添加 “YZX” 的昵称或%@，直接输入 “YZX” 就可以快速搜索到联系人。";
+
+/* Table view footer title */
+"⚠️ Be Careful. All of the keys including you manually added before will be removed!" = "⚠️ 请注意！包括之前手动添加的字段都将被清除掉。";
+
