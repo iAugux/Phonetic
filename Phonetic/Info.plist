@@ -30,7 +30,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>111</string>
+	<string>113</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>tweetbot</string>

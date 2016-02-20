@@ -1,5 +1,5 @@
 /* Class = "UILabel"; text = "Nickname for Quick Search"; ObjectID = "7Zz-a5-PCr"; */
-"7Zz-a5-PCr.text" = "暱稱字段";
+"7Zz-a5-PCr.text" = "暱稱欄位";
 
 /* Class = "UILabel"; text = "0%"; ObjectID = "7ea-gB-6zc"; */
 "7ea-gB-6zc.text" = "0%";
@@ -26,7 +26,7 @@
 "44u-fr-4OF.text" = "使用音調";
 
 /* Class = "UILabel"; text = "Tap to Add Phonetic Keys"; ObjectID = "88h-HX-tVr"; */
-"88h-HX-tVr.text" = "點擊添加拼音字段";
+"88h-HX-tVr.text" = "點擊添加拼音欄位";
 
 /* Class = "UILabel"; text = "Follow us"; ObjectID = "517-qx-83L"; */
 "517-qx-83L.text" = "關注";
@@ -35,19 +35,19 @@
 "AO5-Q6-lZ2.text" = "Version";
 
 /* Class = "UILabel"; text = "Middle Name for Quick Search"; ObjectID = "Buy-mD-J4T"; */
-"Buy-mD-J4T.text" = "中間名字段";
+"Buy-mD-J4T.text" = "中間名欄位";
 
 /* Class = "UILabel"; text = "⬇︎"; ObjectID = "DwT-Qb-X56"; */
 "DwT-Qb-X56.text" = "⬇︎";
 
 /* Class = "UILabel"; text = "\"Nickname for Quick Search\" is highly recommended. But first you need  DISABLE  \"Prefer Nicknames\" by following steps below."; ObjectID = "EIf-G1-HVP"; */
-"EIf-G1-HVP.text" = "推薦使用“暱稱字段”，首先需要按照以下步驟關閉“首選暱稱”。";
+"EIf-G1-HVP.text" = "推薦使用“暱稱欄位”，首先需要按照以下步驟關閉“優先使用暱稱”。";
 
 /* Class = "UILabel"; text = "Status"; ObjectID = "EqW-Dx-MRg"; */
 "EqW-Dx-MRg.text" = "狀態";
 
 /* Class = "UILabel"; text = "Middle Name Phonetic Keys"; ObjectID = "FYS-C4-a9Y"; */
-"FYS-C4-a9Y.text" = "中間名字段";
+"FYS-C4-a9Y.text" = "中間名欄位";
 
 /* Class = "UITableViewSection"; footerTitle = "If the device language is not Chinese, the switch will be forced open."; ObjectID = "KMY-XD-2W9"; */
 "KMY-XD-2W9.footerTitle" = "如果設備的語言不是中文，開關將被強制打開。";
@@ -68,16 +68,16 @@
 "QL3-2P-rln.text" = "⬇︎";
 
 /* Class = "UILabel"; text = "Phonetic First & Last Name"; ObjectID = "RLV-Dq-gbJ"; */
-"RLV-Dq-gbJ.text" = "姓 & 名字段";
+"RLV-Dq-gbJ.text" = "姓 & 名欄位";
 
 /* Class = "UILabel"; text = "Mail, Contacts, Calendars"; ObjectID = "Rn2-9L-hlr"; */
 "Rn2-9L-hlr.text" = "郵件、通訊錄、日曆";
 
 /* Class = "UILabel"; text = "Job Title Phonetic Keys"; ObjectID = "S4U-eN-bqH"; */
-"S4U-eN-bqH.text" = "職位字段";
+"S4U-eN-bqH.text" = "職位欄位";
 
 /* Class = "UITableViewSection"; headerTitle = "Clean Phoneitc Keys"; ObjectID = "UKR-Wl-lLI"; */
-"UKR-Wl-lLI.headerTitle" = "清除通訊錄字段";
+"UKR-Wl-lLI.headerTitle" = "清除通訊錄欄位";
 
 /* Class = "UILabel"; text = "On"; ObjectID = "UQ1-gf-Cd7"; */
 "UQ1-gf-Cd7.text" = "開";
@@ -92,7 +92,7 @@
 "boQ-GG-Exe.footerTitle" = "“更多設置窗口”關閉後保持“設置窗口”開啟。";
 
 /* Class = "UILabel"; text = "Nickname Phonetic Keys"; ObjectID = "cQ4-Cq-q6G"; */
-"cQ4-Cq-q6G.text" = "暱稱字段";
+"cQ4-Cq-q6G.text" = "暱稱欄位";
 
 /* Class = "UILabel"; text = "     [ Ye Zixuan ] ➟ [ Ye ZiXuan ]"; ObjectID = "eAK-1G-Uea"; */
 "eAK-1G-Uea.text" = "     [ Ye Zixuan ] ➟ [ Ye ZiXuan ]";
@@ -107,7 +107,7 @@
 "ff8-9l-EEb.text" = "強制開啟動畫";
 
 /* Class = "UILabel"; text = "Prefer Nicknames"; ObjectID = "fj9-LG-qEs"; */
-"fj9-LG-qEs.text" = "首選暱稱";
+"fj9-LG-qEs.text" = "優先使用暱稱";
 
 /* Class = "UILabel"; text = "Rate me"; ObjectID = "gEM-Pg-4pD"; */
 "gEM-Pg-4pD.text" = "打分";
@@ -119,10 +119,10 @@
 "hz3-L8-W7D.text" = "完全開源";
 
 /* Class = "UILabel"; text = "Suffix Phonetic Keys"; ObjectID = "kwm-EK-7jA"; */
-"kwm-EK-7jA.text" = "後綴字段";
+"kwm-EK-7jA.text" = "後綴欄位";
 
 /* Class = "UILabel"; text = "Department Phonetic Keys"; ObjectID = "l5s-Xi-2B0"; */
-"l5s-Xi-2B0.text" = "部門字段";
+"l5s-Xi-2B0.text" = "部門欄位";
 
 /* Class = "UILabel"; text = "✪ Use Tones"; ObjectID = "mxP-N0-BUA"; */
 "mxP-N0-BUA.text" = "✪ 使用音調";
@@ -134,23 +134,23 @@
 "p61-8Y-T8f.text" = "iTranslator Widget";
 
 /* Class = "UILabel"; text = "Short Name"; ObjectID = "qTQ-7g-rad"; */
-"qTQ-7g-rad.text" = "短名稱";
+"qTQ-7g-rad.text" = "簡稱";
 
 /* Class = "UILabel"; text = "Developer's Another App"; ObjectID = "qhz-UL-UxW"; */
 "qhz-UL-UxW.text" = "開發者其他App";
 
 /* Class = "UILabel"; text = "Company Phonetic Keys"; ObjectID = "rEu-aC-4eu"; */
-"rEu-aC-4eu.text" = "公司字段";
+"rEu-aC-4eu.text" = "公司欄位";
 
 /* Class = "UILabel"; text = "✪ Fix Polyphone"; ObjectID = "sB2-zT-AtD"; */
 "sB2-zT-AtD.text" = "✪ 多音字糾錯";
 
 /* Class = "UILabel"; text = "Prefix Phonetic Keys"; ObjectID = "sBb-Ic-5cD"; */
-"sBb-Ic-5cD.text" = "前綴字段";
+"sBb-Ic-5cD.text" = "前綴欄位";
 
 /* Class = "UILabel"; text = "     秘(bì)、单(shàn)、解(xiè) ..."; ObjectID = "uVy-je-IFV"; */
 "uVy-je-IFV.text" = "     秘(bì)、單(shàn)、解(xiè) ...";
 
 /* Class = "UILabel"; text = "Overwrite Already  Exists"; ObjectID = "zOq-ls-6Q3"; */
-"zOq-ls-6Q3.text" = "覆蓋已有字段";
+"zOq-ls-6Q3.text" = "覆蓋已有欄位";
 

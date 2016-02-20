@@ -14,7 +14,7 @@
 "Additional Settings" = "更多設置";
 
 /* UIAlertController - message */
-"Are you sure to clear all Mandarin Latin's phonetic keys?" = "確定清除所有中文拼音字段？";
+"Are you sure to clear all Mandarin Latin's phonetic keys?" = "確定清除所有中文拼音欄位？";
 
 /* alert action - Cancel
  UIAlertAction - title
@@ -22,19 +22,19 @@
 "Cancel" = "取消";
 
 /* Table view header title */
-"Clean Phonetic Keys" = "清除通訊錄字段";
+"Clean Phonetic Keys" = "清除通訊錄欄位";
 
 /* UIAlertAction title - clear all phonetic keys */
 "Clear" = "清除";
 
 /* No comment provided by engineer. */
-"Company" = "公司字段";
+"Company" = "公司欄位";
 
 /* No comment provided by engineer. */
 "Completed" = "完成";
 
 /* No comment provided by engineer. */
-"Department" = "部門字段";
+"Department" = "部門欄位";
 
 /* Table view footer title */
 "Enable animation even audio is playing in background." = "即使有音頻在後台播放也開啟動畫。";
@@ -49,13 +49,13 @@
 "If you like it, please rate me. Thanks!" = "如果你喜歡這個App，請給我打分。謝謝！";
 
 /* No comment provided by engineer. */
-"Job Title" = "職位字段";
+"Job Title" = "職位欄位";
 
 /* Table view footer title */
 "Keep `Settings Window` open after dismissing `Additional Settings Window`." = "“更多設置窗口”關閉後保持“設置窗口”開啟。";
 
 /* No comment provided by engineer. */
-"Middle Name" = "中間名字段";
+"Middle Name" = "中間名欄位";
 
 /* No comment provided by engineer. */
 "Off" = "關";
@@ -70,7 +70,7 @@
 "Please allow `Phonetic` to access your Contacts through the Settings." = "請通過設置允許“Phonetic”訪問你的通訊錄。";
 
 /* No comment provided by engineer. */
-"Prefix" = "前綴字段";
+"Prefix" = "前綴欄位";
 
 /* No comment provided by engineer. */
 "Processing" = "正在處理中";
@@ -82,7 +82,7 @@
 "Pull Down to Dismiss" = "下拉關閉";
 
 /* Table view header title */
-"Quick Search" = "字段用於快速搜索";
+"Quick Search" = "欄位用於快速搜索";
 
 /* alert action - Rate */
 "Rate" = "打分";
@@ -95,7 +95,7 @@
 "Settings" = "設置";
 
 /* No comment provided by engineer. */
-"Suffix" = "後綴字段";
+"Suffix" = "後綴欄位";
 
 /* Table view header title */
 "User Interface Settings" = "用戶界面設置";
@@ -107,5 +107,5 @@
 "e.g: Add a phonetic Nickname / %@ key for `叶梓萱` with `YZX`. Then you can enter `YZX` to search the specific name." = "比如：為 “葉梓萱” 添加 “YZ​​X” 的暱稱或%@，直接輸入 “YZX” 就可以快速搜索到聯繫人。";
 
 /* Table view footer title */
-"⚠️ Be Careful. All of the keys including you manually added before will be removed!" = "⚠️ 請注意！包括之前手動添加的字段都將被清除掉。";
+"⚠️ Be Careful. All of the keys including you manually added before will be removed!" = "⚠️ 請注意！包括之前手動添加的欄位都將被清除掉。";
 
