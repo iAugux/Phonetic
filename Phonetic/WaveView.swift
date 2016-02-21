@@ -19,11 +19,9 @@ class WaveView: UIWebView {
             let url = NSURL(fileURLWithPath: html!)
             loadHTMLString(contents, baseURL: url)
         } catch {
-            #if DEBUG
-                NSLog("\(error)")
-            #endif
+
+            DEBUGLog("\(error)")
         }
-        
     }
 
 }

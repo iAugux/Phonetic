@@ -113,9 +113,8 @@ class PhoneticContacts {
                     }
                 })
             } catch {
-                #if DEBUG
-                    NSLog("fetching Contacts failed ! - \(error)")
-                #endif
+                
+                DEBUGLog("fetching Contacts failed ! - \(error)")
             }
             
             self.isProcessing = false
@@ -179,9 +178,8 @@ class PhoneticContacts {
                     index += 1
                 })
             } catch {
-                #if DEBUG
-                    NSLog("fetching Contacts failed ! - \(error)")
-                #endif
+
+                DEBUGLog("fetching Contacts failed ! - \(error)")
             }
             
             self.isProcessing = false
@@ -199,9 +197,9 @@ class PhoneticContacts {
             let contacts = try self.contactStore.unifiedContactsMatchingPredicate(predicate, keysToFetch: [CNContactGivenNameKey, CNContactFamilyNameKey])
             return contacts.count
         } catch {
-            #if DEBUG
-                NSLog("\(error)")
-            #endif
+
+            DEBUGLog("\(error)")
+
             return 0
         }
     }
@@ -212,9 +210,8 @@ class PhoneticContacts {
         do {
             try self.contactStore.executeSaveRequest(saveRequest)
         } catch {
-            #if DEBUG
-                NSLog("saving Contact failed ! - \(error)")
-            #endif
+
+            DEBUGLog("saving Contact failed ! - \(error)")
         }
     }
     

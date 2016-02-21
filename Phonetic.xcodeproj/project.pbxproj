@@ -39,6 +39,7 @@
 		B16942721C622A7E000D5BFE /* BlurImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B16942711C622A7E000D5BFE /* BlurImageView.swift */; };
 		B16CAB7A1C5E5DE900AF3D35 /* ViewController+Execution.swift in Sources */ = {isa = PBXBuildFile; fileRef = B16CAB791C5E5DE900AF3D35 /* ViewController+Execution.swift */; };
 		B16FEB2D1C779F6400FEB550 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B16FEB2F1C779F6400FEB550 /* Localizable.strings */; };
+		B16FEBB71C79FEDD00FEB550 /* DEBUGLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = B16FEBB61C79FEDD00FEB550 /* DEBUGLog.swift */; };
 		B1878FD11C69CFDF00C3C3E3 /* AppConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1878FD01C69CFDF00C3C3E3 /* AppConfiguration.swift */; };
 		B1887A881C639AE900AD9BC2 /* DGElasticPullToRefreshConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1887A831C639AE900AD9BC2 /* DGElasticPullToRefreshConstants.swift */; };
 		B1887A891C639AE900AD9BC2 /* DGElasticPullToRefreshExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1887A841C639AE900AD9BC2 /* DGElasticPullToRefreshExtensions.swift */; };
@@ -118,6 +119,7 @@
 		B16FEB2E1C779F6400FEB550 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		B16FEB301C779F6B00FEB550 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		B16FEB311C779F6C00FEB550 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		B16FEBB61C79FEDD00FEB550 /* DEBUGLog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DEBUGLog.swift; sourceTree = "<group>"; };
 		B1878FD01C69CFDF00C3C3E3 /* AppConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppConfiguration.swift; sourceTree = "<group>"; };
 		B1887A831C639AE900AD9BC2 /* DGElasticPullToRefreshConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DGElasticPullToRefreshConstants.swift; sourceTree = "<group>"; };
 		B1887A841C639AE900AD9BC2 /* DGElasticPullToRefreshExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DGElasticPullToRefreshExtensions.swift; sourceTree = "<group>"; };
@@ -218,6 +220,7 @@
 		B1215B251C65B7CF00519F36 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				B16FEBB61C79FEDD00FEB550 /* DEBUGLog.swift */,
 				B1878FD01C69CFDF00C3C3E3 /* AppConfiguration.swift */,
 				B1215B261C65B7CF00519F36 /* TopMostViewController+Extension.swift */,
 				B18AC2101C722C220090AE16 /* NSUserDefaults+Extension.swift */,
@@ -487,6 +490,7 @@
 				B196864F1C5CEDBE006F4614 /* OtherSettingView.swift in Sources */,
 				B124789E1C5F34C8006D1B62 /* Type.swift in Sources */,
 				B12090941C6BBA3C00997E0A /* BlurActionSheet.swift in Sources */,
+				B16FEBB71C79FEDD00FEB550 /* DEBUGLog.swift in Sources */,
 				B18AC2011C70F8390090AE16 /* TableViewHeaderFooterViewWithButton.swift in Sources */,
 				B18AC2071C719C220090AE16 /* UIColor+Extension.swift in Sources */,
 				B1215B2E1C65B7CF00519F36 /* UIScreen+Extension.swift in Sources */,

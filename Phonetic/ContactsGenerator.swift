@@ -10,31 +10,41 @@ import Foundation
 import Contacts
 
 
-/** 
- For safety, all of these functions will not work on Release Edition. If you do want to, please delete `#if DEBUG  #endif`. 
+/**
+ For safety, all of these functions will not work on Release Edition. If you do want to, please set `WORK_ON_RELEASE` to true.
  
- Be careful with your contacts on device. And use on your own risk.
-*/
-
-// MARK: - Insert new random contacts for simulator testing.
+ Be careful with your Contacts on device. And use on your own risk.
+ */
+ 
+ // MARK: - Insert new random contacts for simulator testing.
 extension PhoneticContacts {
+    
+    private var WORK_ON_RELEASE: Bool { return false }
+    
+    private var DEBUG: Bool {
+        
+        #if DEBUG
+            return true
+        #else
+            return WORK_ON_RELEASE
+        #endif
+    }
     
     // MARK: - Insert new contacts
     
     /**
-     While there are less than 30 contacts on simulator, it will automatically generate new contacts.
+    While there are less than 30 contacts on simulator, it will automatically generate new contacts.
     
     - parameter numberOfContacts: Number of contacts you want to generate.
     */
     func insertNewContactsForSimulatorIfNeeded(numberOfContacts: UInt16) {
-        #if DEBUG
-            
-            guard numberOfContacts != 0 else { return }
-            guard needInsertNewContactsForTesting else { return }
-            
-            insertNewContacts(numberOfContacts)
-            
-        #endif
+        
+        guard DEBUG else { return }
+        
+        guard numberOfContacts != 0 else { return }
+        guard needInsertNewContactsForTesting else { return }
+        
+        insertNewContacts(numberOfContacts)
     }
     
     /**
@@ -43,13 +53,12 @@ extension PhoneticContacts {
      - parameter numberOfContacts: Number of contacts you want to generate.
      */
     func insertNewContactsForSimulator(numberOfContacts: UInt16) {
-        #if DEBUG
-            
-            guard numberOfContacts != 0 else { return }
-            
-            insertNewContacts(numberOfContacts)
         
-        #endif
+        guard DEBUG else { return }
+        
+        guard numberOfContacts != 0 else { return }
+        
+        insertNewContacts(numberOfContacts)
     }
     
     /**
@@ -59,45 +68,41 @@ extension PhoneticContacts {
      - parameter numberOfContacts: Number of contacts you want to generate.
      */
     func insertNewContactsForDevice(numberOfContacts: UInt16) {
-        #if DEBUG
-            
-            guard Device.type() != .Simulator else { return }
-            guard numberOfContacts != 0 else { return }
-            
-            insertNewContactsWithMultiAlert(numberOfContacts)
-            
-        #endif
+        
+        guard DEBUG else { return }
+        
+        guard Device.type() != .Simulator else { return }
+        guard numberOfContacts != 0 else { return }
+        
+        insertNewContactsWithMultiAlert(numberOfContacts)
     }
     
     
     // MARK: - Remove all contacts
     func removeAllContactsOfSimulator() {
-        #if DEBUG
-            
-            guard Device.type() == .Simulator else { return }
-            
-            let keysToFetch = [CNContactFamilyNameKey, CNContactGivenNameKey, CNContactMiddleNameKey]
-            
-            do {
-                try self.contactStore.enumerateContactsWithFetchRequest(CNContactFetchRequest(keysToFetch: keysToFetch), usingBlock: { (contact, _) -> Void in
-                    
-                    let mutableContact = contact.mutableCopy() as! CNMutableContact
-                    
-                    if !contact.familyName.isEmpty || !contact.givenName.isEmpty || !contact.middleName.isEmpty {
-                        self.deleteContact(mutableContact)
-                    }
-                })
+        
+        guard DEBUG else { return }
+        
+        guard Device.type() == .Simulator else { return }
+        
+        let keysToFetch = [CNContactFamilyNameKey, CNContactGivenNameKey, CNContactMiddleNameKey]
+        
+        do {
+            try self.contactStore.enumerateContactsWithFetchRequest(CNContactFetchRequest(keysToFetch: keysToFetch), usingBlock: { (contact, _) -> Void in
                 
-            } catch {
-                #if DEBUG
-                    NSLog("\(error)")
-                #endif
-            }
+                let mutableContact = contact.mutableCopy() as! CNMutableContact
+                
+                if !contact.familyName.isEmpty || !contact.givenName.isEmpty || !contact.middleName.isEmpty {
+                    self.deleteContact(mutableContact)
+                }
+            })
             
-            let info = "Removed all contacts of your iOS Simulator!"
-            AlertController.alert(info, completionHandler: nil)
-
-        #endif
+        } catch {
+            DEBUGLog("\(error)")
+        }
+        
+        let info = "Removed all contacts of your iOS Simulator!"
+        AlertController.alert(info, completionHandler: nil)
     }
     
     private func insertNewContacts(numberOfContacts: UInt16) {
@@ -146,9 +151,7 @@ extension PhoneticContacts {
         do {
             try self.contactStore.executeSaveRequest(saveRequest)
         } catch {
-            #if DEBUG
-                NSLog("delete contact failed ! - \(error)")
-            #endif
+            DEBUGLog("delete contact failed ! - \(error)")
         }
     }
     
@@ -158,9 +161,7 @@ extension PhoneticContacts {
         do {
             try self.contactStore.executeSaveRequest(saveRequest)
         } catch {
-            #if DEBUG
-                NSLog("saving Contact failed ! - \(error)")
-            #endif
+            DEBUGLog("saving Contact failed ! - \(error)")
         }
     }
     
@@ -179,7 +180,7 @@ extension PhoneticContacts {
         return givenNames[index]
     }
     
-    // TODO: - 
+    // TODO: -
     
     // English names
     private func generateRandomEnglishFamilyName() -> String {
