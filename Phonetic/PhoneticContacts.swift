@@ -76,7 +76,7 @@ class PhoneticContacts {
                         
                         // modify Contact
                         if let family = mutableContact.valueForKey(CNContactFamilyNameKey) as? String {
-                            if let phoneticFamily = self.phonetic(family, needFix: true) {
+                            if let phoneticFamily = self.phonetic(family, needFix: self.fixPolyphonicCharacters) {
                                 
                                 if self.shouldEnablePhoneticFirstAndLastName {
                                     mutableContact.setValue(phoneticFamily.value, forKey: CNContactPhoneticFamilyNameKey)
@@ -313,11 +313,7 @@ class PhoneticContacts {
     }
     
     private func manaullyFixPolyphonicCharacters(str: String) -> String {
-        
-        if !fixPolyphonicCharacters {
-            return str
-        }
-        
+
         var tempString = str
         let specialCharacters = PolyphonicCharacters.SpecialCharacters
         let newCharacters     = PolyphonicCharacters.NewCharacters
