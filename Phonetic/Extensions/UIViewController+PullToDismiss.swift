@@ -1,6 +1,5 @@
 //
 //  UIViewController+PullToDismiss.swift
-//  iTranslator
 //
 //  Created by Augus on 12/7/15.
 //  Copyright © 2015 iAugus. All rights reserved.

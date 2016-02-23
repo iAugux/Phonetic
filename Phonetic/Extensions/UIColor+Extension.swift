@@ -1,7 +1,6 @@
 //
 //  UIColor+Extension.swift
 //
-//
 //  Created by Augus on 9/4/15.
 //  Copyright © 2015 iAugus. All rights reserved.
 //
