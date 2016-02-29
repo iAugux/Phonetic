@@ -25,9 +25,9 @@ extension ViewController {
             
             // rate me
             let title = NSLocalizedString("Rate ♡ Me", comment: "alert view controller title - rate me")
-            let message = NSLocalizedString("If you like it, please rate me. Thanks!", comment: "alert view controller message")
+            let message = NSLocalizedString("If you enjoy Phonetic Contacts, please take one minute to rate me in the App Store. Thanks a lot!", comment: "alert view controller message")
             let rateActionTitle = NSLocalizedString("Rate", comment: "alert action - Rate")
-            let cancelActionTitle = NSLocalizedString("Cancel", comment: "alert action - Cancel")
+            let cancelActionTitle = NSLocalizedString("No, thanks!", comment: "alert action - Cancel")
             
             let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
             let rateAction = UIAlertAction(title: rateActionTitle, style: .Default, handler: { (_) -> Void in
