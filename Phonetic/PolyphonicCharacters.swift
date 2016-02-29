@@ -6,28 +6,12 @@
 //  Copyright © 2016 iAugus. All rights reserved.
 //
 
+import Foundation
 
 
-/**
-*  Just add new polyphonic character to the array of `SpecialCharacters`,
-*  Then add a new character which used replacing the polyphonic character to the array of `NewCharacters`
-*
-*  Note:
-*    1. guarantee the correct Pinyin phonetic.
-*    2. guarantee the same index.
-*/
-
-struct PolyphonicCharacters {
-    static let SpecialCharacters = ["闫", "覃", "繁", "缪", "种", "燕", "任", "阚", "纪", "过", "华", "区", "重", "曾", "沈", "单", "仇", "秘", "解", "折", "朴", "翟", "查", "盖", "万俟", "尉迟"]
-    
-    static let NewCharacters     = ["颜", "秦", "婆", "庙", "虫", "烟", "人", "看", "几", "锅", "话", "欧", "虫", "增", "审", "善", "球", "必", "谢", "蛇", "嫖", "宅", "渣", "哿", "莫奇", "玉迟"]
-}
-
-
-
- /// Add following code to Xcode Playground and replace "重" with your new polyphonic character
- /// to test whether the result is completely correct.
- /// Note: guarantee the Pinyin Tone is also correct.
+/// Add following code to Xcode Playground and replace "重" with your new polyphonic character
+/// to test whether the result is completely correct.
+/// Note: guarantee the Pinyin Tone is also correct.
 
 /*
 
@@ -36,26 +20,120 @@ import Foundation
 let characterForTesting = "重"
 
 func phonetic(str: String) -> String? {
-    
-    var source = str.mutableCopy()
-    
-    CFStringTransform(source as! CFMutableStringRef, nil, kCFStringTransformMandarinLatin, false)
-    
-    if !(source as! NSString).isEqualToString(str) {
-        if source.rangeOfString(" ").location != NSNotFound {
-            let phoneticParts = source.componentsSeparatedByString(" ")
-            
-            source = NSMutableString()
-            
-            for part in phoneticParts {
-                source.appendString(part)
-            }
-        }
-        return source as? String
-    }
-    return nil
+
+var source = str.mutableCopy()
+
+CFStringTransform(source as! CFMutableStringRef, nil, kCFStringTransformMandarinLatin, false)
+
+if !(source as! NSString).isEqualToString(str) {
+if source.rangeOfString(" ").location != NSNotFound {
+let phoneticParts = source.componentsSeparatedByString(" ")
+
+source = NSMutableString()
+
+for part in phoneticParts {
+source.appendString(part)
+}
+}
+return source as? String
+}
+return nil
 }
 
 phonetic(characterForTesting)
 
 */
+
+
+struct PolyphonicChar {
+    
+    static let all = [
+        b1,
+        c1, c2,
+        g1, g2,
+        h1,
+        j1,
+        k1,
+        m1, m2,
+        o1,
+        p1, p2,
+        q1, q2,
+        r1,
+        s1, s2, s3,
+        x1,
+        y1, y2, y3,
+        z1, z2, z3
+    ]
+    
+    static var b1 = Polyphonic(character: "秘", replacement: "必", pinyin: "bì")
+    
+    static var c1 = Polyphonic(character: "重", replacement: "虫", pinyin: "chóng")
+    static var c2 = Polyphonic(character: "种", replacement: "虫", pinyin: "chóng")
+    
+    static var g1 = Polyphonic(character: "盖", replacement: "哿", pinyin: "gě")
+    static var g2 = Polyphonic(character: "过", replacement: "锅", pinyin: "guō")
+    
+    static var h1 = Polyphonic(character: "华", replacement: "话", pinyin: "huà")
+    
+    static var j1 = Polyphonic(character: "纪", replacement: "几", pinyin: "jǐ")
+    
+    static var k1 = Polyphonic(character: "阚", replacement: "看", pinyin: "kàn")
+    
+    static var m1 = Polyphonic(character: "缪", replacement: "庙", pinyin: "miào")
+    static var m2 = Polyphonic(character: "万俟", replacement: "莫奇", pinyin: "mò qí")
+    
+    static var o1 = Polyphonic(character: "区", replacement: "欧", pinyin: "ōu")
+    
+    static var p1 = Polyphonic(character: "繁", replacement: "婆", pinyin: "pó")
+    static var p2 = Polyphonic(character: "朴", replacement: "嫖", pinyin: "piáo")
+    
+    static var q1 = Polyphonic(character: "覃", replacement: "秦", pinyin: "qín")
+    static var q2 = Polyphonic(character: "仇", replacement: "球", pinyin: "qiú")
+    
+    static var r1 = Polyphonic(character: "任", replacement: "人", pinyin: "rén")
+    
+    static var s1 = Polyphonic(character: "单", replacement: "善", pinyin: "shàn")
+    static var s2 = Polyphonic(character: "沈", replacement: "审", pinyin: "shěn")
+    static var s3 = Polyphonic(character: "折", replacement: "蛇", pinyin: "shé")
+    
+    static var x1 = Polyphonic(character: "解", replacement: "谢", pinyin: "xiè")
+    
+    static var y1 = Polyphonic(character: "燕", replacement: "烟", pinyin: "yān")
+    static var y2 = Polyphonic(character: "闫", replacement: "颜", pinyin: "yán")
+    static var y3 = Polyphonic(character: "玉迟", replacement: "必", pinyin: "yù chí")
+    
+    static var z1 = Polyphonic(character: "查", replacement: "渣", pinyin: "zhā")
+    static var z2 = Polyphonic(character: "翟", replacement: "宅", pinyin: "zhái")
+    static var z3 = Polyphonic(character: "曾", replacement: "增", pinyin: "zēng")
+    
+}
+
+class Polyphonic {
+    var character: String
+    var replacement: String
+    var pinyin: String
+    var prefix: String
+    var key: String
+    
+    var on: Bool {
+        get {
+            guard NSUserDefaults.standardUserDefaults().valueForKey(key) != nil else { return true }
+            return NSUserDefaults.standardUserDefaults().boolForKey(key)
+        }
+    }
+    
+    init(character: String, replacement: String, pinyin: String) {
+        self.character = character
+        self.replacement = replacement
+        self.pinyin = pinyin
+        self.key = "kPolyphonicKey+" + character
+        self.prefix = prefixLetter(pinyin)
+    }
+    
+}
+
+private func prefixLetter(str: String) -> String {
+    let str = str as NSString
+    
+    return str.length > 0 ? str.substringToIndex(1).uppercaseString : ""
+}

@@ -8,9 +8,11 @@
 
 import UIKit
 
+
+let kNavigationBarBackgroundColor = UIColor(red: 0.4, green: 0.4, blue: 0.4, alpha: 1.0)
+
 class SettingsNavigationController: UINavigationController {
 
-    let _color     = UIColor(red: 0.4, green: 0.4, blue: 0.4, alpha: 1.0)
     let _font      = UIFont.systemFontOfSize(17.0)
     let _textColor = UIColor.whiteColor()
 
@@ -41,7 +43,7 @@ class SettingsNavigationController: UINavigationController {
     override func loadView() {
         super.loadView()
         completelyTransparentBar()
-        navigationBar.backgroundColor = _color
+        navigationBar.backgroundColor = kNavigationBarBackgroundColor
         navigationBar.tintColor = GLOBAL_CUSTOM_COLOR.darkerColor(0.9)
         
         configureCustomStatusBar()
@@ -86,7 +88,7 @@ class SettingsNavigationController: UINavigationController {
         guard UIDevice.currentDevice().userInterfaceIdiom != .Pad else { return }
         
         customStatusBar = UIView(frame: UIApplication.sharedApplication().statusBarFrame)
-        customStatusBar.backgroundColor = _color
+        customStatusBar.backgroundColor = kNavigationBarBackgroundColor
         
         view.addSubview(customStatusBar)
     }

@@ -50,7 +50,7 @@ class PhoneticContacts {
         // uncomment the following line if you want to remove all Simulator's Contacts first.
 //        self.removeAllContactsOfSimulator()
         
-//        self.insertNewContactsForSimulatorIfNeeded(50)
+        self.insertNewContactsForSimulatorIfNeeded(50)
 //        self.insertNewContactsForDevice(100)
         
         dispatch_async(dispatch_get_global_queue(Int(QOS_CLASS_BACKGROUND.rawValue), 0)) {
@@ -308,21 +308,7 @@ class PhoneticContacts {
         }
         return nil
     }
-    
-    private func manaullyFixPolyphonicCharacters(str: String) -> String {
-
-        var tempString = str
-        let specialCharacters = PolyphonicCharacters.SpecialCharacters
-        let newCharacters     = PolyphonicCharacters.NewCharacters
-        
-        for (index, element) in specialCharacters.enumerate() {
-            if tempString.containsString(element) {
-                tempString = tempString.stringByReplacingOccurrencesOfString(element, withString: newCharacters[index])
-            }
-        }
-        return tempString
-    }
-    
+   
 }
 
 extension PhoneticContacts {

@@ -26,6 +26,8 @@
 		B1215B301C65B7CF00519F36 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1215B2A1C65B7CF00519F36 /* UIViewController+Extension.swift */; };
 		B1215B311C65B7CF00519F36 /* UIViewController+PullToDismiss.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1215B2B1C65B7CF00519F36 /* UIViewController+PullToDismiss.swift */; };
 		B1215B331C65B7EF00519F36 /* UIButton+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1215B321C65B7EF00519F36 /* UIButton+Extension.swift */; };
+		B121B1AB1C7C5C1E00DC0C05 /* PolyphoneicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B121B1AA1C7C5C1E00DC0C05 /* PolyphoneicViewController.swift */; };
+		B121B1B11C7C899B00DC0C05 /* PolyphonicTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B121B1B01C7C899B00DC0C05 /* PolyphonicTableViewCell.swift */; };
 		B122926B1C59236F00F0F549 /* PhoneticContacts.swift in Sources */ = {isa = PBXBuildFile; fileRef = B122926A1C59236F00F0F549 /* PhoneticContacts.swift */; };
 		B124789E1C5F34C8006D1B62 /* Type.swift in Sources */ = {isa = PBXBuildFile; fileRef = B124789D1C5F34C8006D1B62 /* Type.swift */; };
 		B12478A01C5F4D30006D1B62 /* wave.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = B124789F1C5F4D30006D1B62 /* wave.mp4 */; };
@@ -61,6 +63,7 @@
 		B19686561C5CEE11006F4614 /* Size.swift in Sources */ = {isa = PBXBuildFile; fileRef = B19686531C5CEE11006F4614 /* Size.swift */; };
 		B19686571C5CEE11006F4614 /* Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = B19686541C5CEE11006F4614 /* Version.swift */; };
 		B196865B1C5D0535006F4614 /* AppIconImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B196865A1C5D0535006F4614 /* AppIconImageView.swift */; };
+		B1A2AF4F1C8078120080A261 /* PhoneticContacts+Polyphonic.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A2AF4E1C8078120080A261 /* PhoneticContacts+Polyphonic.swift */; };
 		B1B1CB611C5E0E9400AD7E73 /* KDCircularProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B1CB601C5E0E9400AD7E73 /* KDCircularProgress.swift */; };
 		B1B1CB631C5E25E300AD7E73 /* ViewController+Rate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B1CB621C5E25E300AD7E73 /* ViewController+Rate.swift */; };
 		B1FF84E21C5BC36C0036F8AA /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1FF84E11C5BC36C0036F8AA /* SettingViewController.swift */; };
@@ -102,6 +105,8 @@
 		B1215B2A1C65B7CF00519F36 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
 		B1215B2B1C65B7CF00519F36 /* UIViewController+PullToDismiss.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+PullToDismiss.swift"; sourceTree = "<group>"; };
 		B1215B321C65B7EF00519F36 /* UIButton+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIButton+Extension.swift"; sourceTree = "<group>"; };
+		B121B1AA1C7C5C1E00DC0C05 /* PolyphoneicViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PolyphoneicViewController.swift; sourceTree = "<group>"; };
+		B121B1B01C7C899B00DC0C05 /* PolyphonicTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PolyphonicTableViewCell.swift; sourceTree = "<group>"; };
 		B122926A1C59236F00F0F549 /* PhoneticContacts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhoneticContacts.swift; sourceTree = "<group>"; };
 		B124789D1C5F34C8006D1B62 /* Type.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Type.swift; sourceTree = "<group>"; };
 		B124789F1C5F4D30006D1B62 /* wave.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = wave.mp4; sourceTree = "<group>"; };
@@ -141,6 +146,7 @@
 		B19686531C5CEE11006F4614 /* Size.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Size.swift; sourceTree = "<group>"; };
 		B19686541C5CEE11006F4614 /* Version.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Version.swift; sourceTree = "<group>"; };
 		B196865A1C5D0535006F4614 /* AppIconImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppIconImageView.swift; sourceTree = "<group>"; };
+		B1A2AF4E1C8078120080A261 /* PhoneticContacts+Polyphonic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PhoneticContacts+Polyphonic.swift"; sourceTree = "<group>"; };
 		B1B1CB601C5E0E9400AD7E73 /* KDCircularProgress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KDCircularProgress.swift; sourceTree = "<group>"; };
 		B1B1CB621C5E25E300AD7E73 /* ViewController+Rate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ViewController+Rate.swift"; sourceTree = "<group>"; };
 		B1FF84E11C5BC36C0036F8AA /* SettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
@@ -245,6 +251,7 @@
 				B1B1CB621C5E25E300AD7E73 /* ViewController+Rate.swift */,
 				B1FF84E11C5BC36C0036F8AA /* SettingViewController.swift */,
 				B169426F1C6211FB000D5BFE /* AdditionalSettingsViewController.swift */,
+				B121B1AA1C7C5C1E00DC0C05 /* PolyphoneicViewController.swift */,
 				B18AC2081C71B35E0090AE16 /* HelpManualViewController.swift */,
 				B1FF84E31C5BC3800036F8AA /* InfoViewController.swift */,
 				B18AC2021C7104F20090AE16 /* SettingsNavigationController.swift */,
@@ -260,6 +267,7 @@
 				B16942711C622A7E000D5BFE /* BlurImageView.swift */,
 				B15CB2A41C5B3C6C002694ED /* WaveView.swift */,
 				B19686481C5C916C006F4614 /* GradientView.swift */,
+				B121B1B01C7C899B00DC0C05 /* PolyphonicTableViewCell.swift */,
 				B196864E1C5CEDBE006F4614 /* OtherSettingView.swift */,
 				B196865A1C5D0535006F4614 /* AppIconImageView.swift */,
 				B18AC2001C70F8390090AE16 /* TableViewHeaderFooterViewWithButton.swift */,
@@ -273,6 +281,7 @@
 				B164CAB61C60B72C00AD7009 /* PolyphonicCharacters.swift */,
 				B1215B211C65144C00519F36 /* Phonetic.swift */,
 				B122926A1C59236F00F0F549 /* PhoneticContacts.swift */,
+				B1A2AF4E1C8078120080A261 /* PhoneticContacts+Polyphonic.swift */,
 				B1215B1F1C6506D100519F36 /* PhoneticContacts+QuickSearch.swift */,
 				B18AC1FC1C6E716F0090AE16 /* PhoneticContacts+Clean.swift */,
 				B18AC20E1C721F610090AE16 /* DetectPreferredLanguage.swift */,
@@ -475,6 +484,7 @@
 				B18AC20B1C71C0C80090AE16 /* BaseTableViewController.swift in Sources */,
 				B1215B201C6506D100519F36 /* PhoneticContacts+QuickSearch.swift in Sources */,
 				B19686491C5C916C006F4614 /* GradientView.swift in Sources */,
+				B121B1B11C7C899B00DC0C05 /* PolyphonicTableViewCell.swift in Sources */,
 				B1887A8B1C639AE900AD9BC2 /* DGElasticPullToRefreshLoadingViewCircle.swift in Sources */,
 				B1159B721C59045800F16037 /* ViewController.swift in Sources */,
 				B140CCF01C60FAD30078657A /* ContactsGenerator.swift in Sources */,
@@ -491,6 +501,7 @@
 				B124789E1C5F34C8006D1B62 /* Type.swift in Sources */,
 				B12090941C6BBA3C00997E0A /* BlurActionSheet.swift in Sources */,
 				B16FEBB71C79FEDD00FEB550 /* DEBUGLog.swift in Sources */,
+				B1A2AF4F1C8078120080A261 /* PhoneticContacts+Polyphonic.swift in Sources */,
 				B18AC2011C70F8390090AE16 /* TableViewHeaderFooterViewWithButton.swift in Sources */,
 				B18AC2071C719C220090AE16 /* UIColor+Extension.swift in Sources */,
 				B1215B2E1C65B7CF00519F36 /* UIScreen+Extension.swift in Sources */,
@@ -506,6 +517,7 @@
 				B1215B2C1C65B7CF00519F36 /* TopMostViewController+Extension.swift in Sources */,
 				B1159B701C59045800F16037 /* AppDelegate.swift in Sources */,
 				B16CAB7A1C5E5DE900AF3D35 /* ViewController+Execution.swift in Sources */,
+				B121B1AB1C7C5C1E00DC0C05 /* PolyphoneicViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

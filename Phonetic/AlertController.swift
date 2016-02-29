@@ -6,21 +6,20 @@
 //  Copyright © 2016 iAugus. All rights reserved.
 //
 
-import CoreAudioKit
-
+import UIKit
 
 
 class AlertController {
     
     class func alert(info: String, completionHandler: (() -> Void)?) {
-        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (_) -> Void in
+        let okAction = UIAlertAction(title: "OK", style: .Cancel) { (_) -> Void in
             if let completion = completionHandler {
                 completion()
             }
         }
         
         let alertController = UIAlertController(title: nil, message: info, preferredStyle: .Alert)
-        alertController.addAction(cancelAction)
+        alertController.addAction(okAction)
         UIApplication.topMostViewController()?.presentViewController(alertController, animated: true, completion: nil)
     }
     

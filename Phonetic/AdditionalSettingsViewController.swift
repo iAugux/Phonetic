@@ -9,8 +9,6 @@
 import UIKit
 
 
-let kDismissedAdditionalSettingsVCNotification = "kDismissedAdditionalSettingsVCNotification"
-
 let SWITCH_TINT_COLOR_FOR_UI_SETTINGS = UIColor(red: 0.4395, green: 0.8138, blue: 0.9971, alpha: 1.0)
 
 class AdditionalSettingsViewController: BaseTableViewController {
@@ -20,17 +18,10 @@ class AdditionalSettingsViewController: BaseTableViewController {
     
     private let userDefaults = NSUserDefaults.standardUserDefaults()
     
-    private let on     = NSLocalizedString("On", comment: "")
-    private let off    = NSLocalizedString("Off", comment: "")
-    private let _title = NSLocalizedString("Additional Settings", comment: "SettingsNavigationController title - Additional Settings")
+    private let on  = NSLocalizedString("On", comment: "")
+    private let off = NSLocalizedString("Off", comment: "")
 
-    private var blurBackgroundView: BlurImageView!
     private var blurActionSheet: BlurActionSheet!
-    
-    // MARK: - Deinit
-    deinit {
-        tableView.dg_removePullToRefresh()
-    }
     
     // MARK: -
     @IBOutlet weak var statusLabel: UILabel!
@@ -144,14 +135,6 @@ class AdditionalSettingsViewController: BaseTableViewController {
         }
     }
     
-    private var keepSettingWindowOpen: Bool {
-        if userDefaults.valueForKey(kKeepSettingsWindowOpen) == nil {
-            userDefaults.setBool(kKeepSettingsWindowOpenDefaultBool, forKey: kKeepSettingsWindowOpen)
-            userDefaults.synchronize()
-        }
-        return userDefaults.boolForKey(kKeepSettingsWindowOpen)
-    }
-    
 }
 
 // MARK: - Life Cycle
@@ -202,42 +185,7 @@ extension AdditionalSettingsViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.separatorColor = UIColor(red: 0.502, green: 0.502, blue: 0.502, alpha: 1.0)
-        
-        if let nav = navigationController as? SettingsNavigationController {
-            configurePullToDismissViewController(UIColor.clearColor(), fillColor: nav._color, completionHandler: {
-                self.postDismissedNotificationIfNeeded()
-            })
-        }
-    }
-    
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        guard let nav = navigationController as? SettingsNavigationController else { return }
-        
-        nav.customTitleLabel?.text = _title
-        nav.configureCustomBarButtonIfNeeded()
-        nav.customBarButton?.alpha = 0
-        nav.customTitleLabel?.alpha = 0
-        
-        UIView.animateWithDuration(0.3, animations: { () -> Void in
-            nav.customBarButton?.alpha = 1
-            nav.customTitleLabel?.alpha = 1
-        })
-    }
-    
-    override func viewWillDisappear(animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        guard let nav = navigationController as? SettingsNavigationController else { return }
-
-        UIView.animateWithDuration(0.3, delay: 0, options: .CurveEaseInOut, animations: { () -> Void in
-            nav.customBarButton?.alpha = 0
-            }) { (_) -> Void in
-                nav.customBarButton?.removeFromSuperview()
-                nav.customBarButton = nil
-        }
+        _title = NSLocalizedString("Additional Settings", comment: "SettingsNavigationController title - Additional Settings")
     }
     
     override func didReceiveMemoryWarning() {
@@ -447,12 +395,6 @@ extension AdditionalSettingsViewController {
     
 }
 
-// MARK: - Should Enable Phonetic First & Last Name
-extension AdditionalSettingsViewController {
-    
-    
-}
-
 // MARK: - Configure Subviews
 extension AdditionalSettingsViewController {
     
@@ -519,84 +461,6 @@ extension AdditionalSettingsViewController {
     
 }
 
-// MARK: - Keep `SettingViewController` open after dismissing.
-extension AdditionalSettingsViewController {
-    
-    private func postDismissedNotificationIfNeeded() {
-        // It is not necessary here, but I prefer to keep it.
-        guard UIDevice.currentDevice().userInterfaceIdiom != .Pad else { return }
-        
-        guard keepSettingWindowOpen else { return }
-        
-        NSNotificationCenter.defaultCenter().postNotificationName(kDismissedAdditionalSettingsVCNotification, object: nil)
-    }
-    
-    override func dismissViewController() {
-        dismissViewControllerAnimated(true) { () -> Void in
-            self.postDismissedNotificationIfNeeded()
-        }
-    }
-    
-}
-
-// MARK: - Scroll View Delegate
-extension AdditionalSettingsViewController {
-    
-    override func scrollViewWillBeginDragging(scrollView: UIScrollView) {
-        // TODO: - Direction
-//        if scrollView.panGestureRecognizer.translationInView(scrollView.superview).y > 0 {
-//        }
-        prepareForDismissingViewController(true)
-    }
-    
-    override func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-//        if scrollView.panGestureRecognizer.translationInView(scrollView.superview).y > 0 {
-//        }
-        prepareForDismissingViewController(false)
-    }
-    
-    private func makeNavigationBarTransparent(transparent: Bool) {
-        UIView.animateWithDuration(0.5) { () -> Void in
-            self.navigationController?.navigationBar.alpha = transparent ? 0 : 1
-        }
-    }
-    
-    private func prepareForDismissingViewController(prepared: Bool) {
-        
-        guard let nav = navigationController as? SettingsNavigationController else { return }
-        
-        if !prepared {
-            UIView.animateWithDuration(0.3, delay: 0, options: .CurveEaseInOut, animations: { () -> Void in
-                nav.customTitleLabel?.alpha = 0
-                }, completion: { (_) -> Void in
-                    
-                    nav.customTitleLabel?.text      = self._title
-                    nav.customTitleLabel?.font      = nav._font
-                    nav.customTitleLabel?.textColor = nav._textColor
-            })
-        }
-        
-        UIView.animateWithDuration(0.3, delay: 0.1, options: .CurveEaseInOut, animations: { () -> Void in
-            nav.customTitleLabel?.alpha = prepared ? 0 : 1
-            nav.customBarButton?.alpha = prepared ? 0 : 1
-            }) { (_) -> Void in
-                
-                if prepared {
-                    nav.customTitleLabel?.text      = NSLocalizedString("Pull Down to Dismiss", comment: "")
-                    nav.customTitleLabel?.textColor = GLOBAL_CUSTOM_COLOR.colorWithAlphaComponent(0.8)
-                    nav.customTitleLabel?.font      = UIFont.systemFontOfSize(12.0, weight: -1.0)
-                }
-                
-                UIView.animateWithDuration(0.3, delay: 0.1, options: .CurveEaseInOut, animations: { () -> Void in
-                    nav.customTitleLabel?.alpha = 1
-                    }, completion: { (_) -> Void in
-                        
-                })
-        }
-    }
-    
-}
-
 // MARK: - Rotation
 extension AdditionalSettingsViewController {
     
@@ -611,8 +475,6 @@ extension AdditionalSettingsViewController {
             blurActionSheet?.removeFromSuperview()
         }
     }
-    
-    
 }
 
 extension AdditionalSettingsViewController: TableViewHeaderFooterViewWithButtonDelegate {
@@ -687,26 +549,6 @@ extension AdditionalSettingsViewController {
         }
         
         return footerTitle
-    }
-    
-}
-
-// MARK: - Table View Delegate
-extension AdditionalSettingsViewController {
-    
-    override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-        //  @fixed: iPad refusing to accept clear color
-        cell.backgroundColor = UIColor.clearColor()
-    }
-    
-    override func tableView(tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {
-        // change label's text color of Footer View
-        (view as! UITableViewHeaderFooterView).textLabel?.textColor = UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1.0)
-    }
-    
-    override func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
-        // change label's text color of Header View
-        (view as! UITableViewHeaderFooterView).textLabel?.textColor = UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1.0)
     }
     
 }
