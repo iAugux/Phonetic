@@ -51,8 +51,8 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureSubViews()
-        
-        NSTimer.scheduledTimerWithTimeInterval(3.0, target: self, selector: "rateMeInTheThirdTime", userInfo: nil, repeats: false)
+
+        NSTimer.scheduledTimerWithTimeInterval(3.0, target: self, selector: "rateMeInTheSecondTime", userInfo: nil, repeats: false)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "showLabels", name: kVCWillDisappearNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "popoverSettingViewController", name: kDismissedAdditionalSettingsVCNotification, object: nil)
     }
@@ -75,6 +75,8 @@ class ViewController: UIViewController {
         avPlayer?.pause()
         avPlayerPlaceholderView.subviews.first?.removeFromSuperview()
         avPlayerController = nil
+        
+        AlertController.alert("removed", completionHandler: nil)
     }
     
     private func configureSubViews() {
