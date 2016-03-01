@@ -24,6 +24,7 @@ class PolyphonicViewController: BaseTableViewController {
     }
     
     @IBOutlet weak var masterLabel: UILabel!
+    @IBOutlet weak var headerViewContainer: UIView!
     
     override func loadView() {
         super.loadView()
@@ -155,6 +156,8 @@ extension PolyphonicViewController {
         super.tableView(tableView, willDisplayHeaderView: view, forSection: section)
         
         (view as! UITableViewHeaderFooterView).contentView.backgroundColor = kNavigationBarBackgroundColor
+        
+        headerViewContainer.frame.size = headerViewContainer.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize)
     }
     
 }
