@@ -1,5 +1,3 @@
-###### Note: `The new branch will always be merged after the latest Version being sold on App Store.`
-
 # Phonetic
 ![Language](https://img.shields.io/badge/language-Swift%202-orange.svg)
 ![License](https://img.shields.io/badge/License-Custom%20License%20Based%20on%20MIT-2181C3.svg)
