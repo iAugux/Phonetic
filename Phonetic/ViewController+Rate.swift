@@ -11,23 +11,23 @@ import UIKit
 
 extension ViewController {
     
-    func rateMeInTheThirdTime() {
+    func rateMeInTheSecondTime() {
         
         guard let build = NSBundle.mainBundle().objectForInfoDictionaryKey(kCFBundleVersionKey as String) as? String else { return }
 
         let rateMe = "kRateMeOnAppStore\(build)"
         let userDefaults = NSUserDefaults.standardUserDefaults()
         
-        guard userDefaults.integerForKey(rateMe) < 4 else { return }    // never alert again
+        guard userDefaults.integerForKey(rateMe) < 3 else { return }    // never alert again
         
-        guard userDefaults.integerForKey(rateMe) != 3 else {
-            userDefaults.setInteger(4, forKey: rateMe)
+        guard userDefaults.integerForKey(rateMe) != 2 else {
+            userDefaults.setInteger(3, forKey: rateMe)
             
             // rate me
-            let title = NSLocalizedString("Rate ♡ Me", comment: "alert view controller title - rate me")
-            let message = NSLocalizedString("If you enjoy Phonetic Contacts, please take one minute to rate me in the App Store. Thanks a lot!", comment: "alert view controller message")
+            let title = NSLocalizedString("Rate ♡ Phonetic", comment: "alert view controller title - rate me")
+            let message = NSLocalizedString("If you enjoy using Phonetic Contacts, would you mind taking a moment to rate it? It won't take more than one minute. Thanks a lot!", comment: "alert view controller message")
             let rateActionTitle = NSLocalizedString("Rate", comment: "alert action - Rate")
-            let cancelActionTitle = NSLocalizedString("No, thanks!", comment: "alert action - Cancel")
+            let cancelActionTitle = NSLocalizedString("No, thanks", comment: "alert action - Cancel")
             
             let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
             let rateAction = UIAlertAction(title: rateActionTitle, style: .Default, handler: { (_) -> Void in
@@ -47,9 +47,6 @@ extension ViewController {
             return
         case 1:
             userDefaults.setInteger(2, forKey: rateMe)
-            return
-        case 2:
-            userDefaults.setInteger(3, forKey: rateMe)
             return
         default: return
         }
