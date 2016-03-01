@@ -46,7 +46,7 @@
 "If the device language is not Chinese, the switch will be forced open." = "如果设备的语言不是中文，开关将被强制打开。";
 
 /* alert view controller message */
-"If you like it, please rate me. Thanks!" = "如果你喜欢这个App，请给我打分。谢谢！";
+"If you enjoy using Phonetic Contacts, would you mind taking a moment to rate it? It won't take more than one minute. Thanks a lot!" = "如果您喜欢使用 Phonetic Contacts，烦请花点时间给它评分。感谢您的支持！";
 
 /* No comment provided by engineer. */
 "Job Title" = "职位字段";
@@ -88,7 +88,7 @@
 "Rate" = "打分";
 
 /* alert view controller title - rate me */
-"Rate ♡ Me" = "给我打分";
+"Rate ♡ Phonetic" = "给我打分";
 
 /* navigation item title - Settings
    UIAlertAction - title */
