@@ -48,8 +48,9 @@ phonetic(characterForTesting)
 struct PolyphonicChar {
     
     static let all = [
-        b1,
-        c1, c2,
+        b1, b2, b3,
+        c1, c2, c3,
+        d1,
         g1, g2,
         h1,
         j1,
@@ -57,18 +58,23 @@ struct PolyphonicChar {
         m1, m2,
         o1,
         p1, p2,
-        q1, q2,
+        q1, q2, q3,
         r1,
         s1, s2, s3,
         x1,
-        y1, y2, y3,
-        z1, z2, z3
+        y1, y2, y3, y4,
+        z1, z2, z3, z4, z5
     ]
     
     static var b1 = Polyphonic(character: "秘", replacement: "必", pinyin: "bì")
+    static var b2 = Polyphonic(character: "薄", replacement: "博", pinyin: "bó")
+    static var b3 = Polyphonic(character: "卜", replacement: "补", pinyin: "bǔ")
     
     static var c1 = Polyphonic(character: "重", replacement: "虫", pinyin: "chóng")
     static var c2 = Polyphonic(character: "种", replacement: "虫", pinyin: "chóng")
+    static var c3 = Polyphonic(character: "单于", replacement: "缠于", pinyin: "chán yú")
+    
+    static var d1 = Polyphonic(character: "都", replacement: "嘟", pinyin: "dū")
     
     static var g1 = Polyphonic(character: "盖", replacement: "哿", pinyin: "gě")
     static var g2 = Polyphonic(character: "过", replacement: "锅", pinyin: "guō")
@@ -89,6 +95,7 @@ struct PolyphonicChar {
     
     static var q1 = Polyphonic(character: "覃", replacement: "秦", pinyin: "qín")
     static var q2 = Polyphonic(character: "仇", replacement: "球", pinyin: "qiú")
+    static var q3 = Polyphonic(character: "戚", replacement: "器", pinyin: "qì")
     
     static var r1 = Polyphonic(character: "任", replacement: "人", pinyin: "rén")
     
@@ -100,11 +107,14 @@ struct PolyphonicChar {
     
     static var y1 = Polyphonic(character: "燕", replacement: "烟", pinyin: "yān")
     static var y2 = Polyphonic(character: "闫", replacement: "颜", pinyin: "yán")
-    static var y3 = Polyphonic(character: "玉迟", replacement: "必", pinyin: "yù chí")
+    static var y3 = Polyphonic(character: "员", replacement: "运", pinyin: "yùn")
+    static var y4 = Polyphonic(character: "玉迟", replacement: "玉迟", pinyin: "yù chí")
     
     static var z1 = Polyphonic(character: "查", replacement: "渣", pinyin: "zhā")
     static var z2 = Polyphonic(character: "翟", replacement: "宅", pinyin: "zhái")
-    static var z3 = Polyphonic(character: "曾", replacement: "增", pinyin: "zēng")
+    static var z3 = Polyphonic(character: "祭", replacement: "债", pinyin: "zhài")
+    static var z4 = Polyphonic(character: "曾", replacement: "增", pinyin: "zēng")
+    static var z5 = Polyphonic(character: "中行", replacement: "中航", pinyin: "zhōng háng")
     
 }
 

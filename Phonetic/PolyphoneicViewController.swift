@@ -39,8 +39,9 @@ class PolyphonicViewController: BaseTableViewController {
         super.viewDidLoad()
         
         names = [
-            "B" : [PolyphonicChar.b1],
-            "C" : [PolyphonicChar.c1, PolyphonicChar.c2],
+            "B" : [PolyphonicChar.b1, PolyphonicChar.b2, PolyphonicChar.b3],
+            "C" : [PolyphonicChar.c1, PolyphonicChar.c2, PolyphonicChar.c3],
+            "D" : [PolyphonicChar.d1],
             "G" : [PolyphonicChar.g1, PolyphonicChar.g2],
             "H" : [PolyphonicChar.h1],
             "J" : [PolyphonicChar.j1],
@@ -48,12 +49,12 @@ class PolyphonicViewController: BaseTableViewController {
             "M" : [PolyphonicChar.m1, PolyphonicChar.m2],
             "O" : [PolyphonicChar.o1],
             "P" : [PolyphonicChar.p1, PolyphonicChar.p2],
-            "Q" : [PolyphonicChar.q1, PolyphonicChar.q2],
+            "Q" : [PolyphonicChar.q1, PolyphonicChar.q2, PolyphonicChar.q3],
             "R" : [PolyphonicChar.r1],
             "S" : [PolyphonicChar.s1, PolyphonicChar.s2, PolyphonicChar.s3],
             "X" : [PolyphonicChar.x1],
-            "Y" : [PolyphonicChar.y1, PolyphonicChar.y2, PolyphonicChar.y3],
-            "Z" : [PolyphonicChar.z1, PolyphonicChar.z2, PolyphonicChar.z3]
+            "Y" : [PolyphonicChar.y1, PolyphonicChar.y2, PolyphonicChar.y3, PolyphonicChar.y4],
+            "Z" : [PolyphonicChar.z1, PolyphonicChar.z2, PolyphonicChar.z3, PolyphonicChar.z4, PolyphonicChar.z5]
         ]
 
         nameSectionTitles = (names.allKeys as! [String]).sort()
