@@ -11,14 +11,16 @@ import UIKit
 
 class AlertController {
     
-    class func alert(info: String, completionHandler: (() -> Void)?) {
-        let okAction = UIAlertAction(title: "OK", style: .Cancel) { (_) -> Void in
+    private static let ok = NSLocalizedString("OK", comment: "")
+    
+    class func alert(title title: String = "", message: String = "", actionTitle: String = ok, completionHandler: (() -> Void)?) {
+        let okAction = UIAlertAction(title: actionTitle, style: .Cancel) { (_) -> Void in
             if let completion = completionHandler {
                 completion()
             }
         }
         
-        let alertController = UIAlertController(title: nil, message: info, preferredStyle: .Alert)
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
         alertController.addAction(okAction)
         UIApplication.topMostViewController()?.presentViewController(alertController, animated: true, completion: nil)
     }

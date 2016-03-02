@@ -23,6 +23,8 @@ let kVCWillDisappearNotification  = "kVCWillDisappearNotification"
 
 class SettingViewController: UIViewController {
     
+    @IBOutlet weak var polyphonicButton: UIButton!
+    
     private var customBarButton: UIButton!
     private let userDefaults = NSUserDefaults.standardUserDefaults()
     
@@ -72,6 +74,14 @@ class SettingViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "VCPresentPolyphonicVC" {
+            guard let destinationVC = segue.destinationViewController as? SettingsNavigationController else { return }
+            destinationVC.popoverPresentationController?.sourceRect = polyphonicButton.bounds
+            destinationVC.popoverPresentationController?.backgroundColor = kNavigationBarBackgroundColor
+        }
+    }
+    
     private func configureCustomBarButtonItem() {
         guard let navBar = navigationController?.navigationBar else { return }
         
@@ -98,11 +108,14 @@ class SettingViewController: UIViewController {
     }
     
     private func presentPopoverController() {
-        guard let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier(String(SettingsNavigationController)) as? SettingsNavigationController else { return }
+        guard let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier(String(SettingsNavigationController)) as? SettingsNavigationController,
+            sourceView = customBarButton else { return }
         
         vc.modalPresentationStyle = .Popover
         vc.popoverPresentationController?.canOverlapSourceViewRect = true
-        vc.popoverPresentationController?.sourceView = customBarButton
+        vc.popoverPresentationController?.sourceView = sourceView
+        vc.popoverPresentationController?.sourceRect = sourceView.bounds
+        vc.popoverPresentationController?.backgroundColor = kNavigationBarBackgroundColor
         UIApplication.topMostViewController()?.presentViewController(vc, animated: true, completion: nil)
     }
     

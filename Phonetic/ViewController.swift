@@ -69,6 +69,11 @@ class ViewController: UIViewController {
         UIApplication.sharedApplication().statusBarStyle = .LightContent
     }
     
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        alertToChooseQuickSearchKey()
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         
@@ -76,7 +81,8 @@ class ViewController: UIViewController {
         avPlayerPlaceholderView.subviews.first?.removeFromSuperview()
         avPlayerController = nil
         
-        AlertController.alert("removed", completionHandler: nil)
+        // TODO: - Toast
+//        AlertController.alert("removed", completionHandler: nil)
     }
     
     private func configureSubViews() {

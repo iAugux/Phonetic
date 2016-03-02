@@ -237,6 +237,8 @@ extension AdditionalSettingsViewController {
             
             overwriteAlreadyExistsSwitch.enabled = true
             
+            alertToConfigureForQuickSearchKey()
+            
         } else {
             userDefaults.setBool(false, forKey: kEnableNickname)
             
@@ -465,12 +467,9 @@ extension AdditionalSettingsViewController {
 extension AdditionalSettingsViewController {
     
     override func willRotateToInterfaceOrientation(toInterfaceOrientation: UIInterfaceOrientation, duration: NSTimeInterval) {
+        super.willRotateToInterfaceOrientation(toInterfaceOrientation, duration: duration)
         
-        // FIXME: - After rotating, the position of current popover is not right.
-        // Temporarily, I have to dismiss it first on iPad.
         if UIDevice.currentDevice().userInterfaceIdiom == .Pad {
-            dismissViewController()
-            
             // FIXME: -
             blurActionSheet?.removeFromSuperview()
         }
@@ -480,7 +479,7 @@ extension AdditionalSettingsViewController {
 extension AdditionalSettingsViewController: TableViewHeaderFooterViewWithButtonDelegate {
     
     func tableViewHeaderFooterViewWithButtonDidTap() {
-        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier(String(HelpManualViewController)) as? HelpManualViewController {            
+        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier(String(HelpManualViewController)) as? HelpManualViewController {
             navigationController?.pushViewController(vc, animated: true)
         }
     }
@@ -493,8 +492,8 @@ extension AdditionalSettingsViewController {
     override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
         switch section {
-        case 2:            
-            let headerView = TableViewHeaderFooterViewWithButton(buttonImageName: "help")
+        case 2:
+            let headerView = TableViewHeaderFooterViewWithButton(buttonImageName: "help", tintColor: UIColor(red:1.0, green:1.0, blue:0.4, alpha:1.0))
             headerView.delegate = self
             return headerView
             
@@ -551,6 +550,17 @@ extension AdditionalSettingsViewController {
         return footerTitle
     }
     
+}
+
+extension AdditionalSettingsViewController {
+    
+    private func alertToConfigureForQuickSearchKey() {
+        UIApplication.initializeInTheFirstTime("alertToConfigureForQuickSearchKeyOnlyOnce") { () -> Void in
+            let title = NSLocalizedString("Setting", comment: "UIAlertViewController title")
+            let message = NSLocalizedString("Please tap the yellow button to complete settings. This message is only displayed once!", comment: "UIAlertViewController message")
+            AlertController.alert(title: title, message: message, completionHandler: nil)
+        }
+    }
 }
 
 

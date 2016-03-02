@@ -2,6 +2,7 @@
   "images" : [
     {
       "idiom" : "universal",
+      "filename" : "help.png",
       "scale" : "1x"
     },
     {

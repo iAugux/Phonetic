@@ -104,7 +104,7 @@ extension ViewController: UIPopoverPresentationControllerDelegate {
             nav.hidesBarsOnSwipe = true
             nav.modalPresentationStyle = .Popover
             Popover.popover = nav.popoverPresentationController
-            Popover.popover?.backgroundColor = UIColor(red:0.36, green:0.36, blue:0.36, alpha:1)
+            Popover.popover?.backgroundColor = kNavigationBarBackgroundColor
             Popover.popover?.delegate = self
             Popover.popover?.sourceView = view
 

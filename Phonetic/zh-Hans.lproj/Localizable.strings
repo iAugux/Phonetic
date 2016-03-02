@@ -1,3 +1,6 @@
+/* */
+"OK" = "好";
+
 /* No comment provided by engineer. */
 "%@ for Quick Search" = "%@";
 
@@ -87,12 +90,18 @@
 /* alert action - Rate */
 "Rate" = "打分";
 
+/* alert action - Cancel */
+"No, thanks" = "取消";
+
 /* alert view controller title - rate me */
 "Rate ♡ Phonetic" = "给我打分";
 
 /* navigation item title - Settings
    UIAlertAction - title */
 "Settings" = "设置";
+
+/* UIAlertViewController title */
+"Setting" = "设置";
 
 /* No comment provided by engineer. */
 "Suffix" = "后缀字段";
@@ -109,3 +118,26 @@
 /* Table view footer title */
 "⚠️ Be Careful. All of the keys including you manually added before will be removed!" = "⚠️ 请注意！包括之前手动添加的字段都将被清除掉。";
 
+/* UIAlertViewController message */
+"Please tap the yellow button to complete settings. This message is only displayed once!" = "请点击黄色按钮来完成设置。本条消息只显示一次！";
+
+/* alert view controller title */
+"Choose Key for Quick Search" = "选择字段用于快速搜索";
+
+/* alert view controller message */
+"`Nickname Key` is highly recommended. This message is only displayed once! You can also set it later in settings." = "推荐使用`昵称字段`。本条消息只显示一次！你也可以稍后自行设置。";
+
+/* alert action title */
+"Go Setting" = "去设置";
+
+/* alert action title */
+"I'll Set it Later" = "稍后再设置";
+
+/* alert action title */
+"Already Done. Dismiss" = "已设置，关闭";
+
+/* */
+"Enable All" = "全选";
+
+/* */
+"Disable All" = "全部取消";

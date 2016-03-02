@@ -154,3 +154,6 @@
 /* Class = "UILabel"; text = "Overwrite Already  Exists"; ObjectID = "zOq-ls-6Q3"; */
 "zOq-ls-6Q3.text" = "覆盖已有字段";
 
+/* Class = "UILabel"; text = "The more polyphonic characters are selected, the more time will be taken."; ObjectID = "fzh-k8-Gk4"; */
+"fzh-k8-Gk4.text" = "多音字选择的越多，运行花费的时间越多。";
+

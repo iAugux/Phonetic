@@ -178,3 +178,17 @@ extension BaseTableViewController {
     }
     
 }
+
+
+// MARK: - Rotation
+extension BaseTableViewController {
+    
+    override func willRotateToInterfaceOrientation(toInterfaceOrientation: UIInterfaceOrientation, duration: NSTimeInterval) {
+        
+        // FIXME: - After rotating, the position of current popover is not right.
+        // Temporarily, I have to dismiss it first on iPad.
+        if UIDevice.currentDevice().userInterfaceIdiom == .Pad {
+            dismissViewController()
+        }
+    }
+}

@@ -32,7 +32,7 @@ let kCleanPhoneticSuffix                 = "kCleanPhoneticSuffix"
 let kPhoneticFirstAndLastNameDefaultBool = true
 
 let kAdditionalSettingsStatusDefaultBool = true
-let kEnableNicknameDefaultBool           = true
+let kEnableNicknameDefaultBool           = false
 let kEnableCustomNameDefaultBool         = false
 let kOverwriteAlreadyExistsDefaultBool   = false
 let kKeepSettingsWindowOpenDefaultBool   = false

@@ -102,13 +102,13 @@ extension PhoneticContacts {
         }
         
         let info = "Removed all contacts of your iOS Simulator!"
-        AlertController.alert(info, completionHandler: nil)
+        AlertController.alert(title: info, completionHandler: nil)
     }
     
     private func insertNewContacts(numberOfContacts: UInt16) {
         
         let info = "We will generate \(numberOfContacts) new random contacts for your iOS Simulator."
-        AlertController.alert(info) { () -> Void in
+        AlertController.alert(title: info) { () -> Void in
             self.generateAndInsert(numberOfContacts)
         }
     }
