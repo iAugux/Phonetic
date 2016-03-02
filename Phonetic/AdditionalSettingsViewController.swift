@@ -122,6 +122,18 @@ class AdditionalSettingsViewController: BaseTableViewController {
         }
     }
     
+    @IBOutlet weak var cleanSocialProfilesKeysSwitch: UISwitch! {
+        didSet {
+            cleanSocialProfilesKeysSwitch.shouldSwitch(kCleanSocialProfilesKeys, defaultBool: kCleanSocialProfilesKeysDefaultBool)
+        }
+    }
+    
+    @IBOutlet weak var cleanInstantMessageAddressesKeysSwitch: UISwitch! {
+        didSet {
+            cleanInstantMessageAddressesKeysSwitch.shouldSwitch(kCleanInstantMessageAddressesKeys, defaultBool: kCleanInstantMessageKeysDefaultBool)
+        }
+    }
+    
     // MARK: - UI
     @IBOutlet weak var forceOpenAnimationSwitch: UISwitch! {
         didSet {
@@ -144,42 +156,44 @@ extension AdditionalSettingsViewController {
         super.loadView()
         configureQuickSearchSelectionViews()
         
-        statusLabel.text                           = statusSwitch.on ? on : off
+        statusLabel.text                                   = statusSwitch.on ? on : off
 
-        phoneticFirstAndLastNameSwitch.onTintColor = GLOBAL_CUSTOM_COLOR
+        phoneticFirstAndLastNameSwitch.onTintColor         = GLOBAL_CUSTOM_COLOR
 
-        statusSwitch.onTintColor                   = GLOBAL_CUSTOM_COLOR
-        nicknameSwitch.onTintColor                 = GLOBAL_CUSTOM_COLOR
-        customNameSwitch.onTintColor               = GLOBAL_CUSTOM_COLOR
-        overwriteAlreadyExistsSwitch.onTintColor   = GLOBAL_CUSTOM_COLOR
+        statusSwitch.onTintColor                           = GLOBAL_CUSTOM_COLOR
+        nicknameSwitch.onTintColor                         = GLOBAL_CUSTOM_COLOR
+        customNameSwitch.onTintColor                       = GLOBAL_CUSTOM_COLOR
+        overwriteAlreadyExistsSwitch.onTintColor           = GLOBAL_CUSTOM_COLOR
 
-        enableAllCleanPhoneticSwitch.onTintColor   = GLOBAL_CUSTOM_COLOR
-        cleanPhoneticNicknameSwitch.onTintColor    = GLOBAL_CUSTOM_COLOR
-        cleanPhoneticMiddleNameSwitch.onTintColor  = GLOBAL_CUSTOM_COLOR
-        cleanPhoneticDepartmentSwitch.onTintColor  = GLOBAL_CUSTOM_COLOR
-        cleanPhoneticCompanySwitch.onTintColor     = GLOBAL_CUSTOM_COLOR
-        cleanPhoneticJobTitleSwitch.onTintColor    = GLOBAL_CUSTOM_COLOR
-        cleanPhoneticPrefixSwitch.onTintColor      = GLOBAL_CUSTOM_COLOR
-        cleanPhoneticSuffixSwitch.onTintColor      = GLOBAL_CUSTOM_COLOR
+        enableAllCleanPhoneticSwitch.onTintColor           = GLOBAL_CUSTOM_COLOR
+        cleanPhoneticNicknameSwitch.onTintColor            = GLOBAL_CUSTOM_COLOR
+        cleanPhoneticMiddleNameSwitch.onTintColor          = GLOBAL_CUSTOM_COLOR
+        cleanPhoneticDepartmentSwitch.onTintColor          = GLOBAL_CUSTOM_COLOR
+        cleanPhoneticCompanySwitch.onTintColor             = GLOBAL_CUSTOM_COLOR
+        cleanPhoneticJobTitleSwitch.onTintColor            = GLOBAL_CUSTOM_COLOR
+        cleanPhoneticPrefixSwitch.onTintColor              = GLOBAL_CUSTOM_COLOR
+        cleanPhoneticSuffixSwitch.onTintColor              = GLOBAL_CUSTOM_COLOR
+        cleanSocialProfilesKeysSwitch.onTintColor          = GLOBAL_CUSTOM_COLOR
+        cleanInstantMessageAddressesKeysSwitch.onTintColor = GLOBAL_CUSTOM_COLOR
 
-        forceOpenAnimationSwitch.onTintColor       = SWITCH_TINT_COLOR_FOR_UI_SETTINGS
-        keepSettingWindowOpenSwitch.onTintColor    = SWITCH_TINT_COLOR_FOR_UI_SETTINGS
+        forceOpenAnimationSwitch.onTintColor               = SWITCH_TINT_COLOR_FOR_UI_SETTINGS
+        keepSettingWindowOpenSwitch.onTintColor            = SWITCH_TINT_COLOR_FOR_UI_SETTINGS
 
-        
-        phoneticFirstAndLastNameSwitch.enabled     = DetectPreferredLanguage.isChineseLanguage
-        
-        nicknameSwitch.enabled                     = statusSwitch.on
-        customNameSwitch.enabled                   = statusSwitch.on
-        overwriteAlreadyExistsSwitch.enabled       = statusSwitch.on && (nicknameSwitch.on || customNameSwitch.on)
 
-        enableAllCleanPhoneticSwitch.enabled       = statusSwitch.on
-        cleanPhoneticNicknameSwitch.enabled        = statusSwitch.on
-        cleanPhoneticMiddleNameSwitch.enabled      = statusSwitch.on
-        cleanPhoneticDepartmentSwitch.enabled      = statusSwitch.on
-        cleanPhoneticCompanySwitch.enabled         = statusSwitch.on
-        cleanPhoneticJobTitleSwitch.enabled        = statusSwitch.on
-        cleanPhoneticPrefixSwitch.enabled          = statusSwitch.on
-        cleanPhoneticSuffixSwitch.enabled          = statusSwitch.on
+        phoneticFirstAndLastNameSwitch.enabled             = DetectPreferredLanguage.isChineseLanguage
+
+        nicknameSwitch.enabled                             = statusSwitch.on
+        customNameSwitch.enabled                           = statusSwitch.on
+        overwriteAlreadyExistsSwitch.enabled               = statusSwitch.on && (nicknameSwitch.on || customNameSwitch.on)
+
+        enableAllCleanPhoneticSwitch.enabled               = statusSwitch.on
+        cleanPhoneticNicknameSwitch.enabled                = statusSwitch.on
+        cleanPhoneticMiddleNameSwitch.enabled              = statusSwitch.on
+        cleanPhoneticDepartmentSwitch.enabled              = statusSwitch.on
+        cleanPhoneticCompanySwitch.enabled                 = statusSwitch.on
+        cleanPhoneticJobTitleSwitch.enabled                = statusSwitch.on
+        cleanPhoneticPrefixSwitch.enabled                  = statusSwitch.on
+        cleanPhoneticSuffixSwitch.enabled                  = statusSwitch.on
         
     }
     
@@ -204,18 +218,20 @@ extension AdditionalSettingsViewController {
         
         statusLabel.text = sender.on ? on : off
         
-        nicknameSwitch.enabled                 = sender.on
-        customNameSwitch.enabled               = sender.on
-        overwriteAlreadyExistsSwitch.enabled   = sender.on
+        nicknameSwitch.enabled                         = sender.on
+        customNameSwitch.enabled                       = sender.on
+        overwriteAlreadyExistsSwitch.enabled           = sender.on
 
-        enableAllCleanPhoneticSwitch.enabled   = sender.on
-        cleanPhoneticNicknameSwitch.enabled    = sender.on
-        cleanPhoneticMiddleNameSwitch.enabled  = sender.on
-        cleanPhoneticDepartmentSwitch.enabled  = sender.on
-        cleanPhoneticCompanySwitch.enabled     = sender.on
-        cleanPhoneticJobTitleSwitch.enabled    = sender.on
-        cleanPhoneticPrefixSwitch.enabled      = sender.on
-        cleanPhoneticSuffixSwitch.enabled      = sender.on
+        enableAllCleanPhoneticSwitch.enabled           = sender.on
+        cleanPhoneticNicknameSwitch.enabled            = sender.on
+        cleanPhoneticMiddleNameSwitch.enabled          = sender.on
+        cleanPhoneticDepartmentSwitch.enabled          = sender.on
+        cleanPhoneticCompanySwitch.enabled             = sender.on
+        cleanPhoneticJobTitleSwitch.enabled            = sender.on
+        cleanPhoneticPrefixSwitch.enabled              = sender.on
+        cleanPhoneticSuffixSwitch.enabled              = sender.on
+        cleanSocialProfilesKeysSwitch.enabled          = sender.on
+        cleanInstantMessageAddressesKeysSwitch.enabled = sender.on
 
         userDefaults.setBool(sender.on, forKey: kAdditionalSettingsStatus)
         userDefaults.synchronize()
@@ -285,11 +301,7 @@ extension AdditionalSettingsViewController {
     
     // MARK: - Clean Phonetic Keys
     @IBAction func enableAllCleanPhoneticSwitchDidTap(sender: UISwitch) {
-        userDefaults.setBool(sender.on, forKey: kEnableAllCleanPhonetic)
-        
-        if userDefaults.synchronize() {
-            enableAllCleanPhoneticSwitchWithDelay(sender.on)
-        }
+        enableAllCleanPhoneticSwitchWithAlert(sender.on)
     }
     
     @IBAction func cleanPhoneticNicknameKeysSwitchDidTap(sender: UISwitch) {
@@ -326,6 +338,15 @@ extension AdditionalSettingsViewController {
         userDefaults.setBool(sender.on, forKey: kCleanPhoneticSuffix)
         userDefaults.synchronize()
     }
+    
+    @IBAction func cleanSocialProfilesKeysSwitchDidTap(sender: UISwitch) {
+        enableCleanSocialProfilesSwitchWithAlert(sender.on)
+    }
+    
+    @IBAction func cleanInstantMessageAddressesKeysSwitchDidTap(sender: UISwitch) {
+        enableCleanInstantMessageAddressesSwitchWithAlert(sender.on)
+    }
+    
     
     // MARK: - UI
     @IBAction func forceOpenAnimationSwitchDidTap(sender: UISwitch) {
@@ -370,8 +391,9 @@ extension AdditionalSettingsViewController {
         
     }
     
-    private func enableAllCleanPhoneticSwitchWithDelay(enabled: Bool) {
-        let delayInSeconds: Double = 0.2
+    private func enableAllCleanPhoneticSwitchWithDelay(enabled: Bool, delay: Bool) {
+        
+        let delayInSeconds: Double = delay ? 0.2 : 0.0
         let popTime = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(NSEC_PER_SEC) * delayInSeconds))
         dispatch_after(popTime, dispatch_get_main_queue(), {
             
@@ -394,7 +416,67 @@ extension AdditionalSettingsViewController {
             }
         })
     }
+}
+
+// MARK: - Switch With Alert
+extension AdditionalSettingsViewController {
     
+    private func enableAllCleanPhoneticSwitchWithAlert(enabled: Bool) {
+        
+        let title = NSLocalizedString("Clean All Keys", comment: "UIAlertViewController title")
+        let message = NSLocalizedString("Are you sure to clean all keys? All of those keys including you manually added before will be removed too! This can not be revoked!!", comment: "UIAlertViewController message")
+        
+        enableAllCleanPhoneticSwitch.switchWithAlert(title, message: message, okActionTitle: NSLocalizedString("Clean", comment: ""), on: enabled) { () -> Void in
+            self.userDefaults.setBool(enabled, forKey: kEnableAllCleanPhonetic)
+            if self.userDefaults.synchronize() {
+                self.enableAllCleanPhoneticSwitchWithDelay(enabled, delay: !enabled)
+            }
+        }
+    }
+    
+    private func enableCleanSocialProfilesSwitchWithAlert(enabled: Bool) {
+        let title = NSLocalizedString("Clean Keys", comment: "UIAlertViewController title")
+        let message = NSLocalizedString("Are you sure to clean Social Profiles keys? This can not be revoked!!", comment: "UIAlertViewController message")
+        
+        let social = String(format: "\n\n Tencent Weibo\n\n Game Center\n\n Sina Weibo\n\n Facebook\n\n MySpace\n\n LinkedIn\n\n Twitter\n\n Flickr\n\n Yelp")
+        
+        cleanSocialProfilesKeysSwitch.switchWithAlert(title, message: message + social, okActionTitle: NSLocalizedString("Clean", comment: ""), on: enabled) { () -> Void in
+            self.userDefaults.setBool(enabled, forKey: kCleanSocialProfilesKeys)
+            if self.userDefaults.synchronize() {
+                self.cleanSocialProfilesKeysSwitch.setOn(enabled, animated: true)
+            }
+        }
+    }
+    
+    private func enableCleanInstantMessageAddressesSwitchWithAlert(enabled: Bool) {
+        let title = NSLocalizedString("Clean Keys", comment: "UIAlertViewController title")
+        let message = NSLocalizedString("Are you sure to clean Instant Message Addresses keys? This can not be revoked!!", comment: "UIAlertViewController message")
+        
+        let im = String(format: "\n\n Facebook Messenger\n\n Yahoo! Messenger\n\n MSN Messenger\n\n Google Talk\n\n Gadu-Gadu\n\n Jabber\n\n Skype\n\n AIM\n\n ICQ\n\n QQ")
+        
+        cleanInstantMessageAddressesKeysSwitch.switchWithAlert(title, message: message + im, okActionTitle: NSLocalizedString("Clean", comment: ""), on: enabled) { () -> Void in
+            self.userDefaults.setBool(enabled, forKey: kCleanInstantMessageAddressesKeys)
+            if self.userDefaults.synchronize() {
+                self.cleanInstantMessageAddressesKeysSwitch.setOn(enabled, animated: true)
+            }
+        }
+    }
+   
+}
+
+extension UISwitch {
+    
+    private func switchWithAlert(title: String, message: String, okActionTitle: String, on: Bool, closure: (() -> Void)) {
+        if on {
+            AlertController.alertWithCancelAction(title: title, message: message, actionTitle: okActionTitle, completionHandler: { () -> Void in
+                closure()
+                }, canceledHandler: { () -> Void in
+                    self.setOn(false, animated: true)
+            })
+        } else {
+            closure()
+        }
+    }
 }
 
 // MARK: - Configure Subviews
@@ -536,7 +618,7 @@ extension AdditionalSettingsViewController {
             footerTitle = String.localizedStringWithFormat(NSLocalizedString("e.g: Add a phonetic Nickname / %@ key for `叶梓萱` with `YZX`. Then you can enter `YZX` to search the specific name.", comment: "Table view footer title"), quickSearchKey)
             
         case 3:
-            footerTitle = NSLocalizedString("⚠️ Be Careful. All of the keys including you manually added before will be removed!", comment: "Table view footer title")
+            footerTitle = NSLocalizedString("⚠️ Be Careful. All of those keys including you manually added before will be removed!", comment: "Table view footer title")
             
         case 4:
             footerTitle = NSLocalizedString("Enable animation even audio is playing in background.", comment: "Table view footer title")

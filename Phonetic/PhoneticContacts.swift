@@ -126,7 +126,7 @@ class PhoneticContacts {
         
     }
     
-    func clearMandarinLatinPhonetic(handleAccessGranted: AccessGrantedHandler, handleResult: ResultHandler, completionHandler: CompletionHandler) {
+    func cleanMandarinLatinPhonetic(handleAccessGranted: AccessGrantedHandler, handleResult: ResultHandler, completionHandler: CompletionHandler) {
         AppDelegate().requestContactsAccess { (accessGranted) in
             guard accessGranted else { return }
             
@@ -153,8 +153,8 @@ class PhoneticContacts {
                     let mutableContact: CNMutableContact = contact.mutableCopy() as! CNMutableContact
                     
                     // modify Contact
-                    /// only clear who has Mandarin Latin.
-                    /// Some english names may also have phonetic keys which you don't want to be cleared.
+                    /// only clean who has Mandarin Latin.
+                    /// Some english names may also have phonetic keys which you don't want to be cleaned.
                     if let family = mutableContact.valueForKey(CNContactFamilyNameKey) as? String {
                         if self.antiPhonetic(family) {
                             mutableContact.setValue("", forKey: CNContactPhoneticFamilyNameKey)

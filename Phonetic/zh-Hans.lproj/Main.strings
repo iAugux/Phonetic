@@ -82,8 +82,8 @@
 /* Class = "UILabel"; text = "On"; ObjectID = "UQ1-gf-Cd7"; */
 "UQ1-gf-Cd7.text" = "开";
 
-/* Class = "UILabel"; text = "Double Tap or Long Press to Revoke"; ObjectID = "VOa-VH-F2I"; */
-"VOa-VH-F2I.text" = "双击或长按撤销";
+/* Class = "UILabel"; text = "Double Tap or Long Press to Clean"; ObjectID = "VOa-VH-F2I"; */
+"VOa-VH-F2I.text" = "双击或长按清除";
 
 /* Class = "UILabel"; text = "Enable Animation"; ObjectID = "bdE-R0-bwA"; */
 "bdE-R0-bwA.text" = "开启动画";
@@ -155,5 +155,10 @@
 "zOq-ls-6Q3.text" = "覆盖已有字段";
 
 /* Class = "UILabel"; text = "The more polyphonic characters are selected, the more time will be taken."; ObjectID = "fzh-k8-Gk4"; */
-"fzh-k8-Gk4.text" = "多音字选择的越多，运行花费的时间越多。";
+"fzh-k8-Gk4.text" = "多音字选择的越多，运行花费的时间越长。";
 
+/* Class = "UILabel"; text = "Social Profiles Keys"; ObjectID = "EKv-sW-d82"; */
+"EKv-sW-d82.text" = "社交资料字段";
+
+/* Class = "UILabel"; text = "Instant Message Addresses Keys"; ObjectID = "iQO-ha-HZP"; */
+"iQO-ha-HZP.text" = "即时信息字段";

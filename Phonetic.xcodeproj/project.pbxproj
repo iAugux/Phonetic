@@ -26,7 +26,6 @@
 		B12478A01C5F4D30006D1B62 /* wave.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = B124789F1C5F4D30006D1B62 /* wave.mp4 */; };
 		B140CCF01C60FAD30078657A /* ContactsGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B140CCEF1C60FAD30078657A /* ContactsGenerator.swift */; };
 		B140CCF21C610E300078657A /* AlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B140CCF11C610E300078657A /* AlertController.swift */; };
-		B151E3511C844B980023A415 /* InstantMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B151E3501C844B980023A415 /* InstantMessage.swift */; };
 		B15CB2A51C5B3C6C002694ED /* WaveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15CB2A41C5B3C6C002694ED /* WaveView.swift */; };
 		B15CB2A91C5B3CA4002694ED /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = B15CB2A71C5B3CA4002694ED /* index.html */; };
 		B15CB2AA1C5B3CA4002694ED /* three.min.js in Resources */ = {isa = PBXBuildFile; fileRef = B15CB2A81C5B3CA4002694ED /* three.min.js */; };
@@ -109,7 +108,6 @@
 		B140CCEF1C60FAD30078657A /* ContactsGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsGenerator.swift; sourceTree = "<group>"; };
 		B140CCF11C610E300078657A /* AlertController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertController.swift; sourceTree = "<group>"; };
 		B151E34F1C841A3E0023A415 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
-		B151E3501C844B980023A415 /* InstantMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstantMessage.swift; sourceTree = "<group>"; };
 		B15CB2A41C5B3C6C002694ED /* WaveView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WaveView.swift; sourceTree = "<group>"; };
 		B15CB2A71C5B3CA4002694ED /* index.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
 		B15CB2A81C5B3CA4002694ED /* three.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = three.min.js; sourceTree = "<group>"; };
@@ -272,7 +270,6 @@
 				B1A2AF4E1C8078120080A261 /* PhoneticContacts+Polyphonic.swift */,
 				B1215B1F1C6506D100519F36 /* PhoneticContacts+QuickSearch.swift */,
 				B18AC1FC1C6E716F0090AE16 /* PhoneticContacts+Clean.swift */,
-				B151E3501C844B980023A415 /* InstantMessage.swift */,
 				B18AC20E1C721F610090AE16 /* DetectPreferredLanguage.swift */,
 				B140CCEF1C60FAD30078657A /* ContactsGenerator.swift */,
 			);
@@ -511,7 +508,6 @@
 				B1C852231C856AD2005549FD /* UIView+Extension.swift in Sources */,
 				B1C852201C856AD2005549FD /* UINavigationController+Extension.swift in Sources */,
 				B1C8521B1C856AD2005549FD /* NSUserDefaults+Extension.swift in Sources */,
-				B151E3511C844B980023A415 /* InstantMessage.swift in Sources */,
 				B124789E1C5F34C8006D1B62 /* Type.swift in Sources */,
 				B1C8521E1C856AD2005549FD /* UIButton+Extension.swift in Sources */,
 				B12090941C6BBA3C00997E0A /* BlurActionSheet.swift in Sources */,

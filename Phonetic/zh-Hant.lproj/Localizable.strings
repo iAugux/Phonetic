@@ -17,18 +17,24 @@
 "Additional Settings" = "更多設置";
 
 /* UIAlertController - message */
-"Are you sure to clear all Mandarin Latin's phonetic keys?" = "確定清除所有中文拼音欄位？";
+"Are you sure to clean all Mandarin Latin's phonetic keys?" = "確定清除所有中文拼音欄位？";
+
+/* UIAlertController - message */
+" This can not be revoked!!" = "清除後無法恢復！！";
+
+/* UIAlertController - message */
+" And clean following keys you've chosen?" = "並且清除下列你已選擇的欄位？";
 
 /* alert action - Cancel
  UIAlertAction - title
- UIAlertAction title - do not to clear phonetic keys */
+ UIAlertAction title - do not to clean phonetic keys */
 "Cancel" = "取消";
 
 /* Table view header title */
 "Clean Phonetic Keys" = "清除通訊錄欄位";
 
-/* UIAlertAction title - clear all phonetic keys */
-"Clear" = "清除";
+/* UIAlertAction title - clean all phonetic keys */
+"Clean" = "清除";
 
 /* No comment provided by engineer. */
 "Company" = "公司欄位";
@@ -38,6 +44,15 @@
 
 /* No comment provided by engineer. */
 "Department" = "部門欄位";
+
+/* No comment provided by engineer. */
+"Nickname" = "昵称欄位";
+
+/* No comment provided by engineer. */
+"Social Profiles" = "社交资料欄位";
+
+/* No comment provided by engineer. */
+"Instant Message Addresses" = "即时信息欄位";
 
 /* Table view footer title */
 "Enable animation even audio is playing in background." = "即使有音頻在後台播放也開啟動畫。";
@@ -116,16 +131,16 @@
 "e.g: Add a phonetic Nickname / %@ key for `叶梓萱` with `YZX`. Then you can enter `YZX` to search the specific name." = "比如：為 “葉梓萱” 添加 “YZ​​X” 的暱稱或%@，直接輸入 “YZX” 就可以快速搜索到聯繫人。";
 
 /* Table view footer title */
-"⚠️ Be Careful. All of the keys including you manually added before will be removed!" = "⚠️ 請注意！包括之前手動添加的欄位都將被清除掉。";
+"⚠️ Be Careful. All of those keys including you manually added before will be removed!" = "⚠️ 請注意！包括之前手動添加的欄位都將被清除掉。";
 
 /* UIAlertViewController message */
 "Please tap the yellow button to complete settings. This message is only displayed once!" = "請點擊黃色按鈕來完成設置。本條消息只顯示一次！";
 
 /* alert view controller title */
-"Choose Key for Quick Search" = "選擇字段用於快速搜索";
+"Choose Key for Quick Search" = "選擇欄位用於快速搜索";
 
 /* alert view controller message */
-"`Nickname Key` is highly recommended. This message is only displayed once! You can also set it later in settings." = "推薦使用`暱稱字段`。本條消息只顯示一次！你也可以稍後自行設置。";
+"`Nickname Key` is highly recommended. This message is only displayed once! You can also set it later in settings." = "推薦使用`暱稱欄位`。本條消息只顯示一次！你也可以稍後自行設置。";
 
 /* alert action title */
 "Go Setting" = "去設置";
@@ -141,3 +156,18 @@
 
 /* */
 "Disable All" = "全部取消";
+
+/* UIAlertViewController title */
+"Clean All Keys" = "清除所有欄位";
+
+/* UIAlertViewController title */
+"Clean Keys" = "清除欄位";
+
+/* UIAlertViewController message */
+"Are you sure to clean all keys? All of those keys including you manually added before will be removed too! This can not be revoked!!" = "確定清除所有欄位？包括之前手動添加的欄位都將被清除掉！清除後將無法恢復！！";
+
+/* UIAlertViewController message */
+"Are you sure to clean Social Profiles keys? This can not be revoked!!" = "確定清除所有個人社交資料欄位？清除後將無法恢復！！";
+
+/* UIAlertViewController message */
+"Are you sure to clean Instant Message Addresses keys? This can not be revoked!!" = "確定清除所有即時信息欄位？清除後將無法恢復！！";

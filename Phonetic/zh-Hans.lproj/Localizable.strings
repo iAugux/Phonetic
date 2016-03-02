@@ -17,18 +17,24 @@
 "Additional Settings" = "更多设置";
 
 /* UIAlertController - message */
-"Are you sure to clear all Mandarin Latin's phonetic keys?" = "确定清除所有中文拼音字段？";
+"Are you sure to clean all Mandarin Latin's phonetic keys?" = "确定清除所有中文拼音字段？";
+
+/* UIAlertController - message */
+" This can not be revoked!!" = "清除后无法恢复！！";
+
+/* UIAlertController - message */
+" And clean following keys you've chosen?" = "并且清除下列你已选择的字段？";
 
 /* alert action - Cancel
    UIAlertAction - title
-   UIAlertAction title - do not to clear phonetic keys */
+   UIAlertAction title - do not to clean phonetic keys */
 "Cancel" = "取消";
 
 /* Table view header title */
 "Clean Phonetic Keys" = "清除通讯录字段";
 
-/* UIAlertAction title - clear all phonetic keys */
-"Clear" = "清除";
+/* UIAlertAction title - clean all phonetic keys */
+"Clean" = "清除";
 
 /* No comment provided by engineer. */
 "Company" = "公司字段";
@@ -38,6 +44,15 @@
 
 /* No comment provided by engineer. */
 "Department" = "部门字段";
+
+/* No comment provided by engineer. */
+"Nickname" = "昵称字段";
+
+/* No comment provided by engineer. */
+"Social Profiles" = "社交资料字段";
+
+/* No comment provided by engineer. */
+"Instant Message Addresses" = "即时信息字段";
 
 /* Table view footer title */
 "Enable animation even audio is playing in background." = "即使有音频在后台播放也开启动画。";
@@ -116,7 +131,7 @@
 "e.g: Add a phonetic Nickname / %@ key for `叶梓萱` with `YZX`. Then you can enter `YZX` to search the specific name." = "比如：为 “叶梓萱” 添加 “YZX” 的昵称或%@，直接输入 “YZX” 就可以快速搜索到联系人。";
 
 /* Table view footer title */
-"⚠️ Be Careful. All of the keys including you manually added before will be removed!" = "⚠️ 请注意！包括之前手动添加的字段都将被清除掉。";
+"⚠️ Be Careful. All of those keys including you manually added before will be removed!" = "⚠️ 请注意！包括之前手动添加的字段都将被清除掉。";
 
 /* UIAlertViewController message */
 "Please tap the yellow button to complete settings. This message is only displayed once!" = "请点击黄色按钮来完成设置。本条消息只显示一次！";
@@ -141,3 +156,18 @@
 
 /* */
 "Disable All" = "全部取消";
+
+/* UIAlertViewController title */
+"Clean All Keys" = "清除所有字段";
+
+/* UIAlertViewController title */
+"Clean Keys" = "清除字段";
+
+/* UIAlertViewController message */
+"Are you sure to clean all keys? All of those keys including you manually added before will be removed too! This can not be revoked!!" = "确定清除所有字段？包括之前手动添加的字段都将被清除掉！清除后将无法恢复！！";
+
+/* UIAlertViewController message */
+"Are you sure to clean Social Profiles keys? This can not be revoked!!" = "确定清除所有个人社交资料字段？清除后将无法恢复！！";
+
+/* UIAlertViewController message */
+"Are you sure to clean Instant Message Addresses keys? This can not be revoked!!" = "确定清除所有即时信息字段？清除后将无法恢复！！";

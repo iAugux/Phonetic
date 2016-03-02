@@ -91,8 +91,8 @@ class ViewController: UIViewController {
         executeButton?.setImage(UIImage(named: "touch")?.imageWithRenderingMode(.AlwaysTemplate), forState: .Normal)
         
         singleTap = UITapGestureRecognizer(target: self, action: "execute")
-        multiTap  = UITapGestureRecognizer(target: self, action: "clear:")
-        longPress = UILongPressGestureRecognizer(target: self, action: "clear:")
+        multiTap  = UITapGestureRecognizer(target: self, action: "clean:")
+        longPress = UILongPressGestureRecognizer(target: self, action: "clean:")
         multiTap.numberOfTapsRequired = 2
         
         swipeUp = UISwipeGestureRecognizer(target: self, action: "abortActions")

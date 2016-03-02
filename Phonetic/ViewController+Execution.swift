@@ -61,24 +61,26 @@ extension ViewController {
         }
     }
     
-    func clear(gesture: UIGestureRecognizer) {
+    func clean(gesture: UIGestureRecognizer) {
         
         // former: UITapGestureRecognizer.
         // the later: ensure be triggered at the beginning while long pressing, or there will be a warning at runtime.
         guard gesture.isKindOfClass(UITapGestureRecognizer) || gesture.state == .Began else { return }
         
         let title             = NSLocalizedString("Warning!", comment: "UIAlertController - title")
-        let message           = NSLocalizedString("Are you sure to clear all Mandarin Latin's phonetic keys?", comment: "UIAlertController - message")
-        let okActionTitle     = NSLocalizedString("Clear", comment: "UIAlertAction title - clear all phonetic keys")
-        let cancelActionTitle = NSLocalizedString("Cancel", comment: "UIAlertAction title - do not to clear phonetic keys")
+        let message           = NSLocalizedString("Are you sure to clean all Mandarin Latin's phonetic keys?", comment: "UIAlertController - message")
+        let okActionTitle     = NSLocalizedString("Clean", comment: "UIAlertAction title - clean all phonetic keys")
+        let cancelActionTitle = NSLocalizedString("Cancel", comment: "UIAlertAction title - do not to clean phonetic keys")
         
-        let alertController   = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+        let appendingMessage = PhoneticContacts.sharedInstance.messageOfCurrentKeysNeedToBeCleaned
+        
+        let alertController   = UIAlertController(title: title, message: message + appendingMessage, preferredStyle: .Alert)
         let cancelAction      = UIAlertAction(title: cancelActionTitle, style: .Cancel, handler: nil)
         let okAction          = UIAlertAction(title: okActionTitle, style: .Default) { (_) -> Void in
             
             self.initializeUI(false)
 
-            PhoneticContacts.sharedInstance.clearMandarinLatinPhonetic({ () -> Void in
+            PhoneticContacts.sharedInstance.cleanMandarinLatinPhonetic({ () -> Void in
                 self.isProcessing = true
                 self.playVideoIfNeeded()
                 }, handleResult: { (currentResult, percentage) -> Void in

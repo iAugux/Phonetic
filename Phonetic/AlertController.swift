@@ -14,19 +14,41 @@ class AlertController {
     private static let ok = NSLocalizedString("OK", comment: "")
     
     class func alert(title title: String = "", message: String = "", actionTitle: String = ok, completionHandler: (() -> Void)?) {
-        let okAction = UIAlertAction(title: actionTitle, style: .Cancel) { (_) -> Void in
+        AlertController.alert(title: title, message: message, actionTitle: actionTitle, addCancelAction: false, completionHandler: completionHandler, canceledHandler: nil)
+       }
+    
+    class func alertWithCancelAction(title title: String = "", message: String = "", actionTitle: String = ok, completionHandler: (() -> Void)?, canceledHandler: (() -> Void)?) {
+        AlertController.alert(title: title, message: message, actionTitle: actionTitle, addCancelAction: true, completionHandler: completionHandler, canceledHandler: canceledHandler)
+    }
+    
+    
+    
+    class func multiAlertsWithOptions(multiItemsOfInfo: [String], completionHandler: (() -> Void)?) {
+        alertWithOptions(multiItemsOfInfo, completionHandler: completionHandler)
+    }
+    
+    private class func alert(title title: String = "", message: String = "", actionTitle: String = ok, addCancelAction: Bool, completionHandler: (() -> Void)?, canceledHandler: (() -> Void)?) {
+        let okAction = UIAlertAction(title: actionTitle, style: .Default) { (_) -> Void in
             if let completion = completionHandler {
                 completion()
             }
         }
         
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+        
+        if addCancelAction {
+            let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .Cancel) { (_) -> Void in
+                if let handler = canceledHandler {
+                    handler()
+                }
+            }
+
+            alertController.addAction(cancelAction)
+        }
+        
         alertController.addAction(okAction)
+        
         UIApplication.topMostViewController()?.presentViewController(alertController, animated: true, completion: nil)
-    }
-    
-    class func multiAlertsWithOptions(multiItemsOfInfo: [String], completionHandler: (() -> Void)?) {
-        alertWithOptions(multiItemsOfInfo, completionHandler: completionHandler)
     }
     
     private class func alertWithOptions(multiItemsOfInfo: [String], completionHandler: (() -> Void)?) {

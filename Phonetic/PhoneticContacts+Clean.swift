@@ -28,6 +28,10 @@ extension PhoneticContacts {
         
         if shouldCleanPhoneticSuffixKeys { keys.append(CNContactNameSuffixKey) }
         
+        if shouldCleanSocialProfilesKeys { keys.append(CNContactSocialProfilesKey) }
+        
+        if shouldCleanInstantMessageAddressesKeys{ keys.append(CNContactInstantMessageAddressesKey) }
+        
         return keys
     }
     
@@ -39,6 +43,8 @@ extension PhoneticContacts {
         removePhoneticJobTitleKeysIfNeeded(mutableContact)
         removePhoneticPrefixKeysIfNeeded(mutableContact)
         removePhoneticSuffixKeysIfNeeded(mutableContact)
+        removeSocialProfilesKeysIfNeeded(mutableContact)
+        removeInstantMessageAddressesKeysIfNeeded(mutableContact)
     }
     
     private func removePhoneticNicknameIfNeeded(mutableContact: CNMutableContact) {
@@ -69,6 +75,14 @@ extension PhoneticContacts {
         removePhoneticKeysIfNeeded(mutableContact, shouldClean: shouldCleanPhoneticSuffixKeys, key: CNContactNameSuffixKey)
     }
     
+    private func removeSocialProfilesKeysIfNeeded(mutableContact: CNMutableContact) {
+        removeKeysArrayIfNeeded(mutableContact, shouldClean: shouldCleanSocialProfilesKeys, key: CNContactSocialProfilesKey)
+    }
+    
+    private func removeInstantMessageAddressesKeysIfNeeded(mutableContact: CNMutableContact) {
+        removeKeysArrayIfNeeded(mutableContact, shouldClean: shouldCleanInstantMessageAddressesKeys, key: CNContactInstantMessageAddressesKey)
+    }
+    
     private func removePhoneticKeysIfNeeded(mutableContact: CNMutableContact, shouldClean: Bool, key: String) {
         
         guard shouldClean else { return }
@@ -78,6 +92,12 @@ extension PhoneticContacts {
         }
     }
     
+    private func removeKeysArrayIfNeeded(mutableContact: CNMutableContact, shouldClean: Bool, key: String) {
+        
+        guard shouldClean, let _ = mutableContact.valueForKey(key) as? NSArray else { return }
+        
+        mutableContact.setValue([], forKey: key)
+    }
     
 }
 
@@ -111,6 +131,17 @@ extension PhoneticContacts {
         return shouldCleanPhoneticKey(kCleanPhoneticSuffix, defaultKeyValue: kCleanPhoneticSuffixDefaultBool)
     }
     
+    // MARK: - Social Profiles Key
+    private var shouldCleanSocialProfilesKeys: Bool {
+        return shouldCleanPhoneticKey(kCleanSocialProfilesKeys, defaultKeyValue: kCleanSocialProfilesKeysDefaultBool)
+    }
+    
+    // MARK: - Instant Message Addresses Key
+    private var shouldCleanInstantMessageAddressesKeys: Bool {
+        return shouldCleanPhoneticKey(kCleanInstantMessageAddressesKeys, defaultKeyValue: kCleanInstantMessageKeysDefaultBool)
+    }
+    
+    // MARK: -
     private func shouldCleanPhoneticKey(key: String, defaultKeyValue: Bool) -> Bool {
         
         guard masterSwitchStatusIsOn else { return false }
@@ -118,6 +149,49 @@ extension PhoneticContacts {
         return userDefaults.getBool(key, defaultKeyValue: defaultKeyValue)
     }
     
+}
+
+extension PhoneticContacts {
+    
+    internal var messageOfCurrentKeysNeedToBeCleaned: String {
+        var str = ""
+        
+        if shouldCleanPhoneticNicknameKeys ||
+            shouldCleanPhoneticMiddleNameKeys ||
+            shouldCleanPhoneticDepartmentKeys ||
+            shouldCleanPhoneticCompanyKeys ||
+            shouldCleanPhoneticJobTitleKeys ||
+            shouldCleanPhoneticPrefixKeys ||
+            shouldCleanPhoneticSuffixKeys ||
+            shouldCleanSocialProfilesKeys ||
+            shouldCleanInstantMessageAddressesKeys {
+                str = NSLocalizedString(" And clean following keys you've chosen?", comment: "")
+        }
+        
+        str += NSLocalizedString(" This can not be revoked!!", comment: "")
+        str += "\n\n"
+        
+        if shouldCleanPhoneticNicknameKeys { str.append(PhoneticKeys.Nickname.key) }
+        if shouldCleanPhoneticMiddleNameKeys { str.append(PhoneticKeys.MiddleName.key) }
+        if shouldCleanPhoneticDepartmentKeys { str.append(PhoneticKeys.Department.key) }
+        if shouldCleanPhoneticCompanyKeys { str.append(PhoneticKeys.Company.key) }
+        if shouldCleanPhoneticJobTitleKeys { str.append(PhoneticKeys.JobTitle.key) }
+        if shouldCleanPhoneticPrefixKeys { str.append(PhoneticKeys.Prefix.key) }
+        if shouldCleanPhoneticSuffixKeys { str.append(PhoneticKeys.Suffix.key) }
+        if shouldCleanSocialProfilesKeys { str.append(PhoneticKeys.SocialProfiles.key) }
+        if shouldCleanInstantMessageAddressesKeys{ str.append(PhoneticKeys.InstantMessageAddresses.key) }
+        
+        str = String(str.characters.dropLast(2))
+        
+        return String(format: str)
+    }
+}
+
+extension String {
+    
+    private mutating func append(str: String) {
+        self += str + "\n\n"
+    }
 }
 
 extension PhoneticContacts {
