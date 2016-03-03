@@ -414,6 +414,17 @@ extension AdditionalSettingsViewController {
                 self.cleanPhoneticPrefixSwitch.setOn(enabled, animated: true)
                 self.cleanPhoneticSuffixSwitch.setOn(enabled, animated: true)
             }
+            
+            // switch off SocialProfilesKeysSwitch & InstantMessageAddressesKeysSwitch too.
+            if !enabled {
+                self.userDefaults.setBool(false, forKey: kCleanSocialProfilesKeys)
+                self.userDefaults.setBool(false, forKey: kCleanInstantMessageAddressesKeys)
+                
+                if self.userDefaults.synchronize() {
+                    self.cleanSocialProfilesKeysSwitch.setOn(false, animated: true)
+                    self.cleanInstantMessageAddressesKeysSwitch.setOn(false, animated: true)
+                }
+            }
         })
     }
 }
