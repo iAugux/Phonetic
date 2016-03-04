@@ -1793,8 +1793,8 @@
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Instant Message Addresses Keys" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iQO-ha-HZP">
-                                                    <rect key="frame" x="16" y="0.0" width="519" height="44"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Instant Messages Keys" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iQO-ha-HZP">
+                                                    <rect key="frame" x="16" y="0.0" width="511" height="44"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
@@ -1812,7 +1812,7 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="iQO-ha-HZP" firstAttribute="leading" secondItem="QnN-yM-xEn" secondAttribute="leading" constant="16" id="3jd-TI-Wep"/>
-                                                <constraint firstItem="0Lf-Kp-5Uv" firstAttribute="leading" secondItem="iQO-ha-HZP" secondAttribute="trailing" id="A2s-Ez-ySo"/>
+                                                <constraint firstItem="0Lf-Kp-5Uv" firstAttribute="leading" secondItem="iQO-ha-HZP" secondAttribute="trailing" constant="8" id="A2s-Ez-ySo"/>
                                                 <constraint firstItem="iQO-ha-HZP" firstAttribute="top" secondItem="QnN-yM-xEn" secondAttribute="top" id="O5j-Ok-mIL"/>
                                                 <constraint firstItem="0Lf-Kp-5Uv" firstAttribute="centerY" secondItem="QnN-yM-xEn" secondAttribute="centerY" id="mQR-Vx-eIm"/>
                                                 <constraint firstAttribute="trailing" secondItem="0Lf-Kp-5Uv" secondAttribute="trailing" constant="16" id="qdG-LI-3cn"/>

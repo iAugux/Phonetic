@@ -160,5 +160,5 @@
 /* Class = "UILabel"; text = "Social Profiles Keys"; ObjectID = "EKv-sW-d82"; */
 "EKv-sW-d82.text" = "社交資料欄位";
 
-/* Class = "UILabel"; text = "Instant Message Addresses Keys"; ObjectID = "iQO-ha-HZP"; */
+/* Class = "UILabel"; text = "Instant Messages Keys"; ObjectID = "iQO-ha-HZP"; */
 "iQO-ha-HZP.text" = "即時信息欄位";
