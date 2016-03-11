@@ -65,7 +65,7 @@ class OtherSettingView: UIStackView, MFMailComposeViewControllerDelegate, SFSafa
     
     // MARK: - Rate me
     static func RateMe() {
-        let appURL = NSURL(string: "https://itunes.apple.com/app/id1078961574")
+        let appURL = NSURL(string: "https://itunes.apple.com/app/viewContentsUserReviews?id=1078961574")
         if UIApplication.sharedApplication().canOpenURL(appURL!) {
             UIApplication.sharedApplication().openURL(appURL!)
         }
