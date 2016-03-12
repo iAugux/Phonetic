@@ -7,11 +7,14 @@
 //
 
 import UIKit
+import Contacts
 
 
 extension ViewController {
     
-    func alertToChooseQuickSearchKey() {
+    func alertToChooseQuickSearchKeyIfNeeded() {
+        
+        guard CNContactStore.authorizationStatusForEntityType(.Contacts) == .Authorized else { return }
         
         UIApplication.initializeInTheFirstTime { () -> Void in
             
