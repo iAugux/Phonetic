@@ -434,8 +434,8 @@ extension AdditionalSettingsViewController {
     
     private func enableAllCleanPhoneticSwitchWithAlert(enabled: Bool) {
         
-        let title = NSLocalizedString("Clean All Keys", comment: "UIAlertViewController title")
-        let message = NSLocalizedString("Are you sure to clean all keys? All of those keys including you manually added before will be removed too! This can not be revoked!!", comment: "UIAlertViewController message")
+        let title = NSLocalizedString("Clean All Keys", comment: "UIAlertController title")
+        let message = NSLocalizedString("Are you sure to clean all keys? All of those keys including you manually added before will be removed too! This can not be revoked!!", comment: "UIAlertController message")
         
         enableAllCleanPhoneticSwitch.switchWithAlert(title, message: message, okActionTitle: NSLocalizedString("Clean", comment: ""), on: enabled) { () -> Void in
             self.userDefaults.setBool(enabled, forKey: kEnableAllCleanPhonetic)
@@ -446,8 +446,8 @@ extension AdditionalSettingsViewController {
     }
     
     private func enableCleanSocialProfilesSwitchWithAlert(enabled: Bool) {
-        let title = NSLocalizedString("Clean Keys", comment: "UIAlertViewController title")
-        let message = NSLocalizedString("Are you sure to clean Social Profiles keys? This can not be revoked!!", comment: "UIAlertViewController message")
+        let title = NSLocalizedString("Clean Keys", comment: "UIAlertController title")
+        let message = NSLocalizedString("Are you sure to clean Social Profiles keys? This can not be revoked!!", comment: "UIAlertController message")
         
         let social = String(format: "\n\n Tencent Weibo\n\n Game Center\n\n Sina Weibo\n\n Facebook\n\n MySpace\n\n LinkedIn\n\n Twitter\n\n Flickr\n\n Yelp")
         
@@ -460,8 +460,8 @@ extension AdditionalSettingsViewController {
     }
     
     private func enableCleanInstantMessageAddressesSwitchWithAlert(enabled: Bool) {
-        let title = NSLocalizedString("Clean Keys", comment: "UIAlertViewController title")
-        let message = NSLocalizedString("Are you sure to clean Instant Message Addresses keys? This can not be revoked!!", comment: "UIAlertViewController message")
+        let title = NSLocalizedString("Clean Keys", comment: "UIAlertController title")
+        let message = NSLocalizedString("Are you sure to clean Instant Message Addresses keys? This can not be revoked!!", comment: "UIAlertController message")
         
         let im = String(format: "\n\n Facebook Messenger\n\n Yahoo! Messenger\n\n MSN Messenger\n\n Google Talk\n\n Gadu-Gadu\n\n Jabber\n\n Skype\n\n AIM\n\n ICQ\n\n QQ")
         
@@ -649,8 +649,8 @@ extension AdditionalSettingsViewController {
     
     private func alertToConfigureForQuickSearchKey() {
         UIApplication.initializeInTheFirstTime("alertToConfigureForQuickSearchKeyOnlyOnce") { () -> Void in
-            let title = NSLocalizedString("Setting", comment: "UIAlertViewController title")
-            let message = NSLocalizedString("Please tap the yellow button to complete settings. This message is only displayed once!", comment: "UIAlertViewController message")
+            let title = NSLocalizedString("Setting", comment: "UIAlertController title")
+            let message = NSLocalizedString("Please tap the yellow button to complete settings. This message is only displayed once!", comment: "UIAlertController message")
             AlertController.alert(title: title, message: message, completionHandler: nil)
         }
     }

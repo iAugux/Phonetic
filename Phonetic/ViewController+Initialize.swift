@@ -18,8 +18,8 @@ extension ViewController {
         
         UIApplication.initializeInTheFirstTime { () -> Void in
             
-            let title = NSLocalizedString("Choose Key for Quick Search", comment: "alert view controller title")
-            let message = NSLocalizedString("`Nickname Key` is highly recommended. This message is only displayed once! You can also set it later in settings.", comment: "alert view controller message")
+            let title = NSLocalizedString("Choose Key for Quick Search", comment: "alert controller title")
+            let message = NSLocalizedString("`Nickname Key` is highly recommended. This message is only displayed once! You can also set it later in settings.", comment: "alert controller message")
             let okActionTitle = NSLocalizedString("Go Setting", comment: "alert action title")
             let laterActionTitle = NSLocalizedString("I'll Set it Later", comment: "alert action title")
             let cancelActionTitle = NSLocalizedString("Already Done. Dismiss", comment: "alert action title")

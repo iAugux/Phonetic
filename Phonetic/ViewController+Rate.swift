@@ -24,8 +24,8 @@ extension ViewController {
             userDefaults.setInteger(3, forKey: rateMe)
             
             // rate me
-            let title = NSLocalizedString("Rate ♡ Phonetic", comment: "alert view controller title - rate me")
-            let message = NSLocalizedString("If you enjoy using Phonetic Contacts, would you mind taking a moment to rate it? It won't take more than one minute. Thanks a lot!", comment: "alert view controller message")
+            let title = NSLocalizedString("Rate ♡ Phonetic", comment: "alert controller title - rate me")
+            let message = NSLocalizedString("If you enjoy using Phonetic Contacts, would you mind taking a moment to rate it? It won't take more than one minute. Thanks a lot!", comment: "alert controller message")
             let rateActionTitle = NSLocalizedString("Rate", comment: "alert action - Rate")
             let cancelActionTitle = NSLocalizedString("No, thanks", comment: "alert action - Cancel")
             

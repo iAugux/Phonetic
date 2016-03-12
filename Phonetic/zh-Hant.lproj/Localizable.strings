@@ -63,7 +63,7 @@
 /* Table view footer title */
 "If the device language is not Chinese, the switch will be forced open." = "如果設備的語言不是中文，開關將被強制打開。";
 
-/* alert view controller message */
+/* alert controller message */
 "If you enjoy using Phonetic Contacts, would you mind taking a moment to rate it? It won't take more than one minute. Thanks a lot!" = "如果您喜歡使用 Phonetic Contacts，煩請花點時間給它評分。感謝您的支持！";
 
 /* No comment provided by engineer. */
@@ -108,14 +108,14 @@
 /* alert action - Cancel */
 "No, thanks" = "取消";
 
-/* alert view controller title - rate me */
+/* alert controller title - rate me */
 "Rate ♡ Phonetic" = "給我打分";
 
 /* navigation item title - Settings
  UIAlertAction - title */
 "Settings" = "設置";
 
-/* UIAlertViewController title */
+/* UIAlertController title */
 "Setting" = "設置";
 
 /* No comment provided by engineer. */
@@ -133,13 +133,13 @@
 /* Table view footer title */
 "⚠️ Be Careful. All of those keys including you manually added before will be removed!" = "⚠️ 請注意！包括之前手動添加的欄位都將被清除掉。";
 
-/* UIAlertViewController message */
+/* UIAlertController message */
 "Please tap the yellow button to complete settings. This message is only displayed once!" = "請點擊黃色按鈕來完成設置。本條消息只顯示一次！";
 
-/* alert view controller title */
+/* alert controller title */
 "Choose Key for Quick Search" = "選擇欄位用於快速搜索";
 
-/* alert view controller message */
+/* alert controller message */
 "`Nickname Key` is highly recommended. This message is only displayed once! You can also set it later in settings." = "推薦使用`暱稱欄位`。本條消息只顯示一次！你也可以稍後自行設置。";
 
 /* alert action title */
@@ -157,17 +157,17 @@
 /* */
 "Disable All" = "全部取消";
 
-/* UIAlertViewController title */
+/* UIAlertController title */
 "Clean All Keys" = "清除所有欄位";
 
-/* UIAlertViewController title */
+/* UIAlertController title */
 "Clean Keys" = "清除欄位";
 
-/* UIAlertViewController message */
+/* UIAlertController message */
 "Are you sure to clean all keys? All of those keys including you manually added before will be removed too! This can not be revoked!!" = "確定清除所有欄位？包括之前手動添加的欄位都將被清除掉！清除後將無法恢復！！";
 
-/* UIAlertViewController message */
+/* UIAlertController message */
 "Are you sure to clean Social Profiles keys? This can not be revoked!!" = "確定清除所有個人社交資料欄位？清除後將無法恢復！！";
 
-/* UIAlertViewController message */
+/* UIAlertController message */
 "Are you sure to clean Instant Message Addresses keys? This can not be revoked!!" = "確定清除所有即時信息欄位？清除後將無法恢復！！";
