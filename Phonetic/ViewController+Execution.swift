@@ -142,7 +142,7 @@ extension ViewController {
         avPlayerPlaceholderView.addSubview(avPlayerController.view)
         
         // loop video
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "loopingVideo", name: AVPlayerItemDidPlayToEndTimeNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ViewController.loopingVideo), name: AVPlayerItemDidPlayToEndTimeNotification, object: nil)
     }
     
     private func hideBlurVieWithAnimation(hidden: Bool) {

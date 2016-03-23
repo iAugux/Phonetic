@@ -16,7 +16,7 @@ class AppIconImageView: UIImageView {
         clipsToBounds      = true
         layer.cornerRadius = frame.width * 0.25
         
-        let recognizer = UITapGestureRecognizer(target: self, action: "iconDidTap")
+        let recognizer = UITapGestureRecognizer(target: self, action: #selector(AppIconImageView.iconDidTap))
         addGestureRecognizer(recognizer)
     }
     

@@ -54,6 +54,7 @@
 		B1A2AF4F1C8078120080A261 /* PhoneticContacts+Polyphonic.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A2AF4E1C8078120080A261 /* PhoneticContacts+Polyphonic.swift */; };
 		B1B1CB611C5E0E9400AD7E73 /* KDCircularProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B1CB601C5E0E9400AD7E73 /* KDCircularProgress.swift */; };
 		B1B1CB631C5E25E300AD7E73 /* ViewController+Rate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B1CB621C5E25E300AD7E73 /* ViewController+Rate.swift */; };
+		B1C5BBEE1CA27EA9009B0A71 /* UIDevice+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C5BBED1CA27EA9009B0A71 /* UIDevice+Extension.swift */; };
 		B1C852081C8566DB005549FD /* ViewController+Initialize.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C852071C8566DB005549FD /* ViewController+Initialize.swift */; };
 		B1C852191C856AD2005549FD /* AppConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C8520C1C856AD2005549FD /* AppConfiguration.swift */; };
 		B1C8521A1C856AD2005549FD /* DEBUGLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C8520D1C856AD2005549FD /* DEBUGLog.swift */; };
@@ -139,6 +140,7 @@
 		B1A2AF4E1C8078120080A261 /* PhoneticContacts+Polyphonic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PhoneticContacts+Polyphonic.swift"; sourceTree = "<group>"; };
 		B1B1CB601C5E0E9400AD7E73 /* KDCircularProgress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KDCircularProgress.swift; sourceTree = "<group>"; };
 		B1B1CB621C5E25E300AD7E73 /* ViewController+Rate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ViewController+Rate.swift"; sourceTree = "<group>"; };
+		B1C5BBED1CA27EA9009B0A71 /* UIDevice+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIDevice+Extension.swift"; sourceTree = "<group>"; };
 		B1C852071C8566DB005549FD /* ViewController+Initialize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ViewController+Initialize.swift"; sourceTree = "<group>"; };
 		B1C8520C1C856AD2005549FD /* AppConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppConfiguration.swift; sourceTree = "<group>"; };
 		B1C8520D1C856AD2005549FD /* DEBUGLog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DEBUGLog.swift; sourceTree = "<group>"; };
@@ -351,6 +353,7 @@
 				B1C8520F1C856AD2005549FD /* TopMostViewController+Extension.swift */,
 				B1C852101C856AD2005549FD /* UIApplication+Extension.swift */,
 				B1C852111C856AD2005549FD /* UIButton+Extension.swift */,
+				B1C5BBED1CA27EA9009B0A71 /* UIDevice+Extension.swift */,
 				B1C852121C856AD2005549FD /* UIColor+Extension.swift */,
 				B1C852131C856AD2005549FD /* UINavigationController+Extension.swift */,
 				B1C852141C856AD2005549FD /* UIScreen+Extension.swift */,
@@ -516,6 +519,7 @@
 				B1215B221C65144C00519F36 /* Phonetic.swift in Sources */,
 				B1887A891C639AE900AD9BC2 /* DGElasticPullToRefreshExtensions.swift in Sources */,
 				B164CAB71C60B72C00AD7009 /* PolyphonicCharacters.swift in Sources */,
+				B1C5BBEE1CA27EA9009B0A71 /* UIDevice+Extension.swift in Sources */,
 				B1C852191C856AD2005549FD /* AppConfiguration.swift in Sources */,
 				B1887A8A1C639AE900AD9BC2 /* DGElasticPullToRefreshLoadingView.swift in Sources */,
 				B1C8521D1C856AD2005549FD /* UIApplication+Extension.swift in Sources */,
