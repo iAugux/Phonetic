@@ -34,6 +34,7 @@
 		B16942721C622A7E000D5BFE /* BlurImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B16942711C622A7E000D5BFE /* BlurImageView.swift */; };
 		B16CAB7A1C5E5DE900AF3D35 /* ViewController+Execution.swift in Sources */ = {isa = PBXBuildFile; fileRef = B16CAB791C5E5DE900AF3D35 /* ViewController+Execution.swift */; };
 		B16FEB2D1C779F6400FEB550 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B16FEB2F1C779F6400FEB550 /* Localizable.strings */; };
+		B178D8981CA28E74003254B9 /* UIEffectView+Ex.swift in Sources */ = {isa = PBXBuildFile; fileRef = B178D8971CA28E74003254B9 /* UIEffectView+Ex.swift */; };
 		B1887A881C639AE900AD9BC2 /* DGElasticPullToRefreshConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1887A831C639AE900AD9BC2 /* DGElasticPullToRefreshConstants.swift */; };
 		B1887A891C639AE900AD9BC2 /* DGElasticPullToRefreshExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1887A841C639AE900AD9BC2 /* DGElasticPullToRefreshExtensions.swift */; };
 		B1887A8A1C639AE900AD9BC2 /* DGElasticPullToRefreshLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1887A851C639AE900AD9BC2 /* DGElasticPullToRefreshLoadingView.swift */; };
@@ -120,6 +121,7 @@
 		B16FEB291C779F4E00FEB550 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Main.strings"; sourceTree = "<group>"; };
 		B16FEB301C779F6B00FEB550 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		B16FEB311C779F6C00FEB550 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		B178D8971CA28E74003254B9 /* UIEffectView+Ex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIEffectView+Ex.swift"; sourceTree = "<group>"; };
 		B1887A831C639AE900AD9BC2 /* DGElasticPullToRefreshConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DGElasticPullToRefreshConstants.swift; sourceTree = "<group>"; };
 		B1887A841C639AE900AD9BC2 /* DGElasticPullToRefreshExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DGElasticPullToRefreshExtensions.swift; sourceTree = "<group>"; };
 		B1887A851C639AE900AD9BC2 /* DGElasticPullToRefreshLoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DGElasticPullToRefreshLoadingView.swift; sourceTree = "<group>"; };
@@ -259,6 +261,7 @@
 				B196864E1C5CEDBE006F4614 /* OtherSettingView.swift */,
 				B196865A1C5D0535006F4614 /* AppIconImageView.swift */,
 				B18AC2001C70F8390090AE16 /* TableViewHeaderFooterViewWithButton.swift */,
+				B178D8971CA28E74003254B9 /* UIEffectView+Ex.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -525,6 +528,7 @@
 				B1C8521D1C856AD2005549FD /* UIApplication+Extension.swift in Sources */,
 				B18AC1FD1C6E716F0090AE16 /* PhoneticContacts+Clean.swift in Sources */,
 				B196865B1C5D0535006F4614 /* AppIconImageView.swift in Sources */,
+				B178D8981CA28E74003254B9 /* UIEffectView+Ex.swift in Sources */,
 				B18AC2091C71B35E0090AE16 /* HelpManualViewController.swift in Sources */,
 				B1159BBF1C59140400F16037 /* AppDelegate+Extension.swift in Sources */,
 				B1159B701C59045800F16037 /* AppDelegate.swift in Sources */,
