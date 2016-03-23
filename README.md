@@ -1,5 +1,5 @@
 # Phonetic
-![Language](https://img.shields.io/badge/language-Swift%202-orange.svg)
+![Language](https://img.shields.io/badge/language-Swift%202.2-orange.svg)
 ![License](https://img.shields.io/badge/License-Custom%20License%20Based%20on%20MIT-2181C3.svg)
 [![Homepage](https://img.shields.io/badge/Homepage-iAugus-9021C5.svg)](http://iAugus.com)
 [![Tweet](https://img.shields.io/badge/Tweet-%40iAugux-1B95E0.svg)](https://twitter.com/iaugux)
@@ -37,7 +37,7 @@
 ###### Thanks in advance.
 ## Requirements
 - iOS 9.0+
-- Swift 2
+- Swift 2.2
 
 ## Video Preview
 ##### On Youtube
