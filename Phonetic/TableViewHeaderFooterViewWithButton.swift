@@ -30,7 +30,7 @@ class TableViewHeaderFooterViewWithButton: UITableViewHeaderFooterView {
         button.frame.origin.x = textLabel!.frame.maxX + 8.0
         button.tintColor = tintColor
         button.setImage(UIImage(named: name)?.imageWithRenderingMode(.AlwaysTemplate), forState: .Normal)
-        button.addTarget(self, action: #selector(TableViewHeaderFooterViewWithButton.buttonDidTap), forControlEvents: .TouchUpInside)
+        button.addTarget(self, action: #selector(buttonDidTap), forControlEvents: .TouchUpInside)
         addSubview(button)
     }
 

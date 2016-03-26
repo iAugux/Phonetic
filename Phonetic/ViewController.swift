@@ -52,9 +52,9 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         configureSubViews()
 
-        NSTimer.scheduledTimerWithTimeInterval(3.0, target: self, selector: #selector(ViewController.rateMeInTheSecondTime), userInfo: nil, repeats: false)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ViewController.showLabels), name: kVCWillDisappearNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ViewController.popoverSettingViewController), name: kDismissedAdditionalSettingsVCNotification, object: nil)
+        NSTimer.scheduledTimerWithTimeInterval(3.0, target: self, selector: #selector(rateMeInTheSecondTime), userInfo: nil, repeats: false)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(showLabels), name: kVCWillDisappearNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(popoverSettingViewController), name: kDismissedAdditionalSettingsVCNotification, object: nil)
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -90,12 +90,12 @@ class ViewController: UIViewController {
         executeButton?.tintColor = GLOBAL_CUSTOM_COLOR
         executeButton?.setImage(UIImage(named: "touch")?.imageWithRenderingMode(.AlwaysTemplate), forState: .Normal)
         
-        singleTap = UITapGestureRecognizer(target: self, action: #selector(ViewController.execute))
-        multiTap  = UITapGestureRecognizer(target: self, action: #selector(ViewController.clean(_:)))
-        longPress = UILongPressGestureRecognizer(target: self, action: #selector(ViewController.clean(_:)))
+        singleTap = UITapGestureRecognizer(target: self, action: #selector(execute))
+        multiTap  = UITapGestureRecognizer(target: self, action: #selector(clean(_:)))
+        longPress = UILongPressGestureRecognizer(target: self, action: #selector(clean(_:)))
         multiTap.numberOfTapsRequired = 2
         
-        swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(ViewController.abortActions))
+        swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(abortActions))
         swipeUp.direction = .Up
         
         executeButton.addGestureRecognizer(singleTap)
@@ -105,10 +105,10 @@ class ViewController: UIViewController {
         singleTap.requireGestureRecognizerToFail(longPress)
         
         // setting button
-        settingButton.addTarget(self, action: #selector(ViewController.popoverSettingViewController), forControlEvents: .TouchUpInside)
+        settingButton.addTarget(self, action: #selector(popoverSettingViewController), forControlEvents: .TouchUpInside)
         
         // info button
-        infoButton.addTarget(self, action: #selector(ViewController.popoverInfoViewController), forControlEvents: .TouchUpInside)
+        infoButton.addTarget(self, action: #selector(popoverInfoViewController), forControlEvents: .TouchUpInside)
         
         // Preventing multiple buttons from being touched at the same time
 //        settingButton.exclusiveTouch = true

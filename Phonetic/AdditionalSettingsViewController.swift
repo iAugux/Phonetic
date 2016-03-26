@@ -497,7 +497,7 @@ extension AdditionalSettingsViewController {
         quickSearchSelectionIndicator.tintColor = UIColor.whiteColor()
         quickSearchSelectionIndicator.image = UIImage(named: "expand")?.imageWithRenderingMode(.AlwaysTemplate)
         
-        let recognizer = UITapGestureRecognizer(target: self, action: #selector(AdditionalSettingsViewController.alertActionSheetToChooseCustomKeyForQuickSearch))
+        let recognizer = UITapGestureRecognizer(target: self, action: #selector(alertActionSheetToChooseCustomKeyForQuickSearch))
         quickSearchSelectionLabel.addGestureRecognizer(recognizer)
         quickSearchSelectionLabel.userInteractionEnabled = true
         quickSearchSelectionLabel.text = String.localizedStringWithFormat(NSLocalizedString("%@ for Quick Search", comment: ""), quickSearchKey)

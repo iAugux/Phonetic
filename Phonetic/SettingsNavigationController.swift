@@ -76,7 +76,7 @@ class SettingsNavigationController: UINavigationController {
         customBarButton.tintColor   = UIColor.whiteColor()
         customBarButton.frame.size  = CGSizeMake(25, 25)
         customBarButton.contentMode = .Center
-        customBarButton.addTarget(self, action: #selector(SettingsNavigationController.dismissViewController), forControlEvents: .TouchUpInside)
+        customBarButton.addTarget(self, action: #selector(dismissViewController), forControlEvents: .TouchUpInside)
         
         navigationBar.addSubview(customBarButton)
         

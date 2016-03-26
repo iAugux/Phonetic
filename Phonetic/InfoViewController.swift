@@ -32,7 +32,7 @@ class InfoViewController: UIViewController, SFSafariViewControllerDelegate {
     }
     
     private func configureGithubImageView() {
-        let recognizer = UITapGestureRecognizer(target: self, action: #selector(InfoViewController.checkOnGithub))
+        let recognizer = UITapGestureRecognizer(target: self, action: #selector(checkOnGithub))
         github.addGestureRecognizer(recognizer)
     }
     

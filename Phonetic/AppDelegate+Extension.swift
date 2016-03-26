@@ -12,7 +12,7 @@ import Contacts
 extension AppDelegate {
     
     func requestAccess() {
-        NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: #selector(AppDelegate.requestAccessSelector), userInfo: nil, repeats: false)
+        NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: #selector(requestAccessSelector), userInfo: nil, repeats: false)
     }
     
     func requestAccessSelector() {

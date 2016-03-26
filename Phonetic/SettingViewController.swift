@@ -91,7 +91,7 @@ class SettingViewController: UIViewController {
         customBarButton.setImage(UIImage(named: "additional_settings")?.imageWithRenderingMode(.AlwaysTemplate), forState: .Normal)
         customBarButton.center = navBar.center
         customBarButton.frame.origin.x = 13.0
-        customBarButton.addTarget(self, action: #selector(SettingViewController.customBarButtonDidTap), forControlEvents: .TouchUpInside)
+        customBarButton.addTarget(self, action: #selector(customBarButtonDidTap), forControlEvents: .TouchUpInside)
         navBar.addSubview(customBarButton)
     }
     

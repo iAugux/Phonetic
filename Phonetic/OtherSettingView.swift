@@ -16,7 +16,7 @@ class OtherSettingView: UIStackView, MFMailComposeViewControllerDelegate, SFSafa
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        let recognizer = UITapGestureRecognizer(target: self, action: #selector(OtherSettingView.viewDidTap))
+        let recognizer = UITapGestureRecognizer(target: self, action: #selector(viewDidTap))
         addGestureRecognizer(recognizer)
     }
     
