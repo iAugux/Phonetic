@@ -18,6 +18,7 @@ let kEnableCustomName                    = "kEnableCustomName"
 let kOverwriteAlreadyExists              = "kOverwriteAlreadyExists"
 let kKeepSettingsWindowOpen              = "kKeepSettingsWindowOpen"
 let kForceEnableAnimation                = "kForceEnableAnimation"
+let kAlwaysSeparatePinyin                = "kAlwaysSeparatePinyin"
 
 let kEnableAllCleanPhonetic              = "kEnableAllCleanPhonetic"
 let kCleanPhoneticNickname               = "kCleanPhoneticNickname"
@@ -39,6 +40,7 @@ let kEnableCustomNameDefaultBool         = false
 let kOverwriteAlreadyExistsDefaultBool   = false
 let kKeepSettingsWindowOpenDefaultBool   = false
 let kForceEnableAnimationDefaultBool     = false
+let kAlwaysSeparatePinyinDefaultBool     = false
 
 let kEnableAllCleanPhoneticDefaultBool   = false
 let kCleanPhoneticNicknameDefaultBool    = false

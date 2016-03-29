@@ -134,6 +134,15 @@ class AdditionalSettingsViewController: BaseTableViewController {
         }
     }
     
+    
+    // MARK: - 
+    @IBOutlet weak var separatePinyinSwitch: UISwitch! {
+        didSet {
+            separatePinyinSwitch.shouldSwitch(kAlwaysSeparatePinyin, defaultBool: kAlwaysSeparatePinyinDefaultBool)
+        }
+    }
+    
+    
     // MARK: - UI
     @IBOutlet weak var forceOpenAnimationSwitch: UISwitch! {
         didSet {
@@ -175,7 +184,9 @@ extension AdditionalSettingsViewController {
         cleanPhoneticSuffixSwitch.onTintColor              = GLOBAL_CUSTOM_COLOR
         cleanSocialProfilesKeysSwitch.onTintColor          = GLOBAL_CUSTOM_COLOR
         cleanInstantMessageAddressesKeysSwitch.onTintColor = GLOBAL_CUSTOM_COLOR
-
+        
+        separatePinyinSwitch.onTintColor                   = GLOBAL_CUSTOM_COLOR
+        
         forceOpenAnimationSwitch.onTintColor               = SWITCH_TINT_COLOR_FOR_UI_SETTINGS
         keepSettingWindowOpenSwitch.onTintColor            = SWITCH_TINT_COLOR_FOR_UI_SETTINGS
 
@@ -345,6 +356,13 @@ extension AdditionalSettingsViewController {
     
     @IBAction func cleanInstantMessageAddressesKeysSwitchDidTap(sender: UISwitch) {
         enableCleanInstantMessageAddressesSwitchWithAlert(sender.on)
+    }
+    
+    
+    // MARK: - 
+    @IBAction func separatePinyinSwitchDidTap(sender: AnyObject) {
+        userDefaults.setBool(sender.on, forKey: kAlwaysSeparatePinyin)
+        userDefaults.synchronize()
     }
     
     
@@ -607,8 +625,8 @@ extension AdditionalSettingsViewController {
             
         case 3:
             headerTitle = NSLocalizedString("Clean Phonetic Keys", comment: "Table view header title")
-            
-        case 4:
+  
+        case 5:
             headerTitle = NSLocalizedString("User Interface Settings", comment: "Table view header title")
             
         default: break
@@ -632,9 +650,12 @@ extension AdditionalSettingsViewController {
             footerTitle = NSLocalizedString("⚠️ Be Careful. All of those keys including you manually added before will be removed!", comment: "Table view footer title")
             
         case 4:
-            footerTitle = NSLocalizedString("Enable animation even audio is playing in background.", comment: "Table view footer title")
+            footerTitle = "e.g: 叶梓萱 [ Ye Zi Xuan ]"
             
         case 5:
+            footerTitle = NSLocalizedString("Enable animation even audio is playing in background.", comment: "Table view footer title")
+            
+        case 6:
             footerTitle = NSLocalizedString("Keep `Settings Window` open after dismissing `Additional Settings Window`.", comment: "Table view footer title")
             
         default: break

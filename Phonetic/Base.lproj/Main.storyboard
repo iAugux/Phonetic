@@ -1823,10 +1823,49 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
+                            <tableViewSection headerTitle="" footerTitle="e.g: 叶梓萱 [ Ye Zi Xuan ]" id="Fmt-kb-jt1" userLabel="UI">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="44" id="pDa-HB-YSz">
+                                        <rect key="frame" x="0.0" y="1002" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="pDa-HB-YSz" id="NEp-SK-UAS">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Always Separate Pinyin" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DR7-JE-aLH">
+                                                    <rect key="frame" x="17" y="0.0" width="510" height="44"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Vah-TB-c7O">
+                                                    <rect key="frame" x="535" y="6" width="51" height="31"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="49" id="DpW-YL-iYm"/>
+                                                        <constraint firstAttribute="height" constant="31" id="vL3-LE-l5S"/>
+                                                    </constraints>
+                                                    <connections>
+                                                        <action selector="separatePinyinSwitchDidTap:" destination="814-Dy-ps6" eventType="valueChanged" id="sGG-cJ-8DG"/>
+                                                    </connections>
+                                                </switch>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="DR7-JE-aLH" secondAttribute="bottom" id="KvS-ip-zq2"/>
+                                                <constraint firstItem="DR7-JE-aLH" firstAttribute="top" secondItem="NEp-SK-UAS" secondAttribute="top" id="MaW-rb-Rod"/>
+                                                <constraint firstItem="DR7-JE-aLH" firstAttribute="leading" secondItem="NEp-SK-UAS" secondAttribute="leading" constant="17" id="Mhg-4U-Apq"/>
+                                                <constraint firstAttribute="trailing" secondItem="Vah-TB-c7O" secondAttribute="trailing" constant="16" id="aQ4-hp-L6W"/>
+                                                <constraint firstItem="Vah-TB-c7O" firstAttribute="centerY" secondItem="NEp-SK-UAS" secondAttribute="centerY" id="yk2-q4-PY2"/>
+                                                <constraint firstItem="Vah-TB-c7O" firstAttribute="leading" secondItem="DR7-JE-aLH" secondAttribute="trailing" constant="8" id="zg6-Sm-yT7"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
                             <tableViewSection headerTitle="User Interface Setting" footerTitle="Enable animation even audio is playing in background." id="9hg-Jy-A3S" userLabel="UI">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="44" id="BaE-2x-Bzs">
-                                        <rect key="frame" x="0.0" y="1016" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="1112" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="BaE-2x-Bzs" id="6Vj-AL-rNT">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
@@ -1865,7 +1904,7 @@
                             <tableViewSection headerTitle="" footerTitle="Keep `Settings Window` open after dismissing `Additional Settings Window`." id="boQ-GG-Exe" userLabel="UI">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="44" id="aUH-Zn-KLv">
-                                        <rect key="frame" x="0.0" y="1104.5" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="1200.5" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="aUH-Zn-KLv" id="one-20-V15">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
@@ -1930,6 +1969,7 @@
                         <outlet property="phoneticFirstAndLastNameSwitch" destination="dV0-a0-Ofl" id="2To-5i-jQJ"/>
                         <outlet property="quickSearchSelectionIndicator" destination="nVA-4v-Nav" id="XzD-do-qaL"/>
                         <outlet property="quickSearchSelectionLabel" destination="Buy-mD-J4T" id="R3a-l1-4A9"/>
+                        <outlet property="separatePinyinSwitch" destination="Vah-TB-c7O" id="xRI-te-4ah"/>
                         <outlet property="statusLabel" destination="UQ1-gf-Cd7" id="kR8-Vq-Ai2"/>
                         <outlet property="statusSwitch" destination="alP-kM-Gh6" id="xEt-e8-EEi"/>
                     </connections>

@@ -52,10 +52,10 @@ class PhoneticContacts {
         aborted      = !isProcessing
         
         // uncomment the following line if you want to remove all Simulator's Contacts first.
-//        self.removeAllContactsOfSimulator()
+        //        self.removeAllContactsOfSimulator()
         
         self.insertNewContactsForSimulatorIfNeeded(50)
-//        self.insertNewContactsForDevice(100)
+        //        self.insertNewContactsForDevice(100)
         
         dispatch_async(dispatch_get_global_queue(Int(QOS_CLASS_BACKGROUND.rawValue), 0)) {
             
@@ -184,7 +184,7 @@ class PhoneticContacts {
                     index += 1
                 })
             } catch {
-
+                
                 DEBUGLog("fetching Contacts failed ! - \(error)")
             }
             
@@ -203,9 +203,9 @@ class PhoneticContacts {
             let contacts = try self.contactStore.unifiedContactsMatchingPredicate(predicate, keysToFetch: [CNContactGivenNameKey, CNContactFamilyNameKey])
             return contacts.count
         } catch {
-
+            
             DEBUGLog("\(error)")
-
+            
             return 0
         }
     }
@@ -216,7 +216,7 @@ class PhoneticContacts {
         do {
             try self.contactStore.executeSaveRequest(saveRequest)
         } catch {
-
+            
             DEBUGLog("saving Contact failed ! - \(error)")
         }
     }
@@ -286,21 +286,32 @@ class PhoneticContacts {
                 source = NSMutableString()
                 brief = briefInitial(phoneticParts)
                 
-                if upcasePinyin {
-                    
-                    // upcase all words of First Name.   e.g:  Liu YiFei
+                if separatePinyin {
                     for part in phoneticParts {
+                        // upcase all words
                         source.appendString(upcaseInitial(part))
+                        
+                        // insert blank space
+                        source.appendString(" ")
                     }
                     
                 } else {
-                    
-                    // only upcase the first word of First Name.    e.g: Liu Yifei
-                    for (index, part) in phoneticParts.enumerate() {
-                        if index == 0 {
+                    if upcasePinyin {
+                        
+                        // upcase all words of First Name.   e.g:  Liu YiFei
+                        for part in phoneticParts {
                             source.appendString(upcaseInitial(part))
-                        } else {
-                            source.appendString(part)
+                        }
+                        
+                    } else {
+                        
+                        // only upcase the first word of First Name.    e.g: Liu Yifei
+                        for (index, part) in phoneticParts.enumerate() {
+                            if index == 0 {
+                                source.appendString(upcaseInitial(part))
+                            } else {
+                                source.appendString(part)
+                            }
                         }
                     }
                 }
@@ -309,12 +320,12 @@ class PhoneticContacts {
                 brief = briefInitial([source as! String])
             }
             
-            let value = upcaseInitial(source as! String).stringByReplacingOccurrencesOfString(" ", withString: "")
+            let value = upcaseInitial(source as! String)//.stringByReplacingOccurrencesOfString(" ", withString: "")
             return Phonetic(brief: brief, value: value)
         }
         return nil
     }
-   
+    
 }
 
 extension PhoneticContacts {
@@ -338,7 +349,9 @@ extension PhoneticContacts {
         return userDefaults.getBool(kFixPolyphonicChar, defaultKeyValue: kFixPolyphonicCharDefaultBool)
     }
     
-    
+    private var separatePinyin: Bool {
+        return userDefaults.getBool(kAlwaysSeparatePinyin, defaultKeyValue: kAlwaysSeparatePinyinDefaultBool)
+    }
     
 }
 

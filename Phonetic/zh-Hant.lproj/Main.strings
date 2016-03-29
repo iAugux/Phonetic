@@ -162,3 +162,6 @@
 
 /* Class = "UILabel"; text = "Instant Messages Keys"; ObjectID = "iQO-ha-HZP"; */
 "iQO-ha-HZP.text" = "即時信息欄位";
+
+/* Class = "UILabel"; text = "Always Separate Pinyin"; ObjectID = "DR7-JE-aLH.text"; */
+"DR7-JE-aLH.text" = "總是隔開拼音";
