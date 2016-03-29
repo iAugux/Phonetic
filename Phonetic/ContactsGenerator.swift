@@ -140,7 +140,7 @@ extension PhoneticContacts {
         guard Device.type() == .Simulator else { return false }
         
         // if there is more enough to test, return false
-        guard contactsTotalCount() < 30 else { return false }
+        guard contactsTotalCount < 30 else { return false }
         
         return true
     }

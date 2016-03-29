@@ -17,6 +17,8 @@ class PhoneticContacts {
     let contactStore = CNContactStore()
     let userDefaults = NSUserDefaults.standardUserDefaults()
     
+    var contactsTotalCount: Int!
+    
     var isProcessing    = false
     private var aborted = false
     
@@ -44,6 +46,8 @@ class PhoneticContacts {
             handleAccessGranted()
         }
         
+        contactsTotalCount = getContactsTotalCount()
+        
         isProcessing = true
         aborted      = !isProcessing
         
@@ -56,7 +60,7 @@ class PhoneticContacts {
         dispatch_async(dispatch_get_global_queue(Int(QOS_CLASS_BACKGROUND.rawValue), 0)) {
             
             var index = 1
-            let count = self.contactsTotalCount()
+            let count = self.contactsTotalCount
             
             do {
                 try self.contactStore.enumerateContactsWithFetchRequest(CNContactFetchRequest(keysToFetch: self.keysToFetch), usingBlock: { (contact, _) -> Void in
@@ -134,13 +138,15 @@ class PhoneticContacts {
             handleAccessGranted()
         }
         
+        contactsTotalCount = getContactsTotalCount()
+        
         isProcessing = true
         aborted = !isProcessing
         
         dispatch_async(dispatch_get_global_queue(Int(QOS_CLASS_BACKGROUND.rawValue), 0)) {
             
             var index = 1
-            let count = self.contactsTotalCount()
+            let count = self.contactsTotalCount
             
             do {
                 try self.contactStore.enumerateContactsWithFetchRequest(CNContactFetchRequest(keysToFetch: self.keysToFetch), usingBlock: { (contact, _) -> Void in
@@ -190,7 +196,7 @@ class PhoneticContacts {
         }
     }
     
-    func contactsTotalCount() -> Int {
+    func getContactsTotalCount() -> Int {
         let predicate = CNContact.predicateForContactsInContainerWithIdentifier(contactStore.defaultContainerIdentifier())
         
         do {
