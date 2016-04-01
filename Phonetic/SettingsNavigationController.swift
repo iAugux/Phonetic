@@ -76,11 +76,17 @@ class SettingsNavigationController: UINavigationController {
         customBarButton.tintColor   = UIColor.whiteColor()
         customBarButton.frame.size  = CGSizeMake(25, 25)
         customBarButton.contentMode = .Center
-        customBarButton.addTarget(self, action: #selector(dismissViewController), forControlEvents: .TouchUpInside)
+        customBarButton.addTarget(self, action: #selector(SettingViewController.customBarButtonDidTap), forControlEvents: .TouchUpInside)
         
         navigationBar.addSubview(customBarButton)
         
         hideCustomBarButton = shouldHideCustomBarButton
+    }
+    
+    func customBarButtonDidTap() {
+        if let vc = viewControllers.first as? BaseTableViewController {
+            vc.dismissViewController()
+        }
     }
     
     private func configureCustomStatusBar() {
