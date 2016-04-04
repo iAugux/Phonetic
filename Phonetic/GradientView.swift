@@ -54,6 +54,13 @@ class GradientView: UIView {
         bgImageView.contentMode = .ScaleAspectFill
         insertSubview(bgImageView, atIndex: 0)
         
+        guard UIDevice.currentDevice().isBlurSupported() && !UIAccessibilityIsReduceTransparencyEnabled() else {
+            let overlayView = UIView(frame: frame)
+            overlayView.backgroundColor = UIColor(red: 0.498, green: 0.498, blue: 0.498, alpha: 0.926)
+            insertSubview(overlayView, atIndex: 1)
+            return
+        }
+        
         let effect     = UIBlurEffect(style: .Light)
         let blurView   = UIVisualEffectView(effect: effect)
         blurView.frame = bounds

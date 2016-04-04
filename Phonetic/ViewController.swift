@@ -113,6 +113,11 @@ class ViewController: UIViewController {
         // Preventing multiple buttons from being touched at the same time
 //        settingButton.exclusiveTouch = true
 //        infoButton.exclusiveTouch = true
+        
+        if !UIDevice.currentDevice().isBlurSupported() || UIAccessibilityIsReduceTransparencyEnabled() {
+            blurView.effect = nil
+            blurView.backgroundColor = UIColor(red: 0.498, green: 0.498, blue: 0.498, alpha: 0.926)
+        }
     }
     
     private func enableExecuteButtonGestures(enable: Bool) {
