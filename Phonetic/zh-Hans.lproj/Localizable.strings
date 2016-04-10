@@ -173,6 +173,12 @@
 "Are you sure to clean Instant Message Addresses keys? This can not be revoked!!" = "确定清除所有即时信息字段？清除后将无法恢复！！";
 
 
+/* Local Notification - alert body */
+"Mission Completed !" = "任务完成！";
+
+/* Local Notification - App terminated notification */
+"Phonetic is about to be terminated! Please open it again to complete the mission." = "Phonetic 将要中止运行！请再次打开以完成任务。";
+
 // 3D Touch items
 
 "Add Phonetic Keys" = "添加拼音字段";
