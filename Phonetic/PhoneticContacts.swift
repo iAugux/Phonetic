@@ -6,7 +6,7 @@
 //  Copyright © 2016 iAugus. All rights reserved.
 //
 
-import Foundation
+import UIKit
 import Contacts
 
 
@@ -14,13 +14,24 @@ class PhoneticContacts {
     
     static let sharedInstance = PhoneticContacts()
     
+    init() {
+        DEBUGLog("Register UserNotificationSettings & UIApplicationDidBecomeActiveNotification")
+        
+        // register user notification settings
+        UIApplication.sharedApplication().registerUserNotificationSettings(UIUserNotificationSettings(forTypes: [.Alert, .Badge, .Sound], categories: nil))
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(PhoneticContacts.reinstateBackgroundTask), name: UIApplicationDidBecomeActiveNotification, object: nil)
+    }
+    
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
+    
+    
     let contactStore = CNContactStore()
     let userDefaults = NSUserDefaults.standardUserDefaults()
     
     var contactsTotalCount: Int!
-    
-    var isProcessing    = false
-    private var aborted = false
     
     var keysToFetch: [String] {
         var keys = [CNContactGivenNameKey, CNContactFamilyNameKey, CNContactPhoneticGivenNameKey, CNContactPhoneticFamilyNameKey]
@@ -34,11 +45,32 @@ class PhoneticContacts {
         return keys
     }
     
+    var isProcessing = false {
+        didSet {
+            if isProcessing {
+                registerBackgroundTask()
+            } else {
+                endBackgroundTask()
+            }
+        }
+    }
+    
+    private var aborted = false
+
+    private lazy var backgroundTask = UIBackgroundTaskInvalid
+    
+    private lazy var localNotification: UILocalNotification = {
+        let localNotification = UILocalNotification()
+        localNotification.soundName = UILocalNotificationDefaultSoundName
+        return localNotification
+    }()
+    
+    
     typealias ResultHandler = ((currentResult: String?, percentage: Int) -> Void)
     typealias AccessGrantedHandler = (() -> Void)
     typealias CompletionHandler = ((aborted: Bool) -> Void)
     
-    func execute(handleAccessGranted: AccessGrantedHandler, handleResult:  ResultHandler, completionHandler: CompletionHandler) {
+    func execute(handleAccessGranted: AccessGrantedHandler, resultHandler:  ResultHandler, completionHandler: CompletionHandler) {
         AppDelegate().requestContactsAccess { (accessGranted) in
             guard accessGranted else { return }
             
@@ -55,7 +87,8 @@ class PhoneticContacts {
         //        self.removeAllContactsOfSimulator()
         
         self.insertNewContactsForSimulatorIfNeeded(50)
-        //        self.insertNewContactsForDevice(100)
+//                self.insertNewContactsForDevice(100)
+        
         
         dispatch_async(dispatch_get_global_queue(Int(QOS_CLASS_BACKGROUND.rawValue), 0)) {
             
@@ -109,9 +142,7 @@ class PhoneticContacts {
                         
                         let result = phoneticFamilyResult + " " + phoneticGivenResult
                         
-                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                            handleResult(currentResult: result, percentage: self.currentPercentage(index, total: count))
-                        })
+                        self.handlingResult(resultHandler, result: result, index: index, total: count)
                         
                         index += 1
                     }
@@ -123,14 +154,12 @@ class PhoneticContacts {
             
             self.isProcessing = false
             
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                completionHandler(aborted: self.aborted)
-            })
+            self.handlingCompletion(completionHandler)
         }
         
     }
     
-    func cleanMandarinLatinPhonetic(handleAccessGranted: AccessGrantedHandler, handleResult: ResultHandler, completionHandler: CompletionHandler) {
+    func cleanMandarinLatinPhonetic(handleAccessGranted: AccessGrantedHandler, resultHandler: ResultHandler, completionHandler: CompletionHandler) {
         AppDelegate().requestContactsAccess { (accessGranted) in
             guard accessGranted else { return }
             
@@ -177,9 +206,7 @@ class PhoneticContacts {
                     
                     self.saveContact(mutableContact)
                     
-                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                        handleResult(currentResult: nil, percentage: self.currentPercentage(index, total: count))
-                    })
+                    self.handlingResult(resultHandler, result: nil, index: index, total: count)
                     
                     index += 1
                 })
@@ -190,9 +217,7 @@ class PhoneticContacts {
             
             self.isProcessing = false
             
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                completionHandler(aborted: self.aborted)
-            })
+            self.handlingCompletion(completionHandler)
         }
     }
     
@@ -208,6 +233,65 @@ class PhoneticContacts {
             
             return 0
         }
+    }
+    
+    private func handlingCompletion(handle: CompletionHandler) {
+        
+        switch UIApplication.sharedApplication().applicationState {
+        case .Background:
+            // completed not aborted
+            if !aborted {
+                DEBUGLog("Mission Completed")
+                
+                localNotification.fireDate = NSDate()
+                localNotification.alertBody = NSLocalizedString("Mission Completed !", comment: "Local Notification - alert body")
+                UIApplication.sharedApplication().scheduleLocalNotification(localNotification)
+            }
+        default:
+            break
+        }
+        
+        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            handle(aborted: self.aborted)
+        })
+    }
+    
+    private func handlingResult(handle: ResultHandler, result: String?, index: Int, total: Int) {
+        
+        let percentage = currentPercentage(index, total: total)
+        
+        switch UIApplication.sharedApplication().applicationState {
+        case .Active:
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                handle(currentResult: result, percentage: percentage)
+            })
+            
+        case .Background:
+            
+            // set icon badge number as current percentage.
+            UIApplication.sharedApplication().applicationIconBadgeNumber = percentage
+            
+            // handling results while it is almost complete to correct the UI of percentage.
+            if percentage > 95 {
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    handle(currentResult: result, percentage: percentage)
+                })
+            }
+            
+            let remainingTime = UIApplication.sharedApplication().backgroundTimeRemaining
+            
+            // App is about to be terminated, send notification.
+            if remainingTime < 10 {
+                localNotification.fireDate = NSDate()
+                localNotification.alertBody = NSLocalizedString("Phonetic is about to be terminated! Please open it again to complete the mission.", comment: "Local Notification - App terminated notification")
+                UIApplication.sharedApplication().scheduleLocalNotification(localNotification)
+            }
+            
+            DEBUGLog("Background time remaining \(remainingTime) seconds")
+            
+        default: break
+        }
+        
     }
     
     private func saveContact(contact: CNMutableContact) {
@@ -327,6 +411,33 @@ class PhoneticContacts {
     }
     
 }
+
+
+// MARK: - Background Task
+
+private extension PhoneticContacts {
+    
+    @objc func reinstateBackgroundTask() {
+        if isProcessing && (backgroundTask == UIBackgroundTaskInvalid) {
+            registerBackgroundTask()
+        }
+    }
+    
+    func registerBackgroundTask() {
+        backgroundTask = UIApplication.sharedApplication().beginBackgroundTaskWithExpirationHandler {
+            [unowned self] in
+            self.endBackgroundTask()
+        }
+        assert(backgroundTask != UIBackgroundTaskInvalid)
+    }
+    
+    func endBackgroundTask() {
+        DEBUGLog("Background task ended.")
+        UIApplication.sharedApplication().endBackgroundTask(backgroundTask)
+        backgroundTask = UIBackgroundTaskInvalid
+    }
+}
+
 
 extension PhoneticContacts {
     

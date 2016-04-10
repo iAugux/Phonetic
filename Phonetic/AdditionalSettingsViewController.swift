@@ -380,10 +380,7 @@ extension AdditionalSettingsViewController {
     // MARK: - Turn On/Off Switch Automatically
     private func switchStatusAutomaticallyWithDelay(sender: UISwitch) {
         
-        let delayInSeconds: Double = 0.2
-        let popTime = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(NSEC_PER_SEC) * delayInSeconds))
-        dispatch_after(popTime, dispatch_get_main_queue(), {
-            
+        executeAfterDelay(0.2) { 
             if sender == self.overwriteAlreadyExistsSwitch && !self.customNameSwitch.on {
                 if let _ = self.nicknameSwitch?.setOn(true, animated: true) {
                     self.userDefaults.setBool(true, forKey: kEnableNickname)
@@ -405,8 +402,8 @@ extension AdditionalSettingsViewController {
                 default: break
                 }
             }
-        })
-        
+
+        }
     }
     
     private func enableAllCleanPhoneticSwitchWithDelay(enabled: Bool, delay: Bool) {

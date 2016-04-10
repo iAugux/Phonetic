@@ -81,10 +81,7 @@ class PolyphonicViewController: BaseTableViewController {
                 NSUserDefaults.standardUserDefaults().synchronize()
                 
                 // Just for UI, did not store values.
-                
-                let delayInSeconds: Double = 0.2
-                let popTime = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(NSEC_PER_SEC) * delayInSeconds))
-                dispatch_after(popTime, dispatch_get_main_queue(), {
+                executeAfterDelay(0.2, completion: {
                     for cell in self.tableView.visibleCells {
                         if let cell = cell as? PolyphonicTableViewCell {
                             cell.polyphonicSwitch.on = sender.on

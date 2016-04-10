@@ -24,6 +24,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.backgroundColor = UIColor.clearColor()
         
         requestAccess()
+        
+        // clear icon badge number if needed.
+        application.applicationIconBadgeNumber = 0
+        
+        application.beginBackgroundTaskWithName("showNotification", expirationHandler: nil)
 
         return true
     }
@@ -47,6 +52,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillEnterForeground(application: UIApplication) {
         // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+        
+        // clear icon badge number
+        application.applicationIconBadgeNumber = 0
         
         // fixes UI bugs
         if let rootViewController = window?.rootViewController as? ViewController {

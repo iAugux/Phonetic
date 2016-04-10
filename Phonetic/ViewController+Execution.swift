@@ -51,7 +51,7 @@ extension ViewController {
         PhoneticContacts.sharedInstance.execute({ () -> Void in
             self.isProcessing = true
             self.playVideoIfNeeded()
-            }, handleResult: { (currentResult, percentage) -> Void in
+            }, resultHandler: { (currentResult, percentage) -> Void in
                 self.outputView.text = currentResult
                 self.percentageLabel.text = "\(percentage)%"
                 self.runProgressBar(false, percentage: percentage)
@@ -88,7 +88,7 @@ extension ViewController {
             PhoneticContacts.sharedInstance.cleanMandarinLatinPhonetic({ () -> Void in
                 self.isProcessing = true
                 self.playVideoIfNeeded()
-                }, handleResult: { (currentResult, percentage) -> Void in
+                }, resultHandler: { (currentResult, percentage) -> Void in
                     self.percentageLabel.text = "\(100 - percentage)%"
                     self.runProgressBar(true, percentage: percentage)
                 }, completionHandler: { (aborted) -> Void in
@@ -106,6 +106,13 @@ extension ViewController {
     
     // MARK: - Video
     func loopingVideo(){
+        
+        guard UIApplication.sharedApplication().applicationState == .Active && PhoneticContacts.sharedInstance.isProcessing else {
+            avPlayer?.pause()
+            avPlayerController = nil
+            return
+        }
+        
         avPlayer?.seekToTime(CMTimeMakeWithSeconds(0, 1))
         avPlayer?.play()
     }
