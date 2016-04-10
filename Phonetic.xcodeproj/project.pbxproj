@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B1128A0F1CBA177A000258E2 /* AppDelegate+3DTouch.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1128A0E1CBA1779000258E2 /* AppDelegate+3DTouch.swift */; };
 		B1159B701C59045800F16037 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1159B6F1C59045800F16037 /* AppDelegate.swift */; };
 		B1159B721C59045800F16037 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1159B711C59045800F16037 /* ViewController.swift */; };
 		B1159B751C59045800F16037 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B1159B731C59045800F16037 /* Main.storyboard */; };
@@ -86,6 +87,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B1128A0E1CBA1779000258E2 /* AppDelegate+3DTouch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AppDelegate+3DTouch.swift"; sourceTree = "<group>"; };
 		B1159B6C1C59045800F16037 /* Phonetic.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Phonetic.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B1159B6F1C59045800F16037 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B1159B711C59045800F16037 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -203,6 +205,7 @@
 			children = (
 				B1159B6F1C59045800F16037 /* AppDelegate.swift */,
 				B1159BBE1C59140400F16037 /* AppDelegate+Extension.swift */,
+				B1128A0E1CBA1779000258E2 /* AppDelegate+3DTouch.swift */,
 				B12292681C59185600F0F549 /* Models */,
 				B12292671C59185000F0F549 /* Views */,
 				B12292661C59184000F0F549 /* Controllers */,
@@ -419,6 +422,11 @@
 					B1159B6B1C59045800F16037 = {
 						CreatedOnToolsVersion = 7.2;
 						DevelopmentTeam = J4Z2NCTR3S;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 					B1159B7F1C59045800F16037 = {
 						CreatedOnToolsVersion = 7.2;
@@ -514,6 +522,7 @@
 				B1C852231C856AD2005549FD /* UIView+Extension.swift in Sources */,
 				B1C852201C856AD2005549FD /* UINavigationController+Extension.swift in Sources */,
 				B1C8521B1C856AD2005549FD /* NSUserDefaults+Extension.swift in Sources */,
+				B1128A0F1CBA177A000258E2 /* AppDelegate+3DTouch.swift in Sources */,
 				B124789E1C5F34C8006D1B62 /* Type.swift in Sources */,
 				B1C8521E1C856AD2005549FD /* UIButton+Extension.swift in Sources */,
 				B12090941C6BBA3C00997E0A /* BlurActionSheet.swift in Sources */,

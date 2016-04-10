@@ -67,6 +67,11 @@ extension ViewController {
         // the later: ensure be triggered at the beginning while long pressing, or there will be a warning at runtime.
         guard gesture.isKindOfClass(UITapGestureRecognizer) || gesture.state == .Began else { return }
         
+        clean()
+    }
+    
+    func clean() {
+        
         let title             = NSLocalizedString("Warning!", comment: "UIAlertController - title")
         let message           = NSLocalizedString("Are you sure to clean all Mandarin Latin's phonetic keys?", comment: "UIAlertController - message")
         let okActionTitle     = NSLocalizedString("Clean", comment: "UIAlertAction title - clean all phonetic keys")
@@ -97,6 +102,7 @@ extension ViewController {
         
         presentViewController(alertController, animated: true, completion: nil)
     }
+    
     
     // MARK: - Video
     func loopingVideo(){

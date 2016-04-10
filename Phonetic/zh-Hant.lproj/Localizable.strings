@@ -171,3 +171,9 @@
 
 /* UIAlertController message */
 "Are you sure to clean Instant Message Addresses keys? This can not be revoked!!" = "確定清除所有即時信息欄位？清除後將無法恢復！！";
+
+
+// 3D Touch items
+
+"Add Phonetic Keys" = "添加拼音欄位";
+"Clean Phonetic Keys" = "清除拼音欄位";

@@ -18,6 +18,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
+        createShortcutItemsWithIcons()
+
         application.statusBarStyle = .LightContent
         window?.backgroundColor = UIColor.clearColor()
         
