@@ -25,6 +25,12 @@ class BlurActionSheetCell: UITableViewCell {
         underLineView = UIView()
         underLineView.backgroundColor = underLineColor
         contentView.addSubview(underLineView)
+        underLineView.snp_makeConstraints { (make) in
+            make.top.equalTo(0)
+            make.left.equalTo(8)
+            make.right.equalTo(-8)
+            make.height.equalTo(0.5)
+        }
         
         backgroundView = nil
         backgroundColor = UIColor.clearColor()
@@ -34,21 +40,12 @@ class BlurActionSheetCell: UITableViewCell {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        let width               = bounds.size.width
-        let margin: CGFloat     = 8.0
-        let lineHeight: CGFloat = 0.5
-        
-        underLineView.frame = CGRectMake(margin, 0, width - margin * 2, lineHeight)
-    }
     
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         if selected {
             self.textLabel?.textColor = UIColor.lightGrayColor()
-            underLineView.backgroundColor = underLineColor
+            underLineView?.backgroundColor = underLineColor
         }
     }
     
@@ -56,7 +53,7 @@ class BlurActionSheetCell: UITableViewCell {
         super.setHighlighted(highlighted, animated: animated)
         if highlighted {
             self.textLabel?.textColor = UIColor.lightGrayColor()
-            underLineView.backgroundColor = underLineColor
+            underLineView?.backgroundColor = underLineColor
         }
     }
 

@@ -47,20 +47,6 @@ class BlurActionSheet: UIView, UITableViewDataSource {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
-    override func layoutSubviews() {
-        super.layoutSubviews()
-
-        let maxHeight = actionSheetCellHeight * CGFloat(titles!.count - 1) + actionSheetCancelHeight
-        
-        // TODO: - maxHeight shouldn't be greater than screen's height.
-        
-        var frame = UIScreen.mainScreen().bounds
-        frame.size.height = maxHeight
-        frame.origin.y = UIScreen.mainScreen().bounds.height - maxHeight
-        
-        tableView.frame = frame
-    }
     
     class func showWithTitles(titles: [String], handler: ((index: Int) -> Void)) -> BlurActionSheet {
         return showWithTitles(titles, view: nil, handler: handler)
