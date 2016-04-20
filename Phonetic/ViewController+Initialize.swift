@@ -34,7 +34,7 @@ extension ViewController {
             alertController.addAction(okAction)
             alertController.addAction(cancelAction)
             alertController.addAction(laterAction)
-            UIApplication.topMostViewController()?.presentViewController(alertController, animated: true, completion: nil)
+            UIApplication.topMostViewController?.presentViewController(alertController, animated: true, completion: nil)
         }
 
     }

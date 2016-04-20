@@ -158,3 +158,17 @@ extension PolyphonicViewController {
     }
     
 }
+
+
+// MARK: - Rotation
+extension PolyphonicViewController {
+    
+    override func willRotateToInterfaceOrientation(toInterfaceOrientation: UIInterfaceOrientation, duration: NSTimeInterval) {
+        if UIDevice.isPad {
+            dismissViewController(completion: {
+                kShouldRepresentPolyphonicVC = true
+            })
+        }
+    }
+
+}

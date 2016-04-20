@@ -8,6 +8,14 @@
 import UIKit
 
 
+extension UIDevice {
+    
+    static var isPad: Bool {
+        return UIDevice.currentDevice().userInterfaceIdiom == .Pad
+    }
+}
+
+
 // MARK: - Check if device supports blur
 // REFERENCE: - http://stackoverflow.com/a/29997626/4656574
 

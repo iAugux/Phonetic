@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Device
 
 
 let kNavigationBarBackgroundColor = UIColor(red: 0.4, green: 0.4, blue: 0.4, alpha: 1.0)
@@ -85,7 +86,7 @@ class SettingsNavigationController: UINavigationController {
     
     func customBarButtonDidTap() {
         if let vc = viewControllers.first as? BaseTableViewController {
-            vc.dismissViewController()
+            vc.dismissViewController(completion: nil)
         }
     }
     

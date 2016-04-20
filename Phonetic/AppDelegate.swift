@@ -77,6 +77,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 
+    
+}
 
+
+extension AppDelegate {
+    
+    // Detecting touching outside of the popover
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        
+        guard UIDevice.isPad else { return }
+        
+        DEBUGLog("Touched Began")
+        
+        kShouldRepresentAdditionalVC = false
+        kShouldRepresentPolyphonicVC = false
+    }
 }
 

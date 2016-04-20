@@ -61,7 +61,7 @@ extension AppDelegate {
         
         alertViewController.addAction(okAction)
         alertViewController.addAction(cancelAction)
-        UIApplication.topMostViewController()?.presentViewController(alertViewController, animated: true, completion: nil)
+        UIApplication.topMostViewController?.presentViewController(alertViewController, animated: true, completion: nil)
     }
     
 }

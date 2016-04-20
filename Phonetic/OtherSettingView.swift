@@ -9,6 +9,7 @@
 import UIKit
 import MessageUI
 import SafariServices
+import Device
 
 class OtherSettingView: UIStackView, MFMailComposeViewControllerDelegate, SFSafariViewControllerDelegate {
     
@@ -58,7 +59,7 @@ class OtherSettingView: UIStackView, MFMailComposeViewControllerDelegate, SFSafa
         
         let safariVC = SFSafariViewController(URL: NSURL(string: "https://twitter.com/iAugux")!)
         safariVC.delegate = self
-        UIApplication.topMostViewController()?.presentViewController(safariVC, animated: true, completion: {
+        UIApplication.topMostViewController?.presentViewController(safariVC, animated: true, completion: {
             UIApplication.sharedApplication().statusBarStyle = .Default
         })
     }
@@ -83,7 +84,7 @@ class OtherSettingView: UIStackView, MFMailComposeViewControllerDelegate, SFSafa
                 if let build = NSBundle.mainBundle().objectForInfoDictionaryKey(kCFBundleVersionKey as String) as? String {
                     let info = "# V \(version) (\(build)), \(Device.version()), iOS \(UIDevice.currentDevice().systemVersion) #\n"
                     picker?.setMessageBody(info, isHTML: true)
-                    UIApplication.topMostViewController()?.presentViewController(picker!, animated: true, completion: nil)
+                    UIApplication.topMostViewController?.presentViewController(picker!, animated: true, completion: nil)
                 }
             }
         }

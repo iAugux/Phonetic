@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Device
 
 
 let kUseTones                     = "kUseTones"
@@ -21,12 +22,17 @@ let kEnableAnimationDefaultBool   = Device.size() == Size.Screen3_5Inch ? false 
 
 let kVCWillDisappearNotification  = "kVCWillDisappearNotification"
 
+var kShouldRepresentAdditionalVC  = false
+var kShouldRepresentPolyphonicVC  = false
+
 class SettingViewController: UIViewController {
     
     @IBOutlet weak var polyphonicButton: UIButton!
     
-    private var customBarButton: UIButton!
     private let userDefaults = NSUserDefaults.standardUserDefaults()
+    
+    private var customBarButton: UIButton!
+    
     
     @IBOutlet weak var enableAnimationSwitch: UISwitch! {
         didSet {
@@ -99,6 +105,7 @@ class SettingViewController: UIViewController {
                 
         if UIDevice.currentDevice().userInterfaceIdiom == .Pad {
             presentPopoverController()
+            kShouldRepresentAdditionalVC = true
         } else {
             // dismiss current view controller first.
             dismissViewControllerAnimated(true) { () -> Void in
@@ -116,7 +123,8 @@ class SettingViewController: UIViewController {
         vc.popoverPresentationController?.sourceView = sourceView
         vc.popoverPresentationController?.sourceRect = sourceView.bounds
         vc.popoverPresentationController?.backgroundColor = kNavigationBarBackgroundColor
-        UIApplication.topMostViewController()?.presentViewController(vc, animated: true, completion: nil)
+        
+        UIApplication.topMostViewController?.presentViewController(vc, animated: true, completion:nil)
     }
     
     // MARKS: - Actions of UISwitch
@@ -141,3 +149,16 @@ class SettingViewController: UIViewController {
     }
     
 }
+
+
+extension SettingViewController {
+    
+    override func didRotateFromInterfaceOrientation(fromInterfaceOrientation: UIInterfaceOrientation) {
+        
+        guard UIDevice.isPad else { return }
+       
+        kShouldRepresentAdditionalVC ? customBarButton?.sendActionsForControlEvents(.TouchUpInside) : ()
+        kShouldRepresentPolyphonicVC ? polyphonicButton?.sendActionsForControlEvents(.TouchUpInside) : ()
+    }
+}
+

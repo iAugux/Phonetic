@@ -49,7 +49,7 @@ class InfoViewController: UIViewController, SFSafariViewControllerDelegate {
         dismissViewControllerAnimated(true) { () -> Void in
             let safariVC = SFSafariViewController(URL: NSURL(string: "https://github.com/iAugux/Phonetic")!)
             safariVC.delegate = self
-            UIApplication.topMostViewController()?.presentViewController(safariVC, animated: true, completion: {
+            UIApplication.topMostViewController?.presentViewController(safariVC, animated: true, completion: {
                 UIApplication.sharedApplication().statusBarStyle = .Default
             })
         }

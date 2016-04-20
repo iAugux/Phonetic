@@ -143,9 +143,10 @@ extension BaseTableViewController {
         NSNotificationCenter.defaultCenter().postNotificationName(kDismissedAdditionalSettingsVCNotification, object: nil)
     }
     
-    override func dismissViewController() {
+    func dismissViewController(completion completion: CompletionHandler?) {
         dismissViewControllerAnimated(true) { () -> Void in
             self.postDismissedNotificationIfNeeded()
+            completion?()
         }
     }
     
@@ -177,18 +178,4 @@ extension BaseTableViewController {
         (view as! UITableViewHeaderFooterView).textLabel?.textColor = _color
     }
     
-}
-
-
-// MARK: - Rotation
-extension BaseTableViewController {
-    
-    override func willRotateToInterfaceOrientation(toInterfaceOrientation: UIInterfaceOrientation, duration: NSTimeInterval) {
-        
-        // FIXME: - After rotating, the position of current popover is not right.
-        // Temporarily, I have to dismiss it first on iPad.
-        if UIDevice.currentDevice().userInterfaceIdiom == .Pad {
-            dismissViewController()
-        }
-    }
 }

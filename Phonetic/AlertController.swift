@@ -48,7 +48,7 @@ class AlertController {
         
         alertController.addAction(okAction)
         
-        UIApplication.topMostViewController()?.presentViewController(alertController, animated: true, completion: nil)
+        UIApplication.topMostViewController?.presentViewController(alertController, animated: true, completion: nil)
     }
     
     private class func alertWithOptions(multiItemsOfInfo: [String], completionHandler: (() -> Void)?) {
@@ -83,7 +83,7 @@ class AlertController {
             let alertController = UIAlertController(title: nil, message: tempInfoArray.first, preferredStyle: .Alert)
             alertController.addAction(cancelAction)
             alertController.addAction(okAction)
-            UIApplication.topMostViewController()?.presentViewController(alertController, animated: true, completion: nil)
+            UIApplication.topMostViewController?.presentViewController(alertController, animated: true, completion: nil)
         }
     }
     

@@ -18,18 +18,14 @@ class BlurBackgroundView: UIView {
         backgroundColor = UIColor(white: 0.7, alpha: 0)
         
         blurView = UIVisualEffectView(effect: UIBlurEffect(style: .Dark))
-        blurView.frame = UIScreen.mainScreen().bounds
         addSubview(blurView)
+        blurView.snp_makeConstraints { (make) in
+            make.edges.equalTo(UIEdgeInsetsZero)
+        }
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        
-        blurView.frame = UIScreen.mainScreen().bounds
     }
 
 }

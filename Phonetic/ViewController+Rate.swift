@@ -36,7 +36,7 @@ extension ViewController {
             let cancelAction = UIAlertAction(title: cancelActionTitle, style: .Cancel, handler: nil)
             alertController.addAction(rateAction)
             alertController.addAction(cancelAction)
-            UIApplication.topMostViewController()?.presentViewController(alertController, animated: true, completion: nil)
+            UIApplication.topMostViewController?.presentViewController(alertController, animated: true, completion: nil)
             
             return
         }

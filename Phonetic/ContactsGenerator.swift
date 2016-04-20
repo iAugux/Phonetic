@@ -8,7 +8,7 @@
 
 import Foundation
 import Contacts
-
+import Device
 
 /**
  For safety, all of these functions will not work on Release Edition. If you do want to, please set `WORK_ON_RELEASE` to true.

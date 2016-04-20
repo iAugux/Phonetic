@@ -162,11 +162,9 @@ class ViewController: UIViewController {
         abortingAlertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
         abortingAlertController.addAction(cancelAction)
         abortingAlertController.addAction(okAction)
-        UIApplication.topMostViewController()?.presentViewController(abortingAlertController, animated: true, completion: nil)
+        UIApplication.topMostViewController?.presentViewController(abortingAlertController, animated: true, completion: nil)
     }
     
-    
 }
-
 
 

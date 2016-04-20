@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6E57AE17AC2BF92C30B87267 /* Pods_Phonetic.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 969705ECD6BE464694817D7F /* Pods_Phonetic.framework */; };
 		B1128A0F1CBA177A000258E2 /* AppDelegate+3DTouch.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1128A0E1CBA1779000258E2 /* AppDelegate+3DTouch.swift */; };
 		B1128A111CBA873A000258E2 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1128A101CBA873A000258E2 /* Utils.swift */; };
 		B1159B701C59045800F16037 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1159B6F1C59045800F16037 /* AppDelegate.swift */; };
@@ -21,10 +22,9 @@
 		B12090961C6BBA3C00997E0A /* BlurBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B12090931C6BBA3C00997E0A /* BlurBackgroundView.swift */; };
 		B1215B201C6506D100519F36 /* PhoneticContacts+QuickSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1215B1F1C6506D100519F36 /* PhoneticContacts+QuickSearch.swift */; };
 		B1215B221C65144C00519F36 /* Phonetic.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1215B211C65144C00519F36 /* Phonetic.swift */; };
-		B121B1AB1C7C5C1E00DC0C05 /* PolyphoneicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B121B1AA1C7C5C1E00DC0C05 /* PolyphoneicViewController.swift */; };
+		B121B1AB1C7C5C1E00DC0C05 /* PolyphonicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B121B1AA1C7C5C1E00DC0C05 /* PolyphonicViewController.swift */; };
 		B121B1B11C7C899B00DC0C05 /* PolyphonicTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B121B1B01C7C899B00DC0C05 /* PolyphonicTableViewCell.swift */; };
 		B122926B1C59236F00F0F549 /* PhoneticContacts.swift in Sources */ = {isa = PBXBuildFile; fileRef = B122926A1C59236F00F0F549 /* PhoneticContacts.swift */; };
-		B124789E1C5F34C8006D1B62 /* Type.swift in Sources */ = {isa = PBXBuildFile; fileRef = B124789D1C5F34C8006D1B62 /* Type.swift */; };
 		B12478A01C5F4D30006D1B62 /* wave.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = B124789F1C5F4D30006D1B62 /* wave.mp4 */; };
 		B140CCF01C60FAD30078657A /* ContactsGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B140CCEF1C60FAD30078657A /* ContactsGenerator.swift */; };
 		B140CCF21C610E300078657A /* AlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B140CCF11C610E300078657A /* AlertController.swift */; };
@@ -50,9 +50,6 @@
 		B18AC20F1C721F610090AE16 /* DetectPreferredLanguage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18AC20E1C721F610090AE16 /* DetectPreferredLanguage.swift */; };
 		B19686491C5C916C006F4614 /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B19686481C5C916C006F4614 /* GradientView.swift */; };
 		B196864F1C5CEDBE006F4614 /* OtherSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B196864E1C5CEDBE006F4614 /* OtherSettingView.swift */; };
-		B19686551C5CEE11006F4614 /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = B19686521C5CEE11006F4614 /* Device.swift */; };
-		B19686561C5CEE11006F4614 /* Size.swift in Sources */ = {isa = PBXBuildFile; fileRef = B19686531C5CEE11006F4614 /* Size.swift */; };
-		B19686571C5CEE11006F4614 /* Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = B19686541C5CEE11006F4614 /* Version.swift */; };
 		B196865B1C5D0535006F4614 /* AppIconImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B196865A1C5D0535006F4614 /* AppIconImageView.swift */; };
 		B1A2AF4F1C8078120080A261 /* PhoneticContacts+Polyphonic.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A2AF4E1C8078120080A261 /* PhoneticContacts+Polyphonic.swift */; };
 		B1B1CB611C5E0E9400AD7E73 /* KDCircularProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B1CB601C5E0E9400AD7E73 /* KDCircularProgress.swift */; };
@@ -88,6 +85,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4B591EC3271DFE5D22B5F505 /* Pods-Phonetic.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Phonetic.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Phonetic/Pods-Phonetic.debug.xcconfig"; sourceTree = "<group>"; };
+		969705ECD6BE464694817D7F /* Pods_Phonetic.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Phonetic.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B1128A0E1CBA1779000258E2 /* AppDelegate+3DTouch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AppDelegate+3DTouch.swift"; sourceTree = "<group>"; };
 		B1128A101CBA873A000258E2 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		B1159B6C1C59045800F16037 /* Phonetic.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Phonetic.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -106,10 +105,9 @@
 		B12090931C6BBA3C00997E0A /* BlurBackgroundView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlurBackgroundView.swift; sourceTree = "<group>"; };
 		B1215B1F1C6506D100519F36 /* PhoneticContacts+QuickSearch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PhoneticContacts+QuickSearch.swift"; sourceTree = "<group>"; };
 		B1215B211C65144C00519F36 /* Phonetic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Phonetic.swift; sourceTree = "<group>"; };
-		B121B1AA1C7C5C1E00DC0C05 /* PolyphoneicViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PolyphoneicViewController.swift; sourceTree = "<group>"; };
+		B121B1AA1C7C5C1E00DC0C05 /* PolyphonicViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PolyphonicViewController.swift; sourceTree = "<group>"; };
 		B121B1B01C7C899B00DC0C05 /* PolyphonicTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PolyphonicTableViewCell.swift; sourceTree = "<group>"; };
 		B122926A1C59236F00F0F549 /* PhoneticContacts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhoneticContacts.swift; sourceTree = "<group>"; };
-		B124789D1C5F34C8006D1B62 /* Type.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Type.swift; sourceTree = "<group>"; };
 		B124789F1C5F4D30006D1B62 /* wave.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = wave.mp4; sourceTree = "<group>"; };
 		B140CCEF1C60FAD30078657A /* ContactsGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsGenerator.swift; sourceTree = "<group>"; };
 		B140CCF11C610E300078657A /* AlertController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertController.swift; sourceTree = "<group>"; };
@@ -139,9 +137,6 @@
 		B18AC20E1C721F610090AE16 /* DetectPreferredLanguage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetectPreferredLanguage.swift; sourceTree = "<group>"; };
 		B19686481C5C916C006F4614 /* GradientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 		B196864E1C5CEDBE006F4614 /* OtherSettingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OtherSettingView.swift; sourceTree = "<group>"; };
-		B19686521C5CEE11006F4614 /* Device.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Device.swift; sourceTree = "<group>"; };
-		B19686531C5CEE11006F4614 /* Size.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Size.swift; sourceTree = "<group>"; };
-		B19686541C5CEE11006F4614 /* Version.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Version.swift; sourceTree = "<group>"; };
 		B196865A1C5D0535006F4614 /* AppIconImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppIconImageView.swift; sourceTree = "<group>"; };
 		B1A2AF4E1C8078120080A261 /* PhoneticContacts+Polyphonic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PhoneticContacts+Polyphonic.swift"; sourceTree = "<group>"; };
 		B1B1CB601C5E0E9400AD7E73 /* KDCircularProgress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KDCircularProgress.swift; sourceTree = "<group>"; };
@@ -164,6 +159,7 @@
 		B1FF84E11C5BC36C0036F8AA /* SettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		B1FF84E31C5BC3800036F8AA /* InfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
 		B1FF84E51C5BC7B70036F8AA /* ViewController+Popover.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ViewController+Popover.swift"; sourceTree = "<group>"; };
+		C0A35581C78B47D9829CED07 /* Pods-Phonetic.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Phonetic.release.xcconfig"; path = "Pods/Target Support Files/Pods-Phonetic/Pods-Phonetic.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -171,6 +167,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6E57AE17AC2BF92C30B87267 /* Pods_Phonetic.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -184,12 +181,31 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		368F42CA73521A1F7011B1BE /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				969705ECD6BE464694817D7F /* Pods_Phonetic.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		AE273168553BD5B644346787 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				4B591EC3271DFE5D22B5F505 /* Pods-Phonetic.debug.xcconfig */,
+				C0A35581C78B47D9829CED07 /* Pods-Phonetic.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		B1159B631C59045800F16037 = {
 			isa = PBXGroup;
 			children = (
 				B1159B6E1C59045800F16037 /* Phonetic */,
 				B1159B831C59045800F16037 /* PhoneticTests */,
 				B1159B6D1C59045800F16037 /* Products */,
+				AE273168553BD5B644346787 /* Pods */,
+				368F42CA73521A1F7011B1BE /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -246,7 +262,7 @@
 				B1C852071C8566DB005549FD /* ViewController+Initialize.swift */,
 				B1FF84E11C5BC36C0036F8AA /* SettingViewController.swift */,
 				B169426F1C6211FB000D5BFE /* AdditionalSettingsViewController.swift */,
-				B121B1AA1C7C5C1E00DC0C05 /* PolyphoneicViewController.swift */,
+				B121B1AA1C7C5C1E00DC0C05 /* PolyphonicViewController.swift */,
 				B18AC2081C71B35E0090AE16 /* HelpManualViewController.swift */,
 				B1FF84E31C5BC3800036F8AA /* InfoViewController.swift */,
 				B18AC2021C7104F20090AE16 /* SettingsNavigationController.swift */,
@@ -328,20 +344,8 @@
 				B12090901C6BBA3C00997E0A /* BlurActionSheet */,
 				B1887A821C639AE900AD9BC2 /* DGElasticPullToRefresh */,
 				B1B1CB5F1C5E0E9400AD7E73 /* KDCircularProgress */,
-				B19686511C5CEE11006F4614 /* Device */,
 			);
 			name = ThirdParty;
-			sourceTree = "<group>";
-		};
-		B19686511C5CEE11006F4614 /* Device */ = {
-			isa = PBXGroup;
-			children = (
-				B19686521C5CEE11006F4614 /* Device.swift */,
-				B124789D1C5F34C8006D1B62 /* Type.swift */,
-				B19686531C5CEE11006F4614 /* Size.swift */,
-				B19686541C5CEE11006F4614 /* Version.swift */,
-			);
-			path = Device;
 			sourceTree = "<group>";
 		};
 		B1B1CB5F1C5E0E9400AD7E73 /* KDCircularProgress */ = {
@@ -381,9 +385,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B1159B891C59045800F16037 /* Build configuration list for PBXNativeTarget "Phonetic" */;
 			buildPhases = (
+				2857877F8B51D966B4CFF57D /* Check Pods Manifest.lock */,
 				B1159B681C59045800F16037 /* Sources */,
 				B1159B691C59045800F16037 /* Frameworks */,
 				B1159B6A1C59045800F16037 /* Resources */,
+				79E08CFA40AA38BF328121BA /* Embed Pods Frameworks */,
+				5BDBF92B18E6FB80817CC5F9 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -482,6 +489,54 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		2857877F8B51D966B4CFF57D /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		5BDBF92B18E6FB80817CC5F9 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Phonetic/Pods-Phonetic-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		79E08CFA40AA38BF328121BA /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Phonetic/Pods-Phonetic-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		B1159B681C59045800F16037 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -492,10 +547,8 @@
 				B122926B1C59236F00F0F549 /* PhoneticContacts.swift in Sources */,
 				B1C852221C856AD2005549FD /* UISwitch+Extension.swift in Sources */,
 				B16942721C622A7E000D5BFE /* BlurImageView.swift in Sources */,
-				B19686551C5CEE11006F4614 /* Device.swift in Sources */,
 				B1B1CB631C5E25E300AD7E73 /* ViewController+Rate.swift in Sources */,
 				B1C8521A1C856AD2005549FD /* DEBUGLog.swift in Sources */,
-				B19686561C5CEE11006F4614 /* Size.swift in Sources */,
 				B16942701C6211FB000D5BFE /* AdditionalSettingsViewController.swift in Sources */,
 				B1887A881C639AE900AD9BC2 /* DGElasticPullToRefreshConstants.swift in Sources */,
 				B1FF84E61C5BC7B70036F8AA /* ViewController+Popover.swift in Sources */,
@@ -519,7 +572,6 @@
 				B12090951C6BBA3C00997E0A /* BlurActionSheetCell.swift in Sources */,
 				B18AC20F1C721F610090AE16 /* DetectPreferredLanguage.swift in Sources */,
 				B1C852211C856AD2005549FD /* UIScreen+Extension.swift in Sources */,
-				B19686571C5CEE11006F4614 /* Version.swift in Sources */,
 				B1C852241C856AD2005549FD /* UIViewController+Extension.swift in Sources */,
 				B196864F1C5CEDBE006F4614 /* OtherSettingView.swift in Sources */,
 				B1128A111CBA873A000258E2 /* Utils.swift in Sources */,
@@ -527,7 +579,6 @@
 				B1C852201C856AD2005549FD /* UINavigationController+Extension.swift in Sources */,
 				B1C8521B1C856AD2005549FD /* NSUserDefaults+Extension.swift in Sources */,
 				B1128A0F1CBA177A000258E2 /* AppDelegate+3DTouch.swift in Sources */,
-				B124789E1C5F34C8006D1B62 /* Type.swift in Sources */,
 				B1C8521E1C856AD2005549FD /* UIButton+Extension.swift in Sources */,
 				B12090941C6BBA3C00997E0A /* BlurActionSheet.swift in Sources */,
 				B1A2AF4F1C8078120080A261 /* PhoneticContacts+Polyphonic.swift in Sources */,
@@ -546,7 +597,7 @@
 				B1159BBF1C59140400F16037 /* AppDelegate+Extension.swift in Sources */,
 				B1159B701C59045800F16037 /* AppDelegate.swift in Sources */,
 				B16CAB7A1C5E5DE900AF3D35 /* ViewController+Execution.swift in Sources */,
-				B121B1AB1C7C5C1E00DC0C05 /* PolyphoneicViewController.swift in Sources */,
+				B121B1AB1C7C5C1E00DC0C05 /* PolyphonicViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -685,6 +736,7 @@
 		};
 		B1159B8A1C59045800F16037 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4B591EC3271DFE5D22B5F505 /* Pods-Phonetic.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -699,6 +751,7 @@
 		};
 		B1159B8B1C59045800F16037 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C0A35581C78B47D9829CED07 /* Pods-Phonetic.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";

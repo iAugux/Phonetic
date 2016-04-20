@@ -556,6 +556,7 @@ extension AdditionalSettingsViewController {
         }
         
         blurActionSheet = BlurActionSheet.showWithTitles(actionSheetTitles) { (index) -> Void in
+            
             self.setRotationAnimation(self.quickSearchSelectionIndicator, beginWithClockwise: false, clockwise: true, animated: true)
             
             // action canceled
@@ -571,19 +572,8 @@ extension AdditionalSettingsViewController {
     
 }
 
-// MARK: - Rotation
-extension AdditionalSettingsViewController {
-    
-    override func willRotateToInterfaceOrientation(toInterfaceOrientation: UIInterfaceOrientation, duration: NSTimeInterval) {
-        super.willRotateToInterfaceOrientation(toInterfaceOrientation, duration: duration)
-        
-        if UIDevice.currentDevice().userInterfaceIdiom == .Pad {
-            // FIXME: -
-            blurActionSheet?.removeFromSuperview()
-        }
-    }
-}
 
+// MARK: -
 extension AdditionalSettingsViewController: TableViewHeaderFooterViewWithButtonDelegate {
     
     func tableViewHeaderFooterViewWithButtonDidTap() {
@@ -591,8 +581,8 @@ extension AdditionalSettingsViewController: TableViewHeaderFooterViewWithButtonD
             navigationController?.pushViewController(vc, animated: true)
         }
     }
-    
 }
+
 
 // MARK: - Table View Datasource
 extension AdditionalSettingsViewController {
@@ -675,3 +665,15 @@ extension AdditionalSettingsViewController {
 }
 
 
+// MARK: - Rotation
+extension AdditionalSettingsViewController {
+    
+    override func willRotateToInterfaceOrientation(toInterfaceOrientation: UIInterfaceOrientation, duration: NSTimeInterval) {
+        
+        if UIDevice.isPad {
+            dismissViewController(completion: {
+                kShouldRepresentAdditionalVC = true
+            })
+        }
+    }
+}

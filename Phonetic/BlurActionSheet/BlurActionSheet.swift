@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import SnapKit
+
 
 class BlurActionSheet: UIView, UITableViewDataSource {
 
@@ -26,7 +28,10 @@ class BlurActionSheet: UIView, UITableViewDataSource {
         
         blurBackgroundView = BlurBackgroundView()
         addSubview(blurBackgroundView)
-        
+        blurBackgroundView.snp_makeConstraints { (make) in
+            make.edges.equalTo(UIEdgeInsetsZero)
+        }
+
         tableView                 = UITableView()
         tableView.delegate        = self
         tableView.dataSource      = self
@@ -35,7 +40,8 @@ class BlurActionSheet: UIView, UITableViewDataSource {
         tableView.backgroundColor = UIColor.clearColor()
         tableView.separatorStyle  = .None
         tableView.tableFooterView = UIView()
-        addSubview(tableView)
+        blurBackgroundView.addSubview(tableView)
+        
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -72,11 +78,24 @@ class BlurActionSheet: UIView, UITableViewDataSource {
     
     private func show() {
         
+        let maxHeight = actionSheetCellHeight * CGFloat(titles!.count - 1) + actionSheetCancelHeight
+
+        tableView.snp_makeConstraints { (make) in
+            make.left.bottom.right.equalTo(blurBackgroundView)
+            make.height.equalTo(maxHeight)
+        }
+        
         if (containerView != nil) {
             containerView!.addSubview(self)
         } else {
-            UIApplication.sharedApplication().keyWindow?.addSubview(self)
+            print(UIApplication.topMostViewController)
+            print(UIApplication.topMostViewController?.view)
+            UIApplication.topMostViewController?.view.addSubview(self)
         }
+        
+        self.snp_makeConstraints(closure: { (make) in
+            make.edges.equalTo(UIEdgeInsetsZero)
+        })
         
         blurBackgroundView.alpha = 0
         UIView.animateWithDuration(1.0, animations: { () -> Void in

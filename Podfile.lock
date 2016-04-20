@@ -1,0 +1,13 @@
+PODS:
+  - Device (1.0.1)
+  - SnapKit (0.20.0)
+
+DEPENDENCIES:
+  - Device
+  - SnapKit
+
+SPEC CHECKSUMS:
+  Device: 7ed5b87db148886e8c3cbcdde5dc997baddbe10b
+  SnapKit: 5fce3c1bbbf1fbd31de9aa92f33eb9fa03f15650
+
+COCOAPODS: 0.39.0
