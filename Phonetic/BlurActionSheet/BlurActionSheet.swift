@@ -74,10 +74,10 @@ class BlurActionSheet: UIView, UITableViewDataSource {
         if (containerView != nil) {
             containerView!.addSubview(self)
         } else {
-            print(UIApplication.topMostViewController)
-            print(UIApplication.topMostViewController?.view)
             UIApplication.topMostViewController?.view.addSubview(self)
         }
+        
+        guard self.superview != nil else { return }
         
         self.snp_makeConstraints(closure: { (make) in
             make.edges.equalTo(UIEdgeInsetsZero)
