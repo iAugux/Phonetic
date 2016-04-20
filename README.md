@@ -81,6 +81,9 @@
 
 * [`KDCircularProgress`](https://github.com/kaandedeoglu/KDCircularProgress)
 
+* [`SnapKit`](https://github.com/SnapKit/SnapKit)
+
+
 ## License
 `Phonetic` is available under the MIT license. See the `LICENSE` file for more info.
 
