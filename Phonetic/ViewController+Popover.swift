@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SnapKit
 
 // MARK: - Popover view controller even on iPhones
 extension ViewController: UIPopoverPresentationControllerDelegate {
@@ -118,15 +119,19 @@ extension ViewController: UIPopoverPresentationControllerDelegate {
     }
     
     private func configureCustomNavigationTitle(nav: UINavigationController, title: String?) {
+        
         guard title != nil else { return }
         
-        let titleLabel              = UILabel(frame: nav.navigationBar.frame)
+        let titleLabel              = UILabel()
         titleLabel.text             = title
-        titleLabel.frame.size.width = Popover.preferredContentWith
         titleLabel.textAlignment    = .Center
         titleLabel.font             = UIFont.boldSystemFontOfSize(17.0)
         titleLabel.textColor        = UIColor.whiteColor()
+        titleLabel.sizeToFit()
         nav.navigationBar.addSubview(titleLabel)
+        titleLabel.snp_makeConstraints { (make) in
+            make.center.equalTo(nav.navigationBar)
+        }
     }
     
     // MARK: - UIAdaptivePresentationControllerDelegate

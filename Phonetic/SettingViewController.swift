@@ -92,18 +92,20 @@ class SettingViewController: UIViewController {
         guard let navBar = navigationController?.navigationBar else { return }
         
         customBarButton = UIButton(type: .Custom)
-        customBarButton.frame = CGRectMake(0, 0, 25, 25)
         customBarButton.tintColor = UIColor.whiteColor()
         customBarButton.setImage(UIImage(named: "additional_settings")?.imageWithRenderingMode(.AlwaysTemplate), forState: .Normal)
-        customBarButton.center = navBar.center
-        customBarButton.frame.origin.x = 13.0
         customBarButton.addTarget(self, action: #selector(customBarButtonDidTap), forControlEvents: .TouchUpInside)
         navBar.addSubview(customBarButton)
+        customBarButton.snp_makeConstraints { (make) in
+            make.width.height.equalTo(25)
+            make.centerY.equalTo(navBar)
+            make.left.equalTo(13)
+        }
     }
     
-    func customBarButtonDidTap() {
+    @objc private func customBarButtonDidTap() {
                 
-        if UIDevice.currentDevice().userInterfaceIdiom == .Pad {
+        if UIDevice.isPad {
             presentPopoverController()
             kShouldRepresentAdditionalVC = true
         } else {

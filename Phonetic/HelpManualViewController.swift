@@ -17,14 +17,15 @@ class HelpManualViewController: UIViewController {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        
-        title = NSLocalizedString("Help Manual", comment: "Navigation title")
 
-        if let nav = navigationController as? SettingsNavigationController {
-            nav.customTitleLabel?.text = ""
-            navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: nav._textColor, NSFontAttributeName: nav._font]
-        }
+        guard let nav = navigationController as? SettingsNavigationController else { return }
+        
+        let title = NSLocalizedString("Help Manual", comment: "Navigation title")
+        nav.customTitleLabel?.text = title
+        nav.customTitleLabel?.font = UIFont.systemFontOfSize(17)
+        nav.customTitleLabel?.textColor = UIColor.whiteColor()
     }
+    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

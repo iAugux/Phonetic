@@ -8,6 +8,7 @@
 
 import UIKit
 import Device
+import SnapKit
 
 
 let kNavigationBarBackgroundColor = UIColor(red: 0.4, green: 0.4, blue: 0.4, alpha: 1.0)
@@ -18,8 +19,8 @@ class SettingsNavigationController: UINavigationController {
     let _textColor = UIColor.whiteColor()
 
     var customBarButton: UIButton!
-    var customTitleLabel: UILabel!
-    private var customStatusBar: UIView!
+    private(set) var customTitleLabel: UILabel!
+    private var customNavBar: UIView!
     
     private var shouldHideCustomBarButton: Bool {
         // iPad
@@ -47,21 +48,9 @@ class SettingsNavigationController: UINavigationController {
         navigationBar.backgroundColor = kNavigationBarBackgroundColor
         navigationBar.tintColor = GLOBAL_CUSTOM_COLOR.darkerColor(0.9)
         
-        configureCustomStatusBar()
+        configureCustomNavBar()
         configureCustomBarButtonIfNeeded()
         configureCustomTitleLabel()
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        fixCustomViewsFrameIfNeeded()
-        fixCustomStatusBarFrameIfNeeded()
     }
 
     override func didReceiveMemoryWarning() {
@@ -70,65 +59,55 @@ class SettingsNavigationController: UINavigationController {
     }
     
     func configureCustomBarButtonIfNeeded() {
+        
         guard customBarButton == nil else { return }
         
         customBarButton = UIButton(type: .Custom)
         customBarButton.setImage(UIImage(named: "close")?.imageWithRenderingMode(.AlwaysTemplate), forState: .Normal)
         customBarButton.tintColor   = UIColor.whiteColor()
-        customBarButton.frame.size  = CGSizeMake(25, 25)
         customBarButton.contentMode = .Center
-        customBarButton.addTarget(self, action: #selector(SettingViewController.customBarButtonDidTap), forControlEvents: .TouchUpInside)
+        customBarButton.addTarget(self, action: #selector(customBarButtonDidTap), forControlEvents: .TouchUpInside)
         
-        navigationBar.addSubview(customBarButton)
+        view.addSubview(customBarButton)
+        customBarButton.snp_remakeConstraints { (make) in
+            make.width.height.equalTo(25)
+            make.centerY.equalTo(navigationBar)
+            make.left.equalTo(8)
+        }
         
         hideCustomBarButton = shouldHideCustomBarButton
     }
     
-    func customBarButtonDidTap() {
+    @objc private func customBarButtonDidTap() {
         if let vc = viewControllers.first as? BaseTableViewController {
             vc.dismissViewController(completion: nil)
         }
     }
     
-    private func configureCustomStatusBar() {
+    private func configureCustomNavBar() {
         
-        guard UIDevice.currentDevice().userInterfaceIdiom != .Pad else { return }
+        guard !UIDevice.isPad else { return }
         
-        customStatusBar = UIView(frame: UIApplication.sharedApplication().statusBarFrame)
-        customStatusBar.backgroundColor = kNavigationBarBackgroundColor
-        
-        view.addSubview(customStatusBar)
+        customNavBar = UIView()
+        customNavBar.backgroundColor = kNavigationBarBackgroundColor
+        customNavBar.userInteractionEnabled = false
+        navigationBar.addSubview(customNavBar)
+        customNavBar.snp_makeConstraints { (make) in
+            make.left.bottom.right.equalTo(navigationBar)
+            make.top.equalTo(view)
+        }
     }
     
     private func configureCustomTitleLabel() {
         
-        customTitleLabel               = UILabel(frame: CGRectZero)
+        customTitleLabel               = UILabel()
         customTitleLabel.textAlignment = .Center
         customTitleLabel.textColor     = _textColor
         customTitleLabel.font          = _font
-        
+        customTitleLabel.sizeToFit()
         navigationBar.addSubview(customTitleLabel)
-    }
-    
-    private func fixCustomStatusBarFrameIfNeeded() {
-        guard UIDevice.currentDevice().userInterfaceIdiom != .Pad else { return }
-        
-        if UIScreen.screenWidth() < UIScreen.screenHeight() {
-            customStatusBar?.frame = UIApplication.sharedApplication().statusBarFrame
-        } else {
-            customStatusBar?.frame = CGRectZero
-        }
-    }
-    
-    private func fixCustomViewsFrameIfNeeded() {
-        customBarButton?.center = navigationBar.center
-        customBarButton?.frame.origin.x = 8.0
-        customTitleLabel?.sizeToFit()
-        customTitleLabel?.center = navigationBar.center
-        
-        if UIScreen.screenWidth() < UIScreen.screenHeight() && UIDevice.currentDevice().userInterfaceIdiom != .Pad {
-            customBarButton?.frame.origin.y -= UIApplication.sharedApplication().statusBarFrame.height
-            customTitleLabel?.frame.origin.y -= UIApplication.sharedApplication().statusBarFrame.height
+        customTitleLabel.snp_makeConstraints { (make) in
+            make.centerX.centerY.equalTo(navigationBar)
         }
     }
 
