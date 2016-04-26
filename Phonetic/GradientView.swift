@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SnapKit
 
 class GradientView: UIView {
     
@@ -17,42 +18,34 @@ class GradientView: UIView {
         
         backgroundColor = UIColor.clearColor()
         addBlurEffect()
-//        configureGradientView(UIScreen.mainScreen().bounds)
     }
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        
-        if gradient == nil {
-//            configureGradientView(frame)
-        }
-    }
-    
+
     override func drawRect(rect: CGRect) {
         super.drawRect(rect)
-        gradient?.frame = UIScreen.mainScreen().bounds
+//        configureGradientView(rect)
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        setNeedsDisplay()  // redraw view after rotating.        
+//        gradient?.frame = frame
     }
     
     private func configureGradientView(frame: CGRect) {
-        backgroundColor = UIColor.clearColor()
-        
         gradient        = CAGradientLayer()
         gradient.frame  = frame
-        gradient.colors = [UIColor(red:0.4256, green:0.6905, blue:0.99, alpha:0.1).CGColor,
-            UIColor(red:0.279, green:0.279, blue:0.279, alpha:0.1).CGColor]
+        gradient.colors = [UIColor(red:0.0894, green:0.4823, blue:0.9112, alpha:0.1).CGColor,
+            UIColor(red:0.6142, green:0.0611, blue:0.3474, alpha:0.1).CGColor]
         layer.insertSublayer(gradient, atIndex: 1)
     }
     
     private func addBlurEffect() {
+        
         let bgImageView = UIImageView(image: UIImage(named: "wave_placeholder"))
-        bgImageView.frame = bounds
         bgImageView.contentMode = .ScaleAspectFill
         insertSubview(bgImageView, atIndex: 0)
+        bgImageView.snp_makeConstraints { (make) in
+            make.edges.equalTo(UIEdgeInsetsZero)
+        }
         
         guard UIDevice.currentDevice().isBlurSupported() && !UIAccessibilityIsReduceTransparencyEnabled() else {
             let overlayView = UIView(frame: frame)
@@ -63,9 +56,11 @@ class GradientView: UIView {
         
         let effect     = UIBlurEffect(style: .Light)
         let blurView   = UIVisualEffectView(effect: effect)
-        blurView.frame = bounds
         blurView.alpha = 0.96
         insertSubview(blurView, atIndex: 1)
+        blurView.snp_makeConstraints { (make) in
+            make.edges.equalTo(UIEdgeInsetsZero)
+        }
     }
     
 }
