@@ -7,5 +7,6 @@ target 'Phonetic' do
 
 pod 'SnapKit'
 pod 'Device'
+pod 'KDCircularProgress', '~> 1.4.0'
 
 end
