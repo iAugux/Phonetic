@@ -52,7 +52,6 @@
 		B196864F1C5CEDBE006F4614 /* OtherSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B196864E1C5CEDBE006F4614 /* OtherSettingView.swift */; };
 		B196865B1C5D0535006F4614 /* AppIconImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B196865A1C5D0535006F4614 /* AppIconImageView.swift */; };
 		B1A2AF4F1C8078120080A261 /* PhoneticContacts+Polyphonic.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A2AF4E1C8078120080A261 /* PhoneticContacts+Polyphonic.swift */; };
-		B1B1CB611C5E0E9400AD7E73 /* KDCircularProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B1CB601C5E0E9400AD7E73 /* KDCircularProgress.swift */; };
 		B1B1CB631C5E25E300AD7E73 /* ViewController+Rate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B1CB621C5E25E300AD7E73 /* ViewController+Rate.swift */; };
 		B1C5BBEE1CA27EA9009B0A71 /* UIDevice+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C5BBED1CA27EA9009B0A71 /* UIDevice+Extension.swift */; };
 		B1C852081C8566DB005549FD /* ViewController+Initialize.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C852071C8566DB005549FD /* ViewController+Initialize.swift */; };
@@ -139,7 +138,6 @@
 		B196864E1C5CEDBE006F4614 /* OtherSettingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OtherSettingView.swift; sourceTree = "<group>"; };
 		B196865A1C5D0535006F4614 /* AppIconImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppIconImageView.swift; sourceTree = "<group>"; };
 		B1A2AF4E1C8078120080A261 /* PhoneticContacts+Polyphonic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PhoneticContacts+Polyphonic.swift"; sourceTree = "<group>"; };
-		B1B1CB601C5E0E9400AD7E73 /* KDCircularProgress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KDCircularProgress.swift; sourceTree = "<group>"; };
 		B1B1CB621C5E25E300AD7E73 /* ViewController+Rate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ViewController+Rate.swift"; sourceTree = "<group>"; };
 		B1C5BBED1CA27EA9009B0A71 /* UIDevice+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIDevice+Extension.swift"; sourceTree = "<group>"; };
 		B1C852071C8566DB005549FD /* ViewController+Initialize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ViewController+Initialize.swift"; sourceTree = "<group>"; };
@@ -343,17 +341,8 @@
 			children = (
 				B12090901C6BBA3C00997E0A /* BlurActionSheet */,
 				B1887A821C639AE900AD9BC2 /* DGElasticPullToRefresh */,
-				B1B1CB5F1C5E0E9400AD7E73 /* KDCircularProgress */,
 			);
 			name = ThirdParty;
-			sourceTree = "<group>";
-		};
-		B1B1CB5F1C5E0E9400AD7E73 /* KDCircularProgress */ = {
-			isa = PBXGroup;
-			children = (
-				B1B1CB601C5E0E9400AD7E73 /* KDCircularProgress.swift */,
-			);
-			path = KDCircularProgress;
 			sourceTree = "<group>";
 		};
 		B1C8520B1C856AD2005549FD /* Extensions */ = {
@@ -552,7 +541,6 @@
 				B16942701C6211FB000D5BFE /* AdditionalSettingsViewController.swift in Sources */,
 				B1887A881C639AE900AD9BC2 /* DGElasticPullToRefreshConstants.swift in Sources */,
 				B1FF84E61C5BC7B70036F8AA /* ViewController+Popover.swift in Sources */,
-				B1B1CB611C5E0E9400AD7E73 /* KDCircularProgress.swift in Sources */,
 				B15CB2A51C5B3C6C002694ED /* WaveView.swift in Sources */,
 				B1C8521C1C856AD2005549FD /* TopMostViewController+Extension.swift in Sources */,
 				B18AC20B1C71C0C80090AE16 /* BaseTableViewController.swift in Sources */,

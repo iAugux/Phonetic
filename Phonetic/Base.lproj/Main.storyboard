@@ -480,7 +480,7 @@
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="wave_placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="LvG-ez-hoK">
                                 <rect key="frame" x="0.0" y="129" width="600" height="470.5"/>
                             </imageView>
-                            <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="t0P-2l-GxZ" customClass="KDCircularProgress" customModule="Phonetic" customModuleProvider="target">
+                            <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="t0P-2l-GxZ" customClass="KDCircularProgress" customModule="KDCircularProgress">
                                 <rect key="frame" x="265" y="71" width="70" height="70"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0%" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7ea-gB-6zc">

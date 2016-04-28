@@ -53,7 +53,7 @@ extension ViewController {
             self.playVideoIfNeeded()
             }, resultHandler: { (currentResult, percentage) -> Void in
                 self.outputView.text = currentResult
-                self.percentageLabel.text = "\(percentage)%"
+                self.percentageLabel.text = "\(Int(percentage))%"
                 self.runProgressBar(false, percentage: percentage)
             }) { (aborted) -> Void in
                 self.avPlayer?.pause()
@@ -89,7 +89,7 @@ extension ViewController {
                 self.isProcessing = true
                 self.playVideoIfNeeded()
                 }, resultHandler: { (currentResult, percentage) -> Void in
-                    self.percentageLabel.text = "\(100 - percentage)%"
+                    self.percentageLabel.text = "\(100 - Int(percentage))%"
                     self.runProgressBar(true, percentage: percentage)
                 }, completionHandler: { (aborted) -> Void in
                     self.avPlayer?.pause()
@@ -165,7 +165,7 @@ extension ViewController {
     }
     
     // MARK: - Progress
-    private func runProgressBar(rollback: Bool, percentage: Int) {
+    private func runProgressBar(rollback: Bool, percentage: Double) {
         if !rollback {
             let angle = percentage * 360 / 100
             progress.angle = angle

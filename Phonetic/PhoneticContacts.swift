@@ -66,7 +66,7 @@ class PhoneticContacts {
     }()
     
     
-    typealias ResultHandler = ((currentResult: String?, percentage: Int) -> Void)
+    typealias ResultHandler = ((currentResult: String?, percentage: Double) -> Void)
     typealias AccessGrantedHandler = (() -> Void)
     typealias CompletionHandler = ((aborted: Bool) -> Void)
     
@@ -78,7 +78,7 @@ class PhoneticContacts {
             handleAccessGranted()
         }
         
-        contactsTotalCount = getContactsTotalCount()
+        contactsTotalCount = getContactsTotalCount
         
         isProcessing = true
         aborted      = !isProcessing
@@ -167,7 +167,7 @@ class PhoneticContacts {
             handleAccessGranted()
         }
         
-        contactsTotalCount = getContactsTotalCount()
+        contactsTotalCount = getContactsTotalCount
         
         isProcessing = true
         aborted = !isProcessing
@@ -221,7 +221,7 @@ class PhoneticContacts {
         }
     }
     
-    func getContactsTotalCount() -> Int {
+    var getContactsTotalCount: Int {
         let predicate = CNContact.predicateForContactsInContainerWithIdentifier(contactStore.defaultContainerIdentifier())
         
         do {
@@ -269,7 +269,7 @@ class PhoneticContacts {
         case .Background:
             
             // set icon badge number as current percentage.
-            UIApplication.sharedApplication().applicationIconBadgeNumber = percentage
+            UIApplication.sharedApplication().applicationIconBadgeNumber = Int(percentage)
             
             // handling results while it is almost complete to correct the UI of percentage.
             if percentage > 95 {
@@ -305,8 +305,9 @@ class PhoneticContacts {
         }
     }
     
-    private func currentPercentage(index: Int, total: Int) -> Int {
-        return min(100 * index / total, 100)
+    private func currentPercentage(index: Int, total: Int) -> Double {
+        let percentage = Double(index) / Double(total) * 100
+        return min(percentage, 100)
     }
     
     

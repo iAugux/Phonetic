@@ -9,6 +9,7 @@
 import UIKit
 import AVFoundation
 import AVKit
+import KDCircularProgress
 
 let GLOBAL_CUSTOM_COLOR = UIColor(red: 0.0, green: 1.0, blue: 1.0, alpha: 1.0)
 
