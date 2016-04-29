@@ -44,7 +44,7 @@ class TableViewHeaderFooterViewWithButton: UITableViewHeaderFooterView {
         button.frame.origin.x = textLabel!.frame.maxX + 8.0
     }
     
-    internal func buttonDidTap() {
+    @objc private func buttonDidTap() {
        delegate?.tableViewHeaderFooterViewWithButtonDidTap()
     }
     
