@@ -25,7 +25,8 @@ class PolyphonicViewController: BaseTableViewController {
     
     @IBOutlet weak var masterLabel: UILabel!
     @IBOutlet weak var headerViewContainer: UIView!
-    
+    @IBOutlet weak var masterSwitchTrailingConstraint: NSLayoutConstraint!
+
     override func loadView() {
         super.loadView()
         _title = NSLocalizedString("Polyphonic Characters", comment: "SettingsNavigationController title - Polyphonic Chararcters")
@@ -34,6 +35,8 @@ class PolyphonicViewController: BaseTableViewController {
         
         masterSwitch.onTintColor = GLOBAL_CUSTOM_COLOR
         masterSwitch.shouldSwitch(kEnableAllPolyphonicChars, defaultBool: true)
+        
+        UIDevice.isPad ? masterSwitchTrailingConstraint.constant = 42 : ()
     }
     
     override func viewDidLoad() {
