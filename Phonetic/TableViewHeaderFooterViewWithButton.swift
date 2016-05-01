@@ -22,7 +22,7 @@ class TableViewHeaderFooterViewWithButton: UITableViewHeaderFooterView {
         super.init(reuseIdentifier: reuseIdentifier)
     }
     
-    convenience init(buttonImageName name: String, tintColor: UIColor) {
+    convenience init(buttonImageName name: String, tintColor: UIColor = .whiteColor(), twinkleInterval: NSTimeInterval = 0.7) {
         self.init(reuseIdentifier: nil)
         button = UIButton(type: .Custom)
         button.frame.size = CGSizeMake(18, 18)
@@ -32,6 +32,8 @@ class TableViewHeaderFooterViewWithButton: UITableViewHeaderFooterView {
         button.setImage(UIImage(named: name)?.imageWithRenderingMode(.AlwaysTemplate), forState: .Normal)
         button.addTarget(self, action: #selector(buttonDidTap), forControlEvents: .TouchUpInside)
         addSubview(button)
+        
+        button?.twinkling(twinkleInterval, minAlpha: 0.2)
     }
 
     required init?(coder aDecoder: NSCoder) {

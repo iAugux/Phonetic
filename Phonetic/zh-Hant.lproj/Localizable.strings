@@ -183,3 +183,22 @@
 
 "Add Phonetic Keys" = "添加拼音欄位";
 "Clean Phonetic Keys" = "清除拼音欄位";
+
+
+"Animation Stopped..." = "動畫已停止...";
+
+
+// MARK: - Walkthrough
+
+"Tutorial" = "引導";
+"Skip" = "跳過";
+
+"Access Contacts" = "訪問通訊錄";
+"Contacts permission is required." = "通訊錄權限是必要的";
+"Push Notification" = "推送通知";
+"Once the mission completed, you'll receive Notification." = "當任務完成時，你將收到通知提醒";
+"Choose a key for Quick Search. Default is「Nickname Key」." = "選擇一個欄位用於快速搜索，默認為「暱稱欄位」";
+"One More Step" = "最後一步";
+"Tap the Settings icon to configure." = "點擊設置圖標來配置";
+"Ready to Go" = "準備就緒";
+"Get Started" = "開始";

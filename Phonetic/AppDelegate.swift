@@ -9,6 +9,9 @@
 import UIKit
 import Contacts
 
+
+let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -23,8 +26,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         application.statusBarStyle = .LightContent
         window?.backgroundColor = UIColor.clearColor()
         
-        requestAccess()
-        
         // clear icon badge number if needed.
         application.applicationIconBadgeNumber = 0
         
@@ -36,7 +37,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillResignActive(application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
-        
+                
         // fixes UI bug
         if let rootViewController = window?.rootViewController as? ViewController {
             if !rootViewController.isProcessing {
@@ -92,6 +93,34 @@ extension AppDelegate {
         
         kShouldRepresentAdditionalVC = false
         kShouldRepresentPolyphonicVC = false
+    }
+    
+    // getVisibleViewController
+    func getVisibleViewController(_rootViewController: UIViewController? = nil) -> UIViewController? {
+        
+        var rootViewController = _rootViewController
+        
+        if rootViewController == nil {
+            rootViewController = UIApplication.sharedApplication().keyWindow?.rootViewController
+        }
+        
+        if rootViewController?.presentedViewController == nil {
+            return rootViewController
+        }
+        
+        if let presented = rootViewController?.presentedViewController {
+
+            if let nav = presented as? UINavigationController {
+                return nav.viewControllers.last
+            }
+            
+            if let tab = presented as? UITabBarController {
+                return tab.selectedViewController
+            }
+            
+            return getVisibleViewController(presented)
+        }
+        return nil
     }
 }
 

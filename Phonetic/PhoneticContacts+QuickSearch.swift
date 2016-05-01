@@ -80,18 +80,18 @@ extension PhoneticContacts {
 
 extension PhoneticContacts {
     
-    internal var masterSwitchStatusIsOn: Bool {
+    var masterSwitchStatusIsOn: Bool {
         return userDefaults.getBool(kAdditionalSettingsStatus, defaultKeyValue: kAdditionalSettingsStatusDefaultBool)
     }
     
-    private var enableNickname: Bool {
+    var enableNickname: Bool {
         
         guard masterSwitchStatusIsOn else { return false }
         
         return userDefaults.getBool(kEnableNickname, defaultKeyValue: kEnableNicknameDefaultBool)
     }
     
-    private var enableCustomName: Bool {
+    var enableCustomName: Bool {
         
         guard masterSwitchStatusIsOn else { return false }
         

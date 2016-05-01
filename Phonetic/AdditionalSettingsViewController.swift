@@ -26,6 +26,12 @@ class AdditionalSettingsViewController: BaseTableViewController {
     // MARK: -
     @IBOutlet weak var statusLabel: UILabel!
     
+    @IBOutlet private weak var tutorialButton: UIButton! {
+        didSet {
+            tutorialButton.setTitle(NSLocalizedString("Tutorial", comment: ""), forState: .Normal)
+        }
+    }
+    
     @IBOutlet weak var statusSwitch: UISwitch! {
         didSet {
             statusSwitch.shouldSwitch(kAdditionalSettingsStatus, defaultBool: kAdditionalSettingsStatusDefaultBool)
@@ -264,7 +270,7 @@ extension AdditionalSettingsViewController {
             
             overwriteAlreadyExistsSwitch.enabled = true
             
-            alertToConfigureForQuickSearchKey()
+//            alertToConfigureForQuickSearchKey()
             
         } else {
             userDefaults.setBool(false, forKey: kEnableNickname)
@@ -517,29 +523,6 @@ extension AdditionalSettingsViewController {
         quickSearchSelectionLabel.userInteractionEnabled = true
         quickSearchSelectionLabel.text = String.localizedStringWithFormat(NSLocalizedString("%@ for Quick Search", comment: ""), quickSearchKey)
     }
-       
-    private func setRotationAnimation(view: UIView, beginWithClockwise: Bool, clockwise: Bool, animated: Bool) {
-        let rotationAnimation = CABasicAnimation(keyPath: "transform.rotation.z")
-        
-        let angle: Double = beginWithClockwise ? (clockwise ? M_PI : 0) : (clockwise ? 0 : -M_PI)
-        
-        if beginWithClockwise {
-            if !clockwise { rotationAnimation.fromValue = M_PI }
-        } else {
-            if clockwise { rotationAnimation.fromValue = -M_PI }
-        }
-        
-        
-        rotationAnimation.toValue = angle
-        rotationAnimation.duration = animated ? 0.4 : 0
-        rotationAnimation.repeatCount = 0
-        rotationAnimation.delegate = self
-        rotationAnimation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseIn)
-        rotationAnimation.fillMode = kCAFillModeForwards
-        rotationAnimation.removedOnCompletion = false
-        
-        view.layer.addAnimation(rotationAnimation, forKey: "rotationAnimation")
-    }
     
 }
 
@@ -547,7 +530,8 @@ extension AdditionalSettingsViewController {
 extension AdditionalSettingsViewController {
     
     internal func alertActionSheetToChooseCustomKeyForQuickSearch() {
-        setRotationAnimation(quickSearchSelectionIndicator, beginWithClockwise: false, clockwise: false, animated: true)
+        
+        quickSearchSelectionIndicator.rotationAnimation(beginWithClockwise: false, clockwise: false, animated: true)
         
         var actionSheetTitles = [String]()
         
@@ -557,7 +541,7 @@ extension AdditionalSettingsViewController {
         
         blurActionSheet = BlurActionSheet.showWithTitles(actionSheetTitles) { (index) -> Void in
             
-            self.setRotationAnimation(self.quickSearchSelectionIndicator, beginWithClockwise: false, clockwise: true, animated: true)
+            self.quickSearchSelectionIndicator.rotationAnimation(beginWithClockwise: false, clockwise: true, animated: true)
             
             // action canceled
             guard (actionSheetTitles.count - 1) != index else { return }
@@ -577,7 +561,7 @@ extension AdditionalSettingsViewController {
 extension AdditionalSettingsViewController: TableViewHeaderFooterViewWithButtonDelegate {
     
     func tableViewHeaderFooterViewWithButtonDidTap() {
-        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier(String(HelpManualViewController)) as? HelpManualViewController {
+        if let vc = UIStoryboard.Main.instantiateViewControllerWithIdentifier(String(HelpManualViewController)) as? HelpManualViewController {
             navigationController?.pushViewController(vc, animated: true)
         }
     }
@@ -591,7 +575,7 @@ extension AdditionalSettingsViewController {
         
         switch section {
         case 2:
-            let headerView = TableViewHeaderFooterViewWithButton(buttonImageName: "help", tintColor: UIColor(red:1.0, green:1.0, blue:0.4, alpha:1.0))
+            let headerView = TableViewHeaderFooterViewWithButton(buttonImageName: "help")
             headerView.delegate = self
             return headerView
             
@@ -676,4 +660,27 @@ extension AdditionalSettingsViewController {
             })
         }
     }
+}
+
+
+// MARK: -
+
+extension AdditionalSettingsViewController {
+    
+    @IBAction func tutorialButtonDidTap(sender: AnyObject) {
+        
+        if !UIDevice.isPad {
+            dismissViewControllerAnimated(true) {
+                displayWalkthrough()
+            }
+            
+        } else {
+            dismissViewControllerAnimated(true, completion: {
+                appDelegate.getVisibleViewController()?.dismissViewControllerAnimated(true, completion: {
+                    displayWalkthrough()
+                })
+            })
+        }
+    }
+    
 }

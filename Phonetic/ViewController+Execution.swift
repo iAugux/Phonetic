@@ -46,6 +46,15 @@ extension ViewController {
     }
     
     func execute() {
+        
+        guard PhoneticContacts.sharedInstance.enableNickname || PhoneticContacts.sharedInstance.enableCustomName else {
+            let msg = NSLocalizedString("You haven't enable any key for Quick Search!", comment: "")
+            let ok = NSLocalizedString("OK", comment: "")
+            AlertController.alert(title: msg, actionTitle: ok, completionHandler: nil)
+            
+            return
+        }
+        
         initializeUI(true)
         
         PhoneticContacts.sharedInstance.execute({ () -> Void in
@@ -66,6 +75,14 @@ extension ViewController {
         // former: UITapGestureRecognizer.
         // the later: ensure be triggered at the beginning while long pressing, or there will be a warning at runtime.
         guard gesture.isKindOfClass(UITapGestureRecognizer) || gesture.state == .Began else { return }
+        
+        guard PhoneticContacts.sharedInstance.keysToFetchIfNeeded.count != 0 else {
+            let msg = NSLocalizedString("You haven't choose any keys for cleaning!", comment: "")
+            let ok = NSLocalizedString("OK", comment: "")
+            AlertController.alert(title: msg, actionTitle: ok, completionHandler: nil)
+            
+            return
+        }
         
         clean()
     }

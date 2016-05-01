@@ -72,7 +72,8 @@ class ViewController: UIViewController {
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        alertToChooseQuickSearchKeyIfNeeded()
+
+        displayWalkthroughIfNeeded()
     }
     
     override func didReceiveMemoryWarning() {
@@ -82,8 +83,10 @@ class ViewController: UIViewController {
         avPlayerPlaceholderView.subviews.first?.removeFromSuperview()
         avPlayerController = nil
         
-        // TODO: - Toast
-//        AlertController.alert("removed", completionHandler: nil)
+        if isProcessing {
+            let message = NSLocalizedString("Animation Stopped...", comment: "")
+            Toast.make(message, delay: 0, interval: 5)
+        }
     }
     
     private func configureSubViews() {

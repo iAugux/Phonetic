@@ -117,7 +117,7 @@ class SettingViewController: UIViewController {
     }
     
     private func presentPopoverController() {
-        guard let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier(String(SettingsNavigationController)) as? SettingsNavigationController,
+        guard let vc = UIStoryboard.Main.instantiateViewControllerWithIdentifier(String(SettingsNavigationController)) as? SettingsNavigationController,
             sourceView = customBarButton else { return }
         
         vc.modalPresentationStyle = .Popover

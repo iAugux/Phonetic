@@ -35,7 +35,7 @@ let kCleanInstantMessageAddressesKeys    = "kCleanInstantMessageAddressesKeys"
 let kPhoneticFirstAndLastNameDefaultBool = true
 
 let kAdditionalSettingsStatusDefaultBool = true
-let kEnableNicknameDefaultBool           = false
+let kEnableNicknameDefaultBool           = true
 let kEnableCustomNameDefaultBool         = false
 let kOverwriteAlreadyExistsDefaultBool   = false
 let kKeepSettingsWindowOpenDefaultBool   = false

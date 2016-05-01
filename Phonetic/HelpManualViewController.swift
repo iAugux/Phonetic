@@ -10,6 +10,8 @@ import UIKit
 
 class HelpManualViewController: UIViewController {
     
+    @IBOutlet private weak var settingButton: UIButton!
+
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.tintColor = .whiteColor()
@@ -26,6 +28,10 @@ class HelpManualViewController: UIViewController {
         nav.customTitleLabel?.textColor = UIColor.whiteColor()
     }
     
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        settingButton.twinkling(0.6, minAlpha: 0.3, maxAlpha: 1)
+    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

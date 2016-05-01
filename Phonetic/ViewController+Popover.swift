@@ -80,7 +80,7 @@ extension ViewController: UIPopoverPresentationControllerDelegate {
         
         switch button {
         case .Info:
-            guard let infoVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier(String(InfoViewController)) as? InfoViewController else { return }
+            guard let infoVC = UIStoryboard.Main.instantiateViewControllerWithIdentifier(String(InfoViewController)) as? InfoViewController else { return }
             Popover.popoverContent = infoVC
             Popover.popoverContent!.preferredContentSize = Popover.preferredContentSize
             
@@ -89,7 +89,7 @@ extension ViewController: UIPopoverPresentationControllerDelegate {
             rect = infoButton.frame
             
         case .Setting:
-            guard let settingVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier(String(SettingViewController)) as? SettingViewController else { return }
+            guard let settingVC = UIStoryboard.Main.instantiateViewControllerWithIdentifier(String(SettingViewController)) as? SettingViewController else { return }
             Popover.popoverContent = settingVC
             Popover.popoverContent!.preferredContentSize = Popover.preferredMutableContentSize
             
