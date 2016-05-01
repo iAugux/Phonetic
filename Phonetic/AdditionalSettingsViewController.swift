@@ -612,13 +612,13 @@ extension AdditionalSettingsViewController {
         
         switch section {
         case 0:
-            footerTitle = NSLocalizedString("If the device language is not Chinese, the switch will be forced open.", comment: "Table view footer title")
+            footerTitle = NSLocalizedString("Sort contacts under the English system. If the device language is not Chinese, the switch will be forced open.", comment: "Table view footer title")
             
         case 2:
             footerTitle = String.localizedStringWithFormat(NSLocalizedString("e.g: Add a phonetic Nickname / %@ key for `叶梓萱` with `YZX`. Then you can enter `YZX` to search the specific name.", comment: "Table view footer title"), quickSearchKey)
             
         case 3:
-            footerTitle = NSLocalizedString("⚠️ Be Careful. All of those keys including you manually added before will be removed!", comment: "Table view footer title")
+            footerTitle = NSLocalizedString("⚠️ Be Careful. All of those keys including you manually added before will be removed!「Select keys you want to delete and go back to Main Interface, Long Press to clean」", comment: "Table view footer title")
             
         case 4:
             footerTitle = "e.g: 叶梓萱 [ Ye Zi Xuan ]"

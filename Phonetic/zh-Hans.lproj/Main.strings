@@ -50,7 +50,7 @@
 "FYS-C4-a9Y.text" = "中间名字段";
 
 /* Class = "UITableViewSection"; footerTitle = "If the device language is not Chinese, the switch will be forced open."; ObjectID = "KMY-XD-2W9"; */
-"KMY-XD-2W9.footerTitle" = "如果设备的语言不是中文，开关将被强制打开。";
+"KMY-XD-2W9.footerTitle" = "用于英文系统下通讯录排序。如果设备的语言不是中文，开关将被强制打开。";
 
 /* Class = "UITableViewSection"; headerTitle = "Phonetic Contacts"; ObjectID = "KMY-XD-2W9"; */
 "KMY-XD-2W9.headerTitle" = "Phonetic Contacts";

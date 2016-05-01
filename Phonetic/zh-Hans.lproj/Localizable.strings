@@ -61,7 +61,7 @@
 "Help Manual" = "帮助手册";
 
 /* Table view footer title */
-"If the device language is not Chinese, the switch will be forced open." = "如果设备的语言不是中文，开关将被强制打开。";
+"Sort contacts under the English system. If the device language is not Chinese, the switch will be forced open." = "用于英文系统下通讯录排序。如果设备的语言不是中文，开关将被强制打开。";
 
 /* alert controller message */
 "If you enjoy using Phonetic Contacts, would you mind taking a moment to rate it? It won't take more than one minute. Thanks a lot!" = "如果您喜欢使用 Phonetic Contacts，烦请花点时间给它评分。感谢您的支持！";
@@ -131,7 +131,7 @@
 "e.g: Add a phonetic Nickname / %@ key for `叶梓萱` with `YZX`. Then you can enter `YZX` to search the specific name." = "比如：为 “叶梓萱” 添加 “YZX” 的昵称或%@，直接输入 “YZX” 就可以快速搜索到联系人。";
 
 /* Table view footer title */
-"⚠️ Be Careful. All of those keys including you manually added before will be removed!" = "⚠️ 请注意！包括之前手动添加的字段都将被清除掉。";
+"⚠️ Be Careful. All of those keys including you manually added before will be removed!「Select keys you want to delete and go back to Main Interface, Long Press to clean」" = "⚠️ 请注意！包括之前手动添加的字段都将被清除掉。「选择需要删除的字段，回到主界面，长按执行按钮来清除」";
 
 /* UIAlertController message */
 "Please tap the yellow button to complete settings. This message is only displayed once!" = "请点击黄色按钮来完成设置。本条消息只显示一次！";
