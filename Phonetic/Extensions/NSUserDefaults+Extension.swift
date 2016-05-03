@@ -11,59 +11,43 @@ import Foundation
 extension NSUserDefaults {
     
     func getBool(key: String, defaultKeyValue: Bool) -> Bool {
-        return getBool(NSUserDefaults.standardUserDefaults(), key: key, defaultKeyValue: defaultKeyValue)
-    }
-    
-    func getBool(userDefaults: NSUserDefaults, key: String, defaultKeyValue: Bool) -> Bool {
-        if userDefaults.valueForKey(key) == nil {
-            userDefaults.setBool(defaultKeyValue, forKey: key)
-            userDefaults.synchronize()
+        if valueForKey(key) == nil {
+            setBool(defaultKeyValue, forKey: key)
+            synchronize()
         }
-        return userDefaults.boolForKey(key)
+        return boolForKey(key)
     }
 }
 
 extension NSUserDefaults {
     
     func getInteger(key: String, defaultKeyValue: Int) -> Int {
-       return getInteger(NSUserDefaults.standardUserDefaults(), key: key, defaultKeyValue: defaultKeyValue)
-    }
-    
-    func getInteger(userDefaults: NSUserDefaults, key: String, defaultKeyValue: Int) -> Int {
-        if userDefaults.valueForKey(key) == nil {
-            userDefaults.setInteger(defaultKeyValue, forKey: key)
-            userDefaults.synchronize()
+        if valueForKey(key) == nil {
+            setInteger(defaultKeyValue, forKey: key)
+            synchronize()
         }
-        return userDefaults.integerForKey(key)
+        return integerForKey(key)
     }
 }
 
 extension NSUserDefaults {
     
     func getDouble(key: String, defaultKeyValue: Double) -> Double {
-        return getDouble(NSUserDefaults.standardUserDefaults(), key: key, defaultKeyValue: defaultKeyValue)
-    }
-    
-    func getDouble(userDefaults: NSUserDefaults, key: String, defaultKeyValue: Double) -> Double {
-        if userDefaults.valueForKey(key) == nil {
-            userDefaults.setDouble(defaultKeyValue, forKey: key)
-            userDefaults.synchronize()
+        if valueForKey(key) == nil {
+            setDouble(defaultKeyValue, forKey: key)
+            synchronize()
         }
-        return userDefaults.doubleForKey(key)
+        return doubleForKey(key)
     }
 }
 
 extension NSUserDefaults {
     
     func getObject(key: String, defaultkeyValue: AnyObject) -> AnyObject? {
-        return getObject(NSUserDefaults.standardUserDefaults(), key: key, defaultkeyValue: defaultkeyValue)
-    }
-    
-    func getObject(userDefaults: NSUserDefaults, key: String, defaultkeyValue: AnyObject) -> AnyObject? {
-        if userDefaults.objectForKey(key) == nil {
-            userDefaults.setObject(defaultkeyValue, forKey: key)
-            userDefaults.synchronize()
+        if objectForKey(key) == nil {
+            setObject(defaultkeyValue, forKey: key)
+            synchronize()
         }
-        return userDefaults.objectForKey(key)
+        return objectForKey(key)
     }
 }
