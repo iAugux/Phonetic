@@ -47,13 +47,13 @@ extension ViewController {
     
     func execute() {
         
-        guard PhoneticContacts.sharedInstance.enableNickname || PhoneticContacts.sharedInstance.enableCustomName else {
-            let msg = NSLocalizedString("You haven't enable any key for Quick Search!", comment: "")
-            let ok = NSLocalizedString("OK", comment: "")
-            AlertController.alert(title: msg, actionTitle: ok, completionHandler: nil)
-            
-            return
-        }
+//        guard PhoneticContacts.sharedInstance.enableNickname || PhoneticContacts.sharedInstance.enableCustomName else {
+//            let msg = NSLocalizedString("You haven't enable any key for Quick Search!", comment: "")
+//            let ok = NSLocalizedString("OK", comment: "")
+//            AlertController.alert(title: msg, actionTitle: ok, completionHandler: nil)
+//            
+//            return
+//        }
         
         initializeUI(true)
         
