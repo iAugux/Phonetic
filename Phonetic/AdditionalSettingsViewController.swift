@@ -456,7 +456,7 @@ extension AdditionalSettingsViewController {
     private func enableAllCleanPhoneticSwitchWithAlert(enabled: Bool) {
         
         let title = NSLocalizedString("Clean All Keys", comment: "UIAlertController title")
-        let message = NSLocalizedString("Are you sure to clean all keys? All of those keys including you manually added before will be removed too! This can not be revoked!!", comment: "UIAlertController message")
+        let message = NSLocalizedString("Are you sure to clean all keys? All of those keys including you manually added before will be removed too!", comment: "UIAlertController message")
         
         enableAllCleanPhoneticSwitch.switchWithAlert(title, message: message, okActionTitle: NSLocalizedString("Clean", comment: ""), on: enabled) { () -> Void in
             self.userDefaults.setBool(enabled, forKey: kEnableAllCleanPhonetic)

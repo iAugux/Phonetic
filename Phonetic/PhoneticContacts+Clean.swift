@@ -168,7 +168,7 @@ extension PhoneticContacts {
                 str = NSLocalizedString(" And clean following keys you've chosen?", comment: "")
         }
         
-        str += NSLocalizedString(" This can not be revoked!!", comment: "")
+//        str += NSLocalizedString(" This can not be revoked!!", comment: "")
         str += "\n\n"
         
         if shouldCleanPhoneticNicknameKeys { str.append(PhoneticKeys.Nickname.key) }

@@ -164,7 +164,7 @@
 "Clean Keys" = "清除字段";
 
 /* UIAlertController message */
-"Are you sure to clean all keys? All of those keys including you manually added before will be removed too! This can not be revoked!!" = "确定清除所有字段？包括之前手动添加的字段都将被清除掉！清除后将无法恢复！！";
+"Are you sure to clean all keys? All of those keys including you manually added before will be removed too!" = "确定清除所有字段？包括之前手动添加的字段都将被清除掉！";
 
 /* UIAlertController message */
 "Are you sure to clean Social Profiles keys? This can not be revoked!!" = "确定清除所有个人社交资料字段？清除后将无法恢复！！";
@@ -178,6 +178,10 @@
 
 /* Local Notification - App terminated notification */
 "Phonetic is about to be terminated! Please open it again to complete the mission." = "Phonetic 将要中止运行！请再次打开以完成任务。";
+
+"You haven't enable any key for Quick Search!" = "你还没有选择任何字段用于快速搜索！";
+"You haven't choose any keys for cleaning!" = "你还没有选择任何字段用于清除！";
+
 
 // 3D Touch items
 
