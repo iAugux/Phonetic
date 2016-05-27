@@ -1,5 +1,4 @@
-######如果你使用的是中文系统(只需要快速搜索功能), 请使用 [`Zoom Contacts`](https://github.com/iAugux/Zoom-Contacts)
-
+<!--######如果你使用的是中文系统(只需要快速搜索功能), 请使用 [`Zoom Contacts`](https://github.com/iAugux/Zoom-Contacts)-->
 # Phonetic
 ![Language](https://img.shields.io/badge/language-Swift%202.2-orange.svg)
 ![License](https://img.shields.io/badge/License-Custom%20License%20Based%20on%20MIT-2181C3.svg)
@@ -14,6 +13,7 @@
 <a href="https://itunes.apple.com/app/id1078961574"> <img src="https://raw.githubusercontent.com/iAugux/ProjectScreenshots/master/Phonetic/AppStore.png" width="110px">
 </a>
 </div>
+``Phonetic on App Store has more features, check it out.``
 
 ## Features
 
@@ -38,8 +38,9 @@
 #####2. Add Manual to lead developers to help add more polyphonic characters
 ###### Thanks in advance.
 ## Requirements
-- iOS 9.0+
-- Swift 2.2
+- Xcode 7.3 +
+- Swift 2.2 +
+- iOS 9.0 +
 
 ## Video Preview
 ##### On Youtube
