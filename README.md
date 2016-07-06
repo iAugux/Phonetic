@@ -1,7 +1,8 @@
-<!--######如果你使用的是中文系统(只需要快速搜索功能), 请使用 [`Zoom Contacts`](https://github.com/iAugux/Zoom-Contacts)-->
+######如果你使用的是中文系统(只需要快速搜索功能), 请使用 [`Zoom Contacts`](https://github.com/iAugux/Zoom-Contacts)
+
 # Phonetic
 ![Language](https://img.shields.io/badge/language-Swift%202.2-orange.svg)
-![License](https://img.shields.io/badge/License-Custom%20License%20Based%20on%20MIT-2181C3.svg)
+[![License](https://img.shields.io/badge/License-CC%20Attribution--NonCommercial-E5EC00.svg)](https://creativecommons.org/licenses/by-nc/4.0/)
 [![Homepage](https://img.shields.io/badge/Homepage-iAugus-9021C5.svg)](http://iAugus.com)
 [![Tweet](https://img.shields.io/badge/Tweet-%40iAugux-1B95E0.svg)](https://twitter.com/iaugux)
 
@@ -13,7 +14,6 @@
 <a href="https://itunes.apple.com/app/id1078961574"> <img src="https://raw.githubusercontent.com/iAugux/ProjectScreenshots/master/Phonetic/AppStore.png" width="110px">
 </a>
 </div>
-``Phonetic on App Store has more features, check it out.``
 
 ## Features
 
@@ -38,9 +38,8 @@
 #####2. Add Manual to lead developers to help add more polyphonic characters
 ###### Thanks in advance.
 ## Requirements
-- Xcode 7.3 +
-- Swift 2.2 +
-- iOS 9.0 +
+- iOS 9.0+
+- Swift 2.2
 
 ## Video Preview
 ##### On Youtube
@@ -76,7 +75,11 @@
 ## Thanks to
 * [`PhoneticContacts`](https://github.com/lexrus/PhoneticContacts) by `Lexrus` for heavy inspiration.
 
+* [`ARSLineProgress`](https://github.com/soberman/ARSLineProgress)
+
 * [`BlurActionSheet`](https://github.com/iAugux/BlurActionSheet)
+
+* [`CWStatusBarNotification`](https://github.com/cezarywojcik/CWStatusBarNotification/tree/swift)
 
 * [`Device`](https://github.com/Ekhoo/Device)
 
@@ -86,9 +89,8 @@
 
 * [`SnapKit`](https://github.com/SnapKit/SnapKit)
 
-
 ## License
-`Phonetic` is available under the MIT license. See the `LICENSE` file for more info.
+`Phonetic` is available under the [`CC Attribution-NonCommercial  License`](https://creativecommons.org/licenses/by-nc/4.0/).
 
 `Please do NOT repackage and submit to App Store.`
 
