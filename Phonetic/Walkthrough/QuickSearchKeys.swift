@@ -10,17 +10,17 @@ import UIKit
 
 extension WalkthroughViewController: UICollectionViewDataSource {
     
-    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
     
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return keys.count
     }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(String(QuickSearchKeyCell), forIndexPath: indexPath) as! QuickSearchKeyCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(QuickSearchKeyCell.self), for: indexPath) as! QuickSearchKeyCell
         
         cell.keyLabel.text = keys[indexPath.row]
         
@@ -30,18 +30,18 @@ extension WalkthroughViewController: UICollectionViewDataSource {
 
 extension WalkthroughViewController: UICollectionViewDelegate {
     
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 
         switch indexPath.row {
         case 0:
-            NSUserDefaults.standardUserDefaults().setBool(true, forKey: kEnableNickname)
-            NSUserDefaults.standardUserDefaults().setBool(false, forKey: kEnableCustomName)
+            UserDefaults.standard.set(true, forKey: kEnableNickname)
+            UserDefaults.standard.set(false, forKey: kEnableCustomName)
         default:
-            NSUserDefaults.standardUserDefaults().setBool(false, forKey: kEnableNickname)
-            NSUserDefaults.standardUserDefaults().setInteger(indexPath.row - 1, forKey: kQuickSearchKeyRawValue)
-            NSUserDefaults.standardUserDefaults().setBool(true, forKey: kEnableCustomName)
+            UserDefaults.standard.set(false, forKey: kEnableNickname)
+            UserDefaults.standard.set(indexPath.row - 1, forKey: kQuickSearchKeyRawValue)
+            UserDefaults.standard.set(true, forKey: kEnableCustomName)
         }
-        NSUserDefaults.standardUserDefaults().synchronize()
+        UserDefaults.standard.synchronize()
     }
 }
 
@@ -55,8 +55,8 @@ class QuickSearchKeyCell: UICollectionViewCell {
             let color = UIColor(red: 0.5722, green: 0.0, blue: 0.9806, alpha: 1.0)
             imageView.backgroundColor = color
             imageView.layer.cornerRadius = 7.0
-            imageView.layer.shadowColor = color.CGColor
-            imageView.layer.shadowOffset = CGSizeMake(1, 1)
+            imageView.layer.shadowColor = color.cgColor
+            imageView.layer.shadowOffset = CGSize(width: 1, height: 1)
             imageView.layer.shadowOpacity = 0.5
         }
     }
@@ -65,7 +65,7 @@ class QuickSearchKeyCell: UICollectionViewCell {
         super.init(coder: aDecoder)
         let customBackgroundView = CustomSelectedBackgroundView()
         selectedBackgroundView = customBackgroundView
-        selectedBackgroundView?.backgroundColor = UIColor.clearColor()
+        selectedBackgroundView?.backgroundColor = UIColor.clear()
     }
     
     override func awakeFromNib() {

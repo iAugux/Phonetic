@@ -15,7 +15,7 @@ extension UIColor {
         return UIColor(red: randomRed, green: randomGreen, blue: randomBlue, alpha: 1.0)        
     }
     
-    func darkerColor(delta: CGFloat) -> UIColor {
+    func darkerColor(_ delta: CGFloat) -> UIColor {
         var h = CGFloat(0)
         var s = CGFloat(0)
         var b = CGFloat(0)
@@ -24,7 +24,7 @@ extension UIColor {
         return UIColor(hue: h, saturation: s, brightness: b * delta, alpha: a)
     }
     
-    func lighterColor(delta: CGFloat) -> UIColor {
+    func lighterColor(_ delta: CGFloat) -> UIColor {
         var h = CGFloat(0)
         var s = CGFloat(0)
         var b = CGFloat(0)

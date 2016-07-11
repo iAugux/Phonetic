@@ -11,20 +11,20 @@ import Contacts
 
 extension AppDelegate {
     
-    func requestContactsAccess(completionHandler: ((accessGranted: Bool) -> Void)? = nil) {
-        let authStatus = CNContactStore.authorizationStatusForEntityType(.Contacts)
+    func requestContactsAccess(_ completionHandler: ((accessGranted: Bool) -> Void)? = nil) {
+        let authStatus = CNContactStore.authorizationStatus(for: .contacts)
 
         switch authStatus {
             
-        case .Authorized:
+        case .authorized:
             completionHandler?(accessGranted: true)
-        case .Denied, .NotDetermined:
-            contactStore.requestAccessForEntityType(.Contacts, completionHandler: { (access, error) -> Void in
+        case .denied, .notDetermined:
+            contactStore.requestAccess(for: .contacts, completionHandler: { (access, error) -> Void in
                 if access {
                     completionHandler?(accessGranted: true)
                 } else {
-                    if authStatus == .Denied {
-                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    if authStatus == .denied {
+                        DispatchQueue.main.async(execute: { () -> Void in
                             let title = error!.localizedDescription + " !!!"
                             let message = NSLocalizedString("Please allow `Phonetic` to access your Contacts through the Settings.", comment: "UIAlertController message")
                             self.showAllowContactsAccessMessage(title, message: message)
@@ -38,21 +38,21 @@ extension AppDelegate {
         }
     }
     
-    private func showAllowContactsAccessMessage(title: String, message: String) {
+    private func showAllowContactsAccessMessage(_ title: String, message: String) {
         let okActionTitle = NSLocalizedString("Settings", comment: "UIAlertAction - title")
         let cancelActionTitle = NSLocalizedString("Cancel", comment: "UIAlertAction - title")
         
-        let alertViewController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
-        let cancelAction = UIAlertAction(title: cancelActionTitle, style: .Cancel, handler: nil)
-        let okAction = UIAlertAction(title: okActionTitle, style: .Default) { (_) -> Void in
-            if let url = NSURL(string: UIApplicationOpenSettingsURLString) {
-                UIApplication.sharedApplication().openURL(url)
+        let alertViewController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let cancelAction = UIAlertAction(title: cancelActionTitle, style: .cancel, handler: nil)
+        let okAction = UIAlertAction(title: okActionTitle, style: .default) { (_) -> Void in
+            if let url = URL(string: UIApplicationOpenSettingsURLString) {
+                UIApplication.shared().openURL(url)
             }
         }
         
         alertViewController.addAction(okAction)
         alertViewController.addAction(cancelAction)
-        UIApplication.topMostViewController?.presentViewController(alertViewController, animated: true, completion: nil)
+        UIApplication.topMostViewController?.present(alertViewController, animated: true, completion: nil)
     }
     
 }

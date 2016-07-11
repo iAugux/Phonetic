@@ -37,7 +37,7 @@ extension PhoneticContacts {
     
     - parameter numberOfContacts: Number of contacts you want to generate.
     */
-    func insertNewContactsForSimulatorIfNeeded(numberOfContacts: UInt16) {
+    func insertNewContactsForSimulatorIfNeeded(_ numberOfContacts: UInt16) {
         
         guard DEBUG else { return }
         
@@ -52,7 +52,7 @@ extension PhoneticContacts {
      
      - parameter numberOfContacts: Number of contacts you want to generate.
      */
-    func insertNewContactsForSimulator(numberOfContacts: UInt16) {
+    func insertNewContactsForSimulator(_ numberOfContacts: UInt16) {
         
         guard DEBUG else { return }
         
@@ -67,7 +67,7 @@ extension PhoneticContacts {
      
      - parameter numberOfContacts: Number of contacts you want to generate.
      */
-    func insertNewContactsForDevice(numberOfContacts: UInt16) {
+    func insertNewContactsForDevice(_ numberOfContacts: UInt16) {
         
         guard DEBUG else { return }
         
@@ -88,7 +88,7 @@ extension PhoneticContacts {
         let keysToFetch = [CNContactFamilyNameKey, CNContactGivenNameKey, CNContactMiddleNameKey]
         
         do {
-            try self.contactStore.enumerateContactsWithFetchRequest(CNContactFetchRequest(keysToFetch: keysToFetch), usingBlock: { (contact, _) -> Void in
+            try self.contactStore.enumerateContacts(with: CNContactFetchRequest(keysToFetch: keysToFetch), usingBlock: { (contact, _) -> Void in
                 
                 let mutableContact = contact.mutableCopy() as! CNMutableContact
                 
@@ -105,7 +105,7 @@ extension PhoneticContacts {
         AlertController.alert(title: info, completionHandler: nil)
     }
     
-    private func insertNewContacts(numberOfContacts: UInt16) {
+    private func insertNewContacts(_ numberOfContacts: UInt16) {
         
         let info = "We will generate \(numberOfContacts) new random contacts for your iOS Simulator."
         AlertController.alert(title: info) { () -> Void in
@@ -113,7 +113,7 @@ extension PhoneticContacts {
         }
     }
     
-    private func insertNewContactsWithMultiAlert(numberOfContacts: UInt16) {
+    private func insertNewContactsWithMultiAlert(_ numberOfContacts: UInt16) {
         let firstInfo = "We will generate \(numberOfContacts) new random contacts for your Device!"
         let secondInfo = "Are you absolutely sure to do this, this will mess your contacts on your device!!!"
         let thirdInfo = "Use on your own risk."
@@ -123,7 +123,7 @@ extension PhoneticContacts {
         }
     }
     
-    private func generateAndInsert(numberOfContacts: UInt16) {
+    private func generateAndInsert(_ numberOfContacts: UInt16) {
         for _ in 0..<numberOfContacts {
             
             let mutableContact = CNMutableContact()
@@ -145,21 +145,21 @@ extension PhoneticContacts {
         return true
     }
     
-    private func deleteContact(contact: CNMutableContact) {
+    private func deleteContact(_ contact: CNMutableContact) {
         let saveRequest = CNSaveRequest()
-        saveRequest.deleteContact(contact)
+        saveRequest.delete(contact)
         do {
-            try self.contactStore.executeSaveRequest(saveRequest)
+            try self.contactStore.execute(saveRequest)
         } catch {
             DEBUGLog("delete contact failed ! - \(error)")
         }
     }
     
-    private func addNewContact(contact: CNMutableContact) {
+    private func addNewContact(_ contact: CNMutableContact) {
         let saveRequest = CNSaveRequest()
-        saveRequest.addContact(contact, toContainerWithIdentifier: nil)
+        saveRequest.add(contact, toContainerWithIdentifier: nil)
         do {
-            try self.contactStore.executeSaveRequest(saveRequest)
+            try self.contactStore.execute(saveRequest)
         } catch {
             DEBUGLog("saving Contact failed ! - \(error)")
         }

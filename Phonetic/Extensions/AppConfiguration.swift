@@ -12,14 +12,14 @@ import Foundation
 // REFERENCE: http://stackoverflow.com/a/33830605/4656574
 
 enum AppConfiguration {
-    case Debug
-    case TestFlight
-    case AppStore
+    case debug
+    case testFlight
+    case appStore
 }
 
 struct Config {
     // This is private because the use of 'appConfiguration' is preferred.
-    private static let isTestFlight = NSBundle.mainBundle().appStoreReceiptURL?.lastPathComponent == "sandboxReceipt"
+    private static let isTestFlight = Bundle.main.appStoreReceiptURL?.lastPathComponent == "sandboxReceipt"
     
     // This can be used to add debug statements.
     static var isDebug: Bool {
@@ -32,11 +32,11 @@ struct Config {
     
     static var appConfiguration: AppConfiguration {
         if isDebug {
-            return .Debug
+            return .debug
         } else if isTestFlight {
-            return .TestFlight
+            return .testFlight
         } else {
-            return .AppStore
+            return .appStore
         }
     }
 }

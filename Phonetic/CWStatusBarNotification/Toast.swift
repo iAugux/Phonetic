@@ -12,30 +12,24 @@ class Toast {
     
     private static var notification: CWStatusBarNotification = {
         let notification = CWStatusBarNotification()
-        notification.notificationAnimationInStyle = .Top
-        notification.notificationAnimationOutStyle = .Top
+        notification.notificationAnimationInStyle = .top
+        notification.notificationAnimationOutStyle = .top
         return notification
     }()
     
-    static func make(message: String, delay: NSTimeInterval = 0, interval: NSTimeInterval = 1.0) {
+    static func make(_ message: String, delay: TimeInterval = 0, interval: TimeInterval = 1.0) {
         
         let make = {
             notification.displayNotificationWithMessage(message, forDuration: interval)
         }
         
-        dispatch_async(dispatch_get_main_queue()) { 
-            
-            if delay != 0 {
-                let delayInSeconds: Double = delay
-                let popTime = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(NSEC_PER_SEC) * delayInSeconds))
-                dispatch_after(popTime, dispatch_get_main_queue(), {
-                    make()
-                })
-            } else {
+        if delay == 0 {
+            make()
+        } else {
+            DispatchQueue.main.after(when: .now() + delay, execute: {
                 make()
-            }
+            })
         }
-        
     }
     
 }

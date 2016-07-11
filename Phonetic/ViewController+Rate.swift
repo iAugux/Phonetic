@@ -13,15 +13,15 @@ extension ViewController {
     
     func rateMeInTheSecondTime() {
         
-        guard let build = NSBundle.mainBundle().objectForInfoDictionaryKey(kCFBundleVersionKey as String) as? String else { return }
+        guard let build = Bundle.main.objectForInfoDictionaryKey(kCFBundleVersionKey as String) as? String else { return }
 
         let rateMe = "kRateMeOnAppStore\(build)"
-        let userDefaults = NSUserDefaults.standardUserDefaults()
+        let userDefaults = UserDefaults.standard
         
-        guard userDefaults.integerForKey(rateMe) < 3 else { return }    // never alert again
+        guard userDefaults.integer(forKey: rateMe) < 3 else { return }    // never alert again
         
-        guard userDefaults.integerForKey(rateMe) != 2 else {
-            userDefaults.setInteger(3, forKey: rateMe)
+        guard userDefaults.integer(forKey: rateMe) != 2 else {
+            userDefaults.set(3, forKey: rateMe)
             
             // rate me
             let title = NSLocalizedString("Rate ♡ Phonetic", comment: "alert controller title - rate me")
@@ -29,24 +29,24 @@ extension ViewController {
             let rateActionTitle = NSLocalizedString("Rate", comment: "alert action - Rate")
             let cancelActionTitle = NSLocalizedString("No, thanks", comment: "alert action - Cancel")
             
-            let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
-            let rateAction = UIAlertAction(title: rateActionTitle, style: .Default, handler: { (_) -> Void in
+            let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+            let rateAction = UIAlertAction(title: rateActionTitle, style: .default, handler: { (_) -> Void in
                 OtherSettingView.RateMe()
             })
-            let cancelAction = UIAlertAction(title: cancelActionTitle, style: .Cancel, handler: nil)
+            let cancelAction = UIAlertAction(title: cancelActionTitle, style: .cancel, handler: nil)
             alertController.addAction(rateAction)
             alertController.addAction(cancelAction)
-            UIApplication.topMostViewController?.presentViewController(alertController, animated: true, completion: nil)
+            UIApplication.topMostViewController?.present(alertController, animated: true, completion: nil)
             
             return
         }
         
-        switch userDefaults.integerForKey(rateMe) {
+        switch userDefaults.integer(forKey: rateMe) {
         case 0 :  // means 'nil'
-            userDefaults.setInteger(1, forKey: rateMe)
+            userDefaults.set(1, forKey: rateMe)
             return
         case 1:
-            userDefaults.setInteger(2, forKey: rateMe)
+            userDefaults.set(2, forKey: rateMe)
             return
         default: return
         }

@@ -18,15 +18,15 @@ class PolyphonicTableViewCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        nameLabel.textColor = UIColor.whiteColor()
-        polyphonicLabel.textColor = UIColor.lightGrayColor()
+        nameLabel.textColor = UIColor.white()
+        polyphonicLabel.textColor = UIColor.lightGray()
         polyphonicSwitch.onTintColor = GLOBAL_CUSTOM_COLOR
     }
 
-    @IBAction func polyphonicSwitchDidTap(sender: UISwitch) {
+    @IBAction func polyphonicSwitchDidTap(_ sender: UISwitch) {
         if let key = polyphonicKey {
-            NSUserDefaults.standardUserDefaults().setBool(sender.on, forKey: key)
-            NSUserDefaults.standardUserDefaults().synchronize()
+            UserDefaults.standard.set(sender.isOn, forKey: key)
+            UserDefaults.standard.synchronize()
         }
     }
 

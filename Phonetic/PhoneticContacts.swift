@@ -18,20 +18,20 @@ class PhoneticContacts {
         DEBUGLog("Register UserNotificationSettings & UIApplicationDidBecomeActiveNotification")
         
         // register user notification settings
-        UIApplication.sharedApplication().registerUserNotificationSettings(UIUserNotificationSettings(forTypes: [.Alert, .Badge, .Sound], categories: nil))
+        UIApplication.shared().registerUserNotificationSettings(UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil))
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(PhoneticContacts.reinstateBackgroundTask), name: UIApplicationDidBecomeActiveNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(PhoneticContacts.reinstateBackgroundTask), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
     }
     
     deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
     }
     
     
     let contactStore = CNContactStore()
-    let userDefaults = NSUserDefaults.standardUserDefaults()
+    let userDefaults = UserDefaults.standard
     
-    var contactsTotalCount: Int!
+    var contactsTotalCount: Int = 0
     
     var keysToFetch: [String] {
         var keys = [CNContactGivenNameKey, CNContactFamilyNameKey, CNContactPhoneticGivenNameKey, CNContactPhoneticFamilyNameKey]
@@ -40,7 +40,7 @@ class PhoneticContacts {
             keys.append(CNContactQuickSearchKey)
         }
         
-        keys.appendContentsOf(keysToFetchIfNeeded)
+        keys.append(contentsOf: keysToFetchIfNeeded)
         
         return keys
     }
@@ -70,7 +70,7 @@ class PhoneticContacts {
     typealias AccessGrantedHandler = (() -> Void)
     typealias CompletionHandler = ((aborted: Bool) -> Void)
     
-    func execute(handleAccessGranted: AccessGrantedHandler, resultHandler:  ResultHandler, completionHandler: CompletionHandler) {
+    func execute(_ handleAccessGranted: AccessGrantedHandler, resultHandler:  ResultHandler, completionHandler: CompletionHandler) {
         AppDelegate().requestContactsAccess { (accessGranted) in
             guard accessGranted else { return }
             
@@ -90,13 +90,13 @@ class PhoneticContacts {
 //                self.insertNewContactsForDevice(100)
         
         
-        dispatch_async(dispatch_get_global_queue(Int(QOS_CLASS_BACKGROUND.rawValue), 0)) {
+        DispatchQueue.global(attributes: DispatchQueue.GlobalAttributes(rawValue: UInt64(Int(DispatchQueueAttributes.qosBackground.rawValue)))).async {
             
             var index = 1
             let count = self.contactsTotalCount
             
             do {
-                try self.contactStore.enumerateContactsWithFetchRequest(CNContactFetchRequest(keysToFetch: self.keysToFetch), usingBlock: { (contact, _) -> Void in
+                try self.contactStore.enumerateContacts(with: CNContactFetchRequest(keysToFetch: self.keysToFetch), usingBlock: { (contact, _) -> Void in
                     
                     guard self.isProcessing else {
                         self.aborted = true
@@ -112,7 +112,7 @@ class PhoneticContacts {
                         var phoneticGivenBrief   = ""
                         
                         // modify Contact
-                        if let family = mutableContact.valueForKey(CNContactFamilyNameKey) as? String {
+                        if let family = mutableContact.value(forKey: CNContactFamilyNameKey) as? String {
                             if let phoneticFamily = self.phonetic(family, needFix: self.fixPolyphonicCharacters) {
                                 
                                 if self.shouldEnablePhoneticFirstAndLastName {
@@ -124,7 +124,7 @@ class PhoneticContacts {
                             }
                         }
                         
-                        if let given = mutableContact.valueForKey(CNContactGivenNameKey) as? String {
+                        if let given = mutableContact.value(forKey: CNContactGivenNameKey) as? String {
                             if let phoneticGiven = self.phonetic(given, needFix: false) {
                                 
                                 if self.shouldEnablePhoneticFirstAndLastName {
@@ -159,7 +159,7 @@ class PhoneticContacts {
         
     }
     
-    func cleanMandarinLatinPhonetic(handleAccessGranted: AccessGrantedHandler, resultHandler: ResultHandler, completionHandler: CompletionHandler) {
+    func cleanMandarinLatinPhonetic(_ handleAccessGranted: AccessGrantedHandler, resultHandler: ResultHandler, completionHandler: CompletionHandler) {
         AppDelegate().requestContactsAccess { (accessGranted) in
             guard accessGranted else { return }
             
@@ -172,13 +172,13 @@ class PhoneticContacts {
         isProcessing = true
         aborted = !isProcessing
         
-        dispatch_async(dispatch_get_global_queue(Int(QOS_CLASS_BACKGROUND.rawValue), 0)) {
+        DispatchQueue.global(attributes: DispatchQueue.GlobalAttributes(rawValue: UInt64(Int(DispatchQueueAttributes.qosBackground.rawValue)))).async {
             
             var index = 1
             let count = self.contactsTotalCount
             
             do {
-                try self.contactStore.enumerateContactsWithFetchRequest(CNContactFetchRequest(keysToFetch: self.keysToFetch), usingBlock: { (contact, _) -> Void in
+                try self.contactStore.enumerateContacts(with: CNContactFetchRequest(keysToFetch: self.keysToFetch), usingBlock: { (contact, _) -> Void in
                     
                     guard self.isProcessing else {
                         self.aborted = true
@@ -190,13 +190,13 @@ class PhoneticContacts {
                     // modify Contact
                     /// only clean who has Mandarin Latin.
                     /// Some english names may also have phonetic keys which you don't want to be cleaned.
-                    if let family = mutableContact.valueForKey(CNContactFamilyNameKey) as? String {
+                    if let family = mutableContact.value(forKey: CNContactFamilyNameKey) as? String {
                         if self.antiPhonetic(family) {
                             mutableContact.setValue("", forKey: CNContactPhoneticFamilyNameKey)
                         }
                     }
                     
-                    if let given = mutableContact.valueForKey(CNContactGivenNameKey) as? String {
+                    if let given = mutableContact.value(forKey: CNContactGivenNameKey) as? String {
                         if self.antiPhonetic(given) {
                             mutableContact.setValue("", forKey: CNContactPhoneticGivenNameKey)
                         }
@@ -222,69 +222,76 @@ class PhoneticContacts {
     }
     
     var getContactsTotalCount: Int {
-        let predicate = CNContact.predicateForContactsInContainerWithIdentifier(contactStore.defaultContainerIdentifier())
-        
-        do {
-            let contacts = try self.contactStore.unifiedContactsMatchingPredicate(predicate, keysToFetch: [CNContactGivenNameKey, CNContactFamilyNameKey])
-            return contacts.count
-        } catch {
-            
-            DEBUGLog("\(error)")
-            
-            return 0
-        }
+        let contacts = fetchAllContacts(keysToFetch: [CNContactGivenNameKey, CNContactFamilyNameKey])
+        return contacts.count
     }
     
-    private func handlingCompletion(handle: CompletionHandler) {
+    private func fetchAllContacts(keysToFetch keys: [CNKeyDescriptor]) -> [CNContact] {
         
-        switch UIApplication.sharedApplication().applicationState {
-        case .Background:
+        AppDelegate().requestContactsAccess { (accessGranted) in
+            guard accessGranted else { return }
+        }
+        
+        let containers = (try? contactStore.containers(matching: nil)) ?? []
+        
+        let contacts = containers.flatMap { (container) -> [CNContact] in
+            let predicate = CNContact.predicateForContactsInContainer(withIdentifier: container.identifier)
+            return (try? contactStore.unifiedContacts(matching: predicate, keysToFetch: keys)) ?? []
+        }
+        
+        return contacts
+    }
+    
+    private func handlingCompletion(_ handle: CompletionHandler) {
+        
+        switch UIApplication.shared().applicationState {
+        case .background:
             // completed not aborted
             if !aborted {
                 DEBUGLog("Mission Completed")
                 
-                localNotification.fireDate = NSDate()
+                localNotification.fireDate = Date()
                 localNotification.alertBody = NSLocalizedString("Mission Completed !", comment: "Local Notification - alert body")
-                UIApplication.sharedApplication().scheduleLocalNotification(localNotification)
+                UIApplication.shared().scheduleLocalNotification(localNotification)
             }
         default:
             break
         }
         
-        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+        DispatchQueue.main.async(execute: { () -> Void in
             handle(aborted: self.aborted)
         })
     }
     
-    private func handlingResult(handle: ResultHandler, result: String?, index: Int, total: Int) {
+    private func handlingResult(_ handle: ResultHandler, result: String?, index: Int, total: Int) {
         
         let percentage = currentPercentage(index, total: total)
         
-        switch UIApplication.sharedApplication().applicationState {
-        case .Active:
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+        switch UIApplication.shared().applicationState {
+        case .active:
+            DispatchQueue.main.async(execute: { () -> Void in
                 handle(currentResult: result, percentage: percentage)
             })
             
-        case .Background:
+        case .background:
             
             // set icon badge number as current percentage.
-            UIApplication.sharedApplication().applicationIconBadgeNumber = Int(percentage)
+            UIApplication.shared().applicationIconBadgeNumber = Int(percentage)
             
             // handling results while it is almost complete to correct the UI of percentage.
             if percentage > 95 {
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                DispatchQueue.main.async(execute: { () -> Void in
                     handle(currentResult: result, percentage: percentage)
                 })
             }
             
-            let remainingTime = UIApplication.sharedApplication().backgroundTimeRemaining
+            let remainingTime = UIApplication.shared().backgroundTimeRemaining
             
             // App is about to be terminated, send notification.
             if remainingTime < 10 {
-                localNotification.fireDate = NSDate()
+                localNotification.fireDate = Date()
                 localNotification.alertBody = NSLocalizedString("Phonetic is about to be terminated! Please open it again to complete the mission.", comment: "Local Notification - App terminated notification")
-                UIApplication.sharedApplication().scheduleLocalNotification(localNotification)
+                UIApplication.shared().scheduleLocalNotification(localNotification)
             }
             
             DEBUGLog("Background time remaining \(remainingTime) seconds")
@@ -294,18 +301,18 @@ class PhoneticContacts {
         
     }
     
-    private func saveContact(contact: CNMutableContact) {
+    private func saveContact(_ contact: CNMutableContact) {
         let saveRequest = CNSaveRequest()
-        saveRequest.updateContact(contact)
+        saveRequest.update(contact)
         do {
-            try self.contactStore.executeSaveRequest(saveRequest)
+            try self.contactStore.execute(saveRequest)
         } catch {
             
             DEBUGLog("saving Contact failed ! - \(error)")
         }
     }
     
-    private func currentPercentage(index: Int, total: Int) -> Double {
+    private func currentPercentage(_ index: Int, total: Int) -> Double {
         let percentage = Double(index) / Double(total) * 100
         return min(percentage, 100)
     }
@@ -318,10 +325,10 @@ class PhoneticContacts {
      
      - returns: is there any Mandarin Latin
      */
-    private func antiPhonetic(str: String) -> Bool {
+    private func antiPhonetic(_ str: String) -> Bool {
         let str = str as NSString
         for i in 0..<str.length {
-            let word = str.characterAtIndex(i)
+            let word = str.character(at: i)
             if word >= 0x4e00 && word <= 0x9fff {
                 return true
             }
@@ -329,21 +336,21 @@ class PhoneticContacts {
         return false
     }
     
-    private func upcaseInitial(str: String) -> String {
+    private func upcaseInitial(_ str: String) -> String {
         var tempStr = str
         if str.utf8.count > 0 {
-            tempStr = (str as NSString).substringToIndex(1).uppercaseString.stringByAppendingString((str as NSString).substringFromIndex(1))
+            tempStr = (str as NSString).substring(to: 1).uppercased() + (str as NSString).substring(from: 1)
         }
         return tempStr
     }
     
-    private func briefInitial(array: [String]) -> String {
+    private func briefInitial(_ array: [String]) -> String {
         guard array.count > 0 else { return "" }
         
         var tempStr = ""
         for str in array {
             if str.utf8.count > 0 {
-                tempStr += (str as NSString).substringToIndex(1).uppercaseString
+                tempStr += (str as NSString).substring(to: 1).uppercased()
             }
         }
         
@@ -357,27 +364,27 @@ class PhoneticContacts {
         return tempStr
     }
     
-    private func phonetic(str: String, needFix: Bool) -> Phonetic? {
+    private func phonetic(_ str: String, needFix: Bool) -> Phonetic? {
         var source = needFix ? manaullyFixPolyphonicCharacters(str).mutableCopy() : str.mutableCopy()
         
-        CFStringTransform(source as! CFMutableStringRef, nil, kCFStringTransformMandarinLatin, false)
-        CFStringTransform(source as! CFMutableStringRef, nil, kCFStringTransformStripCombiningMarks, useTones)
+        CFStringTransform(source as! CFMutableString, nil, kCFStringTransformMandarinLatin, false)
+        CFStringTransform(source as! CFMutableString, nil, kCFStringTransformStripCombiningMarks, useTones)
         
         var brief: String
         
-        if !(source as! NSString).isEqualToString(str) {
-            if source.rangeOfString(" ").location != NSNotFound {
-                let phoneticParts = source.componentsSeparatedByString(" ")
+        if !(source as! NSString).isEqual(to: str) {
+            if source.range(of: " ").location != NSNotFound {
+                let phoneticParts = source.components(separatedBy: " ")
                 source = NSMutableString()
                 brief = briefInitial(phoneticParts)
                 
                 if separatePinyin {
                     for part in phoneticParts {
                         // upcase all words
-                        source.appendString(upcaseInitial(part))
+                        source.append(upcaseInitial(part))
                         
                         // insert blank space
-                        source.appendString(" ")
+                        source.append(" ")
                     }
                     
                 } else {
@@ -385,17 +392,17 @@ class PhoneticContacts {
                         
                         // upcase all words of First Name.   e.g:  Liu YiFei
                         for part in phoneticParts {
-                            source.appendString(upcaseInitial(part))
+                            source.append(upcaseInitial(part))
                         }
                         
                     } else {
                         
                         // only upcase the first word of First Name.    e.g: Liu Yifei
-                        for (index, part) in phoneticParts.enumerate() {
+                        for (index, part) in phoneticParts.enumerated() {
                             if index == 0 {
-                                source.appendString(upcaseInitial(part))
+                                source.append(upcaseInitial(part))
                             } else {
-                                source.appendString(part)
+                                source.append(part)
                             }
                         }
                     }
@@ -425,7 +432,7 @@ private extension PhoneticContacts {
     }
     
     func registerBackgroundTask() {
-        backgroundTask = UIApplication.sharedApplication().beginBackgroundTaskWithExpirationHandler {
+        backgroundTask = UIApplication.shared().beginBackgroundTask {
             [unowned self] in
             self.endBackgroundTask()
         }
@@ -434,7 +441,7 @@ private extension PhoneticContacts {
     
     func endBackgroundTask() {
         DEBUGLog("Background task ended.")
-        UIApplication.sharedApplication().endBackgroundTask(backgroundTask)
+        UIApplication.shared().endBackgroundTask(backgroundTask)
         backgroundTask = UIBackgroundTaskInvalid
     }
 }

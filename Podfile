@@ -5,8 +5,7 @@ use_frameworks!
 
 target 'Phonetic' do
 
-pod 'SnapKit'
+pod 'SnapKit', :git => 'https://github.com/SnapKit/SnapKit', :branch => 'feature/0.40.0'
 pod 'Device'
-pod 'KDCircularProgress', '~> 1.4.0'
 
 end

@@ -4,6 +4,11 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>Components.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>3</integer>
+		</dict>
 		<key>Phonetic.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -28,6 +33,11 @@
 			<true/>
 		</dict>
 		<key>B1159B7F1C59045800F16037</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>B16EA4F51D3374AF000C6BDB</key>
 		<dict>
 			<key>primary</key>
 			<true/>

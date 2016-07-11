@@ -16,7 +16,7 @@ class AdditionalSettingsViewController: BaseTableViewController {
     @IBOutlet weak var quickSearchSelectionIndicator: UIImageView!
     @IBOutlet weak var quickSearchSelectionLabel: UILabel!
     
-    private let userDefaults = NSUserDefaults.standardUserDefaults()
+    private let userDefaults = UserDefaults.standard
     
     private let on  = NSLocalizedString("On", comment: "")
     private let off = NSLocalizedString("Off", comment: "")
@@ -28,7 +28,7 @@ class AdditionalSettingsViewController: BaseTableViewController {
     
     @IBOutlet private weak var tutorialButton: UIButton! {
         didSet {
-            tutorialButton.setTitle(NSLocalizedString("Tutorial", comment: ""), forState: .Normal)
+            tutorialButton.setTitle(NSLocalizedString("Tutorial", comment: ""), for: UIControlState())
         }
     }
     
@@ -42,7 +42,7 @@ class AdditionalSettingsViewController: BaseTableViewController {
     @IBOutlet weak var phoneticFirstAndLastNameSwitch: UISwitch! {
         didSet {
             guard DetectPreferredLanguage.isChineseLanguage else {
-                phoneticFirstAndLastNameSwitch.on = true
+                phoneticFirstAndLastNameSwitch.isOn = true
                 return
             }
             
@@ -70,11 +70,11 @@ class AdditionalSettingsViewController: BaseTableViewController {
     }
     
     private var quickSearchKey: String {
-        if userDefaults.valueForKey(kQuickSearchKeyRawValue) == nil {
-            userDefaults.setInteger(QuickSearch.MiddleName.rawValue, forKey: kQuickSearchKeyRawValue)
+        if userDefaults.value(forKey: kQuickSearchKeyRawValue) == nil {
+            userDefaults.set(QuickSearch.middleName.rawValue, forKey: kQuickSearchKeyRawValue)
             userDefaults.synchronize()
         }
-        let rawValue = userDefaults.integerForKey(kQuickSearchKeyRawValue)
+        let rawValue = userDefaults.integer(forKey: kQuickSearchKeyRawValue)
         return QuickSearch(rawValue: rawValue)?.key ?? QuickSearch(rawValue: 0)!.key
     }
     
@@ -171,7 +171,7 @@ extension AdditionalSettingsViewController {
         super.loadView()
         configureQuickSearchSelectionViews()
         
-        statusLabel.text                                   = statusSwitch.on ? on : off
+        statusLabel.text                                   = statusSwitch.isOn ? on : off
 
         phoneticFirstAndLastNameSwitch.onTintColor         = GLOBAL_CUSTOM_COLOR
 
@@ -197,20 +197,20 @@ extension AdditionalSettingsViewController {
         keepSettingWindowOpenSwitch.onTintColor            = SWITCH_TINT_COLOR_FOR_UI_SETTINGS
 
 
-        phoneticFirstAndLastNameSwitch.enabled             = DetectPreferredLanguage.isChineseLanguage
+        phoneticFirstAndLastNameSwitch.isEnabled             = DetectPreferredLanguage.isChineseLanguage
 
-        nicknameSwitch.enabled                             = statusSwitch.on
-        customNameSwitch.enabled                           = statusSwitch.on
-        overwriteAlreadyExistsSwitch.enabled               = statusSwitch.on && (nicknameSwitch.on || customNameSwitch.on)
+        nicknameSwitch.isEnabled                             = statusSwitch.isOn
+        customNameSwitch.isEnabled                           = statusSwitch.isOn
+        overwriteAlreadyExistsSwitch.isEnabled               = statusSwitch.isOn && (nicknameSwitch.isOn || customNameSwitch.isOn)
 
-        enableAllCleanPhoneticSwitch.enabled               = statusSwitch.on
-        cleanPhoneticNicknameSwitch.enabled                = statusSwitch.on
-        cleanPhoneticMiddleNameSwitch.enabled              = statusSwitch.on
-        cleanPhoneticDepartmentSwitch.enabled              = statusSwitch.on
-        cleanPhoneticCompanySwitch.enabled                 = statusSwitch.on
-        cleanPhoneticJobTitleSwitch.enabled                = statusSwitch.on
-        cleanPhoneticPrefixSwitch.enabled                  = statusSwitch.on
-        cleanPhoneticSuffixSwitch.enabled                  = statusSwitch.on
+        enableAllCleanPhoneticSwitch.isEnabled               = statusSwitch.isOn
+        cleanPhoneticNicknameSwitch.isEnabled                = statusSwitch.isOn
+        cleanPhoneticMiddleNameSwitch.isEnabled              = statusSwitch.isOn
+        cleanPhoneticDepartmentSwitch.isEnabled              = statusSwitch.isOn
+        cleanPhoneticCompanySwitch.isEnabled                 = statusSwitch.isOn
+        cleanPhoneticJobTitleSwitch.isEnabled                = statusSwitch.isOn
+        cleanPhoneticPrefixSwitch.isEnabled                  = statusSwitch.isOn
+        cleanPhoneticSuffixSwitch.isEnabled                  = statusSwitch.isOn
         
     }
     
@@ -231,179 +231,179 @@ extension AdditionalSettingsViewController {
 extension AdditionalSettingsViewController {
     
     // MARK: - Master Switch
-    @IBAction func statusSwitchDidTap(sender: UISwitch) {
+    @IBAction func statusSwitchDidTap(_ sender: UISwitch) {
         
-        statusLabel.text = sender.on ? on : off
+        statusLabel.text = sender.isOn ? on : off
         
-        nicknameSwitch.enabled                         = sender.on
-        customNameSwitch.enabled                       = sender.on
-        overwriteAlreadyExistsSwitch.enabled           = sender.on
+        nicknameSwitch.isEnabled                         = sender.isOn
+        customNameSwitch.isEnabled                       = sender.isOn
+        overwriteAlreadyExistsSwitch.isEnabled           = sender.isOn
 
-        enableAllCleanPhoneticSwitch.enabled           = sender.on
-        cleanPhoneticNicknameSwitch.enabled            = sender.on
-        cleanPhoneticMiddleNameSwitch.enabled          = sender.on
-        cleanPhoneticDepartmentSwitch.enabled          = sender.on
-        cleanPhoneticCompanySwitch.enabled             = sender.on
-        cleanPhoneticJobTitleSwitch.enabled            = sender.on
-        cleanPhoneticPrefixSwitch.enabled              = sender.on
-        cleanPhoneticSuffixSwitch.enabled              = sender.on
-        cleanSocialProfilesKeysSwitch.enabled          = sender.on
-        cleanInstantMessageAddressesKeysSwitch.enabled = sender.on
+        enableAllCleanPhoneticSwitch.isEnabled           = sender.isOn
+        cleanPhoneticNicknameSwitch.isEnabled            = sender.isOn
+        cleanPhoneticMiddleNameSwitch.isEnabled          = sender.isOn
+        cleanPhoneticDepartmentSwitch.isEnabled          = sender.isOn
+        cleanPhoneticCompanySwitch.isEnabled             = sender.isOn
+        cleanPhoneticJobTitleSwitch.isEnabled            = sender.isOn
+        cleanPhoneticPrefixSwitch.isEnabled              = sender.isOn
+        cleanPhoneticSuffixSwitch.isEnabled              = sender.isOn
+        cleanSocialProfilesKeysSwitch.isEnabled          = sender.isOn
+        cleanInstantMessageAddressesKeysSwitch.isEnabled = sender.isOn
 
-        userDefaults.setBool(sender.on, forKey: kAdditionalSettingsStatus)
+        userDefaults.set(sender.isOn, forKey: kAdditionalSettingsStatus)
         userDefaults.synchronize()
     }
     
     // MARK: - Phonetic Contacts
-    @IBAction func phoneticFirstAndLastNameSwitchDidTap(sender: UISwitch) {
-        userDefaults.setBool(sender.on, forKey: kPhoneticFirstAndLastName)
+    @IBAction func phoneticFirstAndLastNameSwitchDidTap(_ sender: UISwitch) {
+        userDefaults.set(sender.isOn, forKey: kPhoneticFirstAndLastName)
         userDefaults.synchronize()
     }
 
     // MARK: - Quick Search
-    @IBAction func nicknameSwitchDidTap(sender: UISwitch) {
+    @IBAction func nicknameSwitchDidTap(_ sender: UISwitch) {
         
         switchStatusAutomaticallyWithDelay(sender)
         
-        if sender.on {
-            userDefaults.setBool(true, forKey: kEnableNickname)
+        if sender.isOn {
+            userDefaults.set(true, forKey: kEnableNickname)
             
-            overwriteAlreadyExistsSwitch.enabled = true
+            overwriteAlreadyExistsSwitch.isEnabled = true
             
 //            alertToConfigureForQuickSearchKey()
             
         } else {
-            userDefaults.setBool(false, forKey: kEnableNickname)
+            userDefaults.set(false, forKey: kEnableNickname)
             
             // disable `OverwriteAlreadyExistsSwitch` if needed
-            if overwriteAlreadyExistsSwitch.on && !customNameSwitch.on {
-                overwriteAlreadyExistsSwitch.enabled = false
+            if overwriteAlreadyExistsSwitch.isOn && !customNameSwitch.isOn {
+                overwriteAlreadyExistsSwitch.isEnabled = false
             }
         }
         userDefaults.synchronize()
     }
     
-    @IBAction func customNameSwitchDidTap(sender: UISwitch) {
+    @IBAction func customNameSwitchDidTap(_ sender: UISwitch) {
         
         switchStatusAutomaticallyWithDelay(sender)
         
-        if sender.on {
-            userDefaults.setBool(true, forKey: kEnableCustomName)
+        if sender.isOn {
+            userDefaults.set(true, forKey: kEnableCustomName)
             
-            overwriteAlreadyExistsSwitch.enabled = true
+            overwriteAlreadyExistsSwitch.isEnabled = true
             
         } else {
-            userDefaults.setBool(false, forKey: kEnableCustomName)
+            userDefaults.set(false, forKey: kEnableCustomName)
             
             // disable `OverwriteAlreadyExistsSwitch` if needed
-            if overwriteAlreadyExistsSwitch.on && !nicknameSwitch.on {
-                overwriteAlreadyExistsSwitch.enabled = false
+            if overwriteAlreadyExistsSwitch.isOn && !nicknameSwitch.isOn {
+                overwriteAlreadyExistsSwitch.isEnabled = false
             }
         }
         userDefaults.synchronize()
     }
     
-    @IBAction func overwriteAlreadyExistsSwitchDidTap(sender: UISwitch) {
-        if sender.on {
-            userDefaults.setBool(true, forKey: kOverwriteAlreadyExists)
+    @IBAction func overwriteAlreadyExistsSwitchDidTap(_ sender: UISwitch) {
+        if sender.isOn {
+            userDefaults.set(true, forKey: kOverwriteAlreadyExists)
             
             switchStatusAutomaticallyWithDelay(sender)
             
         } else {
-            userDefaults.setBool(false, forKey: kOverwriteAlreadyExists)
+            userDefaults.set(false, forKey: kOverwriteAlreadyExists)
         }
         userDefaults.synchronize()
     }
     
     
     // MARK: - Clean Phonetic Keys
-    @IBAction func enableAllCleanPhoneticSwitchDidTap(sender: UISwitch) {
-        enableAllCleanPhoneticSwitchWithAlert(sender.on)
+    @IBAction func enableAllCleanPhoneticSwitchDidTap(_ sender: UISwitch) {
+        enableAllCleanPhoneticSwitchWithAlert(sender.isOn)
     }
     
-    @IBAction func cleanPhoneticNicknameKeysSwitchDidTap(sender: UISwitch) {
-        userDefaults.setBool(sender.on, forKey: kCleanPhoneticNickname)
+    @IBAction func cleanPhoneticNicknameKeysSwitchDidTap(_ sender: UISwitch) {
+        userDefaults.set(sender.isOn, forKey: kCleanPhoneticNickname)
         userDefaults.synchronize()
     }
     
-    @IBAction func cleanPhoneticMiddleNameKeysSwitchDidTap(sender: UISwitch) {
-        userDefaults.setBool(sender.on, forKey: kCleanPhoneticMiddleName)
+    @IBAction func cleanPhoneticMiddleNameKeysSwitchDidTap(_ sender: UISwitch) {
+        userDefaults.set(sender.isOn, forKey: kCleanPhoneticMiddleName)
         userDefaults.synchronize()
     }
     
-    @IBAction func cleanPhoneticDepartmentKeysSwitchDidTap(sender: UISwitch) {
-        userDefaults.setBool(sender.on, forKey: kCleanPhoneticDepartment)
+    @IBAction func cleanPhoneticDepartmentKeysSwitchDidTap(_ sender: UISwitch) {
+        userDefaults.set(sender.isOn, forKey: kCleanPhoneticDepartment)
         userDefaults.synchronize()
     }
     
-    @IBAction func cleanPhoneticCompanyKeysSwitchDidTap(sender: UISwitch) {
-        userDefaults.setBool(sender.on, forKey: kCleanPhoneticCompany)
+    @IBAction func cleanPhoneticCompanyKeysSwitchDidTap(_ sender: UISwitch) {
+        userDefaults.set(sender.isOn, forKey: kCleanPhoneticCompany)
         userDefaults.synchronize()
     }
     
-    @IBAction func cleanPhoneticjobTitleKeysSwitchDidTap(sender: UISwitch) {
-        userDefaults.setBool(sender.on, forKey: kCleanPhoneticJobTitle)
+    @IBAction func cleanPhoneticjobTitleKeysSwitchDidTap(_ sender: UISwitch) {
+        userDefaults.set(sender.isOn, forKey: kCleanPhoneticJobTitle)
         userDefaults.synchronize()
     }
     
-    @IBAction func cleanPhoneticPrefixKeysSwitchDidTap(sender: UISwitch) {
-        userDefaults.setBool(sender.on, forKey: kCleanPhoneticPrefix)
+    @IBAction func cleanPhoneticPrefixKeysSwitchDidTap(_ sender: UISwitch) {
+        userDefaults.set(sender.isOn, forKey: kCleanPhoneticPrefix)
         userDefaults.synchronize()
     }
     
-    @IBAction func cleanPhoneticSuffixKeysSwitchDidTap(sender: UISwitch) {
-        userDefaults.setBool(sender.on, forKey: kCleanPhoneticSuffix)
+    @IBAction func cleanPhoneticSuffixKeysSwitchDidTap(_ sender: UISwitch) {
+        userDefaults.set(sender.isOn, forKey: kCleanPhoneticSuffix)
         userDefaults.synchronize()
     }
     
-    @IBAction func cleanSocialProfilesKeysSwitchDidTap(sender: UISwitch) {
-        enableCleanSocialProfilesSwitchWithAlert(sender.on)
+    @IBAction func cleanSocialProfilesKeysSwitchDidTap(_ sender: UISwitch) {
+        enableCleanSocialProfilesSwitchWithAlert(sender.isOn)
     }
     
-    @IBAction func cleanInstantMessageAddressesKeysSwitchDidTap(sender: UISwitch) {
-        enableCleanInstantMessageAddressesSwitchWithAlert(sender.on)
+    @IBAction func cleanInstantMessageAddressesKeysSwitchDidTap(_ sender: UISwitch) {
+        enableCleanInstantMessageAddressesSwitchWithAlert(sender.isOn)
     }
     
     
     // MARK: - 
-    @IBAction func separatePinyinSwitchDidTap(sender: AnyObject) {
-        userDefaults.setBool(sender.on, forKey: kAlwaysSeparatePinyin)
+    @IBAction func separatePinyinSwitchDidTap(_ sender: AnyObject) {
+        userDefaults.set(sender.isOn, forKey: kAlwaysSeparatePinyin)
         userDefaults.synchronize()
     }
     
     
     // MARK: - UI
-    @IBAction func forceOpenAnimationSwitchDidTap(sender: UISwitch) {
-        userDefaults.setBool(sender.on, forKey: kForceEnableAnimation)
+    @IBAction func forceOpenAnimationSwitchDidTap(_ sender: UISwitch) {
+        userDefaults.set(sender.isOn, forKey: kForceEnableAnimation)
         userDefaults.synchronize()
     }
     
-    @IBAction func keepSettingWindowOpenSwitchDidTap(sender: UISwitch) {
-        userDefaults.setBool(sender.on, forKey: kKeepSettingsWindowOpen)
+    @IBAction func keepSettingWindowOpenSwitchDidTap(_ sender: UISwitch) {
+        userDefaults.set(sender.isOn, forKey: kKeepSettingsWindowOpen)
         userDefaults.synchronize()
     }
     
     // MARK: - Turn On/Off Switch Automatically
-    private func switchStatusAutomaticallyWithDelay(sender: UISwitch) {
+    private func switchStatusAutomaticallyWithDelay(_ sender: UISwitch) {
         
         executeAfterDelay(0.2) { 
-            if sender == self.overwriteAlreadyExistsSwitch && !self.customNameSwitch.on {
+            if sender == self.overwriteAlreadyExistsSwitch && !self.customNameSwitch.isOn {
                 if let _ = self.nicknameSwitch?.setOn(true, animated: true) {
-                    self.userDefaults.setBool(true, forKey: kEnableNickname)
+                    self.userDefaults.set(true, forKey: kEnableNickname)
                 }
                 return
             }
             
-            if sender.on {
+            if sender.isOn {
                 switch sender {
                 case self.nicknameSwitch:
                     if let _ = self.customNameSwitch?.setOn(false, animated: true) {
-                        self.userDefaults.setBool(false, forKey: kEnableCustomName)
+                        self.userDefaults.set(false, forKey: kEnableCustomName)
                     }
                     
                 case self.customNameSwitch:
                     if let _ = self.nicknameSwitch?.setOn(false, animated: true) {
-                        self.userDefaults.setBool(false, forKey: kEnableNickname)
+                        self.userDefaults.set(false, forKey: kEnableNickname)
                     }
                 default: break
                 }
@@ -412,19 +412,18 @@ extension AdditionalSettingsViewController {
         }
     }
     
-    private func enableAllCleanPhoneticSwitchWithDelay(enabled: Bool, delay: Bool) {
+    private func enableAllCleanPhoneticSwitchWithDelay(_ enabled: Bool, delay: Bool) {
         
         let delayInSeconds: Double = delay ? 0.2 : 0.0
-        let popTime = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(NSEC_PER_SEC) * delayInSeconds))
-        dispatch_after(popTime, dispatch_get_main_queue(), {
-            
-            self.userDefaults.setBool(enabled, forKey: kCleanPhoneticNickname)
-            self.userDefaults.setBool(enabled, forKey: kCleanPhoneticMiddleName)
-            self.userDefaults.setBool(enabled, forKey: kCleanPhoneticDepartment)
-            self.userDefaults.setBool(enabled, forKey: kCleanPhoneticCompany)
-            self.userDefaults.setBool(enabled, forKey: kCleanPhoneticJobTitle)
-            self.userDefaults.setBool(enabled, forKey: kCleanPhoneticPrefix)
-            self.userDefaults.setBool(enabled, forKey: kCleanPhoneticSuffix)
+        
+        executeAfterDelay(delayInSeconds) {
+            self.userDefaults.set(enabled, forKey: kCleanPhoneticNickname)
+            self.userDefaults.set(enabled, forKey: kCleanPhoneticMiddleName)
+            self.userDefaults.set(enabled, forKey: kCleanPhoneticDepartment)
+            self.userDefaults.set(enabled, forKey: kCleanPhoneticCompany)
+            self.userDefaults.set(enabled, forKey: kCleanPhoneticJobTitle)
+            self.userDefaults.set(enabled, forKey: kCleanPhoneticPrefix)
+            self.userDefaults.set(enabled, forKey: kCleanPhoneticSuffix)
             
             if self.userDefaults.synchronize() {
                 self.cleanPhoneticNicknameSwitch.setOn(enabled, animated: true)
@@ -438,56 +437,56 @@ extension AdditionalSettingsViewController {
             
             // switch off SocialProfilesKeysSwitch & InstantMessageAddressesKeysSwitch too.
             if !enabled {
-                self.userDefaults.setBool(false, forKey: kCleanSocialProfilesKeys)
-                self.userDefaults.setBool(false, forKey: kCleanInstantMessageAddressesKeys)
+                self.userDefaults.set(false, forKey: kCleanSocialProfilesKeys)
+                self.userDefaults.set(false, forKey: kCleanInstantMessageAddressesKeys)
                 
                 if self.userDefaults.synchronize() {
                     self.cleanSocialProfilesKeysSwitch.setOn(false, animated: true)
                     self.cleanInstantMessageAddressesKeysSwitch.setOn(false, animated: true)
                 }
             }
-        })
+        }
     }
 }
 
 // MARK: - Switch With Alert
 extension AdditionalSettingsViewController {
     
-    private func enableAllCleanPhoneticSwitchWithAlert(enabled: Bool) {
+    private func enableAllCleanPhoneticSwitchWithAlert(_ enabled: Bool) {
         
         let title = NSLocalizedString("Clean All Keys", comment: "UIAlertController title")
         let message = NSLocalizedString("Are you sure to clean all keys? All of those keys including you manually added before will be removed too!", comment: "UIAlertController message")
         
         enableAllCleanPhoneticSwitch.switchWithAlert(title, message: message, okActionTitle: NSLocalizedString("Clean", comment: ""), on: enabled) { () -> Void in
-            self.userDefaults.setBool(enabled, forKey: kEnableAllCleanPhonetic)
+            self.userDefaults.set(enabled, forKey: kEnableAllCleanPhonetic)
             if self.userDefaults.synchronize() {
                 self.enableAllCleanPhoneticSwitchWithDelay(enabled, delay: !enabled)
             }
         }
     }
     
-    private func enableCleanSocialProfilesSwitchWithAlert(enabled: Bool) {
+    private func enableCleanSocialProfilesSwitchWithAlert(_ enabled: Bool) {
         let title = NSLocalizedString("Clean Keys", comment: "UIAlertController title")
         let message = NSLocalizedString("Are you sure to clean Social Profiles keys? This can not be revoked!!", comment: "UIAlertController message")
         
         let social = String(format: "\n\n Tencent Weibo\n\n Game Center\n\n Sina Weibo\n\n Facebook\n\n MySpace\n\n LinkedIn\n\n Twitter\n\n Flickr\n\n Yelp")
         
         cleanSocialProfilesKeysSwitch.switchWithAlert(title, message: message + social, okActionTitle: NSLocalizedString("Clean", comment: ""), on: enabled) { () -> Void in
-            self.userDefaults.setBool(enabled, forKey: kCleanSocialProfilesKeys)
+            self.userDefaults.set(enabled, forKey: kCleanSocialProfilesKeys)
             if self.userDefaults.synchronize() {
                 self.cleanSocialProfilesKeysSwitch.setOn(enabled, animated: true)
             }
         }
     }
     
-    private func enableCleanInstantMessageAddressesSwitchWithAlert(enabled: Bool) {
+    private func enableCleanInstantMessageAddressesSwitchWithAlert(_ enabled: Bool) {
         let title = NSLocalizedString("Clean Keys", comment: "UIAlertController title")
         let message = NSLocalizedString("Are you sure to clean Instant Message Addresses keys? This can not be revoked!!", comment: "UIAlertController message")
         
         let im = String(format: "\n\n Facebook Messenger\n\n Yahoo! Messenger\n\n MSN Messenger\n\n Google Talk\n\n Gadu-Gadu\n\n Jabber\n\n Skype\n\n AIM\n\n ICQ\n\n QQ")
         
         cleanInstantMessageAddressesKeysSwitch.switchWithAlert(title, message: message + im, okActionTitle: NSLocalizedString("Clean", comment: ""), on: enabled) { () -> Void in
-            self.userDefaults.setBool(enabled, forKey: kCleanInstantMessageAddressesKeys)
+            self.userDefaults.set(enabled, forKey: kCleanInstantMessageAddressesKeys)
             if self.userDefaults.synchronize() {
                 self.cleanInstantMessageAddressesKeysSwitch.setOn(enabled, animated: true)
             }
@@ -498,7 +497,7 @@ extension AdditionalSettingsViewController {
 
 extension UISwitch {
     
-    private func switchWithAlert(title: String, message: String, okActionTitle: String, on: Bool, closure: (() -> Void)) {
+    private func switchWithAlert(_ title: String, message: String, okActionTitle: String, on: Bool, closure: (() -> Void)) {
         if on {
             AlertController.alertWithCancelAction(title: title, message: message, actionTitle: okActionTitle, completionHandler: { () -> Void in
                 closure()
@@ -515,12 +514,12 @@ extension UISwitch {
 extension AdditionalSettingsViewController {
     
     private func configureQuickSearchSelectionViews() {
-        quickSearchSelectionIndicator.tintColor = UIColor.whiteColor()
-        quickSearchSelectionIndicator.image = UIImage(named: "expand")?.imageWithRenderingMode(.AlwaysTemplate)
+        quickSearchSelectionIndicator.tintColor = UIColor.white()
+        quickSearchSelectionIndicator.image = UIImage(named: "expand")?.withRenderingMode(.alwaysTemplate)
         
         let recognizer = UITapGestureRecognizer(target: self, action: #selector(alertActionSheetToChooseCustomKeyForQuickSearch))
         quickSearchSelectionLabel.addGestureRecognizer(recognizer)
-        quickSearchSelectionLabel.userInteractionEnabled = true
+        quickSearchSelectionLabel.isUserInteractionEnabled = true
         quickSearchSelectionLabel.text = String.localizedStringWithFormat(NSLocalizedString("%@ for Quick Search", comment: ""), quickSearchKey)
     }
     
@@ -535,22 +534,27 @@ extension AdditionalSettingsViewController {
         
         var actionSheetTitles = [String]()
         
-        for i in 0...QuickSearch.Cancel.rawValue {
+        for i in 0...QuickSearch.cancel.rawValue {
             actionSheetTitles.append(QuickSearch(rawValue: i)!.key)
         }
         
-        blurActionSheet = BlurActionSheet.showWithTitles(actionSheetTitles) { (index) -> Void in
+        executeAfterDelay(0.2) {
             
-            self.quickSearchSelectionIndicator.rotationAnimation(beginWithClockwise: false, clockwise: true, animated: true)
-            
-            // action canceled
-            guard (actionSheetTitles.count - 1) != index else { return }
-            
-            NSUserDefaults.standardUserDefaults().setInteger(index, forKey: kQuickSearchKeyRawValue)
-            if NSUserDefaults.standardUserDefaults().synchronize() {
-                self.quickSearchSelectionLabel.text = String.localizedStringWithFormat(NSLocalizedString("%@ for Quick Search", comment: ""), actionSheetTitles[index])
+            self.blurActionSheet = BlurActionSheet.showWithTitles(actionSheetTitles) { (index) -> Void in
+                
+                executeAfterDelay(0.1, closure: {
+                    self.quickSearchSelectionIndicator.rotationAnimation(beginWithClockwise: false, clockwise: true, animated: true)
+                })
+                
+                // action canceled
+                guard (actionSheetTitles.count - 1) != index else { return }
+                
+                UserDefaults.standard.set(index, forKey: kQuickSearchKeyRawValue)
+                if UserDefaults.standard.synchronize() {
+                    self.quickSearchSelectionLabel.text = String.localizedStringWithFormat(NSLocalizedString("%@ for Quick Search", comment: ""), actionSheetTitles[index])
+                }
+                self.tableView.reloadData()
             }
-            self.tableView.reloadData()
         }
     }
     
@@ -561,7 +565,7 @@ extension AdditionalSettingsViewController {
 extension AdditionalSettingsViewController: TableViewHeaderFooterViewWithButtonDelegate {
     
     func tableViewHeaderFooterViewWithButtonDidTap() {
-        if let vc = UIStoryboard.Main.instantiateViewControllerWithIdentifier(String(HelpManualViewController)) as? HelpManualViewController {
+        if let vc = UIStoryboard.Main.instantiateViewController(withIdentifier: String(HelpManualViewController.self)) as? HelpManualViewController {
             navigationController?.pushViewController(vc, animated: true)
         }
     }
@@ -571,7 +575,7 @@ extension AdditionalSettingsViewController: TableViewHeaderFooterViewWithButtonD
 // MARK: - Table View Datasource
 extension AdditionalSettingsViewController {
     
-    override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
         switch section {
         case 2:
@@ -583,7 +587,7 @@ extension AdditionalSettingsViewController {
         }
     }
     
-    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         
         var headerTitle: String?
         
@@ -606,7 +610,7 @@ extension AdditionalSettingsViewController {
         return headerTitle
     }
     
-    override func tableView(tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+    override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
         
         var footerTitle: String?
         
@@ -652,7 +656,7 @@ extension AdditionalSettingsViewController {
 // MARK: - Rotation
 extension AdditionalSettingsViewController {
     
-    override func willRotateToInterfaceOrientation(toInterfaceOrientation: UIInterfaceOrientation, duration: NSTimeInterval) {
+    override func willRotate(to toInterfaceOrientation: UIInterfaceOrientation, duration: TimeInterval) {
         
         if UIDevice.isPad {
             dismissViewController(completion: {
@@ -667,16 +671,16 @@ extension AdditionalSettingsViewController {
 
 extension AdditionalSettingsViewController {
     
-    @IBAction func tutorialButtonDidTap(sender: AnyObject) {
+    @IBAction func tutorialButtonDidTap(_ sender: AnyObject) {
         
         if !UIDevice.isPad {
-            dismissViewControllerAnimated(true) {
+            dismiss(animated: true) {
                 displayWalkthrough()
             }
             
         } else {
-            dismissViewControllerAnimated(true, completion: {
-                appDelegate.getVisibleViewController()?.dismissViewControllerAnimated(true, completion: {
+            dismiss(animated: true, completion: {
+                appDelegate.getVisibleViewController()?.dismiss(animated: true, completion: {
                     displayWalkthrough()
                 })
             })

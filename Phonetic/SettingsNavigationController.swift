@@ -15,8 +15,8 @@ let kNavigationBarBackgroundColor = UIColor(red: 0.4, green: 0.4, blue: 0.4, alp
 
 class SettingsNavigationController: UINavigationController {
 
-    let _font      = UIFont.systemFontOfSize(17.0)
-    let _textColor = UIColor.whiteColor()
+    let _font      = UIFont.systemFont(ofSize: 17.0)
+    let _textColor = UIColor.white()
 
     var customBarButton: UIButton!
     private(set) var customTitleLabel: UILabel!
@@ -24,13 +24,13 @@ class SettingsNavigationController: UINavigationController {
     
     private var shouldHideCustomBarButton: Bool {
         // iPad
-        if UIDevice.currentDevice().userInterfaceIdiom == .Pad {
+        if UIDevice.current().userInterfaceIdiom == .pad {
             return true
         }
         
         // 6(s) Plus or larger iPhones in the future (maybe).
-        if Device.isLargerThanScreenSize(Size.Screen4_7Inch) {
-            return UIDevice.currentDevice().orientation.isLandscape
+        if Device.isLargerThanScreenSize(Size.screen4_7Inch) {
+            return UIDevice.current().orientation.isLandscape
         }
         
         return false
@@ -38,7 +38,7 @@ class SettingsNavigationController: UINavigationController {
     
     private var hideCustomBarButton = false {
         didSet {
-            customBarButton?.hidden = hideCustomBarButton
+            customBarButton?.isHidden = hideCustomBarButton
         }
     }
 
@@ -62,14 +62,14 @@ class SettingsNavigationController: UINavigationController {
         
         guard customBarButton == nil else { return }
         
-        customBarButton = UIButton(type: .Custom)
-        customBarButton.setImage(UIImage(named: "close")?.imageWithRenderingMode(.AlwaysTemplate), forState: .Normal)
-        customBarButton.tintColor   = UIColor.whiteColor()
-        customBarButton.contentMode = .Center
-        customBarButton.addTarget(self, action: #selector(customBarButtonDidTap), forControlEvents: .TouchUpInside)
+        customBarButton = UIButton(type: .custom)
+        customBarButton.setImage(UIImage(named: "close")?.withRenderingMode(.alwaysTemplate), for: UIControlState())
+        customBarButton.tintColor   = UIColor.white()
+        customBarButton.contentMode = .center
+        customBarButton.addTarget(self, action: #selector(customBarButtonDidTap), for: .touchUpInside)
         
         view.addSubview(customBarButton)
-        customBarButton.snp_remakeConstraints { (make) in
+        customBarButton.snp.remakeConstraints { (make) in
             make.width.height.equalTo(25)
             make.centerY.equalTo(navigationBar)
             make.left.equalTo(8)
@@ -90,9 +90,9 @@ class SettingsNavigationController: UINavigationController {
         
         customNavBar = UIView()
         customNavBar.backgroundColor = kNavigationBarBackgroundColor
-        customNavBar.userInteractionEnabled = false
+        customNavBar.isUserInteractionEnabled = false
         navigationBar.addSubview(customNavBar)
-        customNavBar.snp_makeConstraints { (make) in
+        customNavBar.snp.makeConstraints { (make) in
             make.left.bottom.right.equalTo(navigationBar)
             make.top.equalTo(view)
         }
@@ -101,12 +101,12 @@ class SettingsNavigationController: UINavigationController {
     private func configureCustomTitleLabel() {
         
         customTitleLabel               = UILabel()
-        customTitleLabel.textAlignment = .Center
+        customTitleLabel.textAlignment = .center
         customTitleLabel.textColor     = _textColor
         customTitleLabel.font          = _font
         customTitleLabel.sizeToFit()
         navigationBar.addSubview(customTitleLabel)
-        customTitleLabel.snp_makeConstraints { (make) in
+        customTitleLabel.snp.makeConstraints { (make) in
             make.centerX.centerY.equalTo(navigationBar)
         }
     }
@@ -115,10 +115,10 @@ class SettingsNavigationController: UINavigationController {
 
 extension SettingsNavigationController {
     
-    override func willRotateToInterfaceOrientation(toInterfaceOrientation: UIInterfaceOrientation, duration: NSTimeInterval) {
+    override func willRotate(to toInterfaceOrientation: UIInterfaceOrientation, duration: TimeInterval) {
         
         // Optimized for 6(s) Plus
-        if Device.isEqualToScreenSize(Size.Screen5_5Inch) {
+        if Device.isEqualToScreenSize(Size.screen5_5Inch) {
             hideCustomBarButton = toInterfaceOrientation.isLandscape
         }
     }

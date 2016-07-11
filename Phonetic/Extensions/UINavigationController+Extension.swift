@@ -11,11 +11,11 @@ import UIKit
 extension UINavigationController {
     
     func completelyTransparentBar() {
-        navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
+        navigationBar.setBackgroundImage(UIImage(), for: .default)
         navigationBar.shadowImage = UIImage()
-        navigationBar.translucent = true
-        view.backgroundColor = UIColor.clearColor()
-        navigationBar.backgroundColor = UIColor.clearColor()
+        navigationBar.isTranslucent = true
+        view.backgroundColor = UIColor.clear()
+        navigationBar.backgroundColor = UIColor.clear()
     }
     
 }

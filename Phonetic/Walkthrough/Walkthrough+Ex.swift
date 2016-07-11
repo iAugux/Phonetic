@@ -10,22 +10,22 @@
 import UIKit
 
 
-func displayWalkthroughIfNeeded(transparent transparent: Bool = true, completion: CompletionHandler? = nil) {
+func displayWalkthroughIfNeeded(transparent: Bool = true, completion: Closure? = nil) {
 
-    guard !NSUserDefaults.standardUserDefaults().boolForKey(displayedWalthroughKey) else { return }
+    guard !UserDefaults.standard.bool(forKey: displayedWalthroughKey) else { return }
     
     displayWalkthrough(transparent: transparent, completion: completion)
 }
 
-func displayWalkthrough(transparent transparent: Bool = true, completion: CompletionHandler? = nil) {
+func displayWalkthrough(transparent: Bool = true, completion: Closure? = nil) {
     
-    guard let pageViewController = WorkthroughSB.instantiateViewControllerWithIdentifier(String(PageViewController)) as? PageViewController else { return }
+    guard let pageViewController = WorkthroughSB.instantiateViewController(withIdentifier: String(PageViewController.self)) as? PageViewController else { return }
     
-    transparent ? pageViewController.modalPresentationStyle = .OverCurrentContext : ()
+    transparent ? pageViewController.modalPresentationStyle = .overCurrentContext : ()
     
-    UIDevice.isPad ? pageViewController.modalTransitionStyle = .CrossDissolve : ()
+    UIDevice.isPad ? pageViewController.modalTransitionStyle = .crossDissolve : ()
     
-    UIApplication.topMostViewController?.presentViewController(pageViewController, animated: true, completion: {
+    UIApplication.topMostViewController?.present(pageViewController, animated: true, completion: {
         completion?()        
     })
     

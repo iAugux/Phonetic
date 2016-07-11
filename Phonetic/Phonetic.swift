@@ -59,29 +59,29 @@ struct Phonetic {
 }
 
 enum QuickSearch: Int {
-    case MiddleName
-    case Department
-    case Company
-    case JobTitle
-    case Prefix
-    case Suffix
-    case Cancel
+    case middleName
+    case department
+    case company
+    case jobTitle
+    case prefix
+    case suffix
+    case cancel
     
     var key: String {
         switch self {
-        case .MiddleName:
+        case .middleName:
             return NSLocalizedString("Middle Name", comment: "")
-        case .Department:
+        case .department:
             return NSLocalizedString("Department", comment: "")
-        case .Company:
+        case .company:
             return NSLocalizedString("Company", comment: "")
-        case .JobTitle:
+        case .jobTitle:
             return NSLocalizedString("Job Title", comment: "")
-        case .Prefix:
+        case .prefix:
             return NSLocalizedString("Prefix", comment: "")
-        case .Suffix:
+        case .suffix:
             return NSLocalizedString("Suffix", comment: "")
-        case .Cancel:
+        case .cancel:
             return NSLocalizedString("Cancel", comment: "")
         }
     }

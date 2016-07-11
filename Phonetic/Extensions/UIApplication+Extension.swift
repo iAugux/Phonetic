@@ -10,17 +10,17 @@ import UIKit
 
 extension UIApplication {
     
-    class func initializeInTheFirstTime(completion: (() -> Void)) {
+    class func initializeInTheFirstTime(_ completion: (() -> Void)) {
         UIApplication.initializeInTheFirstTime(nil, completion: completion)
     }
     
-    class func initializeInTheFirstTime(key: String?, completion: (() -> Void)) {
+    class func initializeInTheFirstTime(_ key: String?, completion: (() -> Void)) {
         
         let _key = (key == nil) ? "ausHasLaunchedHostAppOnce" : key!
         
-        if !NSUserDefaults.standardUserDefaults().boolForKey(_key) {
-            NSUserDefaults.standardUserDefaults().setBool(true, forKey: _key)
-            NSUserDefaults.standardUserDefaults().synchronize()
+        if !UserDefaults.standard.bool(forKey: _key) {
+            UserDefaults.standard.set(true, forKey: _key)
+            UserDefaults.standard.synchronize()
             
             completion()
         }

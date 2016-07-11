@@ -10,7 +10,7 @@ import UIKit
 import Contacts
 
 
-let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+let appDelegate = UIApplication.shared().delegate as! AppDelegate
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -19,22 +19,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     let contactStore = CNContactStore()
     
-    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
         createShortcutItemsWithIcons()
 
-        application.statusBarStyle = .LightContent
-        window?.backgroundColor = UIColor.clearColor()
+        application.statusBarStyle = .lightContent
+        window?.backgroundColor = UIColor.clear()
         
         // clear icon badge number if needed.
         application.applicationIconBadgeNumber = 0
         
-        application.beginBackgroundTaskWithName("showNotification", expirationHandler: nil)
+        application.beginBackgroundTask(withName: "showNotification", expirationHandler: nil)
 
         return true
     }
 
-    func applicationWillResignActive(application: UIApplication) {
+    func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
                 
@@ -46,12 +46,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
 
-    func applicationDidEnterBackground(application: UIApplication) {
+    func applicationDidEnterBackground(_ application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
     }
 
-    func applicationWillEnterForeground(application: UIApplication) {
+    func applicationWillEnterForeground(_ application: UIApplication) {
         // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
         
         // clear icon badge number
@@ -60,7 +60,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // fixes UI bugs
         if let rootViewController = window?.rootViewController as? ViewController {
             if !rootViewController.isProcessing {
-                UIView.animateWithDuration(0.5, delay: 0, options: .CurveEaseInOut, animations: { () -> Void in
+                UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseInOut, animations: { () -> Void in
                     rootViewController.progress?.alpha = 1
                     }, completion: nil)
             } else {
@@ -70,11 +70,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
 
-    func applicationDidBecomeActive(application: UIApplication) {
+    func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
     }
 
-    func applicationWillTerminate(application: UIApplication) {
+    func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 
@@ -85,7 +85,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 extension AppDelegate {
     
     // Detecting touching outside of the popover
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         
         guard UIDevice.isPad else { return }
         
@@ -96,12 +96,12 @@ extension AppDelegate {
     }
     
     // getVisibleViewController
-    func getVisibleViewController(_rootViewController: UIViewController? = nil) -> UIViewController? {
+    func getVisibleViewController(_ _rootViewController: UIViewController? = nil) -> UIViewController? {
         
         var rootViewController = _rootViewController
         
         if rootViewController == nil {
-            rootViewController = UIApplication.sharedApplication().keyWindow?.rootViewController
+            rootViewController = UIApplication.shared().keyWindow?.rootViewController
         }
         
         if rootViewController?.presentedViewController == nil {

@@ -10,11 +10,11 @@ import UIKit
 
 extension UITableViewController {
     
-    func configurePullToDismissViewController(backgroundColor: UIColor, fillColor: UIColor, completionHandler: (() -> Void)?) {
+    func configurePullToDismissViewController(_ backgroundColor: UIColor, fillColor: UIColor, completionHandler: (() -> Void)?) {
         tableView?.dg_addPullToRefreshWithActionHandler({ [weak self] () -> Void in
             
             self?.tableView.dg_stopLoading()
-            self?.dismissViewControllerAnimated(true, completion: {
+            self?.dismiss(animated: true, completion: {
                 if let completion = completionHandler {
                     completion()
                 }
@@ -31,12 +31,12 @@ extension UITableViewController {
 
 extension UIViewController {
     
-    func pullToDismissViewController(tableView tableView: UITableView?, backgroundColor: UIColor, fillColor: UIColor, completionHandler: (() -> Void)?) {
+    func pullToDismissViewController(tableView: UITableView?, backgroundColor: UIColor, fillColor: UIColor, completionHandler: (() -> Void)?) {
                 
         tableView?.dg_addPullToRefreshWithActionHandler({ [weak self] () -> Void in
             
             tableView?.dg_stopLoading()
-            self?.dismissViewControllerAnimated(true, completion: {
+            self?.dismiss(animated: true, completion: {
                 if let completion = completionHandler {
                     completion()
                 }

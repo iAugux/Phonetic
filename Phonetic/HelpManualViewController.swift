@@ -14,21 +14,21 @@ class HelpManualViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationController?.navigationBar.tintColor = .whiteColor()
+        navigationController?.navigationBar.tintColor = .white()
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
         guard let nav = navigationController as? SettingsNavigationController else { return }
         
         let title = NSLocalizedString("Help Manual", comment: "Navigation title")
         nav.customTitleLabel?.text = title
-        nav.customTitleLabel?.font = UIFont.systemFontOfSize(17)
-        nav.customTitleLabel?.textColor = UIColor.whiteColor()
+        nav.customTitleLabel?.font = UIFont.systemFont(ofSize: 17)
+        nav.customTitleLabel?.textColor = UIColor.white()
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         settingButton.twinkling(0.6, minAlpha: 0.3, maxAlpha: 1)
     }
@@ -38,7 +38,7 @@ class HelpManualViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func openSystemSettings(sender: AnyObject) {
+    @IBAction func openSystemSettings(_ sender: AnyObject) {
 //        if let url = NSURL(string: UIApplicationOpenSettingsURLString) {
 //            UIApplication.sharedApplication().openURL(url)
 //        }
@@ -46,8 +46,8 @@ class HelpManualViewController: UIViewController {
         // TODO: - Is it possible to go to the direct destination?
         let str = "prefs:root=ACCOUNT_SETTINGS&path="
         
-        if let url = NSURL(string: str) {
-            UIApplication.sharedApplication().openURL(url)
+        if let url = URL(string: str) {
+            UIApplication.shared().openURL(url)
         }
     }
     
@@ -56,7 +56,7 @@ class HelpManualViewController: UIViewController {
 
 extension HelpManualViewController {
     
-    override func willRotateToInterfaceOrientation(toInterfaceOrientation: UIInterfaceOrientation, duration: NSTimeInterval) {
+    override func willRotate(to toInterfaceOrientation: UIInterfaceOrientation, duration: TimeInterval) {
         
         guard UIDevice.isPad else { return }
         

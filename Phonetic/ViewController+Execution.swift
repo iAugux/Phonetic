@@ -14,19 +14,19 @@ import AVKit
 extension ViewController {
     
     private var enableAnimation: Bool {
-        if NSUserDefaults.standardUserDefaults().valueForKey(kEnableAnimation) == nil {
-            NSUserDefaults.standardUserDefaults().setBool(kEnableAnimationDefaultBool, forKey: kEnableAnimation)
-            NSUserDefaults.standardUserDefaults().synchronize()
+        if UserDefaults.standard.value(forKey: kEnableAnimation) == nil {
+            UserDefaults.standard.set(kEnableAnimationDefaultBool, forKey: kEnableAnimation)
+            UserDefaults.standard.synchronize()
         }
-        return NSUserDefaults.standardUserDefaults().boolForKey(kEnableAnimation)
+        return UserDefaults.standard.bool(forKey: kEnableAnimation)
     }
     
     private var forceEnableAnimation: Bool {
-        if NSUserDefaults.standardUserDefaults().valueForKey(kForceEnableAnimation) == nil {
-            NSUserDefaults.standardUserDefaults().setBool(kForceEnableAnimationDefaultBool, forKey: kForceEnableAnimation)
-            NSUserDefaults.standardUserDefaults().synchronize()
+        if UserDefaults.standard.value(forKey: kForceEnableAnimation) == nil {
+            UserDefaults.standard.set(kForceEnableAnimationDefaultBool, forKey: kForceEnableAnimation)
+            UserDefaults.standard.synchronize()
         }
-        return NSUserDefaults.standardUserDefaults().boolForKey(kForceEnableAnimation)
+        return UserDefaults.standard.bool(forKey: kForceEnableAnimation)
     }
     
     private var shouldEnableAnimation: Bool {
@@ -36,7 +36,7 @@ extension ViewController {
             }
             // guarantee there is no audio playing in the background.
             // e.g: Never pause your music. I don't want to bother you.
-            else if AVAudioSession.sharedInstance().otherAudioPlaying {
+            else if AVAudioSession.sharedInstance().isOtherAudioPlaying {
                 return false
             } else {
                 return true
@@ -70,11 +70,11 @@ extension ViewController {
         }
     }
     
-    func clean(gesture: UIGestureRecognizer) {
+    func clean(_ gesture: UIGestureRecognizer) {
         
         // former: UITapGestureRecognizer.
         // the later: ensure be triggered at the beginning while long pressing, or there will be a warning at runtime.
-        guard gesture.isKindOfClass(UITapGestureRecognizer) || gesture.state == .Began else { return }
+        guard gesture.isKind(of: UITapGestureRecognizer.self) || gesture.state == .began else { return }
         
         guard PhoneticContacts.sharedInstance.keysToFetchIfNeeded.count != 0 else {
             let msg = NSLocalizedString("You haven't choose any keys for cleaning!", comment: "")
@@ -96,9 +96,9 @@ extension ViewController {
         
         let appendingMessage = PhoneticContacts.sharedInstance.messageOfCurrentKeysNeedToBeCleaned
         
-        let alertController   = UIAlertController(title: title, message: message + appendingMessage, preferredStyle: .Alert)
-        let cancelAction      = UIAlertAction(title: cancelActionTitle, style: .Cancel, handler: nil)
-        let okAction          = UIAlertAction(title: okActionTitle, style: .Default) { (_) -> Void in
+        let alertController   = UIAlertController(title: title, message: message + appendingMessage, preferredStyle: .alert)
+        let cancelAction      = UIAlertAction(title: cancelActionTitle, style: .cancel, handler: nil)
+        let okAction          = UIAlertAction(title: okActionTitle, style: .default) { (_) -> Void in
             
             self.initializeUI(false)
 
@@ -117,30 +117,30 @@ extension ViewController {
         alertController.addAction(okAction)
         alertController.addAction(cancelAction)
         
-        presentViewController(alertController, animated: true, completion: nil)
+        present(alertController, animated: true, completion: nil)
     }
     
     
     // MARK: - Video
     func loopingVideo(){
         
-        guard UIApplication.sharedApplication().applicationState == .Active && PhoneticContacts.sharedInstance.isProcessing else {
+        guard UIApplication.shared().applicationState == .active && PhoneticContacts.sharedInstance.isProcessing else {
             avPlayer?.pause()
             avPlayerController = nil
             return
         }
         
-        avPlayer?.seekToTime(CMTimeMakeWithSeconds(0, 1))
+        avPlayer?.seek(to: CMTimeMakeWithSeconds(0, 1))
         avPlayer?.play()
     }
     
     func pauseVideo() {
         avPlayer?.pause()
-        hideBlurVieWithAnimation(false)
+        hideBlurViewWithAnimation(false)
     }
     
     func playVideoIfNeeded() {
-        hideBlurVieWithAnimation(true)
+        hideBlurViewWithAnimation(true)
         
         guard shouldEnableAnimation else {
             // stop playing first if it's playing.
@@ -159,30 +159,33 @@ extension ViewController {
 
     private func configureBackgroundVideo(){
         
-        guard let url = NSBundle.mainBundle().URLForResource("wave", withExtension: "mp4") else { return }
+        guard let url = Bundle.main.urlForResource("wave", withExtension: "mp4") else { return }
         
-        avPlayer                                       = AVPlayer(URL: url)
+        avPlayer                                       = AVPlayer(url: url)
         avPlayerController                             = AVPlayerViewController()
         avPlayerController.player                      = avPlayer
         avPlayerController.view.frame                  = avPlayerPlaceholderView.bounds
         avPlayerController.videoGravity                = AVLayerVideoGravityResize  //AVLayerVideoGravityResizeAspect
-        avPlayerController.view.userInteractionEnabled = false
+        avPlayerController.view.isUserInteractionEnabled = false
         avPlayerController.showsPlaybackControls       = false
         
         avPlayerPlaceholderView.addSubview(avPlayerController.view)
         
         // loop video
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(loopingVideo), name: AVPlayerItemDidPlayToEndTimeNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(loopingVideo), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: nil)
     }
     
-    private func hideBlurVieWithAnimation(hidden: Bool) {
-        UIView.animateWithDuration(1.2, animations: { () -> Void in
-            self.blurView?.alpha = hidden ? 0 : 0.97
-        })
+    private func hideBlurViewWithAnimation(_ hidden: Bool) {
+        
+        UIView.animate(withDuration: 1.2) { [weak self] in
+            self?.blurView?.effect = !hidden ? UIBlurEffect(style: .light) : nil
+        }
+        
+        hideLabels(hidden)
     }
     
     // MARK: - Progress
-    private func runProgressBar(rollback: Bool, percentage: Double) {
+    private func runProgressBar(_ rollback: Bool, percentage: Double) {
         if !rollback {
             let angle = percentage * 360 / 100
             progress.angle = angle
@@ -193,7 +196,7 @@ extension ViewController {
         }
     }
     
-    private func initializeUI(executionCondition: Bool) {
+    private func initializeUI(_ executionCondition: Bool) {
         progress.alpha = 1
         outputView.text = ""
         if executionCondition {
@@ -205,30 +208,30 @@ extension ViewController {
             outputView.alpha     = 0
             outputView.text      = "  " + NSLocalizedString("Processing", comment: "") + "..."
             
-            UIView.animateWithDuration(0.4, animations: { () -> Void in
+            UIView.animate(withDuration: 0.4, animations: { () -> Void in
                 self.outputView.alpha = 1
             })
         }
     }
     
-    private func promoptCompletion(aborted: Bool) {
+    private func promoptCompletion(_ aborted: Bool) {
         
         let text = aborted ? NSLocalizedString("Aborted", comment: "") : NSLocalizedString("Completed", comment: "")
         
-        UIView.animateWithDuration(0.1, delay: 0.3, options: .CurveEaseInOut, animations: { () -> Void in
+        UIView.animate(withDuration: 0.1, delay: 0.3, options: UIViewAnimationOptions(), animations: { () -> Void in
             self.outputView.alpha = 0
             }) { (_) -> Void in
                 self.outputView.text = text
-                UIView.animateWithDuration(1.2, delay: 0, options: .CurveEaseInOut, animations: { () -> Void in
+                UIView.animate(withDuration: 1.2, delay: 0, options: UIViewAnimationOptions(), animations: { () -> Void in
                     self.outputView.alpha = 0.8
                     }, completion: { (_) -> Void in
-                        UIView.animateWithDuration(0.9, delay: 0.7, options: .CurveEaseInOut, animations: { () -> Void in
+                        UIView.animate(withDuration: 0.9, delay: 0.7, options: UIViewAnimationOptions(), animations: { () -> Void in
                             self.outputView.alpha = 0
                             self.progress.alpha = 0
                             }, completion: { (_) -> Void in
                                 self.outputView.text = ""
                                 self.outputView.alpha = 1
-                                self.hideBlurVieWithAnimation(false)
+                                self.hideBlurViewWithAnimation(false)
                                 self.isProcessing = false
                         })
                 })

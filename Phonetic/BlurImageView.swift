@@ -32,10 +32,10 @@ class BlurImageView: UIImageView {
     
     private func configureViews() {
         image = UIImage(named: "wave_placeholder")
-        contentMode = .ScaleToFill
+        contentMode = .scaleToFill
         
-        if UIDevice.currentDevice().isBlurSupported() && !UIAccessibilityIsReduceTransparencyEnabled() {
-            effectView = UIVisualEffectView(effect: UIBlurEffect(style: .Light))
+        if UIDevice.current().isBlurSupported() && !UIAccessibilityIsReduceTransparencyEnabled() {
+            effectView = UIVisualEffectView(effect: UIBlurEffect(style: .light))
             effectView.alpha = 0.98
         } else {
             effectView = UIVisualEffectView(effect: nil)
@@ -43,7 +43,7 @@ class BlurImageView: UIImageView {
         }
         
         effectView.frame = bounds
-        insertSubview(effectView, atIndex: 0)
+        insertSubview(effectView, at: 0)
     }
     
 }

@@ -11,7 +11,7 @@ extension UIView {
     var parentViewController: UIViewController? {
         var parentResponder: UIResponder? = self
         while parentResponder != nil {
-            parentResponder = parentResponder!.nextResponder()
+            parentResponder = parentResponder!.next()
             if let viewController = parentResponder as? UIViewController {
                 return viewController
             }
@@ -21,31 +21,31 @@ extension UIView {
 }
 
 extension UIView {
-    func setFrameSize(size: CGSize) {
+    func setFrameSize(_ size: CGSize) {
         var frame = self.frame
         frame.size = size
         self.frame = frame
     }
     
-    func setFrameHeight(height: CGFloat) {
+    func setFrameHeight(_ height: CGFloat) {
         var frame = self.frame
         frame.size.height = height
         self.frame = frame
     }
     
-    func setFrameWidth(width: CGFloat) {
+    func setFrameWidth(_ width: CGFloat) {
         var frame = self.frame
         frame.size.width = width
         self.frame = frame
     }
 
-    func setFrameOriginX(originX: CGFloat) {
+    func setFrameOriginX(_ originX: CGFloat) {
         var frame = self.frame
         frame.origin.x = originX
         self.frame = frame
     }
     
-    func setFrameOriginY(originY: CGFloat) {
+    func setFrameOriginY(_ originY: CGFloat) {
         var frame = self.frame
         frame.origin.y = originY
         self.frame = frame
@@ -56,7 +56,7 @@ extension UIView {
      
      - parameter view: other view
      */
-    func centerTo(view view: UIView) {
+    func centerTo(view: UIView) {
         self.frame.origin.x = view.bounds.midX - self.frame.width / 2
         self.frame.origin.y = view.bounds.midY - self.frame.height / 2
         
@@ -66,11 +66,11 @@ extension UIView {
 extension UIView {
     
     func simulateHighlight() {
-        UIView.animateWithDuration(0.1, animations: { () -> Void in
+        UIView.animate(withDuration: 0.1, animations: { () -> Void in
             self.alpha = 0.5
             
             }, completion: { (_) -> Void in
-                UIView.animateWithDuration(0.1, delay: 0.1, options: .CurveEaseInOut, animations: { () -> Void in
+                UIView.animate(withDuration: 0.1, delay: 0.1, options: UIViewAnimationOptions(), animations: { () -> Void in
                     self.alpha = 1
                     }, completion: nil)
         })
@@ -80,15 +80,15 @@ extension UIView {
 
 extension UIView {
     
-    func isPointInside(fromView: UIView, point: CGPoint, event: UIEvent?) -> Bool {
-        return pointInside(fromView.convertPoint(point, toView: self), withEvent: event)
+    func isPointInside(_ fromView: UIView, point: CGPoint, event: UIEvent?) -> Bool {
+        return self.point(inside: fromView.convert(point, to: self), with: event)
     }
 }
 
 
 // MARK: - rotation animation
 
-extension UIView {
+extension UIView: CAAnimationDelegate {
     
     /**
      Angle: 𝞹
@@ -98,7 +98,7 @@ extension UIView {
      - parameter clockwise:          <#clockwise description#>
      - parameter animated:           <#animated description#>
      */
-    func rotationAnimation(duration: CFTimeInterval? = 0.4, beginWithClockwise: Bool, clockwise: Bool, animated: Bool) {
+    func rotationAnimation(_ duration: CFTimeInterval? = 0.4, beginWithClockwise: Bool, clockwise: Bool, animated: Bool) {
         
         let rotationAnimation = CABasicAnimation(keyPath: "transform.rotation.z")
         
@@ -117,9 +117,9 @@ extension UIView {
         rotationAnimation.delegate = self
         rotationAnimation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseIn)
         rotationAnimation.fillMode = kCAFillModeForwards
-        rotationAnimation.removedOnCompletion = false
+        rotationAnimation.isRemovedOnCompletion = false
         
-        layer.addAnimation(rotationAnimation, forKey: "rotationAnimation")
+        layer.add(rotationAnimation, forKey: "rotationAnimation")
     }
     
     /**
@@ -129,16 +129,16 @@ extension UIView {
      - parameter clockwise: <#clockwise description#>
      - parameter animated:  <#animated description#>
      */
-    func rotationAnimation(duration: NSTimeInterval, clockwise: Bool, animated: Bool) {
+    func rotationAnimation(_ duration: TimeInterval, clockwise: Bool, animated: Bool) {
         
         let angle = CGFloat(clockwise ? M_PI_2 : -M_PI_2)
         
         if animated {
-            UIView.animateWithDuration(duration, delay: 0, options: .CurveLinear, animations: { () -> Void in
-                self.transform = CGAffineTransformRotate(self.transform, angle)
+            UIView.animate(withDuration: duration, delay: 0, options: .curveLinear, animations: { () -> Void in
+                self.transform = self.transform.rotate(angle)
                 }, completion: nil)
         } else {
-            self.transform = CGAffineTransformRotate(self.transform, angle)
+            self.transform = self.transform.rotate(angle)
         }
         
     }
@@ -150,15 +150,15 @@ extension UIView {
 
 extension UIView {
     
-    func twinkling(duration: NSTimeInterval, minAlpha: CGFloat = 0, maxAlpha: CGFloat = 1) {
+    func twinkling(_ duration: TimeInterval, minAlpha: CGFloat = 0, maxAlpha: CGFloat = 1) {
         
-        UIView.animateWithDuration(duration, animations: {
+        UIView.animate(withDuration: duration, animations: {
             self.alpha = minAlpha
             
         }) { (finished) in
             
             if finished {
-                UIView.animateWithDuration(duration, animations: {
+                UIView.animate(withDuration: duration, animations: {
                     self.alpha = maxAlpha
                     }, completion: { (finished) in
                         

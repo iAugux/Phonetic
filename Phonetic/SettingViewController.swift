@@ -18,7 +18,7 @@ let kUpcasePinyin                 = "kUpcasePinyin"
 let kUseTonesDefaultBool          = false
 let kFixPolyphonicCharDefaultBool = true
 let kUpcasePinyinDefaultBool      = false
-let kEnableAnimationDefaultBool   = Device.size() == Size.Screen3_5Inch ? false : true
+let kEnableAnimationDefaultBool   = Device.size() == Size.screen3_5Inch ? false : true
 
 let kVCWillDisappearNotification  = "kVCWillDisappearNotification"
 
@@ -29,7 +29,7 @@ class SettingViewController: UIViewController {
     
     @IBOutlet weak var polyphonicButton: UIButton!
     
-    private let userDefaults = NSUserDefaults.standardUserDefaults()
+    private let userDefaults = UserDefaults.standard
     
     private var customBarButton: UIButton!
     
@@ -70,9 +70,9 @@ class SettingViewController: UIViewController {
         configureCustomBarButtonItem()
     }
     
-    override func viewDidDisappear(animated: Bool) {
+    override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        NSNotificationCenter.defaultCenter().postNotificationName(kVCWillDisappearNotification, object: nil)
+        NotificationCenter.default.post(name: Notification.Name(rawValue: kVCWillDisappearNotification), object: nil)
     }
     
     override func didReceiveMemoryWarning() {
@@ -80,7 +80,7 @@ class SettingViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "VCPresentPolyphonicVC" {
             guard let destinationVC = segue.destinationViewController as? SettingsNavigationController else { return }
             destinationVC.popoverPresentationController?.sourceRect = polyphonicButton.bounds
@@ -91,12 +91,12 @@ class SettingViewController: UIViewController {
     private func configureCustomBarButtonItem() {
         guard let navBar = navigationController?.navigationBar else { return }
         
-        customBarButton = UIButton(type: .Custom)
-        customBarButton.tintColor = UIColor.whiteColor()
-        customBarButton.setImage(UIImage(named: "additional_settings")?.imageWithRenderingMode(.AlwaysTemplate), forState: .Normal)
-        customBarButton.addTarget(self, action: #selector(customBarButtonDidTap), forControlEvents: .TouchUpInside)
+        customBarButton = UIButton(type: .custom)
+        customBarButton.tintColor = UIColor.white()
+        customBarButton.setImage(UIImage(named: "additional_settings")?.withRenderingMode(.alwaysTemplate), for: UIControlState())
+        customBarButton.addTarget(self, action: #selector(customBarButtonDidTap), for: .touchUpInside)
         navBar.addSubview(customBarButton)
-        customBarButton.snp_makeConstraints { (make) in
+        customBarButton.snp.makeConstraints { (make) in
             make.width.height.equalTo(25)
             make.centerY.equalTo(navBar)
             make.left.equalTo(13)
@@ -110,43 +110,43 @@ class SettingViewController: UIViewController {
             kShouldRepresentAdditionalVC = true
         } else {
             // dismiss current view controller first.
-            dismissViewControllerAnimated(true) { () -> Void in
+            dismiss(animated: true) { () -> Void in
                 self.presentPopoverController()
             }
         }
     }
     
     private func presentPopoverController() {
-        guard let vc = UIStoryboard.Main.instantiateViewControllerWithIdentifier(String(SettingsNavigationController)) as? SettingsNavigationController,
+        guard let vc = UIStoryboard.Main.instantiateViewController(withIdentifier: String(SettingsNavigationController.self)) as? SettingsNavigationController,
             sourceView = customBarButton else { return }
         
-        vc.modalPresentationStyle = .Popover
+        vc.modalPresentationStyle = .popover
         vc.popoverPresentationController?.canOverlapSourceViewRect = true
         vc.popoverPresentationController?.sourceView = sourceView
         vc.popoverPresentationController?.sourceRect = sourceView.bounds
         vc.popoverPresentationController?.backgroundColor = kNavigationBarBackgroundColor
         
-        UIApplication.topMostViewController?.presentViewController(vc, animated: true, completion:nil)
+        UIApplication.topMostViewController?.present(vc, animated: true, completion:nil)
     }
     
     // MARKS: - Actions of UISwitch
-    @IBAction func enableAnimationSwitchDidTap(sender: UISwitch) {
-        userDefaults.setBool(sender.on, forKey: kEnableAnimation)
+    @IBAction func enableAnimationSwitchDidTap(_ sender: UISwitch) {
+        userDefaults.set(sender.isOn, forKey: kEnableAnimation)
         userDefaults.synchronize()
     }
     
-    @IBAction func useTonesSwitchDidTap(sender: UISwitch) {
-        userDefaults.setBool(sender.on, forKey: kUseTones)
+    @IBAction func useTonesSwitchDidTap(_ sender: UISwitch) {
+        userDefaults.set(sender.isOn, forKey: kUseTones)
         userDefaults.synchronize()
     }
     
-    @IBAction func fixPolyphonicCharSwitchDidTap(sender: UISwitch) {
-        userDefaults.setBool(sender.on, forKey: kFixPolyphonicChar)
+    @IBAction func fixPolyphonicCharSwitchDidTap(_ sender: UISwitch) {
+        userDefaults.set(sender.isOn, forKey: kFixPolyphonicChar)
         userDefaults.synchronize()
     }
     
-    @IBAction func upcasePinyinSwitchDidTap(sender: UISwitch) {
-        userDefaults.setBool(sender.on, forKey: kUpcasePinyin)
+    @IBAction func upcasePinyinSwitchDidTap(_ sender: UISwitch) {
+        userDefaults.set(sender.isOn, forKey: kUpcasePinyin)
         userDefaults.synchronize()
     }
     
@@ -155,12 +155,12 @@ class SettingViewController: UIViewController {
 
 extension SettingViewController {
     
-    override func didRotateFromInterfaceOrientation(fromInterfaceOrientation: UIInterfaceOrientation) {
+    override func didRotate(from fromInterfaceOrientation: UIInterfaceOrientation) {
         
         guard UIDevice.isPad else { return }
        
-        kShouldRepresentAdditionalVC ? customBarButton?.sendActionsForControlEvents(.TouchUpInside) : ()
-        kShouldRepresentPolyphonicVC ? polyphonicButton?.sendActionsForControlEvents(.TouchUpInside) : ()
+        _ = kShouldRepresentAdditionalVC ? customBarButton?.sendActions(for: .touchUpInside) : ()
+        _ = kShouldRepresentPolyphonicVC ? polyphonicButton?.sendActions(for: .touchUpInside) : ()
     }
 }
 

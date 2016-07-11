@@ -7,9 +7,16 @@
 //
 
 import UIKit
+import SnapKit
 
 class BlurBackgroundView: UIView {
-
+    
+    var effect: UIBlurEffect! {
+        didSet {
+            blurView?.effect = effect
+        }
+    }
+    
     private var blurView: UIVisualEffectView!
     
     override init(frame: CGRect) {
@@ -17,15 +24,15 @@ class BlurBackgroundView: UIView {
         
         backgroundColor = UIColor(white: 0.7, alpha: 0)
         
-        blurView = UIVisualEffectView(effect: UIBlurEffect(style: .Dark))
+        blurView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
         addSubview(blurView)
-        blurView.snp_makeConstraints { (make) in
+        blurView.snp.makeConstraints { (make) in
             make.edges.equalTo(UIEdgeInsetsZero)
         }
     }
-
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
 }

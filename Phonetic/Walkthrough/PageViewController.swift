@@ -50,21 +50,21 @@ class PageViewController: UIPageViewController {
         
         // create the first walkthrough vc
         if let startWalkThroughViewController = self.viewControllerAtIndex(0) {
-            setViewControllers([startWalkThroughViewController], direction: .Forward, animated: true, completion: nil )
+            setViewControllers([startWalkThroughViewController], direction: .forward, animated: true, completion: nil )
         }
     }
 
-    private func nextPageWithIndex(index: Int) {
+    private func nextPageWithIndex(_ index: Int) {
         if let nextWalkthroughVC = self.viewControllerAtIndex(index + 1) {
-            setViewControllers([nextWalkthroughVC], direction: .Forward, animated: true, completion: nil)
+            setViewControllers([nextWalkthroughVC], direction: .forward, animated: true, completion: nil)
         }
     }
     
-    private func viewControllerAtIndex(index: Int) -> WalkthroughViewController? {
+    private func viewControllerAtIndex(_ index: Int) -> WalkthroughViewController? {
         
         if index == NSNotFound || index < 0 || index >= self.pageDescriptions.count { return nil }
         
-        guard let walkthroughViewController = WorkthroughSB.instantiateViewControllerWithIdentifier(String(WalkthroughViewController)) as? WalkthroughViewController else { return nil }
+        guard let walkthroughViewController = WorkthroughSB.instantiateViewController(withIdentifier: String(WalkthroughViewController.self)) as? WalkthroughViewController else { return nil }
         
         walkthroughViewController.imageName = pageImages[index]
         walkthroughViewController.headerText = pageHeaders[index]
@@ -81,7 +81,7 @@ class PageViewController: UIPageViewController {
 
 extension PageViewController {
     
-    private func viewControllerDidSetAt(index: Int) {
+    private func viewControllerDidSetAt(_ index: Int) {
         
         switch index {
         case 0:
@@ -92,9 +92,9 @@ extension PageViewController {
             })
             
         case 1:
-            executeAfterDelay(0.5, completion: {
+            executeAfterDelay(0.5, closure: {
                 // register user notification settings
-                UIApplication.sharedApplication().registerUserNotificationSettings(UIUserNotificationSettings(forTypes: [.Alert, .Badge, .Sound], categories: nil))
+                UIApplication.shared().registerUserNotificationSettings(UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil))
             })
             
 //        case 2:
@@ -112,14 +112,14 @@ extension PageViewController {
 
 extension PageViewController: UIPageViewControllerDataSource {
     
-    func pageViewController(pageViewController: UIPageViewController, viewControllerBeforeViewController viewController: UIViewController) -> UIViewController? {
+    func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
         var index = (viewController as! WalkthroughViewController).index
         index -= 1
         
         return self.viewControllerAtIndex(index)
     }
     
-    func pageViewController(pageViewController: UIPageViewController, viewControllerAfterViewController viewController: UIViewController) -> UIViewController? {
+    func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
         var index = (viewController as! WalkthroughViewController).index
         index += 1
         

@@ -22,7 +22,7 @@ class OtherSettingView: UIStackView, MFMailComposeViewControllerDelegate, SFSafa
     }
     
     internal func viewDidTap() {
-        parentViewController?.dismissViewControllerAnimated(true, completion: { () -> Void in
+        parentViewController?.dismiss(animated: true, completion: { () -> Void in
             
             // simulate highlight
             for view in self.subviews {
@@ -46,29 +46,29 @@ class OtherSettingView: UIStackView, MFMailComposeViewControllerDelegate, SFSafa
     
     // MARK: - follow me on Twitter
     private func followOnTwitter() {
-        let tweetbotURL = NSURL(string: "tweetbot://iAugux/user_profile/iAugux")
-        let twitterURL = NSURL(string: "twitter://user?screen_name=iAugux")
-        if UIApplication.sharedApplication().canOpenURL(tweetbotURL!) {
-            UIApplication.sharedApplication().openURL(tweetbotURL!)
+        let tweetbotURL = URL(string: "tweetbot://iAugux/user_profile/iAugux")
+        let twitterURL = URL(string: "twitter://user?screen_name=iAugux")
+        if UIApplication.shared().canOpenURL(tweetbotURL!) {
+            UIApplication.shared().openURL(tweetbotURL!)
             return
         }
-        if UIApplication.sharedApplication().canOpenURL(twitterURL!) {
-            UIApplication.sharedApplication().openURL(twitterURL!)
+        if UIApplication.shared().canOpenURL(twitterURL!) {
+            UIApplication.shared().openURL(twitterURL!)
             return
         }
         
-        let safariVC = SFSafariViewController(URL: NSURL(string: "https://twitter.com/iAugux")!)
+        let safariVC = SFSafariViewController(url: URL(string: "https://twitter.com/iAugux")!)
         safariVC.delegate = self
-        UIApplication.topMostViewController?.presentViewController(safariVC, animated: true, completion: {
-            UIApplication.sharedApplication().statusBarStyle = .Default
+        UIApplication.topMostViewController?.present(safariVC, animated: true, completion: {
+            UIApplication.shared().statusBarStyle = .default
         })
     }
     
     // MARK: - Rate me
     static func RateMe() {
-        let appURL = NSURL(string: "https://itunes.apple.com/app/viewContentsUserReviews?id=1078961574")
-        if UIApplication.sharedApplication().canOpenURL(appURL!) {
-            UIApplication.sharedApplication().openURL(appURL!)
+        let appURL = URL(string: "https://itunes.apple.com/app/viewContentsUserReviews?id=1078961574")
+        if UIApplication.shared().canOpenURL(appURL!) {
+            UIApplication.shared().openURL(appURL!)
         }
     }
     
@@ -80,18 +80,18 @@ class OtherSettingView: UIStackView, MFMailComposeViewControllerDelegate, SFSafa
             picker?.setToRecipients(["iAugux@gmail.com"])
             picker?.setSubject("Phonetic Contacts Feedback")
             
-            if let version = NSBundle.mainBundle().objectForInfoDictionaryKey("CFBundleShortVersionString") as? String {
-                if let build = NSBundle.mainBundle().objectForInfoDictionaryKey(kCFBundleVersionKey as String) as? String {
-                    let info = "# V \(version) (\(build)), \(Device.version()), iOS \(UIDevice.currentDevice().systemVersion) #\n"
+            if let version = Bundle.main.objectForInfoDictionaryKey("CFBundleShortVersionString") as? String {
+                if let build = Bundle.main.objectForInfoDictionaryKey(kCFBundleVersionKey as String) as? String {
+                    let info = "# V \(version) (\(build)), \(Device.version()), iOS \(UIDevice.current().systemVersion) #\n"
                     picker?.setMessageBody(info, isHTML: true)
-                    UIApplication.topMostViewController?.presentViewController(picker!, animated: true, completion: nil)
+                    UIApplication.topMostViewController?.present(picker!, animated: true, completion: nil)
                 }
             }
         }
     }
     
-    func mailComposeController(controller: MFMailComposeViewController, didFinishWithResult result: MFMailComposeResult, error: NSError?) {
-        controller.dismissViewControllerAnimated(true) { () -> Void in
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: NSError?) {
+        controller.dismiss(animated: true) { () -> Void in
             self.picker = nil
         }
     }

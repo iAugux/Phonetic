@@ -8,54 +8,51 @@
 import Foundation
 
 
-
-public typealias CompletionHandler = () -> ()
+public typealias Closure = () -> ()
 
 
 class Utils {
     
-    class func documentPath() -> String {
-        return NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true).first!
+    class var documentPath: String {
+        return NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
     }
     
-    class func appGroupDocumentPath(appGroupId: String) -> String {
-        let url = NSFileManager.defaultManager().containerURLForSecurityApplicationGroupIdentifier(appGroupId)
-        let path = url!.absoluteString.stringByReplacingOccurrencesOfString("file:", withString: "", options: .LiteralSearch, range: nil)
+    class func documentPathWithFile(_ name: String) -> String {
+        return (documentPath as NSString).appendingPathComponent(name)
+    }
+    
+    class func appGroupDocumentPath(_ appGroupId: String) -> String? {
+        let url = FileManager.default.containerURLForSecurityApplicationGroupIdentifier(appGroupId)
+        let path = url?.absoluteString?.replacingOccurrences(of: "file:", with: "", options: .literal, range: nil)
         return path
-
     }
     
 }
 
-
-// MARK: - GCD
-
-var GlobalMainQueue: dispatch_queue_t {
-    return dispatch_get_main_queue()
+var GlobalMainQueue: DispatchQueue {
+    return DispatchQueue.main
 }
 
-var GlobalUserInteractiveQueue: dispatch_queue_t {
-    return dispatch_get_global_queue(Int(QOS_CLASS_USER_INTERACTIVE.rawValue), 0)
+var GlobalUserInteractiveQueue: DispatchQueue {
+    return DispatchQueue.global(attributes: DispatchQueue.GlobalAttributes(rawValue: UInt64(DispatchQueueAttributes.qosUserInteractive.rawValue)))
 }
 
-var GlobalUserInitiatedQueue: dispatch_queue_t {
-    return dispatch_get_global_queue(Int(QOS_CLASS_USER_INITIATED.rawValue), 0)
+var GlobalUserInitiatedQueue: DispatchQueue {
+    return DispatchQueue.global(attributes: DispatchQueue.GlobalAttributes(rawValue: UInt64(DispatchQueueAttributes.qosUserInitiated.rawValue)))
 }
 
-var GlobalUtilityQueue: dispatch_queue_t {
-    return dispatch_get_global_queue(Int(QOS_CLASS_UTILITY.rawValue), 0)
+var GlobalUtilityQueue: DispatchQueue {
+    return DispatchQueue.global(attributes: DispatchQueue.GlobalAttributes(rawValue: UInt64(DispatchQueueAttributes.qosUtility.rawValue)))
 }
 
-var GlobalBackgroundQueue: dispatch_queue_t {
-    return dispatch_get_global_queue(Int(QOS_CLASS_BACKGROUND.rawValue), 0)
+var GlobalBackgroundQueue: DispatchQueue {
+    return DispatchQueue.global(attributes: DispatchQueue.GlobalAttributes(rawValue: UInt64(DispatchQueueAttributes.qosBackground.rawValue)))
 }
 
 // MARK: - Delay
 
-func executeAfterDelay(seconds: Double, completion: (() -> Void)) {
-    let delayInSeconds: Double = seconds
-    let popTime = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(NSEC_PER_SEC) * delayInSeconds))
-    dispatch_after(popTime, dispatch_get_main_queue(), {
-        completion()
-    })
+func executeAfterDelay(_ seconds: Double, closure: (() -> Void)) {
+    DispatchQueue.main.after(when: .now() + seconds) {
+        closure()
+    }
 }

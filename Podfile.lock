@@ -1,16 +1,25 @@
 PODS:
   - Device (1.0.1)
-  - KDCircularProgress (1.4.0)
-  - SnapKit (0.20.0)
+  - SnapKit (0.40.0.beta2)
 
 DEPENDENCIES:
   - Device
-  - KDCircularProgress (~> 1.4.0)
-  - SnapKit
+  - SnapKit (from `https://github.com/SnapKit/SnapKit`, branch `feature/0.40.0`)
+
+EXTERNAL SOURCES:
+  SnapKit:
+    :branch: feature/0.40.0
+    :git: https://github.com/SnapKit/SnapKit
+
+CHECKOUT OPTIONS:
+  SnapKit:
+    :commit: 4f47f13902c0a8bf8e2aaefbbfefe534172a0e3d
+    :git: https://github.com/SnapKit/SnapKit
 
 SPEC CHECKSUMS:
   Device: 7ed5b87db148886e8c3cbcdde5dc997baddbe10b
-  KDCircularProgress: f5770bbd83da909bf6cd96c2dea0b8bae45ec774
-  SnapKit: 5fce3c1bbbf1fbd31de9aa92f33eb9fa03f15650
+  SnapKit: 405236dfbf278b9d545db29f3950ae7e7f14f348
 
-COCOAPODS: 0.39.0
+PODFILE CHECKSUM: 2e2cd362be28b92d71dd7fafda7dcde618521ef5
+
+COCOAPODS: 1.0.1

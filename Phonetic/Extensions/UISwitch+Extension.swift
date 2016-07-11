@@ -10,24 +10,24 @@ import UIKit
 
 extension UISwitch {
     
-    func shouldSwitch(userDefaultsKey: String, defaultBool: Bool) {
+    func shouldSwitch(_ userDefaultsKey: String, defaultBool: Bool) {
         var isOn: Bool
-        if NSUserDefaults.standardUserDefaults().valueForKey(userDefaultsKey) == nil {
+        if UserDefaults.standard.value(forKey: userDefaultsKey) == nil {
             isOn = defaultBool
         } else {
-            isOn = NSUserDefaults.standardUserDefaults().boolForKey(userDefaultsKey)
+            isOn = UserDefaults.standard.bool(forKey: userDefaultsKey)
         }
-        self.on = isOn
+        self.isOn = isOn
     }
     
-    func shouldSwitch(userDefaults: NSUserDefaults, userDefaultsKey: String, defaultBool: Bool) {
+    func shouldSwitch(_ userDefaults: UserDefaults, userDefaultsKey: String, defaultBool: Bool) {
         var isOn: Bool
-        if userDefaults.valueForKey(userDefaultsKey) == nil {
+        if userDefaults.value(forKey: userDefaultsKey) == nil {
             isOn = defaultBool
         } else {
-            isOn = userDefaults.boolForKey(userDefaultsKey)
+            isOn = userDefaults.bool(forKey: userDefaultsKey)
         }
-        self.on = isOn
+        self.isOn = isOn
     }
     
 }

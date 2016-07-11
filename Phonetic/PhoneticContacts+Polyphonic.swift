@@ -12,13 +12,13 @@ import Foundation
 // MARK: - Fix polyphonic characters
 extension PhoneticContacts {
     
-    func manaullyFixPolyphonicCharacters(str: String) -> String {
+    func manaullyFixPolyphonicCharacters(_ str: String) -> String {
         
         var tempString = str
         
         for element in PolyphonicChar.all {
-            if element.on && tempString.containsString(element.character) {
-                tempString = tempString.stringByReplacingOccurrencesOfString(element.character, withString: element.replacement)
+            if element.on && tempString.contains(element.character) {
+                tempString = tempString.replacingOccurrences(of: element.character, with: element.replacement)
             }
         }
         

@@ -13,31 +13,31 @@ class AlertController {
     
     private static let ok = NSLocalizedString("OK", comment: "")
     
-    class func alert(title title: String = "", message: String = "", actionTitle: String = ok, completionHandler: (() -> Void)?) {
+    class func alert(title: String = "", message: String = "", actionTitle: String = ok, completionHandler: (() -> Void)?) {
         AlertController.alert(title: title, message: message, actionTitle: actionTitle, addCancelAction: false, completionHandler: completionHandler, canceledHandler: nil)
        }
     
-    class func alertWithCancelAction(title title: String = "", message: String = "", actionTitle: String = ok, completionHandler: (() -> Void)?, canceledHandler: (() -> Void)?) {
+    class func alertWithCancelAction(title: String = "", message: String = "", actionTitle: String = ok, completionHandler: (() -> Void)?, canceledHandler: (() -> Void)?) {
         AlertController.alert(title: title, message: message, actionTitle: actionTitle, addCancelAction: true, completionHandler: completionHandler, canceledHandler: canceledHandler)
     }
     
     
     
-    class func multiAlertsWithOptions(multiItemsOfInfo: [String], completionHandler: (() -> Void)?) {
+    class func multiAlertsWithOptions(_ multiItemsOfInfo: [String], completionHandler: (() -> Void)?) {
         alertWithOptions(multiItemsOfInfo, completionHandler: completionHandler)
     }
     
-    private class func alert(title title: String = "", message: String = "", actionTitle: String = ok, addCancelAction: Bool, completionHandler: (() -> Void)?, canceledHandler: (() -> Void)?) {
-        let okAction = UIAlertAction(title: actionTitle, style: .Default) { (_) -> Void in
+    private class func alert(title: String = "", message: String = "", actionTitle: String = ok, addCancelAction: Bool, completionHandler: (() -> Void)?, canceledHandler: (() -> Void)?) {
+        let okAction = UIAlertAction(title: actionTitle, style: .default) { (_) -> Void in
             if let completion = completionHandler {
                 completion()
             }
         }
         
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
         
         if addCancelAction {
-            let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .Cancel) { (_) -> Void in
+            let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel) { (_) -> Void in
                 if let handler = canceledHandler {
                     handler()
                 }
@@ -48,20 +48,20 @@ class AlertController {
         
         alertController.addAction(okAction)
         
-        UIApplication.topMostViewController?.presentViewController(alertController, animated: true, completion: nil)
+        UIApplication.topMostViewController?.present(alertController, animated: true, completion: nil)
     }
     
-    private class func alertWithOptions(multiItemsOfInfo: [String], completionHandler: (() -> Void)?) {
-        dispatch_async(dispatch_get_main_queue()) { () -> Void in
+    private class func alertWithOptions(_ multiItemsOfInfo: [String], completionHandler: (() -> Void)?) {
+        DispatchQueue.main.async { () -> Void in
             
             var tempInfoArray = multiItemsOfInfo
             
             
-            let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: { (_) -> Void in
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: { (_) -> Void in
                 tempInfoArray.removeAll()
             })
             
-            let okAction = UIAlertAction(title: "OK", style: .Default, handler: { (_) -> Void in
+            let okAction = UIAlertAction(title: "OK", style: .default, handler: { (_) -> Void in
                 
                 tempInfoArray.removeFirst()
                 
@@ -80,10 +80,10 @@ class AlertController {
             })
             guard tempInfoArray.count > 0 else { return }
             
-            let alertController = UIAlertController(title: nil, message: tempInfoArray.first, preferredStyle: .Alert)
+            let alertController = UIAlertController(title: nil, message: tempInfoArray.first, preferredStyle: .alert)
             alertController.addAction(cancelAction)
             alertController.addAction(okAction)
-            UIApplication.topMostViewController?.presentViewController(alertController, animated: true, completion: nil)
+            UIApplication.topMostViewController?.present(alertController, animated: true, completion: nil)
         }
     }
     

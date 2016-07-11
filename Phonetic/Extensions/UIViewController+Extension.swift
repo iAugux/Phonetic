@@ -11,15 +11,15 @@ import UIKit
 extension UIViewController {
     
     func statusBarFrame() -> CGRect {
-        return view.window?.convertRect(UIApplication.sharedApplication().statusBarFrame, toView: view) ?? CGRectZero
+        return view.window?.convert(UIApplication.shared().statusBarFrame, to: view) ?? CGRect.zero
     }
     
     func topBarHeight() -> CGFloat {
         var navBarHeight: CGFloat {
             guard let bar = navigationController?.navigationBar else { return 0 }
-            return view.window?.convertRect(bar.frame, toView: view).height ?? 0
+            return view.window?.convert(bar.frame, to: view).height ?? 0
         }
-        let statusBarHeight = view.window?.convertRect(UIApplication.sharedApplication().statusBarFrame, toView: view).height ?? 0
+        let statusBarHeight = view.window?.convert(UIApplication.shared().statusBarFrame, to: view).height ?? 0
         return statusBarHeight + navBarHeight
     }
     
@@ -30,32 +30,32 @@ extension UIViewController {
     */
     func topBarHeightWhenTemporaryDisappear() -> CGFloat {
         let key = "kAUSTopBarHeightWhenTemporaryDisappear"
-        if NSUserDefaults.standardUserDefaults().valueForKey(key) == nil {
-            NSUserDefaults.standardUserDefaults().setValue(topBarHeight(), forKey: key)
+        if UserDefaults.standard.value(forKey: key) == nil {
+            UserDefaults.standard.setValue(topBarHeight(), forKey: key)
         }
-        else if topBarHeight() != 0 && topBarHeight() != NSUserDefaults.standardUserDefaults().valueForKey(key) as! CGFloat {
-            NSUserDefaults.standardUserDefaults().setValue(topBarHeight(), forKey: key)
+        else if topBarHeight() != 0 && topBarHeight() != UserDefaults.standard.value(forKey: key) as! CGFloat {
+            UserDefaults.standard.setValue(topBarHeight(), forKey: key)
         }
-        return NSUserDefaults.standardUserDefaults().valueForKey(key) as! CGFloat
+        return UserDefaults.standard.value(forKey: key) as! CGFloat
     }
     
 }
 
 // MARK: - keyboard notification
 extension UIViewController {
-    func keyboardWillChangeFrameNotification(notification: NSNotification, scrollBottomConstant: NSLayoutConstraint) {
-        let duration = notification.userInfo?[UIKeyboardAnimationDurationUserInfoKey] as! NSNumber
-        let curve = notification.userInfo?[UIKeyboardAnimationCurveUserInfoKey] as! NSNumber
-        let keyboardBeginFrame = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as! NSValue).CGRectValue()
-        let keyboardEndFrame = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as! NSValue).CGRectValue()
+    func keyboardWillChangeFrameNotification(_ notification: Notification, scrollBottomConstant: NSLayoutConstraint) {
+        let duration = (notification as NSNotification).userInfo?[UIKeyboardAnimationDurationUserInfoKey] as! NSNumber
+        let curve = (notification as NSNotification).userInfo?[UIKeyboardAnimationCurveUserInfoKey] as! NSNumber
+        let keyboardBeginFrame = ((notification as NSNotification).userInfo?[UIKeyboardFrameBeginUserInfoKey] as! NSValue).cgRectValue()
+        let keyboardEndFrame = ((notification as NSNotification).userInfo?[UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue()
         
-        let screenHeight = UIScreen.mainScreen().bounds.height
+        let screenHeight = UIScreen.main().bounds.height
         let isBeginOrEnd = keyboardBeginFrame.origin.y == screenHeight || keyboardEndFrame.origin.y == screenHeight
         let heightOffset = keyboardBeginFrame.origin.y - keyboardEndFrame.origin.y - (isBeginOrEnd ? bottomLayoutGuide.length : 0)
         
-        UIView.animateWithDuration(duration.doubleValue,
+        UIView.animate(withDuration: duration.doubleValue,
             delay: 0,
-            options: UIViewAnimationOptions(rawValue: UInt(curve.integerValue << 16)),
+            options: UIViewAnimationOptions(rawValue: UInt(curve.intValue << 16)),
             animations: { () in
                 scrollBottomConstant.constant = scrollBottomConstant.constant + heightOffset
                 self.view.layoutIfNeeded()
@@ -70,11 +70,11 @@ extension UIViewController {
 extension UIViewController {
 
     func dismissViewController() {
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
     }
     
     func dismissViewControllerWithoutAnimation() {
-        self.dismissViewControllerAnimated(false, completion: nil)
+        self.dismiss(animated: false, completion: nil)
     }
     
 }

@@ -13,12 +13,12 @@ import SnapKit
 extension ViewController: UIPopoverPresentationControllerDelegate {
     
     internal func popoverInfoViewController() {
-        popoverPresentViewController(PopoverButton.Info)
+        popoverPresentViewController(PopoverButton.info)
         hideLabels(true)
     }
     
     internal func popoverSettingViewController() {
-        popoverPresentViewController(PopoverButton.Setting)
+        popoverPresentViewController(PopoverButton.setting)
         hideLabels(true)
     }
     
@@ -26,9 +26,9 @@ extension ViewController: UIPopoverPresentationControllerDelegate {
         hideLabels(false)
     }
     
-    private func hideLabels(hidden: Bool) {
+    func hideLabels(_ hidden: Bool) {
         if let label1 = view.viewWithTag(998), label2 = view.viewWithTag(999) {
-            UIView.animateWithDuration(0.6, delay: 0.1, options: .CurveEaseInOut, animations: { () -> Void in
+            UIView.animate(withDuration: 0.6, delay: 0.1, options: UIViewAnimationOptions(), animations: { () -> Void in
                 label1.alpha = hidden ? 0 : 1
                 label2.alpha = hidden ? 0 : 1
                 
@@ -37,8 +37,8 @@ extension ViewController: UIPopoverPresentationControllerDelegate {
     }
     
     private enum PopoverButton {
-        case Info
-        case Setting
+        case info
+        case setting
     }
 
     private struct Popover {
@@ -50,14 +50,14 @@ extension ViewController: UIPopoverPresentationControllerDelegate {
         private static let preferredContentHeight: CGFloat = 260
         private static let preferredMutableContentHeight = min(345, UIScreen.screenHeight() * 0.66)
         
-        static let preferredContentSize = CGSizeMake(preferredContentWith, preferredContentHeight)
-        static let preferredMutableContentSize = CGSizeMake(preferredContentWith, preferredMutableContentHeight)
+        static let preferredContentSize = CGSize(width: preferredContentWith, height: preferredContentHeight)
+        static let preferredMutableContentSize = CGSize(width: preferredContentWith, height: preferredMutableContentHeight)
     }
     
     // MARK: - fix size of popover view
-    override func didRotateFromInterfaceOrientation(fromInterfaceOrientation: UIInterfaceOrientation) {
+    override func didRotate(from fromInterfaceOrientation: UIInterfaceOrientation) {
                 
-        if Popover.currentButton == .Info {
+        if Popover.currentButton == .info {
             
             // fix popoverContent's size
             Popover.popoverContent?.preferredContentSize = Popover.preferredContentSize
@@ -74,26 +74,26 @@ extension ViewController: UIPopoverPresentationControllerDelegate {
     }
     
     // MARK: - configure popover controller
-    private func popoverPresentViewController(button: PopoverButton) {
+    private func popoverPresentViewController(_ button: PopoverButton) {
         var rect: CGRect
         var title: String
         
         switch button {
-        case .Info:
-            guard let infoVC = UIStoryboard.Main.instantiateViewControllerWithIdentifier(String(InfoViewController)) as? InfoViewController else { return }
+        case .info:
+            guard let infoVC = UIStoryboard.Main.instantiateViewController(withIdentifier: String(InfoViewController.self)) as? InfoViewController else { return }
             Popover.popoverContent = infoVC
             Popover.popoverContent!.preferredContentSize = Popover.preferredContentSize
             
-            Popover.currentButton = .Info
+            Popover.currentButton = .info
             title = NSLocalizedString("About", comment: "navigation item title - About")
             rect = infoButton.frame
             
-        case .Setting:
-            guard let settingVC = UIStoryboard.Main.instantiateViewControllerWithIdentifier(String(SettingViewController)) as? SettingViewController else { return }
+        case .setting:
+            guard let settingVC = UIStoryboard.Main.instantiateViewController(withIdentifier: String(SettingViewController.self)) as? SettingViewController else { return }
             Popover.popoverContent = settingVC
             Popover.popoverContent!.preferredContentSize = Popover.preferredMutableContentSize
             
-            Popover.currentButton = .Setting
+            Popover.currentButton = .setting
             title = NSLocalizedString("Settings", comment: "navigation item title - Settings")
             rect = settingButton.frame
         }
@@ -103,7 +103,7 @@ extension ViewController: UIPopoverPresentationControllerDelegate {
             let nav = UINavigationController(rootViewController: popoverContent)
             nav.completelyTransparentBar()
             nav.hidesBarsOnSwipe = true
-            nav.modalPresentationStyle = .Popover
+            nav.modalPresentationStyle = .popover
             Popover.popover = nav.popoverPresentationController
             Popover.popover?.backgroundColor = kNavigationBarBackgroundColor
             Popover.popover?.delegate = self
@@ -114,37 +114,37 @@ extension ViewController: UIPopoverPresentationControllerDelegate {
             rect.origin.y += 5
             Popover.popover?.sourceRect = rect
             
-            presentViewController(nav, animated: true, completion: nil)
+            present(nav, animated: true, completion: nil)
         }
     }
     
-    private func configureCustomNavigationTitle(nav: UINavigationController, title: String?) {
+    private func configureCustomNavigationTitle(_ nav: UINavigationController, title: String?) {
         
         guard title != nil else { return }
         
         let titleLabel              = UILabel()
         titleLabel.text             = title
-        titleLabel.textAlignment    = .Center
-        titleLabel.font             = UIFont.boldSystemFontOfSize(17.0)
-        titleLabel.textColor        = UIColor.whiteColor()
+        titleLabel.textAlignment    = .center
+        titleLabel.font             = UIFont.boldSystemFont(ofSize: 17.0)
+        titleLabel.textColor        = UIColor.white()
         titleLabel.sizeToFit()
         nav.navigationBar.addSubview(titleLabel)
-        titleLabel.snp_makeConstraints { (make) in
-            make.center.equalTo(nav.navigationBar)
+        titleLabel.snp.makeConstraints { (make) in
+            make.centerX.centerY.equalTo(nav.navigationBar)
         }
     }
     
     // MARK: - UIAdaptivePresentationControllerDelegate
-    func adaptivePresentationStyleForPresentationController(controller: UIPresentationController) -> UIModalPresentationStyle {
-        return .None
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        return .none
     }
     
     // MARK: - for iPhone 6(s) Plus
-    func adaptivePresentationStyleForPresentationController(controller: UIPresentationController, traitCollection: UITraitCollection) -> UIModalPresentationStyle {
-        return .None
+    func adaptivePresentationStyle(for controller: UIPresentationController, traitCollection: UITraitCollection) -> UIModalPresentationStyle {
+        return .none
     }
     
-    override func overrideTraitCollectionForChildViewController(childViewController: UIViewController) -> UITraitCollection? {
+    override func overrideTraitCollection(forChildViewController childViewController: UIViewController) -> UITraitCollection? {
         // disable default UITraitCollection, fix size of popover view on iPhone 6(s) Plus.
         return nil
     }

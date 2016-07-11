@@ -14,7 +14,7 @@ extension ViewController {
     
     func alertToChooseQuickSearchKeyIfNeeded() {
         
-        guard CNContactStore.authorizationStatusForEntityType(.Contacts) == .Authorized else { return }
+        guard CNContactStore.authorizationStatus(for: .contacts) == .authorized else { return }
         
         UIApplication.initializeInTheFirstTime { () -> Void in
             
@@ -24,26 +24,26 @@ extension ViewController {
             let laterActionTitle = NSLocalizedString("I'll Set it Later", comment: "alert action title")
             let cancelActionTitle = NSLocalizedString("Already Done. Dismiss", comment: "alert action title")
         
-            let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
-            let okAction = UIAlertAction(title: okActionTitle, style: .Default, handler: { (_) -> Void in
+            let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+            let okAction = UIAlertAction(title: okActionTitle, style: .default, handler: { (_) -> Void in
                 self.goSetting()
             })
-            let laterAction = UIAlertAction(title: laterActionTitle,style: .Default, handler: nil)
-            let cancelAction = UIAlertAction(title: cancelActionTitle, style: .Cancel, handler: nil)
+            let laterAction = UIAlertAction(title: laterActionTitle,style: .default, handler: nil)
+            let cancelAction = UIAlertAction(title: cancelActionTitle, style: .cancel, handler: nil)
 
             alertController.addAction(okAction)
             alertController.addAction(cancelAction)
             alertController.addAction(laterAction)
-            UIApplication.topMostViewController?.presentViewController(alertController, animated: true, completion: nil)
+            UIApplication.topMostViewController?.present(alertController, animated: true, completion: nil)
         }
 
     }
     
     private func goSetting() {
-        performSegueWithIdentifier("rootVCPresentAdditionalVC", sender: self)
+        performSegue(withIdentifier: "rootVCPresentAdditionalVC", sender: self)
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "rootVCPresentAdditionalVC" {
             guard let destinationVC = segue.destinationViewController as? SettingsNavigationController else { return }
             destinationVC.popoverPresentationController?.sourceRect = settingButton.bounds

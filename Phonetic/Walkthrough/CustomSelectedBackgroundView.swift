@@ -11,14 +11,14 @@ import UIKit
 
 class CustomSelectedBackgroundView: UIView {
 
-    override func drawRect(rect: CGRect) {
+    override func draw(_ rect: CGRect) {
         let aRef = UIGraphicsGetCurrentContext()
-        CGContextSaveGState(aRef)
+        aRef?.saveGState()
         let bezierPath = UIBezierPath(roundedRect: rect, cornerRadius: 8.0)
         bezierPath.lineWidth = 8.0
-        UIColor.whiteColor().setFill()
+        UIColor.white().setFill()
         bezierPath.fill()
-        CGContextRestoreGState(aRef)
+        aRef?.restoreGState()
         
     }
 }

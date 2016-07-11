@@ -127,8 +127,8 @@ class Polyphonic {
     
     var on: Bool {
         get {
-            guard NSUserDefaults.standardUserDefaults().valueForKey(key) != nil else { return true }
-            return NSUserDefaults.standardUserDefaults().boolForKey(key)
+            guard UserDefaults.standard.value(forKey: key) != nil else { return true }
+            return UserDefaults.standard.bool(forKey: key)
         }
     }
     
@@ -142,8 +142,8 @@ class Polyphonic {
     
 }
 
-private func prefixLetter(str: String) -> String {
+private func prefixLetter(_ str: String) -> String {
     let str = str as NSString
     
-    return str.length > 0 ? str.substringToIndex(1).uppercaseString : ""
+    return str.length > 0 ? str.substring(to: 1).uppercased() : ""
 }

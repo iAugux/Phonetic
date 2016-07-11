@@ -35,7 +35,7 @@ extension PhoneticContacts {
         return keys
     }
     
-    func removePhoneticKeysIfNeeded(mutableContact: CNMutableContact) {
+    func removePhoneticKeysIfNeeded(_ mutableContact: CNMutableContact) {
         removePhoneticNicknameIfNeeded(mutableContact)
         removePhoneticMiddleNameIfNeeded(mutableContact)
         removePhoneticDepartmentKeysIfNeeded(mutableContact)
@@ -47,54 +47,54 @@ extension PhoneticContacts {
         removeInstantMessageAddressesKeysIfNeeded(mutableContact)
     }
     
-    private func removePhoneticNicknameIfNeeded(mutableContact: CNMutableContact) {
+    private func removePhoneticNicknameIfNeeded(_ mutableContact: CNMutableContact) {
         removePhoneticKeysIfNeeded(mutableContact, shouldClean: shouldCleanPhoneticNicknameKeys, key: CNContactNicknameKey)
     }
     
-    private func removePhoneticMiddleNameIfNeeded(mutableContact: CNMutableContact) {
+    private func removePhoneticMiddleNameIfNeeded(_ mutableContact: CNMutableContact) {
         removePhoneticKeysIfNeeded(mutableContact, shouldClean: shouldCleanPhoneticMiddleNameKeys, key: CNContactPhoneticMiddleNameKey)
     }
     
-    private func removePhoneticDepartmentKeysIfNeeded(mutableContact: CNMutableContact) {
+    private func removePhoneticDepartmentKeysIfNeeded(_ mutableContact: CNMutableContact) {
         removePhoneticKeysIfNeeded(mutableContact, shouldClean: shouldCleanPhoneticDepartmentKeys, key: CNContactDepartmentNameKey)
     }
     
-    private func removePhoneticCompanyKeysIfNeeded(mutableContact: CNMutableContact) {
+    private func removePhoneticCompanyKeysIfNeeded(_ mutableContact: CNMutableContact) {
         removePhoneticKeysIfNeeded(mutableContact, shouldClean: shouldCleanPhoneticCompanyKeys, key: CNContactOrganizationNameKey)
     }
     
-    private func removePhoneticJobTitleKeysIfNeeded(mutableContact: CNMutableContact) {
+    private func removePhoneticJobTitleKeysIfNeeded(_ mutableContact: CNMutableContact) {
         removePhoneticKeysIfNeeded(mutableContact, shouldClean: shouldCleanPhoneticJobTitleKeys, key: CNContactJobTitleKey)
     }
     
-    private func removePhoneticPrefixKeysIfNeeded(mutableContact: CNMutableContact) {
+    private func removePhoneticPrefixKeysIfNeeded(_ mutableContact: CNMutableContact) {
         removePhoneticKeysIfNeeded(mutableContact, shouldClean: shouldCleanPhoneticPrefixKeys, key: CNContactNamePrefixKey)
     }
     
-    private func removePhoneticSuffixKeysIfNeeded(mutableContact: CNMutableContact) {
+    private func removePhoneticSuffixKeysIfNeeded(_ mutableContact: CNMutableContact) {
         removePhoneticKeysIfNeeded(mutableContact, shouldClean: shouldCleanPhoneticSuffixKeys, key: CNContactNameSuffixKey)
     }
     
-    private func removeSocialProfilesKeysIfNeeded(mutableContact: CNMutableContact) {
+    private func removeSocialProfilesKeysIfNeeded(_ mutableContact: CNMutableContact) {
         removeKeysArrayIfNeeded(mutableContact, shouldClean: shouldCleanSocialProfilesKeys, key: CNContactSocialProfilesKey)
     }
     
-    private func removeInstantMessageAddressesKeysIfNeeded(mutableContact: CNMutableContact) {
+    private func removeInstantMessageAddressesKeysIfNeeded(_ mutableContact: CNMutableContact) {
         removeKeysArrayIfNeeded(mutableContact, shouldClean: shouldCleanInstantMessageAddressesKeys, key: CNContactInstantMessageAddressesKey)
     }
     
-    private func removePhoneticKeysIfNeeded(mutableContact: CNMutableContact, shouldClean: Bool, key: String) {
+    private func removePhoneticKeysIfNeeded(_ mutableContact: CNMutableContact, shouldClean: Bool, key: String) {
         
         guard shouldClean else { return }
         
-        if let _ = mutableContact.valueForKey(key) as? String {
+        if let _ = mutableContact.value(forKey: key) as? String {
             mutableContact.setValue("", forKey: key)
         }
     }
     
-    private func removeKeysArrayIfNeeded(mutableContact: CNMutableContact, shouldClean: Bool, key: String) {
+    private func removeKeysArrayIfNeeded(_ mutableContact: CNMutableContact, shouldClean: Bool, key: String) {
         
-        guard shouldClean, let _ = mutableContact.valueForKey(key) as? NSArray else { return }
+        guard shouldClean, let _ = mutableContact.value(forKey: key) as? NSArray else { return }
         
         mutableContact.setValue([], forKey: key)
     }
@@ -142,7 +142,7 @@ extension PhoneticContacts {
     }
     
     // MARK: -
-    private func shouldCleanPhoneticKey(key: String, defaultKeyValue: Bool) -> Bool {
+    private func shouldCleanPhoneticKey(_ key: String, defaultKeyValue: Bool) -> Bool {
         
         guard masterSwitchStatusIsOn else { return false }
 
@@ -189,7 +189,7 @@ extension PhoneticContacts {
 
 extension String {
     
-    private mutating func append(str: String) {
+    private mutating func append(_ str: String) {
         self += str + "\n\n"
     }
 }

@@ -12,7 +12,7 @@ import UIKit
 
 extension AppDelegate {
     
-    func application(application: UIApplication, performActionForShortcutItem shortcutItem: UIApplicationShortcutItem, completionHandler: (Bool) -> Void) {
+    @objc(application:performActionForShortcutItem:completionHandler:) func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: (Bool) -> Void) {
         
         // react to shortcut item selections
         debugPrint("A shortcut item was pressed. It was ", shortcutItem.localizedTitle)
@@ -25,7 +25,7 @@ extension AppDelegate {
         
     }
     
-    private enum Type: String {
+    private enum `Type`: String {
         case Excute
         case Rollback
     }
@@ -35,7 +35,7 @@ extension AppDelegate {
     
     func createShortcutItemsWithIcons() {
         
-        let executeIcon   = UIApplicationShortcutIcon(type: .Add)
+        let executeIcon   = UIApplicationShortcutIcon(type: .add)
         let rollbackIcon = UIApplicationShortcutIcon(templateImageName: "rollback_3d")
         
         let executeItemTitle = NSLocalizedString("Add Phonetic Keys", comment: "")
@@ -48,7 +48,7 @@ extension AppDelegate {
         // add all items to an array
         let items = [executeItem, rollbackItem]
         
-        UIApplication.sharedApplication().shortcutItems = items
+        UIApplication.shared().shortcutItems = items
     }
     
     

@@ -21,9 +21,9 @@ class InfoViewController: UIViewController, SFSafariViewControllerDelegate {
         configureVersionLabel()
     }
     
-    override func viewDidDisappear(animated: Bool) {
+    override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        NSNotificationCenter.defaultCenter().postNotificationName(kVCWillDisappearNotification, object: nil)
+        NotificationCenter.default.post(name: Notification.Name(rawValue: kVCWillDisappearNotification), object: nil)
     }
     
     override func didReceiveMemoryWarning() {
@@ -37,8 +37,8 @@ class InfoViewController: UIViewController, SFSafariViewControllerDelegate {
     }
     
     private func configureVersionLabel() {
-        if let version = NSBundle.mainBundle().objectForInfoDictionaryKey("CFBundleShortVersionString") as? String {
-            if let build = NSBundle.mainBundle().objectForInfoDictionaryKey(kCFBundleVersionKey as String) as? String {
+        if let version = Bundle.main.objectForInfoDictionaryKey("CFBundleShortVersionString") as? String {
+            if let build = Bundle.main.objectForInfoDictionaryKey(kCFBundleVersionKey as String) as? String {
                 versionLabel.text = "Version \(version) (\(build))"
             }
         }
@@ -46,11 +46,11 @@ class InfoViewController: UIViewController, SFSafariViewControllerDelegate {
     
     func checkOnGithub() {
         
-        dismissViewControllerAnimated(true) { () -> Void in
-            let safariVC = SFSafariViewController(URL: NSURL(string: "https://github.com/iAugux/Phonetic")!)
+        dismiss(animated: true) { () -> Void in
+            let safariVC = SFSafariViewController(url: URL(string: "https://github.com/iAugux/Phonetic")!)
             safariVC.delegate = self
-            UIApplication.topMostViewController?.presentViewController(safariVC, animated: true, completion: {
-                UIApplication.sharedApplication().statusBarStyle = .Default
+            UIApplication.topMostViewController?.present(safariVC, animated: true, completion: {
+                UIApplication.shared().statusBarStyle = .default
             })
         }
     }

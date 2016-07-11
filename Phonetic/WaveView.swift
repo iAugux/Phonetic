@@ -13,10 +13,10 @@ class WaveView: UIWebView {
     override func awakeFromNib() {
         super.awakeFromNib()
 
-        let html = NSBundle.mainBundle().pathForResource("index", ofType: "html")
+        let html = Bundle.main.pathForResource("index", ofType: "html")
         do {
-            let contents = try String(contentsOfFile: html!, encoding: NSUTF8StringEncoding)
-            let url = NSURL(fileURLWithPath: html!)
+            let contents = try String(contentsOfFile: html!, encoding: String.Encoding.utf8)
+            let url = URL(fileURLWithPath: html!)
             loadHTMLString(contents, baseURL: url)
         } catch {
 

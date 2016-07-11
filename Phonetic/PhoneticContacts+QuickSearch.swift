@@ -15,11 +15,11 @@ extension PhoneticContacts {
      *  Search name by enter `WXD` (not case-sensitive), then following names will be listed by example.
      *  "王晓东"、"万孝德" ...
      */
-    func addPhoneticNameForQuickSearchIfNeeded(mutableContact: CNMutableContact, familyBrief: String, givenBrief: String) {
+    func addPhoneticNameForQuickSearchIfNeeded(_ mutableContact: CNMutableContact, familyBrief: String, givenBrief: String) {
         
         guard let CNContactQuickSearchKey = ContactKeyForQuickSearch else { return }
         
-        if let originalPhoneticName = mutableContact.valueForKey(CNContactQuickSearchKey) as? String {
+        if let originalPhoneticName = mutableContact.value(forKey: CNContactQuickSearchKey) as? String {
             
             let newPhoneticName = familyBrief + givenBrief
             
@@ -44,29 +44,29 @@ extension PhoneticContacts {
         }
         
         if enableCustomName {
-            if userDefaults.valueForKey(kQuickSearchKeyRawValue) == nil {
-                userDefaults.setInteger(QuickSearch.MiddleName.rawValue, forKey: kQuickSearchKeyRawValue)
+            if userDefaults.value(forKey: kQuickSearchKeyRawValue) == nil {
+                userDefaults.set(QuickSearch.middleName.rawValue, forKey: kQuickSearchKeyRawValue)
                 userDefaults.synchronize()
             }
             
-            if let quickSearchKey = userDefaults.valueForKey(kQuickSearchKeyRawValue) as? Int {
+            if let quickSearchKey = userDefaults.value(forKey: kQuickSearchKeyRawValue) as? Int {
                 switch quickSearchKey {
-                case QuickSearch.MiddleName.rawValue:
+                case QuickSearch.middleName.rawValue:
                     return CNContactPhoneticMiddleNameKey
                 
-                case QuickSearch.JobTitle.rawValue:
+                case QuickSearch.jobTitle.rawValue:
                     return CNContactJobTitleKey
                     
-                case QuickSearch.Department.rawValue:
+                case QuickSearch.department.rawValue:
                     return CNContactDepartmentNameKey
                     
-                case QuickSearch.Company.rawValue:
+                case QuickSearch.company.rawValue:
                     return CNContactOrganizationNameKey
                     
-                case QuickSearch.Prefix.rawValue:
+                case QuickSearch.prefix.rawValue:
                     return CNContactNamePrefixKey
                     
-                case QuickSearch.Suffix.rawValue:
+                case QuickSearch.suffix.rawValue:
                     return CNContactNameSuffixKey
                     
                 default: return nil
