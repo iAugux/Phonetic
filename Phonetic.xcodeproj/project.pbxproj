@@ -25,6 +25,7 @@
 		B121B1B11C7C899B00DC0C05 /* PolyphonicTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B121B1B01C7C899B00DC0C05 /* PolyphonicTableViewCell.swift */; };
 		B122926B1C59236F00F0F549 /* PhoneticContacts.swift in Sources */ = {isa = PBXBuildFile; fileRef = B122926A1C59236F00F0F549 /* PhoneticContacts.swift */; };
 		B12478A01C5F4D30006D1B62 /* wave.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = B124789F1C5F4D30006D1B62 /* wave.mp4 */; };
+		B125B73D1D3C7A650029AC1E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B125B73F1D3C7A650029AC1E /* InfoPlist.strings */; };
 		B140CCF01C60FAD30078657A /* ContactsGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B140CCEF1C60FAD30078657A /* ContactsGenerator.swift */; };
 		B140CCF21C610E300078657A /* AlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B140CCF11C610E300078657A /* AlertController.swift */; };
 		B15CB2A51C5B3C6C002694ED /* WaveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15CB2A41C5B3C6C002694ED /* WaveView.swift */; };
@@ -152,6 +153,9 @@
 		B121B1B01C7C899B00DC0C05 /* PolyphonicTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PolyphonicTableViewCell.swift; sourceTree = "<group>"; };
 		B122926A1C59236F00F0F549 /* PhoneticContacts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhoneticContacts.swift; sourceTree = "<group>"; };
 		B124789F1C5F4D30006D1B62 /* wave.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = wave.mp4; sourceTree = "<group>"; };
+		B125B73E1D3C7A650029AC1E /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		B125B7401D3C7A660029AC1E /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		B125B7411D3C7A670029AC1E /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		B140CCEF1C60FAD30078657A /* ContactsGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsGenerator.swift; sourceTree = "<group>"; };
 		B140CCF11C610E300078657A /* AlertController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertController.swift; sourceTree = "<group>"; };
 		B151E34F1C841A3E0023A415 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -389,6 +393,7 @@
 				B1159B761C59045800F16037 /* Assets.xcassets */,
 				B1159B781C59045800F16037 /* LaunchScreen.storyboard */,
 				B16FEB2F1C779F6400FEB550 /* Localizable.strings */,
+				B125B73F1D3C7A650029AC1E /* InfoPlist.strings */,
 				B1159B7B1C59045800F16037 /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -653,6 +658,7 @@
 				B174F6551CD636EE00458FE6 /* Walkthrough.storyboard in Resources */,
 				B12478A01C5F4D30006D1B62 /* wave.mp4 in Resources */,
 				B1159B751C59045800F16037 /* Main.storyboard in Resources */,
+				B125B73D1D3C7A650029AC1E /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -850,6 +856,16 @@
 				B1159B791C59045800F16037 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		B125B73F1D3C7A650029AC1E /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B125B73E1D3C7A650029AC1E /* Base */,
+				B125B7401D3C7A660029AC1E /* zh-Hans */,
+				B125B7411D3C7A670029AC1E /* zh-Hant */,
+			);
+			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
 		B16FEB2F1C779F6400FEB550 /* Localizable.strings */ = {

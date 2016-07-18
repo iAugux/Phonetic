@@ -1,0 +1,9 @@
+/* 
+  InfoPlist.strings
+  Phonetic
+
+  Created by Augus on 7/18/16.
+  Copyright © 2016 iAugus. All rights reserved.
+*/
+
+"NSContactsUsageDescription" = "通訊錄權限是必要的";
