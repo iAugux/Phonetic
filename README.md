@@ -1,4 +1,4 @@
-######如果你使用的是中文系统(只需要快速搜索功能), 请使用 [`Zoom Contacts`](https://github.com/iAugux/Zoom-Contacts)
+<!--######如果你使用的是中文系统(只需要快速搜索功能), 请使用 [`Zoom Contacts`](https://github.com/iAugux/Zoom-Contacts)-->
 
 # Phonetic
 ![Language](https://img.shields.io/badge/language-Swift%203-orange.svg)
