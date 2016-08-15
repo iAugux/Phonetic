@@ -40,7 +40,7 @@
 ## Requirements
 - iOS 9.0+
 - Swift 3
-- Xcode 8+
+- Xcode 8(beta5)+
 
 ## Video Preview
 ##### On Youtube
