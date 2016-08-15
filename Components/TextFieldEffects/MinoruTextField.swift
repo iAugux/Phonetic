@@ -18,7 +18,7 @@ import UIKit
      
      This property applies a color to the complete placeholder string. The default value for this property is a black color.
      */
-    @IBInspectable dynamic public var placeholderColor: UIColor = .black() {
+    @IBInspectable dynamic public var placeholderColor: UIColor = .black {
         didSet {
             updatePlaceholder()
         }
@@ -113,7 +113,7 @@ import UIKit
         placeholderLabel.sizeToFit()
         layoutPlaceholderInTextRect()
         
-        if isFirstResponder() {
+        if isFirstResponder {
             animateViewsForTextEntry()
         }
     }

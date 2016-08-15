@@ -18,8 +18,8 @@ class PolyphonicTableViewCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        nameLabel.textColor = UIColor.white()
-        polyphonicLabel.textColor = UIColor.lightGray()
+        nameLabel.textColor = UIColor.white
+        polyphonicLabel.textColor = UIColor.lightGray
         polyphonicSwitch.onTintColor = GLOBAL_CUSTOM_COLOR
     }
 

@@ -40,7 +40,7 @@ import UIKit
      
      The default value for this property is a clear color.
      */
-    @IBInspectable dynamic public var foregroundColor: UIColor = UIColor.black() {
+    @IBInspectable dynamic public var foregroundColor: UIColor = UIColor.black {
         didSet {
             updateForeground()
         }
@@ -120,7 +120,7 @@ import UIKit
         placeholderLabel.sizeToFit()
         layoutPlaceholderInTextRect()
         
-        if isFirstResponder() || text!.isNotEmpty {
+        if isFirstResponder || text!.isNotEmpty {
             animateViewsForTextEntry()
         }
     }
@@ -167,8 +167,8 @@ import UIKit
         var newPoint:CGPoint = CGPoint(x: view.bounds.size.width * anchorPoint.x, y: view.bounds.size.height * anchorPoint.y)
         var oldPoint:CGPoint = CGPoint(x: view.bounds.size.width * view.layer.anchorPoint.x, y: view.bounds.size.height * view.layer.anchorPoint.y)
         
-        newPoint = newPoint.apply(transform: view.transform)
-        oldPoint = oldPoint.apply(transform: view.transform)
+        newPoint = newPoint.applying(view.transform)
+        oldPoint = oldPoint.applying(view.transform)
         
         var position = view.layer.position
         

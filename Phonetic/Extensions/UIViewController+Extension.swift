@@ -11,7 +11,7 @@ import UIKit
 extension UIViewController {
     
     func statusBarFrame() -> CGRect {
-        return view.window?.convert(UIApplication.shared().statusBarFrame, to: view) ?? CGRect.zero
+        return view.window?.convert(UIApplication.shared.statusBarFrame, to: view) ?? CGRect.zero
     }
     
     func topBarHeight() -> CGFloat {
@@ -19,7 +19,7 @@ extension UIViewController {
             guard let bar = navigationController?.navigationBar else { return 0 }
             return view.window?.convert(bar.frame, to: view).height ?? 0
         }
-        let statusBarHeight = view.window?.convert(UIApplication.shared().statusBarFrame, to: view).height ?? 0
+        let statusBarHeight = view.window?.convert(UIApplication.shared.statusBarFrame, to: view).height ?? 0
         return statusBarHeight + navBarHeight
     }
     
@@ -46,10 +46,10 @@ extension UIViewController {
     func keyboardWillChangeFrameNotification(_ notification: Notification, scrollBottomConstant: NSLayoutConstraint) {
         let duration = (notification as NSNotification).userInfo?[UIKeyboardAnimationDurationUserInfoKey] as! NSNumber
         let curve = (notification as NSNotification).userInfo?[UIKeyboardAnimationCurveUserInfoKey] as! NSNumber
-        let keyboardBeginFrame = ((notification as NSNotification).userInfo?[UIKeyboardFrameBeginUserInfoKey] as! NSValue).cgRectValue()
-        let keyboardEndFrame = ((notification as NSNotification).userInfo?[UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue()
+        let keyboardBeginFrame = ((notification as NSNotification).userInfo?[UIKeyboardFrameBeginUserInfoKey] as! NSValue).cgRectValue
+        let keyboardEndFrame = ((notification as NSNotification).userInfo?[UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
         
-        let screenHeight = UIScreen.main().bounds.height
+        let screenHeight = UIScreen.main.bounds.height
         let isBeginOrEnd = keyboardBeginFrame.origin.y == screenHeight || keyboardEndFrame.origin.y == screenHeight
         let heightOffset = keyboardBeginFrame.origin.y - keyboardEndFrame.origin.y - (isBeginOrEnd ? bottomLayoutGuide.length : 0)
         

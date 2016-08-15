@@ -10,7 +10,7 @@ import UIKit
 import Contacts
 
 
-let appDelegate = UIApplication.shared().delegate as! AppDelegate
+let appDelegate = UIApplication.shared.delegate as! AppDelegate
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -24,7 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         createShortcutItemsWithIcons()
 
         application.statusBarStyle = .lightContent
-        window?.backgroundColor = UIColor.clear()
+        window?.backgroundColor = UIColor.clear
         
         // clear icon badge number if needed.
         application.applicationIconBadgeNumber = 0
@@ -101,7 +101,7 @@ extension AppDelegate {
         var rootViewController = _rootViewController
         
         if rootViewController == nil {
-            rootViewController = UIApplication.shared().keyWindow?.rootViewController
+            rootViewController = UIApplication.shared.keyWindow?.rootViewController
         }
         
         if rootViewController?.presentedViewController == nil {

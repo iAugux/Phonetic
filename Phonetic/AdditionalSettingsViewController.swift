@@ -514,7 +514,7 @@ extension UISwitch {
 extension AdditionalSettingsViewController {
     
     private func configureQuickSearchSelectionViews() {
-        quickSearchSelectionIndicator.tintColor = UIColor.white()
+        quickSearchSelectionIndicator.tintColor = UIColor.white
         quickSearchSelectionIndicator.image = UIImage(named: "expand")?.withRenderingMode(.alwaysTemplate)
         
         let recognizer = UITapGestureRecognizer(target: self, action: #selector(alertActionSheetToChooseCustomKeyForQuickSearch))

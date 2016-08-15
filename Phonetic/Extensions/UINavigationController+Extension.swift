@@ -14,8 +14,8 @@ extension UINavigationController {
         navigationBar.setBackgroundImage(UIImage(), for: .default)
         navigationBar.shadowImage = UIImage()
         navigationBar.isTranslucent = true
-        view.backgroundColor = UIColor.clear()
-        navigationBar.backgroundColor = UIColor.clear()
+        view.backgroundColor = UIColor.clear
+        navigationBar.backgroundColor = UIColor.clear
     }
     
 }

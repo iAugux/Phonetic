@@ -16,7 +16,7 @@ let kNavigationBarBackgroundColor = UIColor(red: 0.4, green: 0.4, blue: 0.4, alp
 class SettingsNavigationController: UINavigationController {
 
     let _font      = UIFont.systemFont(ofSize: 17.0)
-    let _textColor = UIColor.white()
+    let _textColor = UIColor.white
 
     var customBarButton: UIButton!
     private(set) var customTitleLabel: UILabel!
@@ -24,13 +24,13 @@ class SettingsNavigationController: UINavigationController {
     
     private var shouldHideCustomBarButton: Bool {
         // iPad
-        if UIDevice.current().userInterfaceIdiom == .pad {
+        if UIDevice.current.userInterfaceIdiom == .pad {
             return true
         }
         
         // 6(s) Plus or larger iPhones in the future (maybe).
         if Device.isLargerThanScreenSize(Size.screen4_7Inch) {
-            return UIDevice.current().orientation.isLandscape
+            return UIDevice.current.orientation.isLandscape
         }
         
         return false
@@ -64,7 +64,7 @@ class SettingsNavigationController: UINavigationController {
         
         customBarButton = UIButton(type: .custom)
         customBarButton.setImage(UIImage(named: "close")?.withRenderingMode(.alwaysTemplate), for: UIControlState())
-        customBarButton.tintColor   = UIColor.white()
+        customBarButton.tintColor   = UIColor.white
         customBarButton.contentMode = .center
         customBarButton.addTarget(self, action: #selector(customBarButtonDidTap), for: .touchUpInside)
         

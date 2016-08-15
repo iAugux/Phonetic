@@ -13,7 +13,7 @@ import Device
 
 class OtherSettingView: UIStackView, MFMailComposeViewControllerDelegate, SFSafariViewControllerDelegate {
     
-    private var picker: MFMailComposeViewController?
+    private var picker: MFMailComposeViewController!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -48,49 +48,53 @@ class OtherSettingView: UIStackView, MFMailComposeViewControllerDelegate, SFSafa
     private func followOnTwitter() {
         let tweetbotURL = URL(string: "tweetbot://iAugux/user_profile/iAugux")
         let twitterURL = URL(string: "twitter://user?screen_name=iAugux")
-        if UIApplication.shared().canOpenURL(tweetbotURL!) {
-            UIApplication.shared().openURL(tweetbotURL!)
+        if UIApplication.shared.canOpenURL(tweetbotURL!) {
+            UIApplication.shared.openURL(tweetbotURL!)
             return
         }
-        if UIApplication.shared().canOpenURL(twitterURL!) {
-            UIApplication.shared().openURL(twitterURL!)
+        if UIApplication.shared.canOpenURL(twitterURL!) {
+            UIApplication.shared.openURL(twitterURL!)
             return
         }
         
         let safariVC = SFSafariViewController(url: URL(string: "https://twitter.com/iAugux")!)
         safariVC.delegate = self
         UIApplication.topMostViewController?.present(safariVC, animated: true, completion: {
-            UIApplication.shared().statusBarStyle = .default
+            UIApplication.shared.statusBarStyle = .default
         })
     }
     
     // MARK: - Rate me
     static func RateMe() {
         let appURL = URL(string: "https://itunes.apple.com/app/viewContentsUserReviews?id=1078961574")
-        if UIApplication.shared().canOpenURL(appURL!) {
-            UIApplication.shared().openURL(appURL!)
+        if UIApplication.shared.canOpenURL(appURL!) {
+            UIApplication.shared.openURL(appURL!)
         }
     }
     
     // MARK: - feedback with Mail
     private func sendMail() {
-        if MFMailComposeViewController.canSendMail() {
-            picker = MFMailComposeViewController()
-            picker?.mailComposeDelegate = self
-            picker?.setToRecipients(["iAugux@gmail.com"])
-            picker?.setSubject("Phonetic Contacts Feedback")
-            
-            if let version = Bundle.main.objectForInfoDictionaryKey("CFBundleShortVersionString") as? String {
-                if let build = Bundle.main.objectForInfoDictionaryKey(kCFBundleVersionKey as String) as? String {
-                    let info = "# V \(version) (\(build)), \(Device.version()), iOS \(UIDevice.current().systemVersion) #\n"
-                    picker?.setMessageBody(info, isHTML: true)
-                    UIApplication.topMostViewController?.present(picker!, animated: true, completion: nil)
-                }
-            }
-        }
+        guard MFMailComposeViewController.canSendMail() else { return }
+        
+        picker = MFMailComposeViewController()
+        picker.mailComposeDelegate = self
+        picker.setToRecipients(["iAugux@gmail.com"])
+        picker.setSubject("Phonetic Contacts Feedback")
+        
+        guard let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String else { return }
+        guard let build = Bundle.main.object(forInfoDictionaryKey: kCFBundleVersionKey as String) as? String else { return }
+        
+        let systemVersion = ProcessInfo.processInfo.operatingSystemVersionString.replacingOccurrences(of: "Version", with: "iOS").replacingOccurrences(of: "Build ", with: "")
+        
+        let info = "# V \(version) (\(build))" + "</br>" +
+            "# \(Device.version())" + "</br>" +
+            "# \(systemVersion)"
+        
+        picker.setMessageBody(info, isHTML: true)
+        UIApplication.topMostViewController?.present(picker, animated: true, completion: nil)
     }
     
-    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: NSError?) {
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
         controller.dismiss(animated: true) { () -> Void in
             self.picker = nil
         }

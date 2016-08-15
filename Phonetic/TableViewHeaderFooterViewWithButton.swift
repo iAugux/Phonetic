@@ -22,7 +22,7 @@ class TableViewHeaderFooterViewWithButton: UITableViewHeaderFooterView {
         super.init(reuseIdentifier: reuseIdentifier)
     }
     
-    convenience init(buttonImageName name: String, tintColor: UIColor = .white(), twinkleInterval: TimeInterval = 0.7) {
+    convenience init(buttonImageName name: String, tintColor: UIColor = .white, twinkleInterval: TimeInterval = 0.7) {
         self.init(reuseIdentifier: nil)
         button = UIButton(type: .custom)
         button.frame.size = CGSize(width: 18, height: 18)

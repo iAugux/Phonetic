@@ -37,8 +37,8 @@ class InfoViewController: UIViewController, SFSafariViewControllerDelegate {
     }
     
     private func configureVersionLabel() {
-        if let version = Bundle.main.objectForInfoDictionaryKey("CFBundleShortVersionString") as? String {
-            if let build = Bundle.main.objectForInfoDictionaryKey(kCFBundleVersionKey as String) as? String {
+        if let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String {
+            if let build = Bundle.main.object(forInfoDictionaryKey: kCFBundleVersionKey as String) as? String {
                 versionLabel.text = "Version \(version) (\(build))"
             }
         }
@@ -50,7 +50,7 @@ class InfoViewController: UIViewController, SFSafariViewControllerDelegate {
             let safariVC = SFSafariViewController(url: URL(string: "https://github.com/iAugux/Phonetic")!)
             safariVC.delegate = self
             UIApplication.topMostViewController?.present(safariVC, animated: true, completion: {
-                UIApplication.shared().statusBarStyle = .default
+                UIApplication.shared.statusBarStyle = .default
             })
         }
     }

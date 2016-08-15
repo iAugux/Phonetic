@@ -27,7 +27,7 @@ extension ViewController: UIPopoverPresentationControllerDelegate {
     }
     
     func hideLabels(_ hidden: Bool) {
-        if let label1 = view.viewWithTag(998), label2 = view.viewWithTag(999) {
+        if let label1 = view.viewWithTag(998), let label2 = view.viewWithTag(999) {
             UIView.animate(withDuration: 0.6, delay: 0.1, options: UIViewAnimationOptions(), animations: { () -> Void in
                 label1.alpha = hidden ? 0 : 1
                 label2.alpha = hidden ? 0 : 1
@@ -126,7 +126,7 @@ extension ViewController: UIPopoverPresentationControllerDelegate {
         titleLabel.text             = title
         titleLabel.textAlignment    = .center
         titleLabel.font             = UIFont.boldSystemFont(ofSize: 17.0)
-        titleLabel.textColor        = UIColor.white()
+        titleLabel.textColor        = UIColor.white
         titleLabel.sizeToFit()
         nav.navigationBar.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { (make) in

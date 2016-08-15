@@ -30,8 +30,8 @@ class PolyphonicViewController: BaseTableViewController {
     override func loadView() {
         super.loadView()
         _title = NSLocalizedString("Polyphonic Characters", comment: "SettingsNavigationController title - Polyphonic Chararcters")
-        tableView.sectionIndexBackgroundColor = UIColor.clear()
-        tableView.sectionIndexColor = UIColor.white()
+        tableView.sectionIndexBackgroundColor = UIColor.clear
+        tableView.sectionIndexColor = UIColor.white
         
         masterSwitch.onTintColor = GLOBAL_CUSTOM_COLOR
         masterSwitch.shouldSwitch(kEnableAllPolyphonicChars, defaultBool: true)

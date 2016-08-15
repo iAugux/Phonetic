@@ -33,7 +33,7 @@ class BlurActionSheetCell: UITableViewCell {
         }
         
         backgroundView = nil
-        backgroundColor = UIColor.clear()
+        backgroundColor = UIColor.clear
         selectedBackgroundView = UIView()
     }
     
@@ -44,7 +44,7 @@ class BlurActionSheetCell: UITableViewCell {
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         if selected {
-            self.textLabel?.textColor = UIColor.lightGray()
+            self.textLabel?.textColor = UIColor.lightGray
             underLineView?.backgroundColor = underLineColor
         }
     }
@@ -52,7 +52,7 @@ class BlurActionSheetCell: UITableViewCell {
     override func setHighlighted(_ highlighted: Bool, animated: Bool) {
         super.setHighlighted(highlighted, animated: animated)
         if highlighted {
-            self.textLabel?.textColor = UIColor.lightGray()
+            self.textLabel?.textColor = UIColor.lightGray
             underLineView?.backgroundColor = underLineColor
         }
     }

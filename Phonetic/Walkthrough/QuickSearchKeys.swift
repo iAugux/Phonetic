@@ -65,7 +65,7 @@ class QuickSearchKeyCell: UICollectionViewCell {
         super.init(coder: aDecoder)
         let customBackgroundView = CustomSelectedBackgroundView()
         selectedBackgroundView = customBackgroundView
-        selectedBackgroundView?.backgroundColor = UIColor.clear()
+        selectedBackgroundView?.backgroundColor = UIColor.clear
     }
     
     override func awakeFromNib() {

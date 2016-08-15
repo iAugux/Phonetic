@@ -46,7 +46,7 @@ extension AppDelegate {
         let cancelAction = UIAlertAction(title: cancelActionTitle, style: .cancel, handler: nil)
         let okAction = UIAlertAction(title: okActionTitle, style: .default) { (_) -> Void in
             if let url = URL(string: UIApplicationOpenSettingsURLString) {
-                UIApplication.shared().openURL(url)
+                UIApplication.shared.openURL(url)
             }
         }
         

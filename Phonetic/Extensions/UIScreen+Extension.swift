@@ -9,10 +9,10 @@ import UIKit
 
 extension UIScreen {
     class func screenWidth() -> CGFloat {
-        return UIScreen.main().bounds.width
+        return UIScreen.main.bounds.width
     }
     
     class func screenHeight() -> CGFloat {
-        return UIScreen.main().bounds.height
+        return UIScreen.main.bounds.height
     }
 }

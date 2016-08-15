@@ -75,7 +75,7 @@ import UIKit
         updateForegroundColor()
         updatePlaceholder()
         
-        if text!.isNotEmpty || isFirstResponder() {
+        if text!.isNotEmpty || isFirstResponder {
             animateViewsForTextEntry()
         }
         

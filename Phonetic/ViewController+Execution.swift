@@ -124,7 +124,7 @@ extension ViewController {
     // MARK: - Video
     func loopingVideo(){
         
-        guard UIApplication.shared().applicationState == .active && PhoneticContacts.sharedInstance.isProcessing else {
+        guard UIApplication.shared.applicationState == .active && PhoneticContacts.sharedInstance.isProcessing else {
             avPlayer?.pause()
             avPlayerController = nil
             return
@@ -159,7 +159,7 @@ extension ViewController {
 
     private func configureBackgroundVideo(){
         
-        guard let url = Bundle.main.urlForResource("wave", withExtension: "mp4") else { return }
+        guard let url = Bundle.main.url(forResource: "wave", withExtension: "mp4") else { return }
         
         avPlayer                                       = AVPlayer(url: url)
         avPlayerController                             = AVPlayerViewController()

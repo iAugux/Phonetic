@@ -16,7 +16,7 @@ import UIKit
 extension UIApplication {
     
     class var topMostViewController: UIViewController? {
-        var topController = UIApplication.shared().keyWindow?.rootViewController
+        var topController = UIApplication.shared.keyWindow?.rootViewController
         while topController?.presentedViewController != nil {
             topController = topController?.presentedViewController
         }
@@ -25,7 +25,7 @@ extension UIApplication {
     
     /// App has more than one window and just want to get topMostViewController of the AppDelegate window.
     class var appDelegateWindowTopMostViewController: UIViewController? {
-        let delegate = UIApplication.shared().delegate as? AppDelegate
+        let delegate = UIApplication.shared.delegate as? AppDelegate
         var topController = delegate?.window?.rootViewController
         while topController?.presentedViewController != nil {
             topController = topController?.presentedViewController
@@ -52,7 +52,7 @@ extension UIViewController {
             for view in self.view.subviews
             {
                 // Key property which most of us are unaware of / rarely use.
-                if let subViewController = view.next() {
+                if let subViewController = view.next {
                     if subViewController is UIViewController {
                         let viewController = subViewController as! UIViewController
                         return viewController.topMostViewController

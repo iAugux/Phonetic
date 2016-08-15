@@ -27,7 +27,7 @@ class BlurBackgroundView: UIView {
         blurView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
         addSubview(blurView)
         blurView.snp.makeConstraints { (make) in
-            make.edges.equalTo(UIEdgeInsetsZero)
+            make.edges.equalTo(0)
         }
     }
     

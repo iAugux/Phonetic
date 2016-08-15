@@ -67,7 +67,7 @@ class ViewController: UIViewController {
         super.viewWillAppear(animated)
         
         // I modified the style while presenting a SFSafariViewController, so here should reset it.
-        UIApplication.shared().statusBarStyle = .lightContent
+        UIApplication.shared.statusBarStyle = .lightContent
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -118,7 +118,7 @@ class ViewController: UIViewController {
 //        settingButton.exclusiveTouch = true
 //        infoButton.exclusiveTouch = true
         
-        if !UIDevice.current().isBlurSupported() || UIAccessibilityIsReduceTransparencyEnabled() {
+        if !UIDevice.current.isBlurSupported() || UIAccessibilityIsReduceTransparencyEnabled() {
             blurView.effect = nil
             blurView.backgroundColor = UIColor(red: 0.498, green: 0.498, blue: 0.498, alpha: 0.926)
         }

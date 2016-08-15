@@ -18,7 +18,7 @@ class PhoneticContacts {
         DEBUGLog("Register UserNotificationSettings & UIApplicationDidBecomeActiveNotification")
         
         // register user notification settings
-        UIApplication.shared().registerUserNotificationSettings(UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil))
+        UIApplication.shared.registerUserNotificationSettings(UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil))
         
         NotificationCenter.default.addObserver(self, selector: #selector(PhoneticContacts.reinstateBackgroundTask), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
     }
@@ -90,7 +90,7 @@ class PhoneticContacts {
 //                self.insertNewContactsForDevice(100)
         
         
-        DispatchQueue.global(attributes: DispatchQueue.GlobalAttributes(rawValue: UInt64(Int(DispatchQueueAttributes.qosBackground.rawValue)))).async {
+        GlobalBackgroundQueue.async {
             
             var index = 1
             let count = self.contactsTotalCount
@@ -172,7 +172,7 @@ class PhoneticContacts {
         isProcessing = true
         aborted = !isProcessing
         
-        DispatchQueue.global(attributes: DispatchQueue.GlobalAttributes(rawValue: UInt64(Int(DispatchQueueAttributes.qosBackground.rawValue)))).async {
+        GlobalBackgroundQueue.async {
             
             var index = 1
             let count = self.contactsTotalCount
@@ -244,7 +244,7 @@ class PhoneticContacts {
     
     private func handlingCompletion(_ handle: CompletionHandler) {
         
-        switch UIApplication.shared().applicationState {
+        switch UIApplication.shared.applicationState {
         case .background:
             // completed not aborted
             if !aborted {
@@ -252,7 +252,7 @@ class PhoneticContacts {
                 
                 localNotification.fireDate = Date()
                 localNotification.alertBody = NSLocalizedString("Mission Completed !", comment: "Local Notification - alert body")
-                UIApplication.shared().scheduleLocalNotification(localNotification)
+                UIApplication.shared.scheduleLocalNotification(localNotification)
             }
         default:
             break
@@ -267,7 +267,7 @@ class PhoneticContacts {
         
         let percentage = currentPercentage(index, total: total)
         
-        switch UIApplication.shared().applicationState {
+        switch UIApplication.shared.applicationState {
         case .active:
             DispatchQueue.main.async(execute: { () -> Void in
                 handle(currentResult: result, percentage: percentage)
@@ -276,7 +276,7 @@ class PhoneticContacts {
         case .background:
             
             // set icon badge number as current percentage.
-            UIApplication.shared().applicationIconBadgeNumber = Int(percentage)
+            UIApplication.shared.applicationIconBadgeNumber = Int(percentage)
             
             // handling results while it is almost complete to correct the UI of percentage.
             if percentage > 95 {
@@ -285,13 +285,13 @@ class PhoneticContacts {
                 })
             }
             
-            let remainingTime = UIApplication.shared().backgroundTimeRemaining
+            let remainingTime = UIApplication.shared.backgroundTimeRemaining
             
             // App is about to be terminated, send notification.
             if remainingTime < 10 {
                 localNotification.fireDate = Date()
                 localNotification.alertBody = NSLocalizedString("Phonetic is about to be terminated! Please open it again to complete the mission.", comment: "Local Notification - App terminated notification")
-                UIApplication.shared().scheduleLocalNotification(localNotification)
+                UIApplication.shared.scheduleLocalNotification(localNotification)
             }
             
             DEBUGLog("Background time remaining \(remainingTime) seconds")
@@ -432,7 +432,7 @@ private extension PhoneticContacts {
     }
     
     func registerBackgroundTask() {
-        backgroundTask = UIApplication.shared().beginBackgroundTask {
+        backgroundTask = UIApplication.shared.beginBackgroundTask {
             [unowned self] in
             self.endBackgroundTask()
         }
@@ -441,7 +441,7 @@ private extension PhoneticContacts {
     
     func endBackgroundTask() {
         DEBUGLog("Background task ended.")
-        UIApplication.shared().endBackgroundTask(backgroundTask)
+        UIApplication.shared.endBackgroundTask(backgroundTask)
         backgroundTask = UIBackgroundTaskInvalid
     }
 }

@@ -27,7 +27,7 @@ class BaseTableViewController: UITableViewController {
         tableView.allowsSelection = false
         
         if let _ = navigationController as? SettingsNavigationController {
-            configurePullToDismissViewController(UIColor.clear(), fillColor: kNavigationBarBackgroundColor, completionHandler: {
+            configurePullToDismissViewController(UIColor.clear, fillColor: kNavigationBarBackgroundColor, completionHandler: {
                 self.postDismissedNotificationIfNeeded()
             })
         }
@@ -136,7 +136,7 @@ extension BaseTableViewController {
     
     private func postDismissedNotificationIfNeeded() {
         // It is not necessary here, but I prefer to keep it.
-        guard UIDevice.current().userInterfaceIdiom != .pad else { return }
+        guard UIDevice.current.userInterfaceIdiom != .pad else { return }
         
         guard keepSettingWindowOpen else { return }
         
@@ -165,7 +165,7 @@ extension BaseTableViewController {
     
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         //  @fixed: iPad refusing to accept clear color
-        cell.backgroundColor = UIColor.clear()
+        cell.backgroundColor = UIColor.clear
     }
     
     override func tableView(_ tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {

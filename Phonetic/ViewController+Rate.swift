@@ -13,7 +13,7 @@ extension ViewController {
     
     func rateMeInTheSecondTime() {
         
-        guard let build = Bundle.main.objectForInfoDictionaryKey(kCFBundleVersionKey as String) as? String else { return }
+        guard let build = Bundle.main.object(forInfoDictionaryKey: kCFBundleVersionKey as String) as? String else { return }
 
         let rateMe = "kRateMeOnAppStore\(build)"
         let userDefaults = UserDefaults.standard

@@ -48,7 +48,7 @@ extension AppDelegate {
         // add all items to an array
         let items = [executeItem, rollbackItem]
         
-        UIApplication.shared().shortcutItems = items
+        UIApplication.shared.shortcutItems = items
     }
     
     

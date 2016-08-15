@@ -62,20 +62,20 @@ public class CWStatusBarNotification : NSObject {
     // MARK: - setup
     
     public override init() {
-        if let tintColor = UIApplication.shared().delegate?.window??
+        if let tintColor = UIApplication.shared.delegate?.window??
             .tintColor {
                 self.notificationLabelBackgroundColor = tintColor
         } else {
-            self.notificationLabelBackgroundColor = UIColor.black()
+            self.notificationLabelBackgroundColor = UIColor.black
         }
-        self.notificationLabelTextColor = UIColor.white()
+        self.notificationLabelTextColor = UIColor.white
         self.notificationLabelFont = UIFont.systemFont(ofSize: self.fontSize)
         self.notificationLabelHeight = 0.0
         self.customView = nil
         self.multiline = false
         if let supportedInterfaceOrientations = UIApplication
-            .shared().keyWindow?.rootViewController?
-            .supportedInterfaceOrientations() {
+            .shared.keyWindow?.rootViewController?
+            .supportedInterfaceOrientations {
                 self.supportedInterfaceOrientations = supportedInterfaceOrientations
         } else {
             self.supportedInterfaceOrientations = .all
@@ -114,11 +114,11 @@ public class CWStatusBarNotification : NSObject {
             return self.notificationLabelHeight
         }
         
-        var statusBarHeight = UIApplication.shared().statusBarFrame
+        var statusBarHeight = UIApplication.shared.statusBarFrame
             .size.height
         if systemVersionLessThan("8.0.0") && UIInterfaceOrientationIsLandscape(
-            UIApplication.shared().statusBarOrientation) {
-                statusBarHeight = UIApplication.shared().statusBarFrame
+            UIApplication.shared.statusBarOrientation) {
+                statusBarHeight = UIApplication.shared.statusBarFrame
                     .size.width
         }
         return statusBarHeight > 0 ? statusBarHeight : 20
@@ -126,10 +126,10 @@ public class CWStatusBarNotification : NSObject {
     
     private func getStatusBarWidth() -> CGFloat {
         if systemVersionLessThan("8.0.0") && UIInterfaceOrientationIsLandscape(
-            UIApplication.shared().statusBarOrientation) {
-                return UIScreen.main().bounds.size.height
+            UIApplication.shared.statusBarOrientation) {
+                return UIScreen.main.bounds.size.height
         }
-        return UIScreen.main().bounds.size.width
+        return UIScreen.main.bounds.size.width
     }
     
     private func getStatusBarOffset() -> CGFloat {
@@ -140,7 +140,7 @@ public class CWStatusBarNotification : NSObject {
     }
     
     private func getNavigationBarHeight() -> CGFloat {
-        if UIInterfaceOrientationIsPortrait(UIApplication.shared()
+        if UIInterfaceOrientationIsPortrait(UIApplication.shared
             .statusBarOrientation) || UI_USER_INTERFACE_IDIOM() == .pad {
                 return 44.0
         }
@@ -265,8 +265,8 @@ public class CWStatusBarNotification : NSObject {
     
     private func createNotificationWindow() {
         self.notificationWindow = CWWindowContainer(
-            frame: UIScreen.main().bounds)
-        self.notificationWindow?.backgroundColor = UIColor.clear()
+            frame: UIScreen.main.bounds)
+        self.notificationWindow?.backgroundColor = UIColor.clear
         self.notificationWindow?.isUserInteractionEnabled = true
         self.notificationWindow?.autoresizingMask = UIViewAutoresizing(
             arrayLiteral: .flexibleWidth, .flexibleHeight)
@@ -285,7 +285,7 @@ public class CWStatusBarNotification : NSObject {
         self.statusBarView = UIView(frame: self.getNotificationLabelFrame())
         self.statusBarView?.clipsToBounds = true
         if self.notificationAnimationType == .replace {
-            let statusBarImageView = UIScreen.main()
+            let statusBarImageView = UIScreen.main
                 .snapshotView(afterScreenUpdates: true)
             self.statusBarView?.addSubview(statusBarImageView)
         }
@@ -301,7 +301,7 @@ public class CWStatusBarNotification : NSObject {
     
     private func firstFrameChange() {
         guard let view = self.isCustomView ? self.customView :
-            self.notificationLabel where self.statusBarView != nil else {
+            self.notificationLabel , self.statusBarView != nil else {
                 return
         }
         view.frame = self.getNotificationLabelFrame()
@@ -319,7 +319,7 @@ public class CWStatusBarNotification : NSObject {
     
     private func secondFrameChange() {
         guard let view = self.isCustomView ? self.customView :
-            self.notificationLabel where self.statusBarView != nil else {
+            self.notificationLabel , self.statusBarView != nil else {
                 return
         }
         switch self.notificationAnimationOutStyle {
@@ -339,7 +339,7 @@ public class CWStatusBarNotification : NSObject {
     
     private func thirdFrameChange() {
         guard let view = self.isCustomView ? self.customView :
-            self.notificationLabel where self.statusBarView != nil else {
+            self.notificationLabel , self.statusBarView != nil else {
                 return
         }
         self.statusBarView!.frame = self.getNotificationLabelFrame()
@@ -420,14 +420,14 @@ public class CWStatusBarNotification : NSObject {
     }
     
     public func displayNotificationWithAttributedString(
-        _ attributedString : AttributedString, completion : () -> ()) {
+        _ attributedString : NSAttributedString, completion : () -> ()) {
             self.displayNotificationWithMessage(attributedString.string,
                 completion: completion)
             self.notificationLabel?.attributedText = attributedString
     }
     
     public func displayNotificationWithAttributedString(
-        _ attributedString : AttributedString,
+        _ attributedString : NSAttributedString,
         forDuration duration : TimeInterval) {
             self.displayNotificationWithMessage(attributedString.string,
                 forDuration: duration)

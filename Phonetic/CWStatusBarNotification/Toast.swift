@@ -26,7 +26,7 @@ class Toast {
         if delay == 0 {
             make()
         } else {
-            DispatchQueue.main.after(when: .now() + delay, execute: {
+            DispatchQueue.main.asyncAfter(deadline: .now() + delay, execute: {
                 make()
             })
         }

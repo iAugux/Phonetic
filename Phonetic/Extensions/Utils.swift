@@ -10,6 +10,10 @@ import Foundation
 
 public typealias Closure = () -> ()
 
+public func NSLocalizedString(_ key: String) -> String {
+    return NSLocalizedString(key, comment: "")
+}
+
 
 class Utils {
     
@@ -17,14 +21,19 @@ class Utils {
         return NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
     }
     
-    class func documentPathWithFile(_ name: String) -> String {
+    class func documentPathForFile(_ name: String) -> String {
         return (documentPath as NSString).appendingPathComponent(name)
     }
     
     class func appGroupDocumentPath(_ appGroupId: String) -> String? {
-        let url = FileManager.default.containerURLForSecurityApplicationGroupIdentifier(appGroupId)
-        let path = url?.absoluteString?.replacingOccurrences(of: "file:", with: "", options: .literal, range: nil)
+        let url = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: appGroupId)
+        let path = url?.absoluteString.replacingOccurrences(of: "file:", with: "", options: .literal, range: nil)
         return path
+    }
+    
+    
+    class func bundlePathForFile(_ name: String) -> String {
+        return (Bundle.main.bundlePath as NSString).appendingPathComponent(name)
     }
     
 }
@@ -34,25 +43,25 @@ var GlobalMainQueue: DispatchQueue {
 }
 
 var GlobalUserInteractiveQueue: DispatchQueue {
-    return DispatchQueue.global(attributes: DispatchQueue.GlobalAttributes(rawValue: UInt64(DispatchQueueAttributes.qosUserInteractive.rawValue)))
+    return DispatchQueue.global(qos: .userInteractive)
 }
 
 var GlobalUserInitiatedQueue: DispatchQueue {
-    return DispatchQueue.global(attributes: DispatchQueue.GlobalAttributes(rawValue: UInt64(DispatchQueueAttributes.qosUserInitiated.rawValue)))
+    return DispatchQueue.global(qos: .userInitiated)
 }
 
 var GlobalUtilityQueue: DispatchQueue {
-    return DispatchQueue.global(attributes: DispatchQueue.GlobalAttributes(rawValue: UInt64(DispatchQueueAttributes.qosUtility.rawValue)))
+    return DispatchQueue.global(qos: .utility)
 }
 
 var GlobalBackgroundQueue: DispatchQueue {
-    return DispatchQueue.global(attributes: DispatchQueue.GlobalAttributes(rawValue: UInt64(DispatchQueueAttributes.qosBackground.rawValue)))
+    return DispatchQueue.global(qos: .background)
 }
 
 // MARK: - Delay
 
 func executeAfterDelay(_ seconds: Double, closure: (() -> Void)) {
-    DispatchQueue.main.after(when: .now() + seconds) {
+    DispatchQueue.main.asyncAfter(deadline: .now() + seconds, execute: {
         closure()
-    }
+    })
 }

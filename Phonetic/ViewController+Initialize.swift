@@ -45,7 +45,7 @@ extension ViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "rootVCPresentAdditionalVC" {
-            guard let destinationVC = segue.destinationViewController as? SettingsNavigationController else { return }
+            guard let destinationVC = segue.destination as? SettingsNavigationController else { return }
             destinationVC.popoverPresentationController?.sourceRect = settingButton.bounds
             destinationVC.popoverPresentationController?.backgroundColor = kNavigationBarBackgroundColor
         }

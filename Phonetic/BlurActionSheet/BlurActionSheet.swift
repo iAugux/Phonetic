@@ -37,7 +37,7 @@ class BlurActionSheet: UIView, UITableViewDataSource {
         tableView.dataSource      = self
         tableView.backgroundView  = nil
         tableView.isScrollEnabled   = false
-        tableView.backgroundColor = UIColor.clear()
+        tableView.backgroundColor = UIColor.clear
         tableView.separatorStyle  = .none
         tableView.tableFooterView = UIView()
         blurBackgroundView.addSubview(tableView)
@@ -53,7 +53,7 @@ class BlurActionSheet: UIView, UITableViewDataSource {
     }
     
     class func showWithTitles(_ titles: [String], view: UIView?, handler: ((index: Int) -> Void)) -> BlurActionSheet {
-        let actionSheet = BlurActionSheet(frame: UIScreen.main().bounds)
+        let actionSheet = BlurActionSheet(frame: UIScreen.main.bounds)
         actionSheet.titles = titles
         actionSheet.containerView = view
         actionSheet.handler = handler
@@ -153,7 +153,7 @@ class BlurActionSheet: UIView, UITableViewDataSource {
         
         cell?.textLabel?.text = titles![indexPath.row]
         cell?.textLabel?.textAlignment = .center
-        cell?.textLabel?.textColor = UIColor.white()
+        cell?.textLabel?.textColor = UIColor.white
         
         return cell!
     }

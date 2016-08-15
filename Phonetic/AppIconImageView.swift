@@ -27,8 +27,8 @@ class AppIconImageView: UIImageView {
     func iconDidTap() {
         parentViewController?.dismiss(animated: true, completion: { () -> Void in
             let appURL = URL(string: "https://itunes.apple.com/app/id1063627763")
-            if UIApplication.shared().canOpenURL(appURL!) {
-                UIApplication.shared().openURL(appURL!)
+            if UIApplication.shared.canOpenURL(appURL!) {
+                UIApplication.shared.openURL(appURL!)
             }            
         })
     }

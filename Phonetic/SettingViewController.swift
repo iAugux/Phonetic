@@ -82,7 +82,7 @@ class SettingViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "VCPresentPolyphonicVC" {
-            guard let destinationVC = segue.destinationViewController as? SettingsNavigationController else { return }
+            guard let destinationVC = segue.destination as? SettingsNavigationController else { return }
             destinationVC.popoverPresentationController?.sourceRect = polyphonicButton.bounds
             destinationVC.popoverPresentationController?.backgroundColor = kNavigationBarBackgroundColor
         }
@@ -92,7 +92,7 @@ class SettingViewController: UIViewController {
         guard let navBar = navigationController?.navigationBar else { return }
         
         customBarButton = UIButton(type: .custom)
-        customBarButton.tintColor = UIColor.white()
+        customBarButton.tintColor = UIColor.white
         customBarButton.setImage(UIImage(named: "additional_settings")?.withRenderingMode(.alwaysTemplate), for: UIControlState())
         customBarButton.addTarget(self, action: #selector(customBarButtonDidTap), for: .touchUpInside)
         navBar.addSubview(customBarButton)
@@ -118,7 +118,7 @@ class SettingViewController: UIViewController {
     
     private func presentPopoverController() {
         guard let vc = UIStoryboard.Main.instantiateViewController(withIdentifier: String(SettingsNavigationController.self)) as? SettingsNavigationController,
-            sourceView = customBarButton else { return }
+            let sourceView = customBarButton else { return }
         
         vc.modalPresentationStyle = .popover
         vc.popoverPresentationController?.canOverlapSourceViewRect = true

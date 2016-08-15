@@ -149,7 +149,7 @@ public class KDCircularProgress: UIView, CAAnimationDelegate {
         }
     }
     
-    @IBInspectable public var trackColor: UIColor = .black() {
+    @IBInspectable public var trackColor: UIColor = .black {
         didSet {
             progressLayer.trackColor = trackColor
             progressLayer.setNeedsDisplay()
@@ -161,7 +161,7 @@ public class KDCircularProgress: UIView, CAAnimationDelegate {
             if let color = progressInsideFillColor {
                 progressLayer.progressInsideFillColor = color
             } else {
-                progressLayer.progressInsideFillColor = .clear()
+                progressLayer.progressInsideFillColor = .clear
             }
         }
     }
@@ -209,7 +209,7 @@ public class KDCircularProgress: UIView, CAAnimationDelegate {
         checkAndSetIBColors()
     }
     
-    override public class func layerClass() -> AnyClass {
+    override public class var layerClass: AnyClass {
         return KDCircularProgressViewLayer.self
     }
     
@@ -220,8 +220,8 @@ public class KDCircularProgress: UIView, CAAnimationDelegate {
     
     private func setInitialValues() {
         radius = (frame.size.width/2.0) * 0.8 //We always apply a 20% padding, stopping glows from being clipped
-        backgroundColor = .clear()
-        setColors(.white(), .cyan())
+        backgroundColor = .clear
+        setColors(.white, .cyan)
     }
     
     private func refreshValues() {
@@ -358,7 +358,7 @@ public class KDCircularProgress: UIView, CAAnimationDelegate {
         var progressThickness: CGFloat!
         var trackThickness: CGFloat!
         var trackColor: UIColor!
-        var progressInsideFillColor = UIColor.clear()
+        var progressInsideFillColor = UIColor.clear
         var colorsArray: [UIColor]! {
             didSet {
                 invalidateGradientCache()
@@ -443,7 +443,7 @@ public class KDCircularProgress: UIView, CAAnimationDelegate {
             
             let glowValue = GlowConstants.glowAmount(forAngle: reducedAngle, glowAmount: glowAmount, glowMode: glowMode, size: width)
             if glowValue > 0 {
-                imageCtx?.setShadow(offset: CGSize.zero, blur: glowValue, color: UIColor.black().cgColor)
+                imageCtx?.setShadow(offset: CGSize.zero, blur: glowValue, color: UIColor.black.cgColor)
             }
             
             let linecap: CGLineCap = roundedCorners == true ? .round : .butt
@@ -455,13 +455,13 @@ public class KDCircularProgress: UIView, CAAnimationDelegate {
             UIGraphicsEndImageContext()
             
             ctx.saveGState()
-            ctx.clipToMask(bounds, mask: drawMask)
+            ctx.clip(to: bounds, mask: drawMask)
             
             //Gradient - Fill
             if !lerpColorMode && colorsArray.count > 1 {
                 let rgbColorsArray: [UIColor] = colorsArray.map { color in // Make sure every color in colors array is in RGB color space
                     if color.cgColor.numberOfComponents == 2 {
-                        if let whiteValue = color.cgColor.components?[0] {
+                        if let whiteValue = color.cgColor.__unsafeComponents?[0] {
                             return UIColor(red: whiteValue, green: whiteValue, blue: whiteValue, alpha: 1.0)
                         } else {
                             return UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
@@ -472,7 +472,7 @@ public class KDCircularProgress: UIView, CAAnimationDelegate {
                 }
                 
                 let componentsArray = rgbColorsArray.flatMap { color -> [CGFloat] in
-                    let components: UnsafePointer<CGFloat> = color.cgColor.components!
+                    let components: UnsafePointer<CGFloat> = color.cgColor.__unsafeComponents!
                     return [components[0], components[1], components[2], 1.0]
                 }
                 
@@ -480,7 +480,7 @@ public class KDCircularProgress: UIView, CAAnimationDelegate {
             } else {
                 var color: UIColor?
                 if colorsArray.isEmpty {
-                    color = UIColor.white()
+                    color = UIColor.white
                 } else if colorsArray.count == 1 {
                     color = colorsArray[0]
                 } else {

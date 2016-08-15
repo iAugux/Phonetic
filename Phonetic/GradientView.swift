@@ -16,7 +16,7 @@ class GradientView: UIView {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         
-        backgroundColor = UIColor.clear()
+        backgroundColor = UIColor.clear
         addBlurEffect()
     }
 
@@ -44,10 +44,10 @@ class GradientView: UIView {
         bgImageView.contentMode = .scaleAspectFill
         insertSubview(bgImageView, at: 0)
         bgImageView.snp.makeConstraints { (make) in
-            make.edges.equalTo(UIEdgeInsetsZero)
+            make.edges.equalTo(0)
         }
         
-        guard UIDevice.current().isBlurSupported() && !UIAccessibilityIsReduceTransparencyEnabled() else {
+        guard UIDevice.current.isBlurSupported() && !UIAccessibilityIsReduceTransparencyEnabled() else {
             let overlayView = UIView(frame: frame)
             overlayView.backgroundColor = UIColor(red: 0.498, green: 0.498, blue: 0.498, alpha: 0.926)
             insertSubview(overlayView, at: 1)
@@ -59,7 +59,7 @@ class GradientView: UIView {
         blurView.alpha = 0.97
         insertSubview(blurView, at: 1)
         blurView.snp.makeConstraints { (make) in
-            make.edges.equalTo(UIEdgeInsetsZero)
+            make.edges.equalTo(0)
         }
     }
     

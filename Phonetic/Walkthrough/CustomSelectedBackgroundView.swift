@@ -16,7 +16,7 @@ class CustomSelectedBackgroundView: UIView {
         aRef?.saveGState()
         let bezierPath = UIBezierPath(roundedRect: rect, cornerRadius: 8.0)
         bezierPath.lineWidth = 8.0
-        UIColor.white().setFill()
+        UIColor.white.setFill()
         bezierPath.fill()
         aRef?.restoreGState()
         

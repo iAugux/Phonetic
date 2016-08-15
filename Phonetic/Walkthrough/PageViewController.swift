@@ -94,7 +94,7 @@ extension PageViewController {
         case 1:
             executeAfterDelay(0.5, closure: {
                 // register user notification settings
-                UIApplication.shared().registerUserNotificationSettings(UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil))
+                UIApplication.shared.registerUserNotificationSettings(UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil))
             })
             
 //        case 2:

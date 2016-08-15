@@ -14,7 +14,7 @@ class HelpManualViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationController?.navigationBar.tintColor = .white()
+        navigationController?.navigationBar.tintColor = .white
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -25,7 +25,7 @@ class HelpManualViewController: UIViewController {
         let title = NSLocalizedString("Help Manual", comment: "Navigation title")
         nav.customTitleLabel?.text = title
         nav.customTitleLabel?.font = UIFont.systemFont(ofSize: 17)
-        nav.customTitleLabel?.textColor = UIColor.white()
+        nav.customTitleLabel?.textColor = UIColor.white
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -47,7 +47,7 @@ class HelpManualViewController: UIViewController {
         let str = "prefs:root=ACCOUNT_SETTINGS&path="
         
         if let url = URL(string: str) {
-            UIApplication.shared().openURL(url)
+            UIApplication.shared.openURL(url)
         }
     }
     
