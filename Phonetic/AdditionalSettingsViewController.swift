@@ -16,17 +16,17 @@ class AdditionalSettingsViewController: BaseTableViewController {
     @IBOutlet weak var quickSearchSelectionIndicator: UIImageView!
     @IBOutlet weak var quickSearchSelectionLabel: UILabel!
     
-    private let userDefaults = UserDefaults.standard
+    fileprivate let userDefaults = UserDefaults.standard
     
-    private let on  = NSLocalizedString("On", comment: "")
-    private let off = NSLocalizedString("Off", comment: "")
+    fileprivate let on  = NSLocalizedString("On", comment: "")
+    fileprivate let off = NSLocalizedString("Off", comment: "")
 
-    private var blurActionSheet: BlurActionSheet!
+    fileprivate var blurActionSheet: BlurActionSheet!
     
     // MARK: -
     @IBOutlet weak var statusLabel: UILabel!
     
-    @IBOutlet private weak var tutorialButton: UIButton! {
+    @IBOutlet fileprivate weak var tutorialButton: UIButton! {
         didSet {
             tutorialButton.setTitle(NSLocalizedString("Tutorial", comment: ""), for: UIControlState())
         }
@@ -69,7 +69,7 @@ class AdditionalSettingsViewController: BaseTableViewController {
         }
     }
     
-    private var quickSearchKey: String {
+    fileprivate var quickSearchKey: String {
         if userDefaults.value(forKey: kQuickSearchKeyRawValue) == nil {
             userDefaults.set(QuickSearch.middleName.rawValue, forKey: kQuickSearchKeyRawValue)
             userDefaults.synchronize()
@@ -384,7 +384,7 @@ extension AdditionalSettingsViewController {
     }
     
     // MARK: - Turn On/Off Switch Automatically
-    private func switchStatusAutomaticallyWithDelay(_ sender: UISwitch) {
+    fileprivate func switchStatusAutomaticallyWithDelay(_ sender: UISwitch) {
         
         executeAfterDelay(0.2) { 
             if sender == self.overwriteAlreadyExistsSwitch && !self.customNameSwitch.isOn {
@@ -412,7 +412,7 @@ extension AdditionalSettingsViewController {
         }
     }
     
-    private func enableAllCleanPhoneticSwitchWithDelay(_ enabled: Bool, delay: Bool) {
+    fileprivate func enableAllCleanPhoneticSwitchWithDelay(_ enabled: Bool, delay: Bool) {
         
         let delayInSeconds: Double = delay ? 0.2 : 0.0
         
@@ -452,7 +452,7 @@ extension AdditionalSettingsViewController {
 // MARK: - Switch With Alert
 extension AdditionalSettingsViewController {
     
-    private func enableAllCleanPhoneticSwitchWithAlert(_ enabled: Bool) {
+    fileprivate func enableAllCleanPhoneticSwitchWithAlert(_ enabled: Bool) {
         
         let title = NSLocalizedString("Clean All Keys", comment: "UIAlertController title")
         let message = NSLocalizedString("Are you sure to clean all keys? All of those keys including you manually added before will be removed too!", comment: "UIAlertController message")
@@ -465,7 +465,7 @@ extension AdditionalSettingsViewController {
         }
     }
     
-    private func enableCleanSocialProfilesSwitchWithAlert(_ enabled: Bool) {
+    fileprivate func enableCleanSocialProfilesSwitchWithAlert(_ enabled: Bool) {
         let title = NSLocalizedString("Clean Keys", comment: "UIAlertController title")
         let message = NSLocalizedString("Are you sure to clean Social Profiles keys? This can not be revoked!!", comment: "UIAlertController message")
         
@@ -479,7 +479,7 @@ extension AdditionalSettingsViewController {
         }
     }
     
-    private func enableCleanInstantMessageAddressesSwitchWithAlert(_ enabled: Bool) {
+    fileprivate func enableCleanInstantMessageAddressesSwitchWithAlert(_ enabled: Bool) {
         let title = NSLocalizedString("Clean Keys", comment: "UIAlertController title")
         let message = NSLocalizedString("Are you sure to clean Instant Message Addresses keys? This can not be revoked!!", comment: "UIAlertController message")
         
@@ -497,9 +497,9 @@ extension AdditionalSettingsViewController {
 
 extension UISwitch {
     
-    private func switchWithAlert(_ title: String, message: String, okActionTitle: String, on: Bool, closure: (() -> Void)) {
+    fileprivate func switchWithAlert(_ title: String, message: String, okActionTitle: String, on: Bool, closure: (() -> Void)) {
         if on {
-            AlertController.alertWithCancelAction(title: title, message: message, actionTitle: okActionTitle, completionHandler: { () -> Void in
+            AlertController.alertWithCancelAction(title, message: message, actionTitle: okActionTitle, completionHandler: { () -> Void in
                 closure()
                 }, canceledHandler: { () -> Void in
                     self.setOn(false, animated: true)
@@ -513,7 +513,7 @@ extension UISwitch {
 // MARK: - Configure Subviews
 extension AdditionalSettingsViewController {
     
-    private func configureQuickSearchSelectionViews() {
+    fileprivate func configureQuickSearchSelectionViews() {
         quickSearchSelectionIndicator.tintColor = UIColor.white
         quickSearchSelectionIndicator.image = UIImage(named: "expand")?.withRenderingMode(.alwaysTemplate)
         
@@ -565,7 +565,7 @@ extension AdditionalSettingsViewController {
 extension AdditionalSettingsViewController: TableViewHeaderFooterViewWithButtonDelegate {
     
     func tableViewHeaderFooterViewWithButtonDidTap() {
-        if let vc = UIStoryboard.Main.instantiateViewController(withIdentifier: String(HelpManualViewController.self)) as? HelpManualViewController {
+        if let vc = UIStoryboard.Main.instantiateViewController(withIdentifier: String(describing: HelpManualViewController.self)) as? HelpManualViewController {
             navigationController?.pushViewController(vc, animated: true)
         }
     }
@@ -643,11 +643,11 @@ extension AdditionalSettingsViewController {
 
 extension AdditionalSettingsViewController {
     
-    private func alertToConfigureForQuickSearchKey() {
+    fileprivate func alertToConfigureForQuickSearchKey() {
         UIApplication.initializeInTheFirstTime("alertToConfigureForQuickSearchKeyOnlyOnce") { () -> Void in
             let title = NSLocalizedString("Setting", comment: "UIAlertController title")
             let message = NSLocalizedString("Please tap the yellow button to complete settings. This message is only displayed once!", comment: "UIAlertController message")
-            AlertController.alert(title: title, message: message, completionHandler: nil)
+            AlertController.alert(title, message: message, completionHandler: nil)
         }
     }
 }

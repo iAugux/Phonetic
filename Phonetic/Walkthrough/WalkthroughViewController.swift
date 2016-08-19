@@ -58,7 +58,7 @@ class WalkthroughViewController: UIViewController {
         configureImageViewIfNeeded()
     }
     
-    private func configureStartButton(_ maxIndex: Int) {
+    fileprivate func configureStartButton(_ maxIndex: Int) {
         startButton.setTitle(NSLocalizedString("Get Started", comment: ""), for: UIControlState())
         startButton.isHidden = (index == maxIndex) ? false : true
         startButton.isUserInteractionEnabled = (index == maxIndex) ? true : false
@@ -66,11 +66,11 @@ class WalkthroughViewController: UIViewController {
         startButton.layer.masksToBounds = true
     }
     
-    private func configureSkipButtonIfNeeded(_ maxIndex: Int) {
+    fileprivate func configureSkipButtonIfNeeded(_ maxIndex: Int) {
         
         skipButton.setTitle(NSLocalizedString("Skip", comment: ""), for: UIControlState())
         
-        let hidden = !UserDefaults.standard.getBool(displayedWalthroughKey, defaultKeyValue: false)
+        let hidden = !UserDefaults.standard.bool(forKey: displayedWalthroughKey, defaultValue: false)
         
         if hidden {
             skipButton.isHidden = true
@@ -81,7 +81,7 @@ class WalkthroughViewController: UIViewController {
         skipButton.isUserInteractionEnabled = skipButton.isHidden ? false : true
     }
     
-    private func configureCollectionViewIfNeeded() {
+    fileprivate func configureCollectionViewIfNeeded() {
 
         guard index == 2 else {
             collectionView.isHidden = true
@@ -98,16 +98,16 @@ class WalkthroughViewController: UIViewController {
                 return 0
                 
             } else {
-                let rawValue = userDefaults.getInteger(kQuickSearchKeyRawValue, defaultKeyValue: QuickSearch.middleName.rawValue)
+                let rawValue = userDefaults.integer(forKey: kQuickSearchKeyRawValue, defaultValue: QuickSearch.middleName.rawValue)
                 return rawValue + 1
             }
         }()
         
         let firstIndexPath = IndexPath(row: row, section: 0)
-        collectionView.selectItem(at: firstIndexPath, animated: false, scrollPosition: UICollectionViewScrollPosition())
+        collectionView.selectItem(at: firstIndexPath, animated: false, scrollPosition: [])
     }
     
-    private func configureImageViewIfNeeded() {
+    fileprivate func configureImageViewIfNeeded() {
         
         guard index == 3 else { return }
         
@@ -116,9 +116,9 @@ class WalkthroughViewController: UIViewController {
         imageView.isUserInteractionEnabled = true
     }
     
-    @objc private func imageViewDidTap() {
+    @objc fileprivate func imageViewDidTap() {
 
-        guard let vc = UIStoryboard.Main.instantiateViewController(withIdentifier: String(HelpManualViewController.self)) as? HelpManualViewController else { return }
+        guard let vc = UIStoryboard.Main.instantiateViewController(withIdentifier: String(describing: HelpManualViewController.self)) as? HelpManualViewController else { return }
                 
         let nav = UINavigationController(rootViewController: vc)
         nav.completelyTransparentBar()
@@ -128,16 +128,14 @@ class WalkthroughViewController: UIViewController {
 
     @IBAction func startClicked() {
         UserDefaults.standard.set(true, forKey: displayedWalthroughKey)
-        UserDefaults.standard.synchronize()
-        
-        self.dismiss(animated: true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
     
     @IBAction func skipClicked() {
         
         startClicked()
         
-//        guard !NSUserDefaults.standardUserDefaults().getBool(displayedWalthroughKey, defaultKeyValue: false) else {
+//        guard !UserDefaults.standard().bool(forKey: displayedWalthroughKey, defaultValue: false) else {
 //            startClicked()
 //            return
 //        }

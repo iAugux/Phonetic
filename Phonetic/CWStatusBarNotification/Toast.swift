@@ -10,7 +10,7 @@ import Foundation
 
 class Toast {
     
-    private static var notification: CWStatusBarNotification = {
+    fileprivate static var notification: CWStatusBarNotification = {
         let notification = CWStatusBarNotification()
         notification.notificationAnimationInStyle = .top
         notification.notificationAnimationOutStyle = .top

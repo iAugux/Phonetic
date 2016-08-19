@@ -19,7 +19,7 @@ struct DetectPreferredLanguage {
     }
     
     // ["zh-Hant-US", "en-US", "zh-Hans-US", "zh-HK", "zh-TW"]
-    private static func isChineseLanguage(_ id: String) -> Bool {
+    fileprivate static func isChineseLanguage(_ id: String) -> Bool {
         
         guard !id.contains("zh-Hans") else { return true } // Chinese Mandrain
         guard !id.contains("zh-TW")   else { return true } // Taiwan

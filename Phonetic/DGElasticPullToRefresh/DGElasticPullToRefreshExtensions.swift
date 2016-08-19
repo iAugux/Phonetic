@@ -1,28 +1,28 @@
 /*
- 
- The MIT License (MIT)
- 
- Copyright (c) 2015 Danil Gontovnik
- 
- Permission is hereby granted, free of charge, to any person obtaining a copy
- of this software and associated documentation files (the "Software"), to deal
- in the Software without restriction, including without limitation the rights
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- copies of the Software, and to permit persons to whom the Software is
- furnished to do so, subject to the following conditions:
- 
- The above copyright notice and this permission notice shall be included in all
- copies or substantial portions of the Software.
- 
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- SOFTWARE.
- 
- */
+
+The MIT License (MIT)
+
+Copyright (c) 2015 Danil Gontovnik
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+*/
 
 import UIKit
 import ObjectiveC
@@ -35,11 +35,11 @@ public extension NSObject {
     // MARK: -
     // MARK: Vars
     
-    private struct dg_associatedKeys {
+    fileprivate struct dg_associatedKeys {
         static var observersArray = "observers"
     }
     
-    private var dg_observers: [[String : NSObject]] {
+    fileprivate var dg_observers: [[String : NSObject]] {
         get {
             if let observers = objc_getAssociatedObject(self, &dg_associatedKeys.observersArray) as? [[String : NSObject]] {
                 return observers
@@ -82,16 +82,16 @@ public extension NSObject {
 public extension UIScrollView {
     
     // MARK: - Vars
-    
-    private struct dg_associatedKeys {
+
+    fileprivate struct dg_associatedKeys {
         static var pullToRefreshView = "pullToRefreshView"
     }
-    
-    private var pullToRefreshView: DGElasticPullToRefreshView? {
+
+    fileprivate var pullToRefreshView: DGElasticPullToRefreshView? {
         get {
             return objc_getAssociatedObject(self, &dg_associatedKeys.pullToRefreshView) as? DGElasticPullToRefreshView
         }
-        
+
         set {
             objc_setAssociatedObject(self, &dg_associatedKeys.pullToRefreshView, newValue, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
         }
@@ -99,16 +99,16 @@ public extension UIScrollView {
     
     // MARK: - Methods (Public)
     
-    public func dg_addPullToRefreshWithActionHandler(_ actionHandler: () -> Void, loadingView: DGElasticPullToRefreshLoadingView?) {
+    public func dg_addPullToRefreshWithActionHandler(_ actionHandler: (() -> Void)!, loadingView: DGElasticPullToRefreshLoadingView?) {
         isMultipleTouchEnabled = false
         panGestureRecognizer.maximumNumberOfTouches = 1
-        
+
         let pullToRefreshView = DGElasticPullToRefreshView()
         self.pullToRefreshView = pullToRefreshView
         pullToRefreshView.actionHandler = actionHandler
         pullToRefreshView.loadingView = loadingView
         addSubview(pullToRefreshView)
-        
+
         pullToRefreshView.observing = true
     }
     

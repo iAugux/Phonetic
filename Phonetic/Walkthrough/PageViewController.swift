@@ -19,22 +19,22 @@ class PageViewController: UIPageViewController {
     
     var maxIndex: Int!
     
-    private static let ACCESS_CONTACTS = NSLocalizedString("Access Contacts", comment: "")
-    private static let REQUIRE_CONTACTS_PERMISSION = NSLocalizedString("Contacts permission is required.", comment: "")
+    fileprivate static let ACCESS_CONTACTS = NSLocalizedString("Access Contacts", comment: "")
+    fileprivate static let REQUIRE_CONTACTS_PERMISSION = NSLocalizedString("Contacts permission is required.", comment: "")
     
-    private let pageImages = ["access_contacts",
+    fileprivate let pageImages = ["access_contacts",
                               "push_notification",
                               "tutorial_screenshot",
                               "access_settings",
                               "tutorial_screenshot"]
     
-    private let pageHeaders = [ACCESS_CONTACTS,
+    fileprivate let pageHeaders = [ACCESS_CONTACTS,
                                NSLocalizedString("Push Notification", comment: ""),
                                NSLocalizedString("Quick Search", comment: ""),
                                NSLocalizedString("One More Step", comment: ""),
                                NSLocalizedString("Ready to Go", comment: "")]
     
-    private let pageDescriptions = [REQUIRE_CONTACTS_PERMISSION,
+    fileprivate let pageDescriptions = [REQUIRE_CONTACTS_PERMISSION,
                                     NSLocalizedString("Once the mission completed, you'll receive Notification.", comment: ""),
                                     NSLocalizedString("Choose a key for Quick Search. Default is「Nickname Key」.", comment: ""),
                                     NSLocalizedString("Tap the Settings icon to configure.", comment: ""),
@@ -54,17 +54,17 @@ class PageViewController: UIPageViewController {
         }
     }
 
-    private func nextPageWithIndex(_ index: Int) {
+    fileprivate func nextPageWithIndex(_ index: Int) {
         if let nextWalkthroughVC = self.viewControllerAtIndex(index + 1) {
             setViewControllers([nextWalkthroughVC], direction: .forward, animated: true, completion: nil)
         }
     }
     
-    private func viewControllerAtIndex(_ index: Int) -> WalkthroughViewController? {
+    fileprivate func viewControllerAtIndex(_ index: Int) -> WalkthroughViewController? {
         
         if index == NSNotFound || index < 0 || index >= self.pageDescriptions.count { return nil }
         
-        guard let walkthroughViewController = WorkthroughSB.instantiateViewController(withIdentifier: String(WalkthroughViewController.self)) as? WalkthroughViewController else { return nil }
+        guard let walkthroughViewController = WorkthroughSB.instantiateViewController(withIdentifier: String(describing: WalkthroughViewController.self)) as? WalkthroughViewController else { return nil }
         
         walkthroughViewController.imageName = pageImages[index]
         walkthroughViewController.headerText = pageHeaders[index]
@@ -81,7 +81,7 @@ class PageViewController: UIPageViewController {
 
 extension PageViewController {
     
-    private func viewControllerDidSetAt(_ index: Int) {
+    fileprivate func viewControllerDidSetAt(_ index: Int) {
         
         switch index {
         case 0:
@@ -97,13 +97,9 @@ extension PageViewController {
                 UIApplication.shared.registerUserNotificationSettings(UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil))
             })
             
-//        case 2:
-            
-            
         default: break
         }
     }
-    
     
 }
 

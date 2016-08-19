@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		B112787C1D61BDDC009402C5 /* Pods_Phonetic.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D093719AEE444E64008DAEB0 /* Pods_Phonetic.framework */; };
 		B112787D1D61BDDC009402C5 /* Pods_Phonetic.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D093719AEE444E64008DAEB0 /* Pods_Phonetic.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		B112787F1D61C268009402C5 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = B112787E1D61C268009402C5 /* README.md */; };
 		B1128A0F1CBA177A000258E2 /* AppDelegate+3DTouch.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1128A0E1CBA1779000258E2 /* AppDelegate+3DTouch.swift */; };
 		B1128A111CBA873A000258E2 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1128A101CBA873A000258E2 /* Utils.swift */; };
 		B1159B701C59045800F16037 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1159B6F1C59045800F16037 /* AppDelegate.swift */; };
@@ -135,7 +134,6 @@
 
 /* Begin PBXFileReference section */
 		A54D96AA551C0EE06AE9B3D9 /* Pods-Phonetic.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Phonetic.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Phonetic/Pods-Phonetic.debug.xcconfig"; sourceTree = "<group>"; };
-		B112787E1D61C268009402C5 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
 		B1128A0E1CBA1779000258E2 /* AppDelegate+3DTouch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AppDelegate+3DTouch.swift"; sourceTree = "<group>"; };
 		B1128A101CBA873A000258E2 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		B1159B6C1C59045800F16037 /* Phonetic.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Phonetic.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -401,7 +399,6 @@
 				B16FEB2F1C779F6400FEB550 /* Localizable.strings */,
 				B125B73F1D3C7A650029AC1E /* InfoPlist.strings */,
 				B1159B7B1C59045800F16037 /* Info.plist */,
-				B112787E1D61C268009402C5 /* README.md */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -625,6 +622,7 @@
 						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = J4Z2NCTR3S;
 						DevelopmentTeamName = "Lei Wang";
+						LastSwiftMigration = 0800;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -755,7 +753,6 @@
 				B174F6511CD636EE00458FE6 /* CustomSelectedBackgroundView.swift in Sources */,
 				B18AC20B1C71C0C80090AE16 /* BaseTableViewController.swift in Sources */,
 				B1215B201C6506D100519F36 /* PhoneticContacts+QuickSearch.swift in Sources */,
-				B112787F1D61C268009402C5 /* README.md in Sources */,
 				B19686491C5C916C006F4614 /* GradientView.swift in Sources */,
 				B121B1B11C7C899B00DC0C05 /* PolyphonicTableViewCell.swift in Sources */,
 				B1887A8B1C639AE900AD9BC2 /* DGElasticPullToRefreshLoadingViewCircle.swift in Sources */,

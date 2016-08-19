@@ -16,8 +16,8 @@ class BlurBackgroundView: UIView {
             blurView?.effect = effect
         }
     }
-    
-    private var blurView: UIVisualEffectView!
+
+    fileprivate var blurView: UIVisualEffectView!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -30,9 +30,9 @@ class BlurBackgroundView: UIView {
             make.edges.equalTo(0)
         }
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
 }

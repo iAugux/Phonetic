@@ -17,14 +17,14 @@ func systemVersionLessThan(_ value : String) -> Bool {
 
 // MARK: - ScrollLabel
 
-public class ScrollLabel : UILabel {
+open class ScrollLabel : UILabel {
     
     // MARK: - properties
     
-    private let padding : CGFloat = 10.0
-    private let scrollSpeed : CGFloat = 40.0
-    private let scrollDelay : CGFloat = 1.0
-    private var textImage : UIImageView?
+    fileprivate let padding : CGFloat = 10.0
+    fileprivate let scrollSpeed : CGFloat = 40.0
+    fileprivate let scrollDelay : CGFloat = 1.0
+    fileprivate var textImage : UIImageView?
     
     // MARK: - setup
     
@@ -38,7 +38,7 @@ public class ScrollLabel : UILabel {
         super.init(coder: aDecoder)
     }
     
-    override public func drawText(in rect: CGRect) {
+    override open func drawText(in rect: CGRect) {
         guard self.scrollOffset() > 0 else {
             self.textImage = nil
             super.drawText(in: rect.insetBy(dx: padding, dy: 0))
@@ -69,7 +69,7 @@ public class ScrollLabel : UILabel {
     
     // MARK - methods
     
-    private func fullWidth() -> CGFloat {
+    fileprivate func fullWidth() -> CGFloat {
         guard let content = self.text else {
             return 0.0
         }
@@ -78,7 +78,7 @@ public class ScrollLabel : UILabel {
         return size.width
     }
     
-    private func scrollOffset() -> CGFloat {
+    fileprivate func scrollOffset() -> CGFloat {
         guard self.numberOfLines == 1 else {
             return 0.0
         }
@@ -94,10 +94,10 @@ public class ScrollLabel : UILabel {
 
 // MARK: - CWWindowContainer
 
-public class CWWindowContainer : UIWindow {
+open class CWWindowContainer : UIWindow {
     var notificationHeight : CGFloat = 0.0
     
-    override public func hitTest(_ pt: CGPoint, with event: UIEvent?) -> UIView? {
+    override open func hitTest(_ pt: CGPoint, with event: UIEvent?) -> UIView? {
         var height : CGFloat = 0.0
         if systemVersionLessThan("8.0.0") && UIInterfaceOrientationIsLandscape(
             UIApplication.shared.statusBarOrientation) {

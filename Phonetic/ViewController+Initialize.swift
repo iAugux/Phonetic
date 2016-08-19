@@ -39,11 +39,11 @@ extension ViewController {
 
     }
     
-    private func goSetting() {
+    fileprivate func goSetting() {
         performSegue(withIdentifier: "rootVCPresentAdditionalVC", sender: self)
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "rootVCPresentAdditionalVC" {
             guard let destinationVC = segue.destination as? SettingsNavigationController else { return }
             destinationVC.popoverPresentationController?.sourceRect = settingButton.bounds

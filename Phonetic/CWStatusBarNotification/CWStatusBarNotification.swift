@@ -29,35 +29,35 @@ import UIKit
 
 // MARK: - CWStatusBarNotification
 
-public class CWStatusBarNotification : NSObject {
+open class CWStatusBarNotification : NSObject {
     // MARK: - properties
     
-    private let fontSize : CGFloat = 10.0
+    fileprivate let fontSize : CGFloat = 10.0
 
-    private var tapGestureRecognizer : UITapGestureRecognizer!
-    private var dismissHandle : CWDelayedClosureHandle?
-    private var isCustomView : Bool
+    fileprivate var tapGestureRecognizer : UITapGestureRecognizer!
+    fileprivate var dismissHandle : CWDelayedClosureHandle?
+    fileprivate var isCustomView : Bool
     
-    public var notificationLabel : ScrollLabel?
-    public var statusBarView : UIView?
-    public var notificationTappedClosure : () -> ()
-    public var notificationIsShowing = false
-    public var notificationIsDismissing = false
-    public var notificationWindow : CWWindowContainer?
+    open var notificationLabel : ScrollLabel?
+    open var statusBarView : UIView?
+    open var notificationTappedClosure : () -> ()
+    open var notificationIsShowing = false
+    open var notificationIsDismissing = false
+    open var notificationWindow : CWWindowContainer?
     
-    public var notificationLabelBackgroundColor : UIColor
-    public var notificationLabelTextColor : UIColor
-    public var notificationLabelFont : UIFont
-    public var notificationLabelHeight : CGFloat
-    public var customView : UIView?
-    public var multiline : Bool
-    public var supportedInterfaceOrientations : UIInterfaceOrientationMask
-    public var notificationAnimationDuration : TimeInterval
-    public var notificationStyle : CWNotificationStyle
-    public var notificationAnimationInStyle : CWNotificationAnimationStyle
-    public var notificationAnimationOutStyle : CWNotificationAnimationStyle
-    public var notificationAnimationType : CWNotificationAnimationType
-    public var preferredStatusBarStyle : UIStatusBarStyle
+    open var notificationLabelBackgroundColor : UIColor
+    open var notificationLabelTextColor : UIColor
+    open var notificationLabelFont : UIFont
+    open var notificationLabelHeight : CGFloat
+    open var customView : UIView?
+    open var multiline : Bool
+    open var supportedInterfaceOrientations : UIInterfaceOrientationMask
+    open var notificationAnimationDuration : TimeInterval
+    open var notificationStyle : CWNotificationStyle
+    open var notificationAnimationInStyle : CWNotificationAnimationStyle
+    open var notificationAnimationOutStyle : CWNotificationAnimationStyle
+    open var notificationAnimationType : CWNotificationAnimationType
+    open var preferredStatusBarStyle : UIStatusBarStyle
     
     // MARK: - setup
     
@@ -358,7 +358,7 @@ public class CWStatusBarNotification : NSObject {
     // MARK: - display notification
     
     public func displayNotificationWithMessage(_ message : String,
-        completion : () -> ()) {
+        completion : @escaping () -> ()) {
             guard !self.notificationIsShowing else {
                 return
             }
@@ -420,7 +420,7 @@ public class CWStatusBarNotification : NSObject {
     }
     
     public func displayNotificationWithAttributedString(
-        _ attributedString : NSAttributedString, completion : () -> ()) {
+        _ attributedString : NSAttributedString, completion : @escaping () -> ()) {
             self.displayNotificationWithMessage(attributedString.string,
                 completion: completion)
             self.notificationLabel?.attributedText = attributedString
@@ -434,7 +434,7 @@ public class CWStatusBarNotification : NSObject {
             self.notificationLabel?.attributedText = attributedString
     }
     
-    public func displayNotificationWithView(_ view : UIView, completion : () -> ()) {
+    public func displayNotificationWithView(_ view : UIView, completion : @escaping () -> ()) {
         guard !self.notificationIsShowing else {
             return
         }

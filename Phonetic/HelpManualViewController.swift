@@ -10,7 +10,7 @@ import UIKit
 
 class HelpManualViewController: UIViewController {
     
-    @IBOutlet private weak var settingButton: UIButton!
+    @IBOutlet fileprivate weak var settingButton: UIButton!
 
     override func viewDidLoad() {
         super.viewDidLoad()

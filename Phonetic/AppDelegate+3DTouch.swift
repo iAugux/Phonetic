@@ -9,23 +9,21 @@
 import UIKit
 
 
-
 extension AppDelegate {
     
-    @objc(application:performActionForShortcutItem:completionHandler:) func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: (Bool) -> Void) {
+    func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: (Bool) -> Void) {
         
         // react to shortcut item selections
         debugPrint("A shortcut item was pressed. It was ", shortcutItem.localizedTitle)
-        
+
         switch shortcutItem.type {
             case Type.Excute.rawValue:   execute()
             case Type.Rollback.rawValue: rollback()
             default: return
         }
-        
     }
     
-    private enum `Type`: String {
+    fileprivate enum `Type`: String {
         case Excute
         case Rollback
     }
@@ -54,15 +52,15 @@ extension AppDelegate {
     
     // MARK: - Actions
     
-    private func execute() {
+    fileprivate func execute() {
         viewController?.execute()
     }
     
-    private func rollback() {
+    fileprivate func rollback() {
         viewController?.clean()
     }
     
-    private var viewController: ViewController? {
+    fileprivate var viewController: ViewController? {
         
         // ensure root vc is presenting.
         window?.rootViewController?.presentedViewController?.dismissViewControllerWithoutAnimation()

@@ -29,9 +29,9 @@ class SettingViewController: UIViewController {
     
     @IBOutlet weak var polyphonicButton: UIButton!
     
-    private let userDefaults = UserDefaults.standard
+    fileprivate let userDefaults = UserDefaults.standard
     
-    private var customBarButton: UIButton!
+    fileprivate var customBarButton: UIButton!
     
     
     @IBOutlet weak var enableAnimationSwitch: UISwitch! {
@@ -80,7 +80,7 @@ class SettingViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "VCPresentPolyphonicVC" {
             guard let destinationVC = segue.destination as? SettingsNavigationController else { return }
             destinationVC.popoverPresentationController?.sourceRect = polyphonicButton.bounds
@@ -117,7 +117,7 @@ class SettingViewController: UIViewController {
     }
     
     private func presentPopoverController() {
-        guard let vc = UIStoryboard.Main.instantiateViewController(withIdentifier: String(SettingsNavigationController.self)) as? SettingsNavigationController,
+        guard let vc = UIStoryboard.Main.instantiateViewController(withIdentifier: String(describing: SettingsNavigationController.self)) as? SettingsNavigationController,
             let sourceView = customBarButton else { return }
         
         vc.modalPresentationStyle = .popover

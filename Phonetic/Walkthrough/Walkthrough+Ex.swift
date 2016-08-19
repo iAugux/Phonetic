@@ -10,16 +10,16 @@
 import UIKit
 
 
-func displayWalkthroughIfNeeded(transparent: Bool = true, completion: Closure? = nil) {
+func displayWalkthroughIfNeeded(_ transparent: Bool = true, completion: Closure? = nil) {
 
     guard !UserDefaults.standard.bool(forKey: displayedWalthroughKey) else { return }
     
-    displayWalkthrough(transparent: transparent, completion: completion)
+    displayWalkthrough(transparent, completion: completion)
 }
 
-func displayWalkthrough(transparent: Bool = true, completion: Closure? = nil) {
+func displayWalkthrough(_ transparent: Bool = true, completion: Closure? = nil) {
     
-    guard let pageViewController = WorkthroughSB.instantiateViewController(withIdentifier: String(PageViewController.self)) as? PageViewController else { return }
+    guard let pageViewController = WorkthroughSB.instantiateViewController(withIdentifier: String(describing: PageViewController.self)) as? PageViewController else { return }
     
     transparent ? pageViewController.modalPresentationStyle = .overCurrentContext : ()
     

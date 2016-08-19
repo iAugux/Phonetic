@@ -11,11 +11,10 @@ import UIKit
 
 class PolyphonicViewController: BaseTableViewController {
     
-    private let kEnableAllPolyphonicChars = "kEnableAllPolyphonicCharacters"
+    fileprivate let kEnableAllPolyphonicChars = "kEnableAllPolyphonicCharacters"
     
-    private var names: NSDictionary!
-    private var nameSectionTitles: NSArray!
-    private var nameIndexTitles: [String]!
+    fileprivate var names: NSDictionary!
+    fileprivate var nameSectionTitles: NSArray!
     
     @IBOutlet weak var masterSwitch: UISwitch! {
         didSet {
@@ -26,7 +25,7 @@ class PolyphonicViewController: BaseTableViewController {
     @IBOutlet weak var masterLabel: UILabel!
     @IBOutlet weak var headerViewContainer: UIView!
     @IBOutlet weak var masterSwitchTrailingConstraint: NSLayoutConstraint!
-
+    
     override func loadView() {
         super.loadView()
         _title = NSLocalizedString("Polyphonic Characters", comment: "SettingsNavigationController title - Polyphonic Chararcters")
@@ -36,7 +35,7 @@ class PolyphonicViewController: BaseTableViewController {
         masterSwitch.onTintColor = GLOBAL_CUSTOM_COLOR
         masterSwitch.shouldSwitch(kEnableAllPolyphonicChars, defaultBool: true)
         
-        UIDevice.isPad ? masterSwitchTrailingConstraint.constant = 42 : ()
+        UIDevice.isPad ? masterSwitchTrailingConstraint.constant = 42 : ()        
     }
     
     override func viewDidLoad() {
@@ -46,24 +45,23 @@ class PolyphonicViewController: BaseTableViewController {
             "B" : [PolyphonicChar.b1, PolyphonicChar.b2, PolyphonicChar.b3],
             "C" : [PolyphonicChar.c1, PolyphonicChar.c2, PolyphonicChar.c3],
             "D" : [PolyphonicChar.d1],
-            "G" : [PolyphonicChar.g1, PolyphonicChar.g2],
+            "G" : [PolyphonicChar.g1, PolyphonicChar.g2, PolyphonicChar.g3, PolyphonicChar.g4],
             "H" : [PolyphonicChar.h1],
-            "J" : [PolyphonicChar.j1],
+            "J" : [PolyphonicChar.j1, PolyphonicChar.j2],
             "K" : [PolyphonicChar.k1],
             "M" : [PolyphonicChar.m1, PolyphonicChar.m2],
+            "N" : [PolyphonicChar.n1],
             "O" : [PolyphonicChar.o1],
             "P" : [PolyphonicChar.p1, PolyphonicChar.p2],
-            "Q" : [PolyphonicChar.q1, PolyphonicChar.q2, PolyphonicChar.q3],
+            "Q" : [PolyphonicChar.q1, PolyphonicChar.q2, PolyphonicChar.q3, PolyphonicChar.q4, PolyphonicChar.q5],
             "R" : [PolyphonicChar.r1],
-            "S" : [PolyphonicChar.s1, PolyphonicChar.s2, PolyphonicChar.s3],
-            "X" : [PolyphonicChar.x1],
+            "S" : [PolyphonicChar.s1, PolyphonicChar.s2, PolyphonicChar.s3, PolyphonicChar.s4],
+            "X" : [PolyphonicChar.x1, PolyphonicChar.x2],
             "Y" : [PolyphonicChar.y1, PolyphonicChar.y2, PolyphonicChar.y3, PolyphonicChar.y4],
             "Z" : [PolyphonicChar.z1, PolyphonicChar.z2, PolyphonicChar.z3, PolyphonicChar.z4, PolyphonicChar.z5]
         ]
-
-        nameSectionTitles = (names.allKeys as! [String]).sorted()
-        nameIndexTitles   = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
         
+        nameSectionTitles = (names.allKeys as! [String]).sorted() as NSArray
     }
     
     override func didReceiveMemoryWarning() {
@@ -74,39 +72,33 @@ class PolyphonicViewController: BaseTableViewController {
     @IBAction func masterSwitchDidTap(_ sender: UISwitch) {
         
         for polyphonic in PolyphonicChar.all {
+            
             UserDefaults.standard.set(sender.isOn, forKey: polyphonic.key)
             
-            if UserDefaults.standard.synchronize() {
-                
-                setMasterLabelText(sender.isOn)
-                
-                UserDefaults.standard.set(sender.isOn, forKey: kEnableAllPolyphonicChars)
-                UserDefaults.standard.synchronize()
-                
-                // Just for UI, did not store values.
-                executeAfterDelay(0.2, closure: {
-                    for cell in self.tableView.visibleCells {
-                        if let cell = cell as? PolyphonicTableViewCell {
-                            cell.polyphonicSwitch.isOn = sender.isOn
-                        }
+            setMasterLabelText(sender.isOn)
+            
+            UserDefaults.standard.set(sender.isOn, forKey: kEnableAllPolyphonicChars)
+            
+            // Just for UI, did not store values.
+            executeAfterDelay(0.2, closure: {
+                for cell in self.tableView.visibleCells {
+                    if let cell = cell as? PolyphonicTableViewCell {
+                        cell.polyphonicSwitch.isOn = sender.isOn
                     }
-                })
-                
-            } else {
-                // Store values failed, set switch status backwards.
-                masterSwitch.setOn(sender.isOn, animated: true)
-            }
+                }
+            })
         }
-        
     }
     
-    private func setMasterLabelText(_ on: Bool) {
+    fileprivate func setMasterLabelText(_ on: Bool) {
         masterLabel?.text = on ? NSLocalizedString("Enable All", comment: "") : NSLocalizedString("Disable All", comment: "")
     }
     
 }
 
+
 // MARK: - Table View Data Source
+
 extension PolyphonicViewController {
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -115,7 +107,7 @@ extension PolyphonicViewController {
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let sectionTitle = nameSectionTitles.object(at: section)
-        let sectionNames = names.object(forKey: sectionTitle)
+        let sectionNames = names.object(forKey: sectionTitle) as AnyObject?
         return sectionNames?.count ?? 0
     }
     
@@ -123,31 +115,34 @@ extension PolyphonicViewController {
         return nameSectionTitles.object(at: section) as? String
     }
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if let cell = tableView.dequeueReusableCell(withIdentifier: String(PolyphonicTableViewCell.self), for: indexPath) as? PolyphonicTableViewCell {
-            let sectionTitle = nameSectionTitles.object(at: indexPath.section)
-            let sectionNames = names.object(forKey: sectionTitle)
-            if let name = sectionNames?.object(at: indexPath.row) as? Polyphonic {
-                cell.nameLabel?.text = name.character
-                cell.polyphonicLabel?.text = "『 \(name.pinyin) 』"
-                cell.polyphonicSwitch?.isOn = name.on
-                cell.polyphonicKey = name.key
-            }
-            
-            return cell
-        }
-        return UITableViewCell()
-    }
-    
     override func sectionIndexTitles(for tableView: UITableView) -> [String]? {
-        return nameIndexTitles
+        return UILocalizedIndexedCollation.current().sectionIndexTitles
     }
     
-    override func tableView(_ tableView: UITableView, sectionForSectionIndexTitle title: String, at index: Int) -> Int {
-        return nameSectionTitles.index(of: title)
+    //    override func tableView(tableView: UITableView, sectionForSectionIndexTitle title: String, atIndex index: Int) -> Int {
+    //        return UILocalizedIndexedCollation.currentCollation().sectionForSectionIndexTitleAtIndex(index)
+    //    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: PolyphonicTableViewCell.self), for: indexPath) as? PolyphonicTableViewCell else {
+            return UITableViewCell()
+        }
+        
+        let sectionTitle = nameSectionTitles.object(at: indexPath.section)
+        let sectionNames = names.object(forKey: sectionTitle) as? NSArray
+        if let name = sectionNames?.object(at: indexPath.row) as? Polyphonic {
+            cell.nameLabel?.text = name.character
+            cell.polyphonicLabel?.text = "『 \(name.pinyin) 』"
+            cell.polyphonicSwitch?.isOn = name.on
+            cell.polyphonicKey = name.key
+        }
+        
+        return cell
     }
     
 }
+
 
 // MARK: - Table View Delegate
 extension PolyphonicViewController {

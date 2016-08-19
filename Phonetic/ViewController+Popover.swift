@@ -36,19 +36,19 @@ extension ViewController: UIPopoverPresentationControllerDelegate {
         }
     }
     
-    private enum PopoverButton {
+    fileprivate enum PopoverButton {
         case info
         case setting
     }
 
-    private struct Popover {
+    fileprivate struct Popover {
         static var popoverContent: UIViewController?
         static var popover: UIPopoverPresentationController?
         static var currentButton: PopoverButton?
         static let preferredContentWith: CGFloat = 220 //min(300, UIScreen.screenWidth() * 0.6)
         
-        private static let preferredContentHeight: CGFloat = 260
-        private static let preferredMutableContentHeight = min(345, UIScreen.screenHeight() * 0.66)
+        fileprivate static let preferredContentHeight: CGFloat = 260
+        fileprivate static let preferredMutableContentHeight = min(345, UIScreen.screenHeight() * 0.66)
         
         static let preferredContentSize = CGSize(width: preferredContentWith, height: preferredContentHeight)
         static let preferredMutableContentSize = CGSize(width: preferredContentWith, height: preferredMutableContentHeight)
@@ -74,13 +74,13 @@ extension ViewController: UIPopoverPresentationControllerDelegate {
     }
     
     // MARK: - configure popover controller
-    private func popoverPresentViewController(_ button: PopoverButton) {
+    fileprivate func popoverPresentViewController(_ button: PopoverButton) {
         var rect: CGRect
         var title: String
         
         switch button {
         case .info:
-            guard let infoVC = UIStoryboard.Main.instantiateViewController(withIdentifier: String(InfoViewController.self)) as? InfoViewController else { return }
+            guard let infoVC = UIStoryboard.Main.instantiateViewController(withIdentifier: String(describing: InfoViewController.self)) as? InfoViewController else { return }
             Popover.popoverContent = infoVC
             Popover.popoverContent!.preferredContentSize = Popover.preferredContentSize
             
@@ -89,7 +89,7 @@ extension ViewController: UIPopoverPresentationControllerDelegate {
             rect = infoButton.frame
             
         case .setting:
-            guard let settingVC = UIStoryboard.Main.instantiateViewController(withIdentifier: String(SettingViewController.self)) as? SettingViewController else { return }
+            guard let settingVC = UIStoryboard.Main.instantiateViewController(withIdentifier: String(describing: SettingViewController.self)) as? SettingViewController else { return }
             Popover.popoverContent = settingVC
             Popover.popoverContent!.preferredContentSize = Popover.preferredMutableContentSize
             
@@ -118,7 +118,7 @@ extension ViewController: UIPopoverPresentationControllerDelegate {
         }
     }
     
-    private func configureCustomNavigationTitle(_ nav: UINavigationController, title: String?) {
+    fileprivate func configureCustomNavigationTitle(_ nav: UINavigationController, title: String?) {
         
         guard title != nil else { return }
         

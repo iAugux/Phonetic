@@ -31,7 +31,7 @@ extension UITableViewController {
 
 extension UIViewController {
     
-    func pullToDismissViewController(tableView: UITableView?, backgroundColor: UIColor, fillColor: UIColor, completionHandler: (() -> Void)?) {
+    func pullToDismissViewController(_ tableView: UITableView?, backgroundColor: UIColor, fillColor: UIColor, completionHandler: (() -> Void)?) {
                 
         tableView?.dg_addPullToRefreshWithActionHandler({ [weak self] () -> Void in
             

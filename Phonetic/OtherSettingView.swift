@@ -13,7 +13,7 @@ import Device
 
 class OtherSettingView: UIStackView, MFMailComposeViewControllerDelegate, SFSafariViewControllerDelegate {
     
-    private var picker: MFMailComposeViewController!
+    fileprivate var picker: MFMailComposeViewController!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -45,7 +45,7 @@ class OtherSettingView: UIStackView, MFMailComposeViewControllerDelegate, SFSafa
     }
     
     // MARK: - follow me on Twitter
-    private func followOnTwitter() {
+    fileprivate func followOnTwitter() {
         let tweetbotURL = URL(string: "tweetbot://iAugux/user_profile/iAugux")
         let twitterURL = URL(string: "twitter://user?screen_name=iAugux")
         if UIApplication.shared.canOpenURL(tweetbotURL!) {

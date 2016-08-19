@@ -47,43 +47,43 @@ extension PhoneticContacts {
         removeInstantMessageAddressesKeysIfNeeded(mutableContact)
     }
     
-    private func removePhoneticNicknameIfNeeded(_ mutableContact: CNMutableContact) {
+    fileprivate func removePhoneticNicknameIfNeeded(_ mutableContact: CNMutableContact) {
         removePhoneticKeysIfNeeded(mutableContact, shouldClean: shouldCleanPhoneticNicknameKeys, key: CNContactNicknameKey)
     }
     
-    private func removePhoneticMiddleNameIfNeeded(_ mutableContact: CNMutableContact) {
+    fileprivate func removePhoneticMiddleNameIfNeeded(_ mutableContact: CNMutableContact) {
         removePhoneticKeysIfNeeded(mutableContact, shouldClean: shouldCleanPhoneticMiddleNameKeys, key: CNContactPhoneticMiddleNameKey)
     }
     
-    private func removePhoneticDepartmentKeysIfNeeded(_ mutableContact: CNMutableContact) {
+    fileprivate func removePhoneticDepartmentKeysIfNeeded(_ mutableContact: CNMutableContact) {
         removePhoneticKeysIfNeeded(mutableContact, shouldClean: shouldCleanPhoneticDepartmentKeys, key: CNContactDepartmentNameKey)
     }
     
-    private func removePhoneticCompanyKeysIfNeeded(_ mutableContact: CNMutableContact) {
+    fileprivate func removePhoneticCompanyKeysIfNeeded(_ mutableContact: CNMutableContact) {
         removePhoneticKeysIfNeeded(mutableContact, shouldClean: shouldCleanPhoneticCompanyKeys, key: CNContactOrganizationNameKey)
     }
     
-    private func removePhoneticJobTitleKeysIfNeeded(_ mutableContact: CNMutableContact) {
+    fileprivate func removePhoneticJobTitleKeysIfNeeded(_ mutableContact: CNMutableContact) {
         removePhoneticKeysIfNeeded(mutableContact, shouldClean: shouldCleanPhoneticJobTitleKeys, key: CNContactJobTitleKey)
     }
     
-    private func removePhoneticPrefixKeysIfNeeded(_ mutableContact: CNMutableContact) {
+    fileprivate func removePhoneticPrefixKeysIfNeeded(_ mutableContact: CNMutableContact) {
         removePhoneticKeysIfNeeded(mutableContact, shouldClean: shouldCleanPhoneticPrefixKeys, key: CNContactNamePrefixKey)
     }
     
-    private func removePhoneticSuffixKeysIfNeeded(_ mutableContact: CNMutableContact) {
+    fileprivate func removePhoneticSuffixKeysIfNeeded(_ mutableContact: CNMutableContact) {
         removePhoneticKeysIfNeeded(mutableContact, shouldClean: shouldCleanPhoneticSuffixKeys, key: CNContactNameSuffixKey)
     }
     
-    private func removeSocialProfilesKeysIfNeeded(_ mutableContact: CNMutableContact) {
+    fileprivate func removeSocialProfilesKeysIfNeeded(_ mutableContact: CNMutableContact) {
         removeKeysArrayIfNeeded(mutableContact, shouldClean: shouldCleanSocialProfilesKeys, key: CNContactSocialProfilesKey)
     }
     
-    private func removeInstantMessageAddressesKeysIfNeeded(_ mutableContact: CNMutableContact) {
+    fileprivate func removeInstantMessageAddressesKeysIfNeeded(_ mutableContact: CNMutableContact) {
         removeKeysArrayIfNeeded(mutableContact, shouldClean: shouldCleanInstantMessageAddressesKeys, key: CNContactInstantMessageAddressesKey)
     }
     
-    private func removePhoneticKeysIfNeeded(_ mutableContact: CNMutableContact, shouldClean: Bool, key: String) {
+    fileprivate func removePhoneticKeysIfNeeded(_ mutableContact: CNMutableContact, shouldClean: Bool, key: String) {
         
         guard shouldClean else { return }
         
@@ -92,7 +92,7 @@ extension PhoneticContacts {
         }
     }
     
-    private func removeKeysArrayIfNeeded(_ mutableContact: CNMutableContact, shouldClean: Bool, key: String) {
+    fileprivate func removeKeysArrayIfNeeded(_ mutableContact: CNMutableContact, shouldClean: Bool, key: String) {
         
         guard shouldClean, let _ = mutableContact.value(forKey: key) as? NSArray else { return }
         
@@ -103,50 +103,50 @@ extension PhoneticContacts {
 
 extension PhoneticContacts {
     
-    private var shouldCleanPhoneticNicknameKeys: Bool {
+    fileprivate var shouldCleanPhoneticNicknameKeys: Bool {
         return shouldCleanPhoneticKey(kCleanPhoneticNickname, defaultKeyValue: kCleanPhoneticNicknameDefaultBool)
     }
     
-    private var shouldCleanPhoneticMiddleNameKeys: Bool {
+    fileprivate var shouldCleanPhoneticMiddleNameKeys: Bool {
         return shouldCleanPhoneticKey(kCleanPhoneticMiddleName, defaultKeyValue: kCleanPhoneticMiddleNameDefaultBool)
     }
     
-    private var shouldCleanPhoneticDepartmentKeys: Bool {
+    fileprivate var shouldCleanPhoneticDepartmentKeys: Bool {
         return shouldCleanPhoneticKey(kCleanPhoneticDepartment, defaultKeyValue: kCleanPhoneticDepartmentDefaultBool)
     }
     
-    private var shouldCleanPhoneticCompanyKeys: Bool {
+    fileprivate var shouldCleanPhoneticCompanyKeys: Bool {
         return shouldCleanPhoneticKey(kCleanPhoneticCompany, defaultKeyValue: kCleanPhoneticCompanyDefaultBool)
     }
     
-    private var shouldCleanPhoneticJobTitleKeys: Bool {
+    fileprivate var shouldCleanPhoneticJobTitleKeys: Bool {
         return shouldCleanPhoneticKey(kCleanPhoneticJobTitle, defaultKeyValue: kCleanPhoneticJobTitleDefaultBool)
     }
     
-    private var shouldCleanPhoneticPrefixKeys: Bool {
+    fileprivate var shouldCleanPhoneticPrefixKeys: Bool {
         return shouldCleanPhoneticKey(kCleanPhoneticPrefix, defaultKeyValue: kCleanPhoneticPrefixDefaultBool)
     }
     
-    private var shouldCleanPhoneticSuffixKeys: Bool {
+    fileprivate var shouldCleanPhoneticSuffixKeys: Bool {
         return shouldCleanPhoneticKey(kCleanPhoneticSuffix, defaultKeyValue: kCleanPhoneticSuffixDefaultBool)
     }
     
     // MARK: - Social Profiles Key
-    private var shouldCleanSocialProfilesKeys: Bool {
+    fileprivate var shouldCleanSocialProfilesKeys: Bool {
         return shouldCleanPhoneticKey(kCleanSocialProfilesKeys, defaultKeyValue: kCleanSocialProfilesKeysDefaultBool)
     }
     
     // MARK: - Instant Message Addresses Key
-    private var shouldCleanInstantMessageAddressesKeys: Bool {
+    fileprivate var shouldCleanInstantMessageAddressesKeys: Bool {
         return shouldCleanPhoneticKey(kCleanInstantMessageAddressesKeys, defaultKeyValue: kCleanInstantMessageKeysDefaultBool)
     }
     
     // MARK: -
-    private func shouldCleanPhoneticKey(_ key: String, defaultKeyValue: Bool) -> Bool {
+    fileprivate func shouldCleanPhoneticKey(_ key: String, defaultKeyValue: Bool) -> Bool {
         
         guard masterSwitchStatusIsOn else { return false }
 
-        return userDefaults.getBool(key, defaultKeyValue: defaultKeyValue)
+        return userDefaults.bool(forKey: key, defaultValue: defaultKeyValue)
     }
     
 }
@@ -189,7 +189,7 @@ extension PhoneticContacts {
 
 extension String {
     
-    private mutating func append(_ str: String) {
+    fileprivate mutating func append(_ str: String) {
         self += str + "\n\n"
     }
 }

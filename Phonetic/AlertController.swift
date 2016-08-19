@@ -11,14 +11,14 @@ import UIKit
 
 class AlertController {
     
-    private static let ok = NSLocalizedString("OK", comment: "")
+    fileprivate static let ok = NSLocalizedString("OK", comment: "")
     
-    class func alert(title: String = "", message: String = "", actionTitle: String = ok, completionHandler: (() -> Void)?) {
-        AlertController.alert(title: title, message: message, actionTitle: actionTitle, addCancelAction: false, completionHandler: completionHandler, canceledHandler: nil)
+    class func alert(_ title: String = "", message: String = "", actionTitle: String = ok, completionHandler: (() -> Void)?) {
+        AlertController.alert(title, message: message, actionTitle: actionTitle, addCancelAction: false, completionHandler: completionHandler, canceledHandler: nil)
        }
     
-    class func alertWithCancelAction(title: String = "", message: String = "", actionTitle: String = ok, completionHandler: (() -> Void)?, canceledHandler: (() -> Void)?) {
-        AlertController.alert(title: title, message: message, actionTitle: actionTitle, addCancelAction: true, completionHandler: completionHandler, canceledHandler: canceledHandler)
+    class func alertWithCancelAction(_ title: String = "", message: String = "", actionTitle: String = ok, completionHandler: (() -> Void)?, canceledHandler: (() -> Void)?) {
+        AlertController.alert(title, message: message, actionTitle: actionTitle, addCancelAction: true, completionHandler: completionHandler, canceledHandler: canceledHandler)
     }
     
     
@@ -27,7 +27,7 @@ class AlertController {
         alertWithOptions(multiItemsOfInfo, completionHandler: completionHandler)
     }
     
-    private class func alert(title: String = "", message: String = "", actionTitle: String = ok, addCancelAction: Bool, completionHandler: (() -> Void)?, canceledHandler: (() -> Void)?) {
+    fileprivate class func alert(_ title: String = "", message: String = "", actionTitle: String = ok, addCancelAction: Bool, completionHandler: (() -> Void)?, canceledHandler: (() -> Void)?) {
         let okAction = UIAlertAction(title: actionTitle, style: .default) { (_) -> Void in
             if let completion = completionHandler {
                 completion()
@@ -51,7 +51,7 @@ class AlertController {
         UIApplication.topMostViewController?.present(alertController, animated: true, completion: nil)
     }
     
-    private class func alertWithOptions(_ multiItemsOfInfo: [String], completionHandler: (() -> Void)?) {
+    fileprivate class func alertWithOptions(_ multiItemsOfInfo: [String], completionHandler: (() -> Void)?) {
         DispatchQueue.main.async { () -> Void in
             
             var tempInfoArray = multiItemsOfInfo

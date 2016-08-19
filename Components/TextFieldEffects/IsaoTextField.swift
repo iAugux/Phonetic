@@ -11,14 +11,14 @@ import UIKit
 /**
  An IsaoTextField is a subclass of the TextFieldEffects object, is a control that displays an UITextField with a customizable visual effect around the lower edge of the control.
  */
-@IBDesignable public class IsaoTextField: TextFieldEffects {
+@IBDesignable open class IsaoTextField: TextFieldEffects {
     
     /**
      The color of the border when it has no content.
      
      This property applies a color to the lower edge of the control. The default value for this property is a clear color. This value is also applied to the placeholder color.
      */
-    @IBInspectable dynamic public var inactiveColor: UIColor? {
+    @IBInspectable dynamic open var inactiveColor: UIColor? {
         didSet {
             updateBorder()
         }
@@ -29,7 +29,7 @@ import UIKit
      
      This property applies a color to the lower edge of the control. The default value for this property is a clear color.
      */
-    @IBInspectable dynamic public var activeColor: UIColor? {
+    @IBInspectable dynamic open var activeColor: UIColor? {
         didSet {
             updateBorder()
         }
@@ -40,33 +40,33 @@ import UIKit
      
      This property determines the size of the placeholder label relative to the font size of the text field.
      */
-    @IBInspectable dynamic public var placeholderFontScale: CGFloat = 0.7 {
+    @IBInspectable dynamic open var placeholderFontScale: CGFloat = 0.7 {
         didSet {
             updatePlaceholder()
         }
     }
     
-    override public var placeholder: String? {
+    override open var placeholder: String? {
         didSet {
             updatePlaceholder()
         }
     }
     
-    override public var bounds: CGRect {
+    override open var bounds: CGRect {
         didSet {
             updateBorder()
             updatePlaceholder()
         }
     }
     
-    private let borderThickness: (active: CGFloat, inactive: CGFloat) = (4, 2)
-    private let placeholderInsets = CGPoint(x: 6, y: 6)
-    private let textFieldInsets = CGPoint(x: 6, y: 6)
-    private let borderLayer = CALayer()
+    fileprivate let borderThickness: (active: CGFloat, inactive: CGFloat) = (4, 2)
+    fileprivate let placeholderInsets = CGPoint(x: 6, y: 6)
+    fileprivate let textFieldInsets = CGPoint(x: 6, y: 6)
+    fileprivate let borderLayer = CALayer()
     
     // MARK: - TextFieldsEffects
     
-    override public func drawViewsForRect(_ rect: CGRect) {
+    override open func drawViewsForRect(_ rect: CGRect) {
         let frame = CGRect(origin: CGPoint.zero, size: CGSize(width: rect.size.width, height: rect.size.height))
         
         placeholderLabel.frame = frame.insetBy(dx: placeholderInsets.x, dy: placeholderInsets.y)
@@ -79,14 +79,14 @@ import UIKit
         addSubview(placeholderLabel)        
     }
     
-    override public func animateViewsForTextEntry() {
+    override open func animateViewsForTextEntry() {
         updateBorder()
         if let activeColor = activeColor {
             performPlacerholderAnimationWithColor(activeColor)
         }
     }
     
-    override public func animateViewsForTextDisplay() {
+    override open func animateViewsForTextDisplay() {
         updateBorder()
         if let inactiveColor = inactiveColor {
             performPlacerholderAnimationWithColor(inactiveColor)
@@ -95,12 +95,12 @@ import UIKit
     
     // MARK: - Private
     
-    private func updateBorder() {
+    fileprivate func updateBorder() {
         borderLayer.frame = rectForBorder(frame)
         borderLayer.backgroundColor = isFirstResponder ? activeColor?.cgColor : inactiveColor?.cgColor
     }
     
-    private func updatePlaceholder() {
+    fileprivate func updatePlaceholder() {
         placeholderLabel.text = placeholder
         placeholderLabel.textColor = inactiveColor
         placeholderLabel.sizeToFit()
@@ -111,12 +111,12 @@ import UIKit
         }
     }
     
-    private func placeholderFontFromFont(_ font: UIFont) -> UIFont! {
+    fileprivate func placeholderFontFromFont(_ font: UIFont) -> UIFont! {
         let smallerFont = UIFont(name: font.fontName, size: font.pointSize * placeholderFontScale)
         return smallerFont
     }
     
-    private func rectForBorder(_ bounds: CGRect) -> CGRect {
+    fileprivate func rectForBorder(_ bounds: CGRect) -> CGRect {
         var newRect:CGRect
         
         if isFirstResponder {
@@ -128,7 +128,7 @@ import UIKit
         return newRect
     }
     
-    private func layoutPlaceholderInTextRect() {
+    fileprivate func layoutPlaceholderInTextRect() {
         let textRect = self.textRect(forBounds: bounds)
         var originX = textRect.origin.x
         switch textAlignment {
@@ -143,7 +143,7 @@ import UIKit
             width: placeholderLabel.frame.size.width, height: placeholderLabel.frame.size.height)
     }
     
-    private func performPlacerholderAnimationWithColor(_ color: UIColor) {
+    fileprivate func performPlacerholderAnimationWithColor(_ color: UIColor) {
         
         let yOffset: CGFloat = 4
         
@@ -159,19 +159,19 @@ import UIKit
                     self.placeholderLabel.transform = CGAffineTransform.identity
                     self.placeholderLabel.alpha = 1
                 }) { _ in
-                    self.animationCompletionHandler?(type: self.isFirstResponder ? .textEntry : .textDisplay)
+                    self.animationCompletionHandler?(self.isFirstResponder ? .textEntry : .textDisplay)
                 }
         }
     }
     
     // MARK: - Overrides
         
-    override public func editingRect(forBounds bounds: CGRect) -> CGRect {
+    override open func editingRect(forBounds bounds: CGRect) -> CGRect {
         let newBounds = CGRect(x: 0, y: 0, width: bounds.size.width, height: bounds.size.height - font!.lineHeight + textFieldInsets.y)
         return newBounds.insetBy(dx: textFieldInsets.x, dy: 0)
     }
     
-    override public func textRect(forBounds bounds: CGRect) -> CGRect {
+    override open func textRect(forBounds bounds: CGRect) -> CGRect {
         let newBounds = CGRect(x: 0, y: 0, width: bounds.size.width, height: bounds.size.height - font!.lineHeight + textFieldInsets.y)
         
         return newBounds.insetBy(dx: textFieldInsets.x, dy: 0)

@@ -15,8 +15,8 @@ class BaseTableViewController: UITableViewController {
     
     var _title = ""
     
-    private let _color = UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1.0)
-    private var blurBackgroundView: BlurImageView!
+    fileprivate let _color = UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1.0)
+    fileprivate var blurBackgroundView: BlurImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -89,13 +89,13 @@ extension BaseTableViewController {
         prepareForDismissingViewController(false)
     }
     
-    private func makeNavigationBarTransparent(_ transparent: Bool) {
+    fileprivate func makeNavigationBarTransparent(_ transparent: Bool) {
         UIView.animate(withDuration: 0.5) { () -> Void in
             self.navigationController?.navigationBar.alpha = transparent ? 0 : 1
         }
     }
     
-    private func prepareForDismissingViewController(_ prepared: Bool) {
+    fileprivate func prepareForDismissingViewController(_ prepared: Bool) {
         
         guard let nav = navigationController as? SettingsNavigationController else { return }
         
@@ -134,7 +134,7 @@ extension BaseTableViewController {
 // MARK: - Keep `SettingViewController` open after dismissing.
 extension BaseTableViewController {
     
-    private func postDismissedNotificationIfNeeded() {
+    fileprivate func postDismissedNotificationIfNeeded() {
         // It is not necessary here, but I prefer to keep it.
         guard UIDevice.current.userInterfaceIdiom != .pad else { return }
         

@@ -13,7 +13,7 @@ import AVKit
 
 extension ViewController {
     
-    private var enableAnimation: Bool {
+    fileprivate var enableAnimation: Bool {
         if UserDefaults.standard.value(forKey: kEnableAnimation) == nil {
             UserDefaults.standard.set(kEnableAnimationDefaultBool, forKey: kEnableAnimation)
             UserDefaults.standard.synchronize()
@@ -21,7 +21,7 @@ extension ViewController {
         return UserDefaults.standard.bool(forKey: kEnableAnimation)
     }
     
-    private var forceEnableAnimation: Bool {
+    fileprivate var forceEnableAnimation: Bool {
         if UserDefaults.standard.value(forKey: kForceEnableAnimation) == nil {
             UserDefaults.standard.set(kForceEnableAnimationDefaultBool, forKey: kForceEnableAnimation)
             UserDefaults.standard.synchronize()
@@ -29,7 +29,7 @@ extension ViewController {
         return UserDefaults.standard.bool(forKey: kForceEnableAnimation)
     }
     
-    private var shouldEnableAnimation: Bool {
+    fileprivate var shouldEnableAnimation: Bool {
         if enableAnimation {
             if forceEnableAnimation {
                 return true
@@ -79,7 +79,7 @@ extension ViewController {
         guard PhoneticContacts.sharedInstance.keysToFetchIfNeeded.count != 0 else {
             let msg = NSLocalizedString("You haven't choose any keys for cleaning!", comment: "")
             let ok = NSLocalizedString("OK", comment: "")
-            AlertController.alert(title: msg, actionTitle: ok, completionHandler: nil)
+            AlertController.alert(msg, actionTitle: ok, completionHandler: nil)
             
             return
         }
@@ -157,7 +157,7 @@ extension ViewController {
         avPlayer?.play()
     }
 
-    private func configureBackgroundVideo(){
+    fileprivate func configureBackgroundVideo(){
         
         guard let url = Bundle.main.url(forResource: "wave", withExtension: "mp4") else { return }
         

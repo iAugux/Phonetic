@@ -56,7 +56,7 @@ extension UIView {
      
      - parameter view: other view
      */
-    func centerTo(view: UIView) {
+    func centerTo(_ view: UIView) {
         self.frame.origin.x = view.bounds.midX - self.frame.width / 2
         self.frame.origin.y = view.bounds.midY - self.frame.height / 2
         

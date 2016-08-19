@@ -11,17 +11,17 @@ import SnapKit
 
 
 class BlurActionSheet: UIView, UITableViewDataSource {
+
+    fileprivate let actionSheetCellHeight: CGFloat = 44.0
+    fileprivate let actionSheetCancelHeight: CGFloat = 58.0
     
-    private let actionSheetCellHeight: CGFloat = 44.0
-    private let actionSheetCancelHeight: CGFloat = 58.0
-    
-    private var showSet: NSMutableSet = NSMutableSet()
+    fileprivate var showSet: NSMutableSet = NSMutableSet()
     var titles: [String]?
-    private var containerView: UIView?
-    var handler: ((index: Int) -> Void)?
+    fileprivate var containerView: UIView?
+    var handler: ((_ index: Int) -> Void)?
     
-    private var tableView: UITableView!
-    private var blurBackgroundView: BlurBackgroundView!
+    fileprivate var tableView: UITableView!
+    fileprivate var blurBackgroundView: BlurBackgroundView!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -31,7 +31,7 @@ class BlurActionSheet: UIView, UITableViewDataSource {
         blurBackgroundView.snp.makeConstraints { (make) in
             make.edges.equalTo(0)
         }
-        
+
         tableView                 = UITableView()
         tableView.delegate        = self
         tableView.dataSource      = self
@@ -43,16 +43,16 @@ class BlurActionSheet: UIView, UITableViewDataSource {
         blurBackgroundView.addSubview(tableView)
         
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    class func showWithTitles(_ titles: [String], handler: ((index: Int) -> Void)) -> BlurActionSheet {
+    class func showWithTitles(_ titles: [String], handler: ((_ index: Int) -> Void)) -> BlurActionSheet {
         return showWithTitles(titles, view: nil, handler: handler)
     }
     
-    class func showWithTitles(_ titles: [String], view: UIView?, handler: ((index: Int) -> Void)) -> BlurActionSheet {
+    class func showWithTitles(_ titles: [String], view: UIView?, handler: ((_ index: Int) -> Void)) -> BlurActionSheet {
         let actionSheet = BlurActionSheet(frame: UIScreen.main.bounds)
         actionSheet.titles = titles
         actionSheet.containerView = view
@@ -62,10 +62,10 @@ class BlurActionSheet: UIView, UITableViewDataSource {
         return actionSheet
     }
     
-    private func show() {
+    fileprivate func show() {
         
         let maxHeight = actionSheetCellHeight * CGFloat(titles!.count - 1) + actionSheetCancelHeight
-        
+
         tableView.snp.makeConstraints { (make) in
             make.left.bottom.right.equalTo(blurBackgroundView)
             make.height.equalTo(maxHeight)
@@ -89,7 +89,7 @@ class BlurActionSheet: UIView, UITableViewDataSource {
         })
     }
     
-    private func hide() {
+    fileprivate func hide() {
         
         var index = 0
         
@@ -97,7 +97,7 @@ class BlurActionSheet: UIView, UITableViewDataSource {
             if let cell = visibleCell as? BlurActionSheetCell {
                 index = index + 1
                 let height = tableView.frame.size.height
-                
+
                 cell.underLineView?.alpha = 0.5
                 cell.textLabel?.alpha = 0.5
                 
@@ -110,7 +110,7 @@ class BlurActionSheet: UIView, UITableViewDataSource {
         }
         
         UIView.animate(withDuration: 0.5, animations: { () -> Void in
-            self.blurBackgroundView.effect = nil
+           self.blurBackgroundView.effect = nil
         })
     }
     
@@ -118,7 +118,7 @@ class BlurActionSheet: UIView, UITableViewDataSource {
         hide()
         if let handler = handler {
             if let titles = titles {
-                handler(index: titles.count - 1)
+                handler(titles.count - 1)
             }
         }
     }
@@ -167,7 +167,7 @@ extension BlurActionSheet: UITableViewDelegate {
         
         hide()
         if let handler = handler {
-            handler(index: indexPath.row)
+            handler(indexPath.row)
         }
     }
     

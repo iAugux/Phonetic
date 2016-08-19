@@ -81,29 +81,29 @@ extension PhoneticContacts {
 extension PhoneticContacts {
     
     var masterSwitchStatusIsOn: Bool {
-        return userDefaults.getBool(kAdditionalSettingsStatus, defaultKeyValue: kAdditionalSettingsStatusDefaultBool)
+        return userDefaults.bool(forKey: kAdditionalSettingsStatus, defaultValue: kAdditionalSettingsStatusDefaultBool)
     }
     
     var enableNickname: Bool {
         
         guard masterSwitchStatusIsOn else { return false }
         
-        return userDefaults.getBool(kEnableNickname, defaultKeyValue: kEnableNicknameDefaultBool)
+        return userDefaults.bool(forKey: kEnableNickname, defaultValue: kEnableNicknameDefaultBool)
     }
     
     var enableCustomName: Bool {
         
         guard masterSwitchStatusIsOn else { return false }
         
-        return userDefaults.getBool(kEnableCustomName, defaultKeyValue: kEnableCustomNameDefaultBool)
+        return userDefaults.bool(forKey: kEnableCustomName, defaultValue: kEnableCustomNameDefaultBool)
     }
     
-    private var overwriteExistingName: Bool {
+    fileprivate var overwriteExistingName: Bool {
         
         guard masterSwitchStatusIsOn else { return false }
         guard enableNickname || enableCustomName else { return false }
         
-        return userDefaults.getBool(kOverwriteAlreadyExists, defaultKeyValue: kOverwriteAlreadyExistsDefaultBool)
+        return userDefaults.bool(forKey: kOverwriteAlreadyExists, defaultValue: kOverwriteAlreadyExistsDefaultBool)
     }
     
 }

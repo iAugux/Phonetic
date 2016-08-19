@@ -24,12 +24,12 @@ class ViewController: UIViewController {
     @IBOutlet weak var infoButton: UIButton!
     @IBOutlet weak var progress: KDCircularProgress!
     
-    private var singleTap: UITapGestureRecognizer!
-    private var multiTap: UITapGestureRecognizer!
-    private var longPress: UILongPressGestureRecognizer!
-    private var swipeUp: UISwipeGestureRecognizer!
+    fileprivate var singleTap: UITapGestureRecognizer!
+    fileprivate var multiTap: UITapGestureRecognizer!
+    fileprivate var longPress: UILongPressGestureRecognizer!
+    fileprivate var swipeUp: UISwipeGestureRecognizer!
     
-    private var abortingAlertController: UIAlertController!
+    fileprivate var abortingAlertController: UIAlertController!
     
     var avPlayerController: AVPlayerViewController!
     var avPlayer: AVPlayer!

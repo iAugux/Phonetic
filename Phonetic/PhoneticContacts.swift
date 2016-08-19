@@ -55,20 +55,20 @@ class PhoneticContacts {
         }
     }
     
-    private var aborted = false
+    fileprivate var aborted = false
 
-    private lazy var backgroundTask = UIBackgroundTaskInvalid
+    fileprivate lazy var backgroundTask = UIBackgroundTaskInvalid
     
-    private lazy var localNotification: UILocalNotification = {
+    fileprivate lazy var localNotification: UILocalNotification = {
         let localNotification = UILocalNotification()
         localNotification.soundName = UILocalNotificationDefaultSoundName
         return localNotification
     }()
     
     
-    typealias ResultHandler = ((currentResult: String?, percentage: Double) -> Void)
+    typealias ResultHandler = ((_ currentResult: String?, _ percentage: Double) -> Void)
     typealias AccessGrantedHandler = (() -> Void)
-    typealias CompletionHandler = ((aborted: Bool) -> Void)
+    typealias CompletionHandler = ((_ aborted: Bool) -> Void)
     
     func execute(_ handleAccessGranted: AccessGrantedHandler, resultHandler:  ResultHandler, completionHandler: CompletionHandler) {
         AppDelegate().requestContactsAccess { (accessGranted) in
@@ -96,7 +96,7 @@ class PhoneticContacts {
             let count = self.contactsTotalCount
             
             do {
-                try self.contactStore.enumerateContacts(with: CNContactFetchRequest(keysToFetch: self.keysToFetch), usingBlock: { (contact, _) -> Void in
+                try self.contactStore.enumerateContacts(with: CNContactFetchRequest(keysToFetch: self.keysToFetch as [CNKeyDescriptor]), usingBlock: { (contact, _) -> Void in
                     
                     guard self.isProcessing else {
                         self.aborted = true
@@ -178,7 +178,7 @@ class PhoneticContacts {
             let count = self.contactsTotalCount
             
             do {
-                try self.contactStore.enumerateContacts(with: CNContactFetchRequest(keysToFetch: self.keysToFetch), usingBlock: { (contact, _) -> Void in
+                try self.contactStore.enumerateContacts(with: CNContactFetchRequest(keysToFetch: self.keysToFetch as [CNKeyDescriptor]), usingBlock: { (contact, _) -> Void in
                     
                     guard self.isProcessing else {
                         self.aborted = true
@@ -222,11 +222,11 @@ class PhoneticContacts {
     }
     
     var getContactsTotalCount: Int {
-        let contacts = fetchAllContacts(keysToFetch: [CNContactGivenNameKey, CNContactFamilyNameKey])
+        let contacts = fetchAllContacts(keysToFetch: [CNContactGivenNameKey as CNKeyDescriptor, CNContactFamilyNameKey as CNKeyDescriptor])
         return contacts.count
     }
     
-    private func fetchAllContacts(keysToFetch keys: [CNKeyDescriptor]) -> [CNContact] {
+    fileprivate func fetchAllContacts(keysToFetch keys: [CNKeyDescriptor]) -> [CNContact] {
         
         AppDelegate().requestContactsAccess { (accessGranted) in
             guard accessGranted else { return }
@@ -242,7 +242,7 @@ class PhoneticContacts {
         return contacts
     }
     
-    private func handlingCompletion(_ handle: CompletionHandler) {
+    fileprivate func handlingCompletion(_ handle: CompletionHandler) {
         
         switch UIApplication.shared.applicationState {
         case .background:
@@ -259,18 +259,18 @@ class PhoneticContacts {
         }
         
         DispatchQueue.main.async(execute: { () -> Void in
-            handle(aborted: self.aborted)
+            handle(self.aborted)
         })
     }
     
-    private func handlingResult(_ handle: ResultHandler, result: String?, index: Int, total: Int) {
+    fileprivate func handlingResult(_ handle: ResultHandler, result: String?, index: Int, total: Int) {
         
         let percentage = currentPercentage(index, total: total)
         
         switch UIApplication.shared.applicationState {
         case .active:
             DispatchQueue.main.async(execute: { () -> Void in
-                handle(currentResult: result, percentage: percentage)
+                handle(result, percentage)
             })
             
         case .background:
@@ -281,7 +281,7 @@ class PhoneticContacts {
             // handling results while it is almost complete to correct the UI of percentage.
             if percentage > 95 {
                 DispatchQueue.main.async(execute: { () -> Void in
-                    handle(currentResult: result, percentage: percentage)
+                    handle(result, percentage)
                 })
             }
             
@@ -301,7 +301,7 @@ class PhoneticContacts {
         
     }
     
-    private func saveContact(_ contact: CNMutableContact) {
+    fileprivate func saveContact(_ contact: CNMutableContact) {
         let saveRequest = CNSaveRequest()
         saveRequest.update(contact)
         do {
@@ -312,7 +312,7 @@ class PhoneticContacts {
         }
     }
     
-    private func currentPercentage(_ index: Int, total: Int) -> Double {
+    fileprivate func currentPercentage(_ index: Int, total: Int) -> Double {
         let percentage = Double(index) / Double(total) * 100
         return min(percentage, 100)
     }
@@ -325,7 +325,7 @@ class PhoneticContacts {
      
      - returns: is there any Mandarin Latin
      */
-    private func antiPhonetic(_ str: String) -> Bool {
+    fileprivate func antiPhonetic(_ str: String) -> Bool {
         let str = str as NSString
         for i in 0..<str.length {
             let word = str.character(at: i)
@@ -336,7 +336,7 @@ class PhoneticContacts {
         return false
     }
     
-    private func upcaseInitial(_ str: String) -> String {
+    fileprivate func upcaseInitial(_ str: String) -> String {
         var tempStr = str
         if str.utf8.count > 0 {
             tempStr = (str as NSString).substring(to: 1).uppercased() + (str as NSString).substring(from: 1)
@@ -344,7 +344,7 @@ class PhoneticContacts {
         return tempStr
     }
     
-    private func briefInitial(_ array: [String]) -> String {
+    fileprivate func briefInitial(_ array: [String]) -> String {
         guard array.count > 0 else { return "" }
         
         var tempStr = ""
@@ -364,8 +364,8 @@ class PhoneticContacts {
         return tempStr
     }
     
-    private func phonetic(_ str: String, needFix: Bool) -> Phonetic? {
-        var source = needFix ? manaullyFixPolyphonicCharacters(str).mutableCopy() : str.mutableCopy()
+    fileprivate func phonetic(_ str: String, needFix: Bool) -> Phonetic? {
+        var source = (needFix ? manaullyFixPolyphonicCharacters(str).mutableCopy() : str.mutableCopy()) as AnyObject
         
         CFStringTransform(source as! CFMutableString, nil, kCFStringTransformMandarinLatin, false)
         CFStringTransform(source as! CFMutableString, nil, kCFStringTransformStripCombiningMarks, useTones)
@@ -373,8 +373,8 @@ class PhoneticContacts {
         var brief: String
         
         if !(source as! NSString).isEqual(to: str) {
-            if source.range(of: " ").location != NSNotFound {
-                let phoneticParts = source.components(separatedBy: " ")
+            if (source as AnyObject).range(of: " ").location != NSNotFound {
+                let phoneticParts = (source as AnyObject).components(separatedBy: " ")
                 source = NSMutableString()
                 brief = briefInitial(phoneticParts)
                 
@@ -423,7 +423,7 @@ class PhoneticContacts {
 
 // MARK: - Background Task
 
-private extension PhoneticContacts {
+fileprivate extension PhoneticContacts {
     
     @objc func reinstateBackgroundTask() {
         if isProcessing && (backgroundTask == UIBackgroundTaskInvalid) {
@@ -453,23 +453,23 @@ extension PhoneticContacts {
         
         guard DetectPreferredLanguage.isChineseLanguage else { return true }
         
-        return userDefaults.getBool(kPhoneticFirstAndLastName, defaultKeyValue: kPhoneticFirstAndLastNameDefaultBool)
+        return userDefaults.bool(forKey: kPhoneticFirstAndLastName, defaultValue: kPhoneticFirstAndLastNameDefaultBool)
     }
     
-    private var upcasePinyin: Bool {
-        return userDefaults.getBool(kUpcasePinyin, defaultKeyValue: kUpcasePinyinDefaultBool)
+    fileprivate var upcasePinyin: Bool {
+        return userDefaults.bool(forKey: kUpcasePinyin, defaultValue: kUpcasePinyinDefaultBool)
     }
     
-    private var useTones: Bool {
-        return userDefaults.getBool(kUseTones, defaultKeyValue: kUseTonesDefaultBool)
+    fileprivate var useTones: Bool {
+        return userDefaults.bool(forKey: kUseTones, defaultValue: kUseTonesDefaultBool)
     }
     
-    private var fixPolyphonicCharacters: Bool {
-        return userDefaults.getBool(kFixPolyphonicChar, defaultKeyValue: kFixPolyphonicCharDefaultBool)
+    fileprivate var fixPolyphonicCharacters: Bool {
+        return userDefaults.bool(forKey: kFixPolyphonicChar, defaultValue: kFixPolyphonicCharDefaultBool)
     }
     
-    private var separatePinyin: Bool {
-        return userDefaults.getBool(kAlwaysSeparatePinyin, defaultKeyValue: kAlwaysSeparatePinyinDefaultBool)
+    fileprivate var separatePinyin: Bool {
+        return userDefaults.bool(forKey: kAlwaysSeparatePinyin, defaultValue: kAlwaysSeparatePinyinDefaultBool)
     }
     
 }

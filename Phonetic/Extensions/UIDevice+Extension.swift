@@ -47,7 +47,7 @@ extension UIDevice {
         return !supported.contains(hardwareString())
     }
     
-    private func hardwareString() -> String {
+    fileprivate func hardwareString() -> String {
         var name: [Int32] = [CTL_HW, HW_MACHINE]
         var size: Int = 2
         sysctl(&name, 2, nil, &size, &name, 0)

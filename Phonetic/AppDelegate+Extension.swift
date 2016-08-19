@@ -11,17 +11,17 @@ import Contacts
 
 extension AppDelegate {
     
-    func requestContactsAccess(_ completionHandler: ((accessGranted: Bool) -> Void)? = nil) {
+    func requestContactsAccess(_ completionHandler: ((_ accessGranted: Bool) -> Void)? = nil) {
         let authStatus = CNContactStore.authorizationStatus(for: .contacts)
 
         switch authStatus {
             
         case .authorized:
-            completionHandler?(accessGranted: true)
+            completionHandler?(true)
         case .denied, .notDetermined:
             contactStore.requestAccess(for: .contacts, completionHandler: { (access, error) -> Void in
                 if access {
-                    completionHandler?(accessGranted: true)
+                    completionHandler?(true)
                 } else {
                     if authStatus == .denied {
                         DispatchQueue.main.async(execute: { () -> Void in
@@ -34,11 +34,11 @@ extension AppDelegate {
             })
             
         default:
-            completionHandler?(accessGranted: false)
+            completionHandler?(false)
         }
     }
     
-    private func showAllowContactsAccessMessage(_ title: String, message: String) {
+    fileprivate func showAllowContactsAccessMessage(_ title: String, message: String) {
         let okActionTitle = NSLocalizedString("Settings", comment: "UIAlertAction - title")
         let cancelActionTitle = NSLocalizedString("Cancel", comment: "UIAlertAction - title")
         

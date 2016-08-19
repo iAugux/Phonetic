@@ -12,7 +12,7 @@ import UIKit
 extension UIButton {
     
     
-    override public func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+    override open func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
         
         let minimalWidthAndHeight: CGFloat = 60
         
