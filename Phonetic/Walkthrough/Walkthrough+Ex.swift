@@ -19,7 +19,7 @@ func displayWalkthroughIfNeeded(_ transparent: Bool = true, completion: Closure?
 
 func displayWalkthrough(_ transparent: Bool = true, completion: Closure? = nil) {
     
-    guard let pageViewController = WorkthroughSB.instantiateViewController(withIdentifier: String(describing: PageViewController.self)) as? PageViewController else { return }
+    guard let pageViewController = WorkthroughSB.instantiateViewController(withIdentifier: String(PageViewController.self)) as? PageViewController else { return }
     
     transparent ? pageViewController.modalPresentationStyle = .overCurrentContext : ()
     

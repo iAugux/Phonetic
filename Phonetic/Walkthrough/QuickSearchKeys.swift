@@ -20,7 +20,7 @@ extension WalkthroughViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: QuickSearchKeyCell.self), for: indexPath) as! QuickSearchKeyCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(QuickSearchKeyCell.self), for: indexPath) as! QuickSearchKeyCell
         
         cell.keyLabel.text = keys[indexPath.row]
         
