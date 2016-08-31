@@ -125,9 +125,7 @@ extension PolyphonicViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: String(PolyphonicTableViewCell.self), for: indexPath) as? PolyphonicTableViewCell else {
-            return UITableViewCell()
-        }
+        let cell = tableView.dequeueReusableCell(with: PolyphonicTableViewCell.self, for: indexPath)
         
         let sectionTitle = nameSectionTitles.object(at: indexPath.section)
         let sectionNames = names.object(forKey: sectionTitle) as? NSArray
