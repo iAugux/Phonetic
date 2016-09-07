@@ -118,7 +118,7 @@ class WalkthroughViewController: UIViewController {
     
     @objc fileprivate func imageViewDidTap() {
 
-        guard let vc = UIStoryboard.Main.instantiateViewController(withIdentifier: String(HelpManualViewController.self)) as? HelpManualViewController else { return }
+        let vc = UIStoryboard.Main.instantiateViewController(with: HelpManualViewController.self)
                 
         let nav = UINavigationController(rootViewController: vc)
         nav.completelyTransparentBar()

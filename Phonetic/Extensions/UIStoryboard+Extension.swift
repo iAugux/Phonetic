@@ -9,11 +9,17 @@ import UIKit
 
 
 extension UIStoryboard {
-    static var Main: UIStoryboard {
-        return UIStoryboard(name: "Main", bundle: nil)
-    }
+    static var Main: UIStoryboard { return UIStoryboard(name: "Main", bundle: nil) }
 }
 
+extension UIStoryboard {
+    
+    /// Instantiates and returns the view controller with the specified identifier.
+    /// Note: withIdentifier must equal to the vc Class
+    func instantiateViewController<T : UIViewController>(with vc: T.Type) -> T {
+        return instantiateViewController(withIdentifier: String(describing: vc.self)) as! T
+    }
+}
 
 
 // MARK: -

@@ -117,8 +117,10 @@ class SettingViewController: UIViewController {
     }
     
     private func presentPopoverController() {
-        guard let vc = UIStoryboard.Main.instantiateViewController(withIdentifier: String(SettingsNavigationController.self)) as? SettingsNavigationController,
-            let sourceView = customBarButton else { return }
+
+        guard let sourceView = customBarButton else { return }
+        
+        let vc = UIStoryboard.Main.instantiateViewController(with: SettingsNavigationController.self)
         
         vc.modalPresentationStyle = .popover
         vc.popoverPresentationController?.canOverlapSourceViewRect = true

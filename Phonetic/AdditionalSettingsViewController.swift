@@ -565,9 +565,8 @@ extension AdditionalSettingsViewController {
 extension AdditionalSettingsViewController: TableViewHeaderFooterViewWithButtonDelegate {
     
     func tableViewHeaderFooterViewWithButtonDidTap() {
-        if let vc = UIStoryboard.Main.instantiateViewController(withIdentifier: String(HelpManualViewController.self)) as? HelpManualViewController {
-            navigationController?.pushViewController(vc, animated: true)
-        }
+        let vc = UIStoryboard.Main.instantiateViewController(with: HelpManualViewController.self)
+        navigationController?.pushViewController(vc, animated: true)
     }
 }
 

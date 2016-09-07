@@ -80,7 +80,7 @@ extension ViewController: UIPopoverPresentationControllerDelegate {
         
         switch button {
         case .info:
-            guard let infoVC = UIStoryboard.Main.instantiateViewController(withIdentifier: String(InfoViewController.self)) as? InfoViewController else { return }
+            let infoVC = UIStoryboard.Main.instantiateViewController(with: InfoViewController.self)
             Popover.popoverContent = infoVC
             Popover.popoverContent!.preferredContentSize = Popover.preferredContentSize
             
@@ -89,7 +89,7 @@ extension ViewController: UIPopoverPresentationControllerDelegate {
             rect = infoButton.frame
             
         case .setting:
-            guard let settingVC = UIStoryboard.Main.instantiateViewController(withIdentifier: String(SettingViewController.self)) as? SettingViewController else { return }
+            let settingVC = UIStoryboard.Main.instantiateViewController(with: SettingViewController.self)
             Popover.popoverContent = settingVC
             Popover.popoverContent!.preferredContentSize = Popover.preferredMutableContentSize
             
@@ -105,7 +105,7 @@ extension ViewController: UIPopoverPresentationControllerDelegate {
             nav.hidesBarsOnSwipe = true
             nav.modalPresentationStyle = .popover
             Popover.popover = nav.popoverPresentationController
-            Popover.popover?.backgroundColor = kNavigationBarBackgroundColor
+            Popover.popover?.backgroundColor = button == .info ? #colorLiteral(red: 0.3013976812, green: 0.3014355302, blue: 0.3013758659, alpha: 1) : #colorLiteral(red: 0.2924501002, green: 0.2924869955, blue: 0.2924288213, alpha: 1)
             Popover.popover?.delegate = self
             Popover.popover?.sourceView = view
 

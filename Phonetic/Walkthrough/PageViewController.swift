@@ -64,7 +64,7 @@ class PageViewController: UIPageViewController {
         
         if index == NSNotFound || index < 0 || index >= self.pageDescriptions.count { return nil }
         
-        guard let walkthroughViewController = WorkthroughSB.instantiateViewController(withIdentifier: String(WalkthroughViewController.self)) as? WalkthroughViewController else { return nil }
+        let walkthroughViewController = WorkthroughSB.instantiateViewController(with: WalkthroughViewController.self)
         
         walkthroughViewController.imageName = pageImages[index]
         walkthroughViewController.headerText = pageHeaders[index]
