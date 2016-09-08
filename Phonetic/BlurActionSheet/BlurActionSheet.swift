@@ -48,11 +48,11 @@ class BlurActionSheet: UIView, UITableViewDataSource {
         fatalError("init(coder:) has not been implemented")
     }
     
-    class func showWithTitles(_ titles: [String], handler: ((_ index: Int) -> Void)) -> BlurActionSheet {
+    class func showWithTitles(_ titles: [String], handler: @escaping ((_ index: Int) -> Void)) -> BlurActionSheet {
         return showWithTitles(titles, view: nil, handler: handler)
     }
     
-    class func showWithTitles(_ titles: [String], view: UIView?, handler: ((_ index: Int) -> Void)) -> BlurActionSheet {
+    class func showWithTitles(_ titles: [String], view: UIView?, handler: @escaping ((_ index: Int) -> Void)) -> BlurActionSheet {
         let actionSheet = BlurActionSheet(frame: UIScreen.main.bounds)
         actionSheet.titles = titles
         actionSheet.containerView = view

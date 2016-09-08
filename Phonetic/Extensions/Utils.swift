@@ -60,7 +60,7 @@ var GlobalBackgroundQueue: DispatchQueue {
 
 // MARK: - Delay
 
-func executeAfterDelay(_ seconds: Double, closure: (() -> Void)) {
+func executeAfterDelay(_ seconds: Double, closure: @escaping (() -> Void)) {
     DispatchQueue.main.asyncAfter(deadline: .now() + seconds, execute: {
         closure()
     })

@@ -70,7 +70,7 @@ class PhoneticContacts {
     typealias AccessGrantedHandler = (() -> Void)
     typealias CompletionHandler = ((_ aborted: Bool) -> Void)
     
-    func execute(_ handleAccessGranted: AccessGrantedHandler, resultHandler:  ResultHandler, completionHandler: CompletionHandler) {
+    func execute(_ handleAccessGranted: @escaping AccessGrantedHandler, resultHandler:  @escaping ResultHandler, completionHandler: @escaping CompletionHandler) {
         AppDelegate().requestContactsAccess { (accessGranted) in
             guard accessGranted else { return }
             
@@ -159,7 +159,7 @@ class PhoneticContacts {
         
     }
     
-    func cleanMandarinLatinPhonetic(_ handleAccessGranted: AccessGrantedHandler, resultHandler: ResultHandler, completionHandler: CompletionHandler) {
+    func cleanMandarinLatinPhonetic(_ handleAccessGranted: @escaping AccessGrantedHandler, resultHandler: @escaping ResultHandler, completionHandler: @escaping CompletionHandler) {
         AppDelegate().requestContactsAccess { (accessGranted) in
             guard accessGranted else { return }
             
@@ -242,7 +242,7 @@ class PhoneticContacts {
         return contacts
     }
     
-    fileprivate func handlingCompletion(_ handle: CompletionHandler) {
+    fileprivate func handlingCompletion(_ handle: @escaping CompletionHandler) {
         
         switch UIApplication.shared.applicationState {
         case .background:
@@ -263,7 +263,7 @@ class PhoneticContacts {
         })
     }
     
-    fileprivate func handlingResult(_ handle: ResultHandler, result: String?, index: Int, total: Int) {
+    fileprivate func handlingResult(_ handle: @escaping ResultHandler, result: String?, index: Int, total: Int) {
         
         let percentage = currentPercentage(index, total: total)
         

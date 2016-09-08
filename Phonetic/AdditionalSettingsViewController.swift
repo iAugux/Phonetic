@@ -497,7 +497,7 @@ extension AdditionalSettingsViewController {
 
 extension UISwitch {
     
-    fileprivate func switchWithAlert(_ title: String, message: String, okActionTitle: String, on: Bool, closure: (() -> Void)) {
+    fileprivate func switchWithAlert(_ title: String, message: String, okActionTitle: String, on: Bool, closure: @escaping (() -> Void)) {
         if on {
             AlertController.alertWithCancelAction(title, message: message, actionTitle: okActionTitle, completionHandler: { () -> Void in
                 closure()
