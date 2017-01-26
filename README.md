@@ -1,5 +1,3 @@
-<!--######如果你使用的是中文系统(只需要快速搜索功能), 请使用 [`Zoom Contacts`](https://github.com/iAugux/Zoom-Contacts)-->
-
 # Phonetic
 ![Language](https://img.shields.io/badge/language-Swift%203-orange.svg)
 [![License](https://img.shields.io/badge/License-CC%20Attribution--NonCommercial-E5EC00.svg)](https://creativecommons.org/licenses/by-nc/4.0/)
@@ -10,6 +8,7 @@
 ####An iOS App to add phonetic keys with Pinyin for Chinese(SC & TC) names. Your Contacts will be sorted by alphabet automatically even under English System.
 
 ## App Store
+Phonetic on the App Store includes more features.
 <div>
 <a href="https://itunes.apple.com/app/id1078961574"> <img src="https://raw.githubusercontent.com/iAugux/ProjectScreenshots/master/Phonetic/AppStore.png" width="110px">
 </a>
