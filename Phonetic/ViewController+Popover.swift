@@ -130,7 +130,7 @@ extension ViewController: UIPopoverPresentationControllerDelegate {
         titleLabel.sizeToFit()
         nav.navigationBar.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { (make) in
-            make.centerX.centerY.equalTo(nav.navigationBar)
+            make.center.equalToSuperview()
         }
     }
     

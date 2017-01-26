@@ -4,7 +4,7 @@ use_frameworks!
 
 target 'Phonetic' do
 
-pod 'SnapKit', :git => 'https://github.com/SnapKit/SnapKit', :branch => 'feature/0.40.0'
-pod 'Device'
+pod 'SnapKit', '~> 3.0.2'
+pod 'Device', '~> 2.0.1'
 
 end

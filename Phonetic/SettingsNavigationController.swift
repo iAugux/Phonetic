@@ -107,7 +107,7 @@ class SettingsNavigationController: UINavigationController {
         customTitleLabel.sizeToFit()
         navigationBar.addSubview(customTitleLabel)
         customTitleLabel.snp.makeConstraints { (make) in
-            make.centerX.centerY.equalTo(navigationBar)
+            make.center.equalToSuperview()
         }
     }
 

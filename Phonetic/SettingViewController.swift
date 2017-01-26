@@ -98,7 +98,7 @@ class SettingViewController: UIViewController {
         navBar.addSubview(customBarButton)
         customBarButton.snp.makeConstraints { (make) in
             make.width.height.equalTo(25)
-            make.centerY.equalTo(navBar)
+            make.centerY.equalToSuperview()
             make.left.equalTo(13)
         }
     }

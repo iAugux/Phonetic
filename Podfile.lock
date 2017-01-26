@@ -1,26 +1,15 @@
 PODS:
-  - Device (1.0.1)
-  - SnapKit (0.40.0.beta2)
+  - Device (2.0.1)
+  - SnapKit (3.0.2)
 
 DEPENDENCIES:
-  - Device
-  - SnapKit (from `https://github.com/SnapKit/SnapKit`, branch `feature/0.40.0`)
-
-EXTERNAL SOURCES:
-  SnapKit:
-    :branch: feature/0.40.0
-    :git: https://github.com/SnapKit/SnapKit
-
-CHECKOUT OPTIONS:
-  SnapKit:
-    :commit: 4f47f13902c0a8bf8e2aaefbbfefe534172a0e3d
-    :git: https://github.com/SnapKit/SnapKit
+  - Device (~> 2.0.1)
+  - SnapKit (~> 3.0.2)
 
 SPEC CHECKSUMS:
-  Device: 7ed5b87db148886e8c3cbcdde5dc997baddbe10b
-  SnapKit: 405236dfbf278b9d545db29f3950ae7e7f14f348
+  Device: 7dd12a4fc8a72a90211f2c9ac8975a728322a148
+  SnapKit: 2e456761aa92d4d4067a7a5594c18769d451a8ad
 
-PODFILE CHECKSUM: 2e2cd362be28b92d71dd7fafda7dcde618521ef5
+PODFILE CHECKSUM: acf5c954713b75aac39e4ecfe8a6b5921abaf40e
 
-COCOAPODS: 1.0.1
-
+COCOAPODS: 1.2.0.rc.1
