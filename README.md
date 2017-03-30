@@ -39,7 +39,7 @@ Phonetic on the App Store includes more features.
 ## Requirements
 - iOS 9.0+
 - Swift 3
-- Xcode 8+
+- Xcode 8.3+
 
 ## Video Preview
 ##### On Youtube
@@ -94,7 +94,7 @@ Phonetic on the App Store includes more features.
 
 `Please do NOT repackage and submit to App Store.`
 
-Copyright © 2016 iAugus
+Copyright © 2017 iAugus
 
 
 
