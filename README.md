@@ -47,8 +47,7 @@ Phonetic on the App Store includes more features.
 <a  href="https://youtu.be/337O4xr7Mj4"> <img src="https://raw.githubusercontent.com/iAugux/ProjectScreenshots/master/Phonetic/0.png"  width="272" height="480"/></a>
 </div>
 
-</br>
-##### Or [Bilibili](http://www.bilibili.com/video/av3775904/)
+##### Or [`Bilibili`](http://www.bilibili.com/video/av3775904)
 
 ## Screenshots
 
