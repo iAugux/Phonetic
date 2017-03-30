@@ -71,7 +71,7 @@ extension PhoneticContacts {
         
         guard DEBUG else { return }
         
-        guard Device.type() != .Simulator else { return }
+        guard Device.type() != .simulator else { return }
         guard numberOfContacts != 0 else { return }
         
         insertNewContactsWithMultiAlert(numberOfContacts)
@@ -83,7 +83,7 @@ extension PhoneticContacts {
         
         guard DEBUG else { return }
         
-        guard Device.type() == .Simulator else { return }
+        guard Device.type() == .simulator else { return }
         
         let keysToFetch = [CNContactFamilyNameKey, CNContactGivenNameKey, CNContactMiddleNameKey]
         
@@ -137,7 +137,7 @@ extension PhoneticContacts {
     
     fileprivate var needInsertNewContactsForTesting: Bool {
         // just insert new contacts for simulator
-        guard Device.type() == .Simulator else { return false }
+        guard Device.type() == .simulator else { return false }
         
         // if there is more enough to test, return false
         guard contactsTotalCount < 30 else { return false }

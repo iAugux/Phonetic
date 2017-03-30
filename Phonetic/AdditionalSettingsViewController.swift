@@ -162,11 +162,9 @@ class AdditionalSettingsViewController: BaseTableViewController {
         }
     }
     
-}
 
-// MARK: - Life Cycle
-extension AdditionalSettingsViewController {
-    
+    // MARK: - Life Cycle
+
     override func loadView() {
         super.loadView()
         configureQuickSearchSelectionViews()
@@ -213,7 +211,7 @@ extension AdditionalSettingsViewController {
         cleanPhoneticSuffixSwitch.isEnabled                  = statusSwitch.isOn
         
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         _title = NSLocalizedString("Additional Settings", comment: "SettingsNavigationController title - Additional Settings")
@@ -223,8 +221,6 @@ extension AdditionalSettingsViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    
 }
 
 // MARK: - Actions of UISwitch

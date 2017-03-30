@@ -29,7 +29,7 @@ class SettingsNavigationController: UINavigationController {
         }
         
         // 6(s) Plus or larger iPhones in the future (maybe).
-        if Device.isLargerThanScreenSize(Size.screen4_7Inch) {
+        if Device.size() > .screen4_7Inch {
             return UIDevice.current.orientation.isLandscape
         }
         
@@ -118,7 +118,7 @@ extension SettingsNavigationController {
     override func willRotate(to toInterfaceOrientation: UIInterfaceOrientation, duration: TimeInterval) {
         
         // Optimized for 6(s) Plus
-        if Device.isEqualToScreenSize(Size.screen5_5Inch) {
+        if Device.size() > .screen5_5Inch {
             hideCustomBarButton = toInterfaceOrientation.isLandscape
         }
     }
