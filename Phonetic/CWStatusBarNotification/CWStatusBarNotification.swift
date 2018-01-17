@@ -32,11 +32,11 @@ import UIKit
 open class CWStatusBarNotification : NSObject {
     // MARK: - properties
     
-    fileprivate let fontSize : CGFloat = 10.0
+    private let fontSize : CGFloat = 10.0
 
-    fileprivate var tapGestureRecognizer : UITapGestureRecognizer!
-    fileprivate var dismissHandle : CWDelayedClosureHandle?
-    fileprivate var isCustomView : Bool
+    private var tapGestureRecognizer : UITapGestureRecognizer!
+    private var dismissHandle : CWDelayedClosureHandle?
+    private var isCustomView : Bool
     
     open var notificationLabel : ScrollLabel?
     open var statusBarView : UIView?
@@ -187,7 +187,7 @@ open class CWStatusBarNotification : NSObject {
     
     // MARK: - screen orientation change
     
-    func updateStatusBarFrame() {
+    @objc func updateStatusBarFrame() {
         if let view = self.isCustomView ? self.customView :
             self.notificationLabel {
                 view.frame = self.getNotificationLabelFrame()
@@ -199,7 +199,7 @@ open class CWStatusBarNotification : NSObject {
     
     // MARK: - on tap
     
-    func notificationTapped(_ recognizer : UITapGestureRecognizer) {
+    @objc func notificationTapped(_ recognizer : UITapGestureRecognizer) {
         self.notificationTappedClosure()
     }
     

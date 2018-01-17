@@ -24,7 +24,7 @@ class AppIconImageView: UIImageView {
         layer.cornerRadius = frame.width * 0.23
     }
     
-    func iconDidTap() {
+    @objc func iconDidTap() {
         parentViewController?.dismiss(animated: true, completion: { () -> Void in
             let appURL = URL(string: "https://itunes.apple.com/app/id1063627763")
             if UIApplication.shared.canOpenURL(appURL!) {

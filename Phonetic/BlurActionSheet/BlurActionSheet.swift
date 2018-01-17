@@ -12,16 +12,16 @@ import SnapKit
 
 class BlurActionSheet: UIView, UITableViewDataSource {
 
-    fileprivate let actionSheetCellHeight: CGFloat = 44.0
-    fileprivate let actionSheetCancelHeight: CGFloat = 58.0
+    private let actionSheetCellHeight: CGFloat = 44.0
+    private let actionSheetCancelHeight: CGFloat = 58.0
     
-    fileprivate var showSet: NSMutableSet = NSMutableSet()
+    private var showSet: NSMutableSet = NSMutableSet()
     var titles: [String]?
-    fileprivate var containerView: UIView?
+    private var containerView: UIView?
     var handler: ((_ index: Int) -> Void)?
     
-    fileprivate var tableView: UITableView!
-    fileprivate var blurBackgroundView: BlurBackgroundView!
+    private var tableView: UITableView!
+    private var blurBackgroundView: BlurBackgroundView!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -62,7 +62,7 @@ class BlurActionSheet: UIView, UITableViewDataSource {
         return actionSheet
     }
     
-    fileprivate func show() {
+    private func show() {
         
         let maxHeight = actionSheetCellHeight * CGFloat(titles!.count - 1) + actionSheetCancelHeight
 
@@ -89,7 +89,7 @@ class BlurActionSheet: UIView, UITableViewDataSource {
         })
     }
     
-    fileprivate func hide() {
+    private func hide() {
         
         var index = 0
         

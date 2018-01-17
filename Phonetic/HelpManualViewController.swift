@@ -10,7 +10,7 @@ import UIKit
 
 class HelpManualViewController: UIViewController {
     
-    @IBOutlet fileprivate weak var settingButton: UIButton!
+    @IBOutlet private weak var settingButton: UIButton!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,7 +58,7 @@ extension HelpManualViewController {
     
     override func willRotate(to toInterfaceOrientation: UIInterfaceOrientation, duration: TimeInterval) {
         
-        guard UIDevice.isPad else { return }
+        guard UIDevice.current.isPad else { return }
         
         dismissViewController()
     }

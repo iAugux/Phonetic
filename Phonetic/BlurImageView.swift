@@ -10,7 +10,7 @@ import UIKit
 
 class BlurImageView: UIImageView {
     
-    fileprivate var effectView: UIVisualEffectView!
+    private var effectView: UIVisualEffectView!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -30,7 +30,7 @@ class BlurImageView: UIImageView {
         effectView?.frame = bounds
     }
     
-    fileprivate func configureViews() {
+    private func configureViews() {
         image = UIImage(named: "wave_placeholder")
         contentMode = .scaleToFill
         
@@ -45,5 +45,4 @@ class BlurImageView: UIImageView {
         effectView.frame = bounds
         insertSubview(effectView, at: 0)
     }
-    
 }

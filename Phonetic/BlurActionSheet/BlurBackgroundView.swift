@@ -17,7 +17,7 @@ class BlurBackgroundView: UIView {
         }
     }
 
-    fileprivate var blurView: UIVisualEffectView!
+    private var blurView: UIVisualEffectView!
     
     override init(frame: CGRect) {
         super.init(frame: frame)

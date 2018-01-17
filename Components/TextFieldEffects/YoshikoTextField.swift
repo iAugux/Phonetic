@@ -13,9 +13,9 @@ import UIKit
  */
 @IBDesignable open class YoshikoTextField: TextFieldEffects {
 
-    fileprivate let borderLayer = CALayer()
-    fileprivate let textFieldInsets = CGPoint(x: 6, y: 0)
-    fileprivate let placeHolderInsets = CGPoint(x: 6, y: 0)
+    private let borderLayer = CALayer()
+    private let textFieldInsets = CGPoint(x: 6, y: 0)
+    private let placeHolderInsets = CGPoint(x: 6, y: 0)
     
     /**
      The size of the border.
@@ -95,13 +95,13 @@ import UIKit
 
     // MARK: Private 
 
-    fileprivate func updateBorder() {
+    private func updateBorder() {
         borderLayer.frame = rectForBounds(bounds)
         borderLayer.borderWidth = borderSize
         borderLayer.borderColor = (isFirstResponder || text!.isNotEmpty) ? activeBorderColor.cgColor : inactiveBorderColor.cgColor
     }
 
-    fileprivate func updateBackground() {
+    private func updateBackground() {
         if isFirstResponder || text!.isNotEmpty {
             borderLayer.backgroundColor = activeBackgroundColor.cgColor
         } else {
@@ -109,7 +109,7 @@ import UIKit
         }
     }
 
-    fileprivate func updatePlaceholder() {
+    private func updatePlaceholder() {
         placeholderLabel.frame = placeholderRect(forBounds: bounds)
         placeholderLabel.text = placeholder
         placeholderLabel.textAlignment = textAlignment
@@ -124,20 +124,20 @@ import UIKit
         }
     }
 
-    fileprivate func placeholderFontFromFontAndPercentageOfOriginalSize(_ font: UIFont, percentageOfOriginalSize: CGFloat) -> UIFont! {
+    private func placeholderFontFromFontAndPercentageOfOriginalSize(_ font: UIFont, percentageOfOriginalSize: CGFloat) -> UIFont! {
         let smallerFont = UIFont(name: font.fontName, size: font.pointSize * percentageOfOriginalSize)
         return smallerFont
     }
 
-    fileprivate func rectForBounds(_ bounds: CGRect) -> CGRect {
+    private func rectForBounds(_ bounds: CGRect) -> CGRect {
         return CGRect(x: bounds.origin.x, y: bounds.origin.y + placeholderHeight, width: bounds.size.width, height: bounds.size.height - placeholderHeight)
     }
 
-    fileprivate var placeholderHeight : CGFloat {
+    private var placeholderHeight : CGFloat {
         return placeHolderInsets.y + placeholderFontFromFontAndPercentageOfOriginalSize(font!, percentageOfOriginalSize: placeholderFontScale).lineHeight
     }
     
-    fileprivate func animateViews() {
+    private func animateViews() {
         UIView.animate(withDuration: 0.2, animations: {
             // Prevents a "flash" in the placeholder
             if self.text!.isEmpty {

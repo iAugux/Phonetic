@@ -21,10 +21,10 @@ open class ScrollLabel : UILabel {
     
     // MARK: - properties
     
-    fileprivate let padding : CGFloat = 10.0
-    fileprivate let scrollSpeed : CGFloat = 40.0
-    fileprivate let scrollDelay : CGFloat = 1.0
-    fileprivate var textImage : UIImageView?
+    private let padding : CGFloat = 10.0
+    private let scrollSpeed : CGFloat = 40.0
+    private let scrollDelay : CGFloat = 1.0
+    private var textImage : UIImageView?
     
     // MARK: - setup
     
@@ -69,16 +69,16 @@ open class ScrollLabel : UILabel {
     
     // MARK - methods
     
-    fileprivate func fullWidth() -> CGFloat {
+    private func fullWidth() -> CGFloat {
         guard let content = self.text else {
             return 0.0
         }
         let size = NSString(string: content).size(
-            attributes: [NSFontAttributeName: self.font])
+            withAttributes: [NSAttributedStringKey.font: self.font])
         return size.width
     }
     
-    fileprivate func scrollOffset() -> CGFloat {
+    private func scrollOffset() -> CGFloat {
         guard self.numberOfLines == 1 else {
             return 0.0
         }

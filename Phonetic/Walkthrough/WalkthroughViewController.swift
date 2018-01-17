@@ -58,7 +58,7 @@ class WalkthroughViewController: UIViewController {
         configureImageViewIfNeeded()
     }
     
-    fileprivate func configureStartButton(_ maxIndex: Int) {
+    private func configureStartButton(_ maxIndex: Int) {
         startButton.setTitle(NSLocalizedString("Get Started", comment: ""), for: UIControlState())
         startButton.isHidden = (index == maxIndex) ? false : true
         startButton.isUserInteractionEnabled = (index == maxIndex) ? true : false
@@ -66,7 +66,7 @@ class WalkthroughViewController: UIViewController {
         startButton.layer.masksToBounds = true
     }
     
-    fileprivate func configureSkipButtonIfNeeded(_ maxIndex: Int) {
+    private func configureSkipButtonIfNeeded(_ maxIndex: Int) {
         
         skipButton.setTitle(NSLocalizedString("Skip", comment: ""), for: UIControlState())
         
@@ -81,7 +81,7 @@ class WalkthroughViewController: UIViewController {
         skipButton.isUserInteractionEnabled = skipButton.isHidden ? false : true
     }
     
-    fileprivate func configureCollectionViewIfNeeded() {
+    private func configureCollectionViewIfNeeded() {
 
         guard index == 2 else {
             collectionView.isHidden = true
@@ -107,7 +107,7 @@ class WalkthroughViewController: UIViewController {
         collectionView.selectItem(at: firstIndexPath, animated: false, scrollPosition: [])
     }
     
-    fileprivate func configureImageViewIfNeeded() {
+    private func configureImageViewIfNeeded() {
         
         guard index == 3 else { return }
         
@@ -116,7 +116,7 @@ class WalkthroughViewController: UIViewController {
         imageView.isUserInteractionEnabled = true
     }
     
-    @objc fileprivate func imageViewDidTap() {
+    @objc private func imageViewDidTap() {
 
         let vc = UIStoryboard.Main.instantiateViewController(with: HelpManualViewController.self)
                 

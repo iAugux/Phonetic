@@ -15,7 +15,7 @@ public enum KDCircularProgressGlowMode {
 @IBDesignable
 open class KDCircularProgress: UIView, CAAnimationDelegate {
 
-    fileprivate struct Conversion {
+    private struct Conversion {
         static func degreesToRadians (_ value:CGFloat) -> CGFloat {
             return value * .pi / 180.0
         }
@@ -25,7 +25,7 @@ open class KDCircularProgress: UIView, CAAnimationDelegate {
         }
     }
 
-    fileprivate struct Utility {
+    private struct Utility {
         static func clamp<T: Comparable>(_ value: T, minMax: (T, T)) -> T {
             let (min, max) = minMax
             if value < min {
@@ -72,13 +72,13 @@ open class KDCircularProgress: UIView, CAAnimationDelegate {
         }
     }
 
-    fileprivate var progressLayer: KDCircularProgressViewLayer {
+    private var progressLayer: KDCircularProgressViewLayer {
         get {
             return layer as! KDCircularProgressViewLayer
         }
     }
 
-    fileprivate var radius: CGFloat! {
+    private var radius: CGFloat! {
         didSet {
             progressLayer.radius = radius
         }
@@ -133,7 +133,7 @@ open class KDCircularProgress: UIView, CAAnimationDelegate {
         }
     }
 
-    @IBInspectable open var glowMode: KDCircularProgressGlowMode = .forward {
+    open var glowMode: KDCircularProgressGlowMode = .forward {
         didSet {
             progressLayer.glowMode = glowMode
         }
@@ -182,11 +182,11 @@ open class KDCircularProgress: UIView, CAAnimationDelegate {
 
     //These are used only from the Interface-Builder. Changing these from code will have no effect.
     //Also IB colors are limited to 3, whereas programatically we can have an arbitrary number of them.
-    @objc @IBInspectable fileprivate var IBColor1: UIColor?
-    @objc @IBInspectable fileprivate var IBColor2: UIColor?
-    @objc @IBInspectable fileprivate var IBColor3: UIColor?
+    @objc @IBInspectable private var IBColor1: UIColor?
+    @objc @IBInspectable private var IBColor2: UIColor?
+    @objc @IBInspectable private var IBColor3: UIColor?
 
-    fileprivate var animationCompletionBlock: ((Bool) -> Void)?
+    private var animationCompletionBlock: ((Bool) -> Void)?
 
     override public init(frame: CGRect) {
         super.init(frame: frame)
@@ -222,13 +222,13 @@ open class KDCircularProgress: UIView, CAAnimationDelegate {
         radius = (frame.size.width/2.0) * 0.8
     }
 
-    fileprivate func setInitialValues() {
+    private func setInitialValues() {
         radius = (frame.size.width/2.0) * 0.8 //We always apply a 20% padding, stopping glows from being clipped
         backgroundColor = .clear
         setColors(.white, .cyan)
     }
 
-    fileprivate func refreshValues() {
+    private func refreshValues() {
         progressLayer.angle = angle
         progressLayer.startAngle = startAngle
         progressLayer.clockwise = clockwise
@@ -242,7 +242,7 @@ open class KDCircularProgress: UIView, CAAnimationDelegate {
         progressLayer.trackThickness = trackThickness/2
     }
 
-    fileprivate func checkAndSetIBColors() {
+    private func checkAndSetIBColors() {
         let nonNilColors = [IBColor1, IBColor2, IBColor3].flatMap { $0 }
         if !nonNilColors.isEmpty {
             setColors(nonNilColors)
@@ -253,7 +253,7 @@ open class KDCircularProgress: UIView, CAAnimationDelegate {
         setColors(colors)
     }
 
-    fileprivate func setColors(_ colors: [UIColor]) {
+    private func setColors(_ colors: [UIColor]) {
         progressLayer.colorsArray = colors
         progressLayer.setNeedsDisplay()
     }
@@ -337,7 +337,7 @@ open class KDCircularProgress: UIView, CAAnimationDelegate {
         progressLayer.setNeedsDisplay()
     }
 
-    fileprivate class KDCircularProgressViewLayer: CALayer {
+    private class KDCircularProgressViewLayer: CALayer {
         @NSManaged var angle: Double
         var radius: CGFloat! {
             didSet {
@@ -370,11 +370,11 @@ open class KDCircularProgress: UIView, CAAnimationDelegate {
                 invalidateGradientCache()
             }
         }
-        fileprivate var gradientCache: CGGradient?
-        fileprivate var locationsCache: [CGFloat]?
+        private var gradientCache: CGGradient?
+        private var locationsCache: [CGFloat]?
 
-        fileprivate struct GlowConstants {
-            fileprivate static let sizeToGlowRatio: CGFloat = 0.00015
+        private struct GlowConstants {
+            private static let sizeToGlowRatio: CGFloat = 0.00015
             static func glowAmountForAngle(_ angle: Double, glowAmount: CGFloat, glowMode: KDCircularProgressGlowMode, size: CGFloat) -> CGFloat {
                 switch glowMode {
                 case .forward:
@@ -508,12 +508,12 @@ open class KDCircularProgress: UIView, CAAnimationDelegate {
             UIGraphicsPopContext()
         }
 
-        fileprivate func fillRectWithContext(_ ctx: CGContext!, color: UIColor) {
+        private func fillRectWithContext(_ ctx: CGContext!, color: UIColor) {
             ctx.setFillColor(color.cgColor)
             ctx.fill(bounds)
         }
 
-        fileprivate func drawGradientWithContext(_ ctx: CGContext!, componentsArray: [CGFloat]) {
+        private func drawGradientWithContext(_ ctx: CGContext!, componentsArray: [CGFloat]) {
             let baseSpace = CGColorSpaceCreateDeviceRGB()
             let locations = locationsCache ?? gradientLocationsForColorCount(componentsArray.count/4, gradientWidth: bounds.size.width)
             let gradient: CGGradient
@@ -541,7 +541,7 @@ open class KDCircularProgress: UIView, CAAnimationDelegate {
             ctx.drawLinearGradient(gradient, start: startPoint, end: endPoint, options: .drawsBeforeStartLocation)
         }
 
-        fileprivate func gradientLocationsForColorCount(_ colorCount: Int, gradientWidth: CGFloat) -> [CGFloat] {
+        private func gradientLocationsForColorCount(_ colorCount: Int, gradientWidth: CGFloat) -> [CGFloat] {
             if colorCount == 0 || gradientWidth == 0 {
                 return []
             } else {
@@ -556,7 +556,7 @@ open class KDCircularProgress: UIView, CAAnimationDelegate {
             }
         }
 
-        fileprivate func invalidateGradientCache() {
+        private func invalidateGradientCache() {
             gradientCache = nil
             locationsCache = nil
         }

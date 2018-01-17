@@ -13,10 +13,10 @@ import UIKit
  */
 @IBDesignable open class AkiraTextField : TextFieldEffects {
     
-    fileprivate let borderSize: (active: CGFloat, inactive: CGFloat) = (1, 2)
-    fileprivate let borderLayer = CALayer()
-    fileprivate let textFieldInsets = CGPoint(x: 6, y: 0)
-    fileprivate let placeHolderInsets = CGPoint(x: 6, y: 0)
+    private let borderSize: (active: CGFloat, inactive: CGFloat) = (1, 2)
+    private let borderLayer = CALayer()
+    private let textFieldInsets = CGPoint(x: 6, y: 0)
+    private let placeHolderInsets = CGPoint(x: 6, y: 0)
     
     /**
      The color of the border.
@@ -93,7 +93,7 @@ import UIKit
     
     // MARK: Private
     
-    fileprivate func updatePlaceholder() {
+    private func updatePlaceholder() {
         placeholderLabel.frame = placeholderRect(forBounds: bounds)
         placeholderLabel.text = placeholder
         placeholderLabel.font = placeholderFontFromFont(font!)
@@ -101,22 +101,22 @@ import UIKit
         placeholderLabel.textAlignment = textAlignment
     }
     
-    fileprivate func updateBorder() {
+    private func updateBorder() {
         borderLayer.frame = rectForBounds(bounds)
         borderLayer.borderWidth = (isFirstResponder || text!.isNotEmpty) ? borderSize.active : borderSize.inactive
         borderLayer.borderColor = borderColor?.cgColor
     }
     
-    fileprivate func placeholderFontFromFont(_ font: UIFont) -> UIFont! {
+    private func placeholderFontFromFont(_ font: UIFont) -> UIFont! {
         let smallerFont = UIFont(name: font.fontName, size: font.pointSize * placeholderFontScale)
         return smallerFont
     }
     
-    fileprivate var placeholderHeight : CGFloat {
+    private var placeholderHeight : CGFloat {
         return placeHolderInsets.y + placeholderFontFromFont(font!).lineHeight;
     }
     
-    fileprivate func rectForBounds(_ bounds: CGRect) -> CGRect {
+    private func rectForBounds(_ bounds: CGRect) -> CGRect {
         return CGRect(x: bounds.origin.x, y: bounds.origin.y + placeholderHeight, width: bounds.size.width, height: bounds.size.height - placeholderHeight)
     }
     

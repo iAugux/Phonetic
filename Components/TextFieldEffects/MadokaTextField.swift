@@ -59,11 +59,11 @@ import UIKit
         }
     }
     
-    fileprivate let borderThickness: CGFloat = 1
-    fileprivate let placeholderInsets = CGPoint(x: 6, y: 6)
-    fileprivate let textFieldInsets = CGPoint(x: 6, y: 6)
-    fileprivate let borderLayer = CAShapeLayer()
-    fileprivate var backgroundLayerColor: UIColor?
+    private let borderThickness: CGFloat = 1
+    private let placeholderInsets = CGPoint(x: 6, y: 6)
+    private let textFieldInsets = CGPoint(x: 6, y: 6)
+    private let borderLayer = CAShapeLayer()
+    private var backgroundLayerColor: UIColor?
     
     // MARK: - TextFieldsEffects
     
@@ -107,7 +107,7 @@ import UIKit
     
     // MARK: - Private
     
-    fileprivate func updateBorder() {
+    private func updateBorder() {
         let rect = rectForBorder(bounds)
         let path = UIBezierPath()
         path.move(to: CGPoint(x: rect.origin.x + borderThickness, y: rect.height - borderThickness))
@@ -123,13 +123,13 @@ import UIKit
         borderLayer.strokeEnd = percentageForBottomBorder()
     }
     
-    fileprivate func percentageForBottomBorder() -> CGFloat {
+    private func percentageForBottomBorder() -> CGFloat {
         let borderRect = rectForBorder(bounds)
         let sumOfSides = (borderRect.width * 2) + (borderRect.height * 2)
         return (borderRect.width * 100 / sumOfSides) / 100
     }
     
-    fileprivate func updatePlaceholder() {
+    private func updatePlaceholder() {
         placeholderLabel.text = placeholder
         placeholderLabel.textColor = placeholderColor
         placeholderLabel.sizeToFit()
@@ -140,18 +140,18 @@ import UIKit
         }
     }
     
-    fileprivate func placeholderFontFromFont(_ font: UIFont) -> UIFont! {
+    private func placeholderFontFromFont(_ font: UIFont) -> UIFont! {
         let smallerFont = UIFont(name: font.fontName, size: font.pointSize * placeholderFontScale)
         return smallerFont
     }
     
-    fileprivate func rectForBorder(_ bounds: CGRect) -> CGRect {
+    private func rectForBorder(_ bounds: CGRect) -> CGRect {
         let newRect = CGRect(x: 0, y: 0, width: bounds.size.width, height: bounds.size.height - font!.lineHeight + textFieldInsets.y)
         
         return newRect
     }
     
-    fileprivate func layoutPlaceholderInTextRect() {
+    private func layoutPlaceholderInTextRect() {
         placeholderLabel.transform = CGAffineTransform.identity
         
         let textRect = self.textRect(forBounds: bounds)

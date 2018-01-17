@@ -9,7 +9,6 @@
 import UIKit
 import Contacts
 
-
 let appDelegate = UIApplication.shared.delegate as! AppDelegate
 
 @UIApplicationMain
@@ -77,8 +76,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
-
-    
 }
 
 
@@ -87,7 +84,7 @@ extension AppDelegate {
     // Detecting touching outside of the popover
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         
-        guard UIDevice.isPad else { return }
+        guard UIDevice.current.isPad else { return }
         
         DEBUGLog("Touched Began")
         
@@ -95,10 +92,9 @@ extension AppDelegate {
         kShouldRepresentPolyphonicVC = false
     }
     
-    // getVisibleViewController
-    func getVisibleViewController(_ _rootViewController: UIViewController? = nil) -> UIViewController? {
+    func getVisibleViewController(_ rvc: UIViewController? = nil) -> UIViewController? {
         
-        var rootViewController = _rootViewController
+        var rootViewController = rvc
         
         if rootViewController == nil {
             rootViewController = UIApplication.shared.keyWindow?.rootViewController
@@ -109,15 +105,12 @@ extension AppDelegate {
         }
         
         if let presented = rootViewController?.presentedViewController {
-
             if let nav = presented as? UINavigationController {
                 return nav.viewControllers.last
             }
-            
             if let tab = presented as? UITabBarController {
                 return tab.selectedViewController
             }
-            
             return getVisibleViewController(presented)
         }
         return nil

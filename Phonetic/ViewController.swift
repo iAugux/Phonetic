@@ -24,12 +24,12 @@ class ViewController: UIViewController {
     @IBOutlet weak var infoButton: UIButton!
     @IBOutlet weak var progress: KDCircularProgress!
     
-    fileprivate var singleTap: UITapGestureRecognizer!
-    fileprivate var multiTap: UITapGestureRecognizer!
-    fileprivate var longPress: UILongPressGestureRecognizer!
-    fileprivate var swipeUp: UISwipeGestureRecognizer!
+    private var singleTap: UITapGestureRecognizer!
+    private var multiTap: UITapGestureRecognizer!
+    private var longPress: UILongPressGestureRecognizer!
+    private var swipeUp: UISwipeGestureRecognizer!
     
-    fileprivate var abortingAlertController: UIAlertController!
+    private var abortingAlertController: UIAlertController!
     
     var avPlayerController: AVPlayerViewController!
     var avPlayer: AVPlayer!
@@ -137,7 +137,7 @@ class ViewController: UIViewController {
         }
     }
     
-    internal func abortActions() {
+    @objc internal func abortActions() {
         UIView.animate(withDuration: 0.45, delay: 0, options: UIViewAnimationOptions(), animations: { () -> Void in
             self.executeButton?.frame.origin.y -= 25
             }) { (_) -> Void in
@@ -168,7 +168,4 @@ class ViewController: UIViewController {
         abortingAlertController.addAction(okAction)
         UIApplication.topMostViewController?.present(abortingAlertController, animated: true, completion: nil)
     }
-    
 }
-
-

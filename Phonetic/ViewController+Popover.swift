@@ -12,17 +12,17 @@ import SnapKit
 // MARK: - Popover view controller even on iPhones
 extension ViewController: UIPopoverPresentationControllerDelegate {
     
-    internal func popoverInfoViewController() {
+    @objc func popoverInfoViewController() {
         popoverPresentViewController(PopoverButton.info)
         hideLabels(true)
     }
     
-    internal func popoverSettingViewController() {
+    @objc func popoverSettingViewController() {
         popoverPresentViewController(PopoverButton.setting)
         hideLabels(true)
     }
     
-    internal func showLabels() {
+    @objc func showLabels() {
         hideLabels(false)
     }
     
@@ -36,19 +36,19 @@ extension ViewController: UIPopoverPresentationControllerDelegate {
         }
     }
     
-    fileprivate enum PopoverButton {
+    private enum PopoverButton {
         case info
         case setting
     }
 
-    fileprivate struct Popover {
+    private struct Popover {
         static var popoverContent: UIViewController?
         static var popover: UIPopoverPresentationController?
         static var currentButton: PopoverButton?
         static let preferredContentWith: CGFloat = 220 //min(300, UIScreen.screenWidth() * 0.6)
         
-        fileprivate static let preferredContentHeight: CGFloat = 260
-        fileprivate static let preferredMutableContentHeight = min(345, UIScreen.screenHeight() * 0.66)
+        private static let preferredContentHeight: CGFloat = 260
+        private static let preferredMutableContentHeight = min(345, UIScreen.screenHeight() * 0.66)
         
         static let preferredContentSize = CGSize(width: preferredContentWith, height: preferredContentHeight)
         static let preferredMutableContentSize = CGSize(width: preferredContentWith, height: preferredMutableContentHeight)
@@ -74,7 +74,7 @@ extension ViewController: UIPopoverPresentationControllerDelegate {
     }
     
     // MARK: - configure popover controller
-    fileprivate func popoverPresentViewController(_ button: PopoverButton) {
+    private func popoverPresentViewController(_ button: PopoverButton) {
         var rect: CGRect
         var title: String
         
@@ -118,7 +118,7 @@ extension ViewController: UIPopoverPresentationControllerDelegate {
         }
     }
     
-    fileprivate func configureCustomNavigationTitle(_ nav: UINavigationController, title: String?) {
+    private func configureCustomNavigationTitle(_ nav: UINavigationController, title: String?) {
         
         guard title != nil else { return }
         
@@ -148,6 +148,4 @@ extension ViewController: UIPopoverPresentationControllerDelegate {
         // disable default UITraitCollection, fix size of popover view on iPhone 6(s) Plus.
         return nil
     }
-    
-
 }

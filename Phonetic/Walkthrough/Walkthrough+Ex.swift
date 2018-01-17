@@ -23,7 +23,7 @@ func displayWalkthrough(_ transparent: Bool = true, completion: Closure? = nil) 
     
     transparent ? pageViewController.modalPresentationStyle = .overCurrentContext : ()
     
-    UIDevice.isPad ? pageViewController.modalTransitionStyle = .crossDissolve : ()
+    UIDevice.current.isPad ? pageViewController.modalTransitionStyle = .crossDissolve : ()
     
     UIApplication.topMostViewController?.present(pageViewController, animated: true, completion: {
         completion?()        

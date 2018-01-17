@@ -15,8 +15,8 @@ class BaseTableViewController: UITableViewController {
     
     var _title = ""
     
-    fileprivate let _color = UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1.0)
-    fileprivate var blurBackgroundView: BlurImageView!
+    private let _color = UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1.0)
+    private var blurBackgroundView: BlurImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -89,13 +89,13 @@ extension BaseTableViewController {
         prepareForDismissingViewController(false)
     }
     
-    fileprivate func makeNavigationBarTransparent(_ transparent: Bool) {
+    private func makeNavigationBarTransparent(_ transparent: Bool) {
         UIView.animate(withDuration: 0.5) { () -> Void in
             self.navigationController?.navigationBar.alpha = transparent ? 0 : 1
         }
     }
     
-    fileprivate func prepareForDismissingViewController(_ prepared: Bool) {
+    private func prepareForDismissingViewController(_ prepared: Bool) {
         
         guard let nav = navigationController as? SettingsNavigationController else { return }
         
@@ -118,7 +118,7 @@ extension BaseTableViewController {
                 if prepared {
                     nav.customTitleLabel?.text      = NSLocalizedString("Pull Down to Dismiss", comment: "")
                     nav.customTitleLabel?.textColor = GLOBAL_CUSTOM_COLOR.withAlphaComponent(0.8)
-                    nav.customTitleLabel?.font      = UIFont.systemFont(ofSize: 12.0, weight: -1.0)
+                    nav.customTitleLabel?.font      = UIFont.systemFont(ofSize: 12.0, weight: UIFont.Weight(rawValue: -1.0))
                 }
                 
                 UIView.animate(withDuration: 0.3, delay: 0.1, options: UIViewAnimationOptions(), animations: { () -> Void in
@@ -134,7 +134,7 @@ extension BaseTableViewController {
 // MARK: - Keep `SettingViewController` open after dismissing.
 extension BaseTableViewController {
     
-    fileprivate func postDismissedNotificationIfNeeded() {
+    private func postDismissedNotificationIfNeeded() {
         // It is not necessary here, but I prefer to keep it.
         guard UIDevice.current.userInterfaceIdiom != .pad else { return }
         

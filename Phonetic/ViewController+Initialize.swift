@@ -39,7 +39,7 @@ extension ViewController {
 
     }
     
-    fileprivate func goSetting() {
+    private func goSetting() {
         performSegue(withIdentifier: "rootVCPresentAdditionalVC", sender: self)
     }
     

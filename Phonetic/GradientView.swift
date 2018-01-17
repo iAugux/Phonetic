@@ -11,7 +11,7 @@ import SnapKit
 
 class GradientView: UIView {
     
-    fileprivate var gradient: CAGradientLayer!
+    private var gradient: CAGradientLayer!
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -30,7 +30,7 @@ class GradientView: UIView {
 //        gradient?.frame = frame
     }
     
-    fileprivate func configureGradientView(_ frame: CGRect) {
+    private func configureGradientView(_ frame: CGRect) {
         gradient        = CAGradientLayer()
         gradient.frame  = frame
         gradient.colors = [UIColor(red:0.0894, green:0.4823, blue:0.9112, alpha:0.1).cgColor,
@@ -38,7 +38,7 @@ class GradientView: UIView {
         layer.insertSublayer(gradient, at: 1)
     }
     
-    fileprivate func addBlurEffect() {
+    private func addBlurEffect() {
         
         let bgImageView = UIImageView(image: UIImage(named: "wave_placeholder"))
         bgImageView.contentMode = .scaleAspectFill

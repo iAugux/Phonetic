@@ -29,9 +29,9 @@ class SettingViewController: UIViewController {
     
     @IBOutlet weak var polyphonicButton: UIButton!
     
-    fileprivate let userDefaults = UserDefaults.standard
+    private let userDefaults = UserDefaults.standard
     
-    fileprivate var customBarButton: UIButton!
+    private var customBarButton: UIButton!
     
     
     @IBOutlet weak var enableAnimationSwitch: UISwitch! {
@@ -105,7 +105,7 @@ class SettingViewController: UIViewController {
     
     @objc private func customBarButtonDidTap() {
                 
-        if UIDevice.isPad {
+        if UIDevice.current.isPad {
             presentPopoverController()
             kShouldRepresentAdditionalVC = true
         } else {
@@ -159,7 +159,7 @@ extension SettingViewController {
     
     override func didRotate(from fromInterfaceOrientation: UIInterfaceOrientation) {
         
-        guard UIDevice.isPad else { return }
+        guard UIDevice.current.isPad else { return }
        
         _ = kShouldRepresentAdditionalVC ? customBarButton?.sendActions(for: .touchUpInside) : ()
         _ = kShouldRepresentPolyphonicVC ? polyphonicButton?.sendActions(for: .touchUpInside) : ()

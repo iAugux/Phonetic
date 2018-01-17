@@ -49,10 +49,10 @@ open class DGElasticPullToRefreshLoadingViewCircle: DGElasticPullToRefreshLoadin
     // MARK: -
     // MARK: Vars
 
-    fileprivate let kRotationAnimation = "kRotationAnimation"
+    private let kRotationAnimation = "kRotationAnimation"
 
-    fileprivate let shapeLayer = CAShapeLayer()
-    fileprivate lazy var identityTransform: CATransform3D = {
+    private let shapeLayer = CAShapeLayer()
+    private lazy var identityTransform: CATransform3D = {
         var transform = CATransform3DIdentity
         transform.m34 = CGFloat(1.0 / -500.0)
         transform = CATransform3DRotate(transform, CGFloat(-90.0).toRadians(), 0.0, 0.0, 1.0)
@@ -113,7 +113,7 @@ open class DGElasticPullToRefreshLoadingViewCircle: DGElasticPullToRefreshLoadin
         shapeLayer.removeAnimation(forKey: kRotationAnimation)
     }
 
-    fileprivate func currentDegree() -> CGFloat {
+    private func currentDegree() -> CGFloat {
         return shapeLayer.value(forKeyPath: "transform.rotation.z") as! CGFloat
     }
 

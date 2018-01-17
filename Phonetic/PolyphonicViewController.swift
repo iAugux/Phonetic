@@ -11,10 +11,10 @@ import UIKit
 
 class PolyphonicViewController: BaseTableViewController {
     
-    fileprivate let kEnableAllPolyphonicChars = "kEnableAllPolyphonicCharacters"
+    private let kEnableAllPolyphonicChars = "kEnableAllPolyphonicCharacters"
     
-    fileprivate var names: NSDictionary!
-    fileprivate var nameSectionTitles: NSArray!
+    private var names: NSDictionary!
+    private var nameSectionTitles: NSArray!
     
     @IBOutlet weak var masterSwitch: UISwitch! {
         didSet {
@@ -35,7 +35,7 @@ class PolyphonicViewController: BaseTableViewController {
         masterSwitch.onTintColor = GLOBAL_CUSTOM_COLOR
         masterSwitch.shouldSwitch(kEnableAllPolyphonicChars, defaultBool: true)
         
-        UIDevice.isPad ? masterSwitchTrailingConstraint.constant = 42 : ()        
+        UIDevice.current.isPad ? masterSwitchTrailingConstraint.constant = 42 : ()
     }
     
     override func viewDidLoad() {
@@ -90,7 +90,7 @@ class PolyphonicViewController: BaseTableViewController {
         }
     }
     
-    fileprivate func setMasterLabelText(_ on: Bool) {
+    private func setMasterLabelText(_ on: Bool) {
         masterLabel?.text = on ? NSLocalizedString("Enable All", comment: "") : NSLocalizedString("Disable All", comment: "")
     }
     
@@ -119,9 +119,9 @@ extension PolyphonicViewController {
         return UILocalizedIndexedCollation.current().sectionIndexTitles
     }
     
-    //    override func tableView(tableView: UITableView, sectionForSectionIndexTitle title: String, atIndex index: Int) -> Int {
-    //        return UILocalizedIndexedCollation.currentCollation().sectionForSectionIndexTitleAtIndex(index)
-    //    }
+//    override func tableView(tableView: UITableView, sectionForSectionIndexTitle title: String, atIndex index: Int) -> Int {
+//        return UILocalizedIndexedCollation.currentCollation().sectionForSectionIndexTitleAtIndex(index)
+//    }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
@@ -160,7 +160,7 @@ extension PolyphonicViewController {
 extension PolyphonicViewController {
     
     override func willRotate(to toInterfaceOrientation: UIInterfaceOrientation, duration: TimeInterval) {
-        if UIDevice.isPad {
+        if UIDevice.current.isPad {
             dismissViewController(completion: {
                 kShouldRepresentPolyphonicVC = true
             })

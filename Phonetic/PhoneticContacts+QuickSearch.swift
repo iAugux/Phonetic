@@ -98,7 +98,7 @@ extension PhoneticContacts {
         return userDefaults.bool(forKey: kEnableCustomName, defaultValue: kEnableCustomNameDefaultBool)
     }
     
-    fileprivate var overwriteExistingName: Bool {
+    private var overwriteExistingName: Bool {
         
         guard masterSwitchStatusIsOn else { return false }
         guard enableNickname || enableCustomName else { return false }

@@ -11,7 +11,7 @@ import UIKit
 
 class AlertController {
     
-    fileprivate static let ok = NSLocalizedString("OK", comment: "")
+    private static let ok = NSLocalizedString("OK", comment: "")
     
     class func alert(_ title: String = "", message: String = "", actionTitle: String = ok, completionHandler: (() -> Void)?) {
         AlertController.alert(title, message: message, actionTitle: actionTitle, addCancelAction: false, completionHandler: completionHandler, canceledHandler: nil)
@@ -27,7 +27,7 @@ class AlertController {
         alertWithOptions(multiItemsOfInfo, completionHandler: completionHandler)
     }
     
-    fileprivate class func alert(_ title: String = "", message: String = "", actionTitle: String = ok, addCancelAction: Bool, completionHandler: (() -> Void)?, canceledHandler: (() -> Void)?) {
+    private class func alert(_ title: String = "", message: String = "", actionTitle: String = ok, addCancelAction: Bool, completionHandler: (() -> Void)?, canceledHandler: (() -> Void)?) {
         let okAction = UIAlertAction(title: actionTitle, style: .default) { (_) -> Void in
             if let completion = completionHandler {
                 completion()
@@ -51,7 +51,7 @@ class AlertController {
         UIApplication.topMostViewController?.present(alertController, animated: true, completion: nil)
     }
     
-    fileprivate class func alertWithOptions(_ multiItemsOfInfo: [String], completionHandler: (() -> Void)?) {
+    private class func alertWithOptions(_ multiItemsOfInfo: [String], completionHandler: (() -> Void)?) {
         DispatchQueue.main.async { () -> Void in
             
             var tempInfoArray = multiItemsOfInfo

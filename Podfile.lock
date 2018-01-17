@@ -1,15 +1,15 @@
 PODS:
-  - Device (2.1.0)
-  - SnapKit (3.2.0)
+  - Device (3.0.3)
+  - SnapKit (4.0.0)
 
 DEPENDENCIES:
-  - Device (~> 2.0)
-  - SnapKit (~> 3.0)
+  - Device
+  - SnapKit (~> 4.0)
 
 SPEC CHECKSUMS:
-  Device: b6f1eac43c482e9b4be50e7606253f2a27449685
-  SnapKit: 1ca44df72cfa543218d177cb8aab029d10d86ea7
+  Device: 9a5264ee4e0f392e7153d2c46b10c8df46b7aad2
+  SnapKit: a42d492c16e80209130a3379f73596c3454b7694
 
-PODFILE CHECKSUM: 744211a44905beaf40fc06a0364546dc517a9616
+PODFILE CHECKSUM: f4e6eee9b8019f968c211e82167b5ea752dd5099
 
-COCOAPODS: 1.2.0
+COCOAPODS: 1.4.0.rc.1

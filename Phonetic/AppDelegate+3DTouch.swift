@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 extension AppDelegate {
     
     func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: (Bool) -> Void) {
@@ -23,7 +22,7 @@ extension AppDelegate {
         }
     }
     
-    fileprivate enum `Type`: String {
+    private enum `Type`: String {
         case Excute
         case Rollback
     }
@@ -52,15 +51,15 @@ extension AppDelegate {
     
     // MARK: - Actions
     
-    fileprivate func execute() {
+    private func execute() {
         viewController?.execute()
     }
     
-    fileprivate func rollback() {
+    private func rollback() {
         viewController?.clean()
     }
     
-    fileprivate var viewController: ViewController? {
+    private var viewController: ViewController? {
         
         // ensure root vc is presenting.
         window?.rootViewController?.presentedViewController?.dismissViewControllerWithoutAnimation()

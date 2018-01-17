@@ -110,14 +110,14 @@ open class TextFieldEffects : UITextField {
     /**
     The textfield has started an editing session.
     */
-    public func textFieldDidBeginEditing() {
+    @objc public func textFieldDidBeginEditing() {
         animateViewsForTextEntry()
     }
     
     /**
     The textfield has ended an editing session.
     */
-    public func textFieldDidEndEditing() {
+    @objc public func textFieldDidEndEditing() {
         animateViewsForTextDisplay()
     }
     

@@ -4,7 +4,7 @@ use_frameworks!
 
 target 'Phonetic' do
 
-pod 'SnapKit', '~> 3.0'
-pod 'Device', '~> 2.0'
+pod 'SnapKit', '~> 4.0'
+pod 'Device'
 
 end

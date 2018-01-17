@@ -38,7 +38,7 @@ extension AppDelegate {
         }
     }
     
-    fileprivate func showAllowContactsAccessMessage(_ title: String, message: String) {
+    private func showAllowContactsAccessMessage(_ title: String, message: String) {
         let okActionTitle = NSLocalizedString("Settings", comment: "UIAlertAction - title")
         let cancelActionTitle = NSLocalizedString("Cancel", comment: "UIAlertAction - title")
         

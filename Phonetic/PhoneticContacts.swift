@@ -55,11 +55,11 @@ class PhoneticContacts {
         }
     }
     
-    fileprivate var aborted = false
+    private var aborted = false
 
-    fileprivate lazy var backgroundTask = UIBackgroundTaskInvalid
+    private lazy var backgroundTask = UIBackgroundTaskInvalid
     
-    fileprivate lazy var localNotification: UILocalNotification = {
+    private lazy var localNotification: UILocalNotification = {
         let localNotification = UILocalNotification()
         localNotification.soundName = UILocalNotificationDefaultSoundName
         return localNotification
@@ -226,7 +226,7 @@ class PhoneticContacts {
         return contacts.count
     }
     
-    fileprivate func fetchAllContacts(keysToFetch keys: [CNKeyDescriptor]) -> [CNContact] {
+    private func fetchAllContacts(keysToFetch keys: [CNKeyDescriptor]) -> [CNContact] {
         
         AppDelegate().requestContactsAccess { (accessGranted) in
             guard accessGranted else { return }
@@ -242,7 +242,7 @@ class PhoneticContacts {
         return contacts
     }
     
-    fileprivate func handlingCompletion(_ handle: @escaping CompletionHandler) {
+    private func handlingCompletion(_ handle: @escaping CompletionHandler) {
         
         switch UIApplication.shared.applicationState {
         case .background:
@@ -263,7 +263,7 @@ class PhoneticContacts {
         })
     }
     
-    fileprivate func handlingResult(_ handle: @escaping ResultHandler, result: String?, index: Int, total: Int) {
+    private func handlingResult(_ handle: @escaping ResultHandler, result: String?, index: Int, total: Int) {
         
         let percentage = currentPercentage(index, total: total)
         
@@ -301,7 +301,7 @@ class PhoneticContacts {
         
     }
     
-    fileprivate func saveContact(_ contact: CNMutableContact) {
+    private func saveContact(_ contact: CNMutableContact) {
         let saveRequest = CNSaveRequest()
         saveRequest.update(contact)
         do {
@@ -312,7 +312,7 @@ class PhoneticContacts {
         }
     }
     
-    fileprivate func currentPercentage(_ index: Int, total: Int) -> Double {
+    private func currentPercentage(_ index: Int, total: Int) -> Double {
         let percentage = Double(index) / Double(total) * 100
         return min(percentage, 100)
     }
@@ -325,7 +325,7 @@ class PhoneticContacts {
      
      - returns: is there any Mandarin Latin
      */
-    fileprivate func antiPhonetic(_ str: String) -> Bool {
+    private func antiPhonetic(_ str: String) -> Bool {
         let str = str as NSString
         for i in 0..<str.length {
             let word = str.character(at: i)
@@ -336,7 +336,7 @@ class PhoneticContacts {
         return false
     }
     
-    fileprivate func upcaseInitial(_ str: String) -> String {
+    private func upcaseInitial(_ str: String) -> String {
         var tempStr = str
         if str.utf8.count > 0 {
             tempStr = (str as NSString).substring(to: 1).uppercased() + (str as NSString).substring(from: 1)
@@ -344,7 +344,7 @@ class PhoneticContacts {
         return tempStr
     }
     
-    fileprivate func briefInitial(_ array: [String]) -> String {
+    private func briefInitial(_ array: [String]) -> String {
         guard array.count > 0 else { return "" }
         
         var tempStr = ""
@@ -364,7 +364,7 @@ class PhoneticContacts {
         return tempStr
     }
     
-    fileprivate func phonetic(_ str: String, needFix: Bool) -> Phonetic? {
+    private func phonetic(_ str: String, needFix: Bool) -> Phonetic? {
         var source = (needFix ? manaullyFixPolyphonicCharacters(str).mutableCopy() : str.mutableCopy()) as AnyObject
         
         CFStringTransform(source as! CFMutableString, nil, kCFStringTransformMandarinLatin, false)
@@ -423,7 +423,7 @@ class PhoneticContacts {
 
 // MARK: - Background Task
 
-fileprivate extension PhoneticContacts {
+private extension PhoneticContacts {
     
     @objc func reinstateBackgroundTask() {
         if isProcessing && (backgroundTask == UIBackgroundTaskInvalid) {
@@ -449,28 +449,27 @@ fileprivate extension PhoneticContacts {
 
 extension PhoneticContacts {
     
-    internal var shouldEnablePhoneticFirstAndLastName: Bool {
+    var shouldEnablePhoneticFirstAndLastName: Bool {
         
         guard DetectPreferredLanguage.isChineseLanguage else { return true }
         
         return userDefaults.bool(forKey: kPhoneticFirstAndLastName, defaultValue: kPhoneticFirstAndLastNameDefaultBool)
     }
     
-    fileprivate var upcasePinyin: Bool {
+    private var upcasePinyin: Bool {
         return userDefaults.bool(forKey: kUpcasePinyin, defaultValue: kUpcasePinyinDefaultBool)
     }
     
-    fileprivate var useTones: Bool {
+    private var useTones: Bool {
         return userDefaults.bool(forKey: kUseTones, defaultValue: kUseTonesDefaultBool)
     }
     
-    fileprivate var fixPolyphonicCharacters: Bool {
+    private var fixPolyphonicCharacters: Bool {
         return userDefaults.bool(forKey: kFixPolyphonicChar, defaultValue: kFixPolyphonicCharDefaultBool)
     }
     
-    fileprivate var separatePinyin: Bool {
+    private var separatePinyin: Bool {
         return userDefaults.bool(forKey: kAlwaysSeparatePinyin, defaultValue: kAlwaysSeparatePinyinDefaultBool)
     }
-    
 }
 

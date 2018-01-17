@@ -49,7 +49,7 @@ class QuickSearchKeyCell: UICollectionViewCell {
     
     @IBOutlet weak var keyLabel: UILabel!
     
-    @IBOutlet fileprivate weak var imageView: UIImageView! {
+    @IBOutlet private weak var imageView: UIImageView! {
         didSet {
             let color = UIColor(red:0.953, green:0.176, blue:0.141, alpha:1.000) //UIColor(red: 0.5722, green: 0.0, blue: 0.9806, alpha: 1.0)
             imageView.backgroundColor = color

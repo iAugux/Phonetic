@@ -59,11 +59,11 @@ import UIKit
         }
     }
 
-    fileprivate let foregroundView = UIView()
-    fileprivate let foregroundLayer = CALayer()
-    fileprivate let borderThickness: CGFloat = 3
-    fileprivate let placeholderInsets = CGPoint(x: 6, y: 6)
-    fileprivate let textFieldInsets = CGPoint(x: 6, y: 6)
+    private let foregroundView = UIView()
+    private let foregroundLayer = CALayer()
+    private let borderThickness: CGFloat = 3
+    private let placeholderInsets = CGPoint(x: 6, y: 6)
+    private let textFieldInsets = CGPoint(x: 6, y: 6)
 
     // MARK: - TextFieldsEffects
 
@@ -102,7 +102,7 @@ import UIKit
 
     // MARK: - Private
 
-    fileprivate func updateForeground() {
+    private func updateForeground() {
         foregroundView.frame = rectForForeground(frame)
         foregroundView.isUserInteractionEnabled = false
         foregroundView.layer.transform = rotationAndPerspectiveTransformForView(foregroundView)
@@ -113,7 +113,7 @@ import UIKit
         foregroundLayer.frame = rectForBorder(foregroundView.frame, isFilled: true)
     }
 
-    fileprivate func updatePlaceholder() {
+    private func updatePlaceholder() {
         placeholderLabel.font = placeholderFontFromFont(font!)
         placeholderLabel.text = placeholder
         placeholderLabel.textColor = placeholderColor
@@ -125,18 +125,18 @@ import UIKit
         }
     }
 
-    fileprivate func placeholderFontFromFont(_ font: UIFont) -> UIFont! {
+    private func placeholderFontFromFont(_ font: UIFont) -> UIFont! {
         let smallerFont = UIFont(name: font.fontName, size: font.pointSize * placeholderFontScale)
         return smallerFont
     }
 
-    fileprivate func rectForForeground(_ bounds: CGRect) -> CGRect {
+    private func rectForForeground(_ bounds: CGRect) -> CGRect {
         let newRect = CGRect(x: 0, y: 0, width: bounds.size.width, height: bounds.size.height - font!.lineHeight + textFieldInsets.y - borderThickness)
 
         return newRect
     }
 
-    fileprivate func rectForBorder(_ bounds: CGRect, isFilled: Bool) -> CGRect {
+    private func rectForBorder(_ bounds: CGRect, isFilled: Bool) -> CGRect {
         var newRect = CGRect(x: 0, y: bounds.size.height, width: bounds.size.width, height: isFilled ? borderThickness : 0)
 
         if !CATransform3DIsIdentity(foregroundView.layer.transform) {
@@ -146,7 +146,7 @@ import UIKit
         return newRect
     }
 
-    fileprivate func layoutPlaceholderInTextRect() {
+    private func layoutPlaceholderInTextRect() {
         let textRect = self.textRect(forBounds: bounds)
         var originX = textRect.origin.x
         switch textAlignment {
@@ -163,7 +163,7 @@ import UIKit
 
     // MARK: -
 
-    fileprivate func setAnchorPoint(_ anchorPoint:CGPoint, forView view:UIView) {
+    private func setAnchorPoint(_ anchorPoint:CGPoint, forView view:UIView) {
         var newPoint:CGPoint = CGPoint(x: view.bounds.size.width * anchorPoint.x, y: view.bounds.size.height * anchorPoint.y)
         var oldPoint:CGPoint = CGPoint(x: view.bounds.size.width * view.layer.anchorPoint.x, y: view.bounds.size.height * view.layer.anchorPoint.y)
 
@@ -182,7 +182,7 @@ import UIKit
         view.layer.anchorPoint = anchorPoint
     }
 
-    fileprivate func colorWithBrightnessFactor(_ color: UIColor, factor: CGFloat) -> UIColor {
+    private func colorWithBrightnessFactor(_ color: UIColor, factor: CGFloat) -> UIColor {
         var hue : CGFloat = 0
         var saturation : CGFloat = 0
         var brightness : CGFloat = 0
@@ -195,7 +195,7 @@ import UIKit
         }
     }
 
-    fileprivate func rotationAndPerspectiveTransformForView(_ view: UIView) -> CATransform3D {
+    private func rotationAndPerspectiveTransformForView(_ view: UIView) -> CATransform3D {
         setAnchorPoint(CGPoint(x: 0.5, y: 1.0), forView:view)
 
         var rotationAndPerspectiveTransform = CATransform3DIdentity

@@ -16,17 +16,17 @@ class AdditionalSettingsViewController: BaseTableViewController {
     @IBOutlet weak var quickSearchSelectionIndicator: UIImageView!
     @IBOutlet weak var quickSearchSelectionLabel: UILabel!
     
-    fileprivate let userDefaults = UserDefaults.standard
+    private let userDefaults = UserDefaults.standard
     
-    fileprivate let on  = NSLocalizedString("On", comment: "")
-    fileprivate let off = NSLocalizedString("Off", comment: "")
+    private let on  = NSLocalizedString("On", comment: "")
+    private let off = NSLocalizedString("Off", comment: "")
 
-    fileprivate var blurActionSheet: BlurActionSheet!
+    private var blurActionSheet: BlurActionSheet!
     
     // MARK: -
     @IBOutlet weak var statusLabel: UILabel!
     
-    @IBOutlet fileprivate weak var tutorialButton: UIButton! {
+    @IBOutlet private weak var tutorialButton: UIButton! {
         didSet {
             tutorialButton.setTitle(NSLocalizedString("Tutorial", comment: ""), for: UIControlState())
         }
@@ -69,7 +69,7 @@ class AdditionalSettingsViewController: BaseTableViewController {
         }
     }
     
-    fileprivate var quickSearchKey: String {
+    private var quickSearchKey: String {
         if userDefaults.value(forKey: kQuickSearchKeyRawValue) == nil {
             userDefaults.set(QuickSearch.middleName.rawValue, forKey: kQuickSearchKeyRawValue)
             userDefaults.synchronize()
@@ -380,7 +380,7 @@ extension AdditionalSettingsViewController {
     }
     
     // MARK: - Turn On/Off Switch Automatically
-    fileprivate func switchStatusAutomaticallyWithDelay(_ sender: UISwitch) {
+    private func switchStatusAutomaticallyWithDelay(_ sender: UISwitch) {
         
         executeAfterDelay(0.2) { 
             if sender == self.overwriteAlreadyExistsSwitch && !self.customNameSwitch.isOn {
@@ -408,7 +408,7 @@ extension AdditionalSettingsViewController {
         }
     }
     
-    fileprivate func enableAllCleanPhoneticSwitchWithDelay(_ enabled: Bool, delay: Bool) {
+    private func enableAllCleanPhoneticSwitchWithDelay(_ enabled: Bool, delay: Bool) {
         
         let delayInSeconds: Double = delay ? 0.2 : 0.0
         
@@ -448,7 +448,7 @@ extension AdditionalSettingsViewController {
 // MARK: - Switch With Alert
 extension AdditionalSettingsViewController {
     
-    fileprivate func enableAllCleanPhoneticSwitchWithAlert(_ enabled: Bool) {
+    private func enableAllCleanPhoneticSwitchWithAlert(_ enabled: Bool) {
         
         let title = NSLocalizedString("Clean All Keys", comment: "UIAlertController title")
         let message = NSLocalizedString("Are you sure to clean all keys? All of those keys including you manually added before will be removed too!", comment: "UIAlertController message")
@@ -461,7 +461,7 @@ extension AdditionalSettingsViewController {
         }
     }
     
-    fileprivate func enableCleanSocialProfilesSwitchWithAlert(_ enabled: Bool) {
+    private func enableCleanSocialProfilesSwitchWithAlert(_ enabled: Bool) {
         let title = NSLocalizedString("Clean Keys", comment: "UIAlertController title")
         let message = NSLocalizedString("Are you sure to clean Social Profiles keys? This can not be revoked!!", comment: "UIAlertController message")
         
@@ -475,7 +475,7 @@ extension AdditionalSettingsViewController {
         }
     }
     
-    fileprivate func enableCleanInstantMessageAddressesSwitchWithAlert(_ enabled: Bool) {
+    private func enableCleanInstantMessageAddressesSwitchWithAlert(_ enabled: Bool) {
         let title = NSLocalizedString("Clean Keys", comment: "UIAlertController title")
         let message = NSLocalizedString("Are you sure to clean Instant Message Addresses keys? This can not be revoked!!", comment: "UIAlertController message")
         
@@ -509,7 +509,7 @@ extension UISwitch {
 // MARK: - Configure Subviews
 extension AdditionalSettingsViewController {
     
-    fileprivate func configureQuickSearchSelectionViews() {
+    private func configureQuickSearchSelectionViews() {
         quickSearchSelectionIndicator.tintColor = UIColor.white
         quickSearchSelectionIndicator.image = UIImage(named: "expand")?.withRenderingMode(.alwaysTemplate)
         
@@ -524,7 +524,7 @@ extension AdditionalSettingsViewController {
 // MARK: - Action Sheet for choosing custom key for Quick Search
 extension AdditionalSettingsViewController {
     
-    internal func alertActionSheetToChooseCustomKeyForQuickSearch() {
+    @objc internal func alertActionSheetToChooseCustomKeyForQuickSearch() {
         
         quickSearchSelectionIndicator.rotationAnimation(beginWithClockwise: false, clockwise: false, animated: true)
         
@@ -638,7 +638,7 @@ extension AdditionalSettingsViewController {
 
 extension AdditionalSettingsViewController {
     
-    fileprivate func alertToConfigureForQuickSearchKey() {
+    private func alertToConfigureForQuickSearchKey() {
         UIApplication.initializeInTheFirstTime("alertToConfigureForQuickSearchKeyOnlyOnce") { () -> Void in
             let title = NSLocalizedString("Setting", comment: "UIAlertController title")
             let message = NSLocalizedString("Please tap the yellow button to complete settings. This message is only displayed once!", comment: "UIAlertController message")
@@ -653,7 +653,7 @@ extension AdditionalSettingsViewController {
     
     override func willRotate(to toInterfaceOrientation: UIInterfaceOrientation, duration: TimeInterval) {
         
-        if UIDevice.isPad {
+        if UIDevice.current.isPad {
             dismissViewController(completion: {
                 kShouldRepresentAdditionalVC = true
             })
@@ -668,7 +668,7 @@ extension AdditionalSettingsViewController {
     
     @IBAction func tutorialButtonDidTap(_ sender: AnyObject) {
         
-        if !UIDevice.isPad {
+        if !UIDevice.current.isPad {
             dismiss(animated: true) {
                 displayWalkthrough()
             }

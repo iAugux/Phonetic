@@ -385,7 +385,7 @@ extension UIView {
     }
 
     @discardableResult
-    fileprivate func _round(_ corners: UIRectCorner, radius: CGFloat) -> CAShapeLayer {
+    private func _round(_ corners: UIRectCorner, radius: CGFloat) -> CAShapeLayer {
         let path        = UIBezierPath(roundedRect: bounds, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
         let mask        = CAShapeLayer()
         mask.path       = path.cgPath
@@ -393,7 +393,7 @@ extension UIView {
         return mask
     }
 
-    fileprivate func addBorder(_ mask: CAShapeLayer, borderColor: UIColor, borderWidth: CGFloat) {
+    private func addBorder(_ mask: CAShapeLayer, borderColor: UIColor, borderWidth: CGFloat) {
         let borderLayer         = CAShapeLayer()
         borderLayer.path        = mask.path
         borderLayer.fillColor   = UIColor.clear.cgColor

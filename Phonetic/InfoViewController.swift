@@ -44,7 +44,7 @@ class InfoViewController: UIViewController, SFSafariViewControllerDelegate {
         }
     }
     
-    func checkOnGithub() {
+    @objc func checkOnGithub() {
         
         dismiss(animated: true) { () -> Void in
             let safariVC = SFSafariViewController(url: URL(string: "https://github.com/iAugux/Phonetic")!)

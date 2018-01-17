@@ -13,7 +13,7 @@ import AVKit
 
 extension ViewController {
     
-    fileprivate var enableAnimation: Bool {
+    private var enableAnimation: Bool {
         if UserDefaults.standard.value(forKey: kEnableAnimation) == nil {
             UserDefaults.standard.set(kEnableAnimationDefaultBool, forKey: kEnableAnimation)
             UserDefaults.standard.synchronize()
@@ -21,7 +21,7 @@ extension ViewController {
         return UserDefaults.standard.bool(forKey: kEnableAnimation)
     }
     
-    fileprivate var forceEnableAnimation: Bool {
+    private var forceEnableAnimation: Bool {
         if UserDefaults.standard.value(forKey: kForceEnableAnimation) == nil {
             UserDefaults.standard.set(kForceEnableAnimationDefaultBool, forKey: kForceEnableAnimation)
             UserDefaults.standard.synchronize()
@@ -29,7 +29,7 @@ extension ViewController {
         return UserDefaults.standard.bool(forKey: kForceEnableAnimation)
     }
     
-    fileprivate var shouldEnableAnimation: Bool {
+    private var shouldEnableAnimation: Bool {
         if enableAnimation {
             if forceEnableAnimation {
                 return true
@@ -45,7 +45,7 @@ extension ViewController {
         return false
     }
     
-    func execute() {
+    @objc func execute() {
         
 //        guard PhoneticContacts.sharedInstance.enableNickname || PhoneticContacts.sharedInstance.enableCustomName else {
 //            let msg = NSLocalizedString("You haven't enable any key for Quick Search!", comment: "")
@@ -70,7 +70,7 @@ extension ViewController {
         }
     }
     
-    func clean(_ gesture: UIGestureRecognizer) {
+    @objc func clean(_ gesture: UIGestureRecognizer) {
         
         // former: UITapGestureRecognizer.
         // the later: ensure be triggered at the beginning while long pressing, or there will be a warning at runtime.
@@ -122,7 +122,7 @@ extension ViewController {
     
     
     // MARK: - Video
-    func loopingVideo(){
+    @objc func loopingVideo(){
         
         guard UIApplication.shared.applicationState == .active && PhoneticContacts.sharedInstance.isProcessing else {
             avPlayer?.pause()
@@ -157,7 +157,7 @@ extension ViewController {
         avPlayer?.play()
     }
 
-    fileprivate func configureBackgroundVideo(){
+    private func configureBackgroundVideo(){
         
         guard let url = Bundle.main.url(forResource: "wave", withExtension: "mp4") else { return }
         
@@ -165,7 +165,7 @@ extension ViewController {
         avPlayerController                             = AVPlayerViewController()
         avPlayerController.player                      = avPlayer
         avPlayerController.view.frame                  = avPlayerPlaceholderView.bounds
-        avPlayerController.videoGravity                = AVLayerVideoGravityResize  //AVLayerVideoGravityResizeAspect
+        avPlayerController.videoGravity                = AVLayerVideoGravity.resize.rawValue  //AVLayerVideoGravityResizeAspect
         avPlayerController.view.isUserInteractionEnabled = false
         avPlayerController.showsPlaybackControls       = false
         

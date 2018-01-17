@@ -70,12 +70,12 @@ import UIKit
         }
     }
     
-    fileprivate let borderThickness: (active: CGFloat, inactive: CGFloat) = (active: 2, inactive: 0.5)
-    fileprivate let placeholderInsets = CGPoint(x: 0, y: 6)
-    fileprivate let textFieldInsets = CGPoint(x: 0, y: 12)
-    fileprivate let inactiveBorderLayer = CALayer()
-    fileprivate let activeBorderLayer = CALayer()    
-    fileprivate var activePlaceholderPoint: CGPoint = CGPoint.zero
+    private let borderThickness: (active: CGFloat, inactive: CGFloat) = (active: 2, inactive: 0.5)
+    private let placeholderInsets = CGPoint(x: 0, y: 6)
+    private let textFieldInsets = CGPoint(x: 0, y: 12)
+    private let inactiveBorderLayer = CALayer()
+    private let activeBorderLayer = CALayer()    
+    private var activePlaceholderPoint: CGPoint = CGPoint.zero
     
     // MARK: - TextFieldsEffects
     
@@ -128,7 +128,7 @@ import UIKit
     
     // MARK: - Private
     
-    fileprivate func updateBorder() {
+    private func updateBorder() {
         inactiveBorderLayer.frame = rectForBorder(borderThickness.inactive, isFilled: true)
         inactiveBorderLayer.backgroundColor = borderInactiveColor?.cgColor
         
@@ -136,7 +136,7 @@ import UIKit
         activeBorderLayer.backgroundColor = borderActiveColor?.cgColor
     }
     
-    fileprivate func updatePlaceholder() {
+    private func updatePlaceholder() {
         placeholderLabel.text = placeholder
         placeholderLabel.textColor = placeholderColor
         placeholderLabel.sizeToFit()
@@ -147,12 +147,12 @@ import UIKit
         }
     }
     
-    fileprivate func placeholderFontFromFont(_ font: UIFont) -> UIFont! {
+    private func placeholderFontFromFont(_ font: UIFont) -> UIFont! {
         let smallerFont = UIFont(name: font.fontName, size: font.pointSize * placeholderFontScale)
         return smallerFont
     }
     
-    fileprivate func rectForBorder(_ thickness: CGFloat, isFilled: Bool) -> CGRect {
+    private func rectForBorder(_ thickness: CGFloat, isFilled: Bool) -> CGRect {
         if isFilled {
             return CGRect(origin: CGPoint(x: 0, y: frame.height-thickness), size: CGSize(width: frame.width, height: thickness))
         } else {
@@ -160,7 +160,7 @@ import UIKit
         }
     }
     
-    fileprivate func layoutPlaceholderInTextRect() {        
+    private func layoutPlaceholderInTextRect() {        
         let textRect = self.textRect(forBounds: bounds)
         var originX = textRect.origin.x
         switch self.textAlignment {

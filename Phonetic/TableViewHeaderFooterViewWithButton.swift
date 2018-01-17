@@ -16,7 +16,7 @@ class TableViewHeaderFooterViewWithButton: UITableViewHeaderFooterView {
     
     var delegate: TableViewHeaderFooterViewWithButtonDelegate!
     
-    fileprivate var button: UIButton!
+    private var button: UIButton!
     
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
@@ -46,7 +46,7 @@ class TableViewHeaderFooterViewWithButton: UITableViewHeaderFooterView {
         button.frame.origin.x = textLabel!.frame.maxX + 8.0
     }
     
-    @objc fileprivate func buttonDidTap() {
+    @objc private func buttonDidTap() {
        delegate?.tableViewHeaderFooterViewWithButtonDidTap()
     }
     

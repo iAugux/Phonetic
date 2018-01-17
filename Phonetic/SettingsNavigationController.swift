@@ -19,10 +19,10 @@ class SettingsNavigationController: UINavigationController {
     let _textColor = UIColor.white
 
     var customBarButton: UIButton!
-    fileprivate(set) var customTitleLabel: UILabel!
-    fileprivate var customNavBar: UIView!
+    private(set) var customTitleLabel: UILabel!
+    private var customNavBar: UIView!
     
-    fileprivate var shouldHideCustomBarButton: Bool {
+    private var shouldHideCustomBarButton: Bool {
         // iPad
         if UIDevice.current.userInterfaceIdiom == .pad {
             return true
@@ -36,7 +36,7 @@ class SettingsNavigationController: UINavigationController {
         return false
     }
     
-    fileprivate var hideCustomBarButton = false {
+    private var hideCustomBarButton = false {
         didSet {
             customBarButton?.isHidden = hideCustomBarButton
         }
@@ -78,15 +78,15 @@ class SettingsNavigationController: UINavigationController {
         hideCustomBarButton = shouldHideCustomBarButton
     }
     
-    @objc fileprivate func customBarButtonDidTap() {
+    @objc private func customBarButtonDidTap() {
         if let vc = viewControllers.first as? BaseTableViewController {
             vc.dismissViewController(completion: nil)
         }
     }
     
-    fileprivate func configureCustomNavBar() {
+    private func configureCustomNavBar() {
         
-        guard !UIDevice.isPad else { return }
+        guard !UIDevice.current.isPad else { return }
         
         customNavBar = UIView()
         customNavBar.backgroundColor = kNavigationBarBackgroundColor
@@ -98,7 +98,7 @@ class SettingsNavigationController: UINavigationController {
         }
     }
     
-    fileprivate func configureCustomTitleLabel() {
+    private func configureCustomTitleLabel() {
         
         customTitleLabel               = UILabel()
         customTitleLabel.textAlignment = .center

@@ -11,7 +11,7 @@ import UIKit
 
 extension ViewController {
     
-    func rateMeInTheSecondTime() {
+    @objc func rateMeInTheSecondTime() {
         
         guard let build = Bundle.main.object(forInfoDictionaryKey: kCFBundleVersionKey as String) as? String else { return }
 
@@ -50,7 +50,5 @@ extension ViewController {
             return
         default: return
         }
-        
     }
-    
 }
