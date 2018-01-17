@@ -171,15 +171,15 @@ extension PhoneticContacts {
 //        str += NSLocalizedString(" This can not be revoked!!", comment: "")
         str += "\n\n"
         
-        if shouldCleanPhoneticNicknameKeys { str.append(PhoneticKeys.Nickname.key) }
-        if shouldCleanPhoneticMiddleNameKeys { str.append(PhoneticKeys.MiddleName.key) }
-        if shouldCleanPhoneticDepartmentKeys { str.append(PhoneticKeys.Department.key) }
-        if shouldCleanPhoneticCompanyKeys { str.append(PhoneticKeys.Company.key) }
-        if shouldCleanPhoneticJobTitleKeys { str.append(PhoneticKeys.JobTitle.key) }
-        if shouldCleanPhoneticPrefixKeys { str.append(PhoneticKeys.Prefix.key) }
-        if shouldCleanPhoneticSuffixKeys { str.append(PhoneticKeys.Suffix.key) }
-        if shouldCleanSocialProfilesKeys { str.append(PhoneticKeys.SocialProfiles.key) }
-        if shouldCleanInstantMessageAddressesKeys{ str.append(PhoneticKeys.InstantMessageAddresses.key) }
+        if shouldCleanPhoneticNicknameKeys { str.append(PhoneticKeys.nickname.key) }
+        if shouldCleanPhoneticMiddleNameKeys { str.append(PhoneticKeys.middleName.key) }
+        if shouldCleanPhoneticDepartmentKeys { str.append(PhoneticKeys.department.key) }
+        if shouldCleanPhoneticCompanyKeys { str.append(PhoneticKeys.company.key) }
+        if shouldCleanPhoneticJobTitleKeys { str.append(PhoneticKeys.jobTitle.key) }
+        if shouldCleanPhoneticPrefixKeys { str.append(PhoneticKeys.prefix.key) }
+        if shouldCleanPhoneticSuffixKeys { str.append(PhoneticKeys.suffix.key) }
+        if shouldCleanSocialProfilesKeys { str.append(PhoneticKeys.socialProfiles.key) }
+        if shouldCleanInstantMessageAddressesKeys{ str.append(PhoneticKeys.instantMessageAddresses.key) }
         
         str = String(str.dropLast(2))
         
@@ -196,13 +196,13 @@ extension String {
 
 extension PhoneticContacts {
     
-    //    func removePhoneticNicknameForTestFlightUsersToFixPreviousBug(mutableContact: CNMutableContact) {
-    //
-    //        guard Config.appConfiguration == .TestFlight || Config.appConfiguration == .Debug else { return }
-    //
-    //        if let _ = mutableContact.valueForKey(CNContactNicknameKey) as? String {
-    //            mutableContact.setValue("", forKey: CNContactNicknameKey)
-    //        }
-    //    }
+//    func removePhoneticNicknameForTestFlightUsersToFixPreviousBug(mutableContact: CNMutableContact) {
+//
+//        guard Config.appConfiguration == .TestFlight || Config.appConfiguration == .Debug else { return }
+//
+//        if let _ = mutableContact.valueForKey(CNContactNicknameKey) as? String {
+//            mutableContact.setValue("", forKey: CNContactNicknameKey)
+//        }
+//    }
     
 }

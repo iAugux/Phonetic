@@ -8,7 +8,6 @@
 
 import Contacts
 
-
 let kPhoneticFirstAndLastName         = "kPhoneticFirstAndLastName"
 
 let kQuickSearchKeyRawValue           = "kQuickSearchKeyRawValueRawValue"
@@ -88,35 +87,35 @@ enum QuickSearch: Int {
 }
 
 enum PhoneticKeys: String {
-    case Nickname
-    case MiddleName
-    case Department
-    case Company
-    case JobTitle
-    case Prefix
-    case Suffix
-    case SocialProfiles
-    case InstantMessageAddresses
+    case nickname
+    case middleName
+    case department
+    case company
+    case jobTitle
+    case prefix
+    case suffix
+    case socialProfiles
+    case instantMessageAddresses
     
     var key: String {
         switch self {
-        case .Nickname:
+        case .nickname:
             return NSLocalizedString("Nickname", comment: "")
-        case .MiddleName:
+        case .middleName:
             return NSLocalizedString("Middle Name", comment: "")
-        case .Department:
+        case .department:
             return NSLocalizedString("Department", comment: "")
-        case .Company:
+        case .company:
             return NSLocalizedString("Company", comment: "")
-        case .JobTitle:
+        case .jobTitle:
             return NSLocalizedString("Job Title", comment: "")
-        case .Prefix:
+        case .prefix:
             return NSLocalizedString("Prefix", comment: "")
-        case .Suffix:
+        case .suffix:
             return NSLocalizedString("Suffix", comment: "")
-        case .SocialProfiles:
+        case .socialProfiles:
             return NSLocalizedString("Social Profiles", comment: "")
-        case .InstantMessageAddresses:
+        case .instantMessageAddresses:
             return NSLocalizedString("Instant Message Addresses", comment: "")
         }
     }
