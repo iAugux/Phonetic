@@ -50,7 +50,6 @@ class HelpManualViewController: UIViewController {
             UIApplication.shared.openURL(url)
         }
     }
-    
 }
 
 

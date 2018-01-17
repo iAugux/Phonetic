@@ -93,7 +93,6 @@ class PolyphonicViewController: BaseTableViewController {
     private func setMasterLabelText(_ on: Bool) {
         masterLabel?.text = on ? NSLocalizedString("Enable All", comment: "") : NSLocalizedString("Disable All", comment: "")
     }
-    
 }
 
 

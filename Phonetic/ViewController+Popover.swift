@@ -119,7 +119,6 @@ extension ViewController: UIPopoverPresentationControllerDelegate {
     }
     
     private func configureCustomNavigationTitle(_ nav: UINavigationController, title: String?) {
-        
         guard title != nil else { return }
         
         let titleLabel              = UILabel()

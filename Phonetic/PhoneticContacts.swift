@@ -15,8 +15,6 @@ class PhoneticContacts {
     static let sharedInstance = PhoneticContacts()
     
     init() {
-        DEBUGLog("Register UserNotificationSettings & UIApplicationDidBecomeActiveNotification")
-        
         // register user notification settings
         UIApplication.shared.registerUserNotificationSettings(UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil))
         
@@ -71,7 +69,7 @@ class PhoneticContacts {
     typealias CompletionHandler = ((_ aborted: Bool) -> Void)
     
     func execute(_ handleAccessGranted: @escaping AccessGrantedHandler, resultHandler:  @escaping ResultHandler, completionHandler: @escaping CompletionHandler) {
-        AppDelegate().requestContactsAccess { (accessGranted) in
+        appDelegate.requestContactsAccess { (accessGranted) in
             guard accessGranted else { return }
             
             // got the access...
@@ -84,11 +82,11 @@ class PhoneticContacts {
         aborted      = !isProcessing
         
         // uncomment the following line if you want to remove all Simulator's Contacts first.
-        //        self.removeAllContactsOfSimulator()
-        
+//        self.removeAllContactsOfSimulator()
+
         self.insertNewContactsForSimulatorIfNeeded(50)
-//                self.insertNewContactsForDevice(100)
-        
+//        self.insertNewContactsForDevice(100)
+
         
         GlobalBackgroundQueue.async {
             
@@ -148,7 +146,6 @@ class PhoneticContacts {
                     }
                 })
             } catch {
-                
                 DEBUGLog("fetching Contacts failed ! - \(error)")
             }
             
@@ -160,7 +157,7 @@ class PhoneticContacts {
     }
     
     func cleanMandarinLatinPhonetic(_ handleAccessGranted: @escaping AccessGrantedHandler, resultHandler: @escaping ResultHandler, completionHandler: @escaping CompletionHandler) {
-        AppDelegate().requestContactsAccess { (accessGranted) in
+        appDelegate.requestContactsAccess { (accessGranted) in
             guard accessGranted else { return }
             
             // got the access...
@@ -227,8 +224,7 @@ class PhoneticContacts {
     }
     
     private func fetchAllContacts(keysToFetch keys: [CNKeyDescriptor]) -> [CNContact] {
-        
-        AppDelegate().requestContactsAccess { (accessGranted) in
+        appDelegate.requestContactsAccess { (accessGranted) in
             guard accessGranted else { return }
         }
         
@@ -243,7 +239,6 @@ class PhoneticContacts {
     }
     
     private func handlingCompletion(_ handle: @escaping CompletionHandler) {
-        
         switch UIApplication.shared.applicationState {
         case .background:
             // completed not aborted
@@ -264,7 +259,6 @@ class PhoneticContacts {
     }
     
     private func handlingResult(_ handle: @escaping ResultHandler, result: String?, index: Int, total: Int) {
-        
         let percentage = currentPercentage(index, total: total)
         
         switch UIApplication.shared.applicationState {
@@ -389,14 +383,12 @@ class PhoneticContacts {
                     
                 } else {
                     if upcasePinyin {
-                        
                         // upcase all words of First Name.   e.g:  Liu YiFei
                         for part in phoneticParts {
                             source.append(upcaseInitial(part))
                         }
                         
                     } else {
-                        
                         // only upcase the first word of First Name.    e.g: Liu Yifei
                         for (index, part) in phoneticParts.enumerated() {
                             if index == 0 {
@@ -417,7 +409,6 @@ class PhoneticContacts {
         }
         return nil
     }
-    
 }
 
 

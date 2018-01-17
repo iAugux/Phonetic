@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 class AlertController {
     
     private static let ok = NSLocalizedString("OK", comment: "")
@@ -20,8 +19,6 @@ class AlertController {
     class func alertWithCancelAction(_ title: String = "", message: String = "", actionTitle: String = ok, completionHandler: (() -> Void)?, canceledHandler: (() -> Void)?) {
         AlertController.alert(title, message: message, actionTitle: actionTitle, addCancelAction: true, completionHandler: completionHandler, canceledHandler: canceledHandler)
     }
-    
-    
     
     class func multiAlertsWithOptions(_ multiItemsOfInfo: [String], completionHandler: (() -> Void)?) {
         alertWithOptions(multiItemsOfInfo, completionHandler: completionHandler)

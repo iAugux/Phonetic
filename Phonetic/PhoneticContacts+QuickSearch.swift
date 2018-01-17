@@ -32,12 +32,11 @@ extension PhoneticContacts {
             }
         }
     }
-        
 }
 
 extension PhoneticContacts {
  
-    internal var ContactKeyForQuickSearch: String? {
+    var ContactKeyForQuickSearch: String? {
         
         if enableNickname {
             return CNContactNicknameKey
@@ -75,7 +74,6 @@ extension PhoneticContacts {
         }
         return nil
     }
-    
 }
 
 extension PhoneticContacts {
@@ -105,5 +103,4 @@ extension PhoneticContacts {
         
         return userDefaults.bool(forKey: kOverwriteAlreadyExists, defaultValue: kOverwriteAlreadyExistsDefaultBool)
     }
-    
 }

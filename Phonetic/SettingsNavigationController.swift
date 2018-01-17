@@ -59,7 +59,6 @@ class SettingsNavigationController: UINavigationController {
     }
     
     func configureCustomBarButtonIfNeeded() {
-        
         guard customBarButton == nil else { return }
         
         customBarButton = UIButton(type: .custom)
@@ -85,7 +84,6 @@ class SettingsNavigationController: UINavigationController {
     }
     
     private func configureCustomNavBar() {
-        
         guard !UIDevice.current.isPad else { return }
         
         customNavBar = UIView()
@@ -99,7 +97,6 @@ class SettingsNavigationController: UINavigationController {
     }
     
     private func configureCustomTitleLabel() {
-        
         customTitleLabel               = UILabel()
         customTitleLabel.textAlignment = .center
         customTitleLabel.textColor     = _textColor
@@ -110,7 +107,6 @@ class SettingsNavigationController: UINavigationController {
             make.center.equalToSuperview()
         }
     }
-
 }
 
 extension SettingsNavigationController {

@@ -36,7 +36,7 @@ class OtherSettingView: UIStackView, MFMailComposeViewControllerDelegate, SFSafa
             case 0: // Twitter
                 self.followOnTwitter()
             case 1: // Rate
-                OtherSettingView.RateMe()
+                OtherSettingView.rateMe()
             case 2: // Feedback
                 self.sendMail()
             default: break
@@ -65,7 +65,7 @@ class OtherSettingView: UIStackView, MFMailComposeViewControllerDelegate, SFSafa
     }
     
     // MARK: - Rate me
-    static func RateMe() {
+    static func rateMe() {
         let appURL = URL(string: "https://itunes.apple.com/app/viewContentsUserReviews?id=1078961574")
         if UIApplication.shared.canOpenURL(appURL!) {
             UIApplication.shared.openURL(appURL!)

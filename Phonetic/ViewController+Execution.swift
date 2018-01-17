@@ -157,8 +157,7 @@ extension ViewController {
         avPlayer?.play()
     }
 
-    private func configureBackgroundVideo(){
-        
+    private func configureBackgroundVideo() {
         guard let url = Bundle.main.url(forResource: "wave", withExtension: "mp4") else { return }
         
         avPlayer                                       = AVPlayer(url: url)
@@ -176,7 +175,6 @@ extension ViewController {
     }
     
     private func hideBlurViewWithAnimation(_ hidden: Bool) {
-        
         UIView.animate(withDuration: 1.2) { [weak self] in
             self?.blurView?.effect = !hidden ? UIBlurEffect(style: .light) : nil
         }
@@ -192,7 +190,6 @@ extension ViewController {
         } else {
             let angle = (100 - percentage) * 360 / 100
             progress.angle = angle
-            
         }
     }
     
@@ -215,7 +212,6 @@ extension ViewController {
     }
     
     private func promoptCompletion(_ aborted: Bool) {
-        
         let text = aborted ? NSLocalizedString("Aborted", comment: "") : NSLocalizedString("Completed", comment: "")
         
         UIView.animate(withDuration: 0.1, delay: 0.3, options: UIViewAnimationOptions(), animations: { () -> Void in

@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 extension ViewController {
     
     @objc func rateMeInTheSecondTime() {
@@ -31,7 +30,7 @@ extension ViewController {
             
             let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
             let rateAction = UIAlertAction(title: rateActionTitle, style: .default, handler: { (_) -> Void in
-                OtherSettingView.RateMe()
+                OtherSettingView.rateMe()
             })
             let cancelAction = UIAlertAction(title: cancelActionTitle, style: .cancel, handler: nil)
             alertController.addAction(rateAction)

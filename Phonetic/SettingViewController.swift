@@ -104,7 +104,6 @@ class SettingViewController: UIViewController {
     }
     
     @objc private func customBarButtonDidTap() {
-                
         if UIDevice.current.isPad {
             presentPopoverController()
             kShouldRepresentAdditionalVC = true
@@ -117,7 +116,6 @@ class SettingViewController: UIViewController {
     }
     
     private func presentPopoverController() {
-
         guard let sourceView = customBarButton else { return }
         
         let vc = UIStoryboard.Main.instantiateViewController(with: SettingsNavigationController.self)
@@ -151,14 +149,12 @@ class SettingViewController: UIViewController {
         userDefaults.set(sender.isOn, forKey: kUpcasePinyin)
         userDefaults.synchronize()
     }
-    
 }
 
 
 extension SettingViewController {
     
     override func didRotate(from fromInterfaceOrientation: UIInterfaceOrientation) {
-        
         guard UIDevice.current.isPad else { return }
        
         _ = kShouldRepresentAdditionalVC ? customBarButton?.sendActions(for: .touchUpInside) : ()

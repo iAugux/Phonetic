@@ -153,7 +153,7 @@ extension PhoneticContacts {
 
 extension PhoneticContacts {
     
-    internal var messageOfCurrentKeysNeedToBeCleaned: String {
+    var messageOfCurrentKeysNeedToBeCleaned: String {
         var str = ""
         
         if shouldCleanPhoneticNicknameKeys ||

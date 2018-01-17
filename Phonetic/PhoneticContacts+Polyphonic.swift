@@ -13,7 +13,6 @@ import Foundation
 extension PhoneticContacts {
     
     func manaullyFixPolyphonicCharacters(_ str: String) -> String {
-        
         var tempString = str
         
         for element in PolyphonicChar.all {
@@ -24,5 +23,4 @@ extension PhoneticContacts {
         
         return tempString
     }
-    
 }
