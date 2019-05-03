@@ -8,46 +8,33 @@
 
 import UIKit
 
-protocol TableViewHeaderFooterViewWithButtonDelegate {
-    func tableViewHeaderFooterViewWithButtonDidTap()
-}
+final class TableViewHeaderFooterViewWithButton: UITableViewHeaderFooterView {
+    var tapHandler: Closure?
 
-class TableViewHeaderFooterViewWithButton: UITableViewHeaderFooterView {
-    
-    var delegate: TableViewHeaderFooterViewWithButtonDelegate!
-    
-    private var button: UIButton!
-    
-    override init(reuseIdentifier: String?) {
-        super.init(reuseIdentifier: reuseIdentifier)
-    }
-    
-    convenience init(buttonImageName name: String, tintColor: UIColor = .white, twinkleInterval: TimeInterval = 0.7) {
-        self.init(reuseIdentifier: nil)
-        button = UIButton(type: .custom)
+    private lazy var button: ASButton = {
+        let button = ASButton(type: .custom)
+        button.clickableArea = .init(uniform: 60)
         button.frame.size = CGSize(width: 18, height: 18)
         button.center = textLabel!.center
         button.frame.origin.x = textLabel!.frame.maxX + 8.0
-        button.tintColor = tintColor
-        button.setImage(UIImage(named: name)?.withRenderingMode(.alwaysTemplate), for: UIControlState())
         button.addTarget(self, action: #selector(buttonDidTap), for: .touchUpInside)
+        return button
+    }()
+    
+    convenience init(buttonImageName name: String, flashDuration: TimeInterval = 0.7) {
+        self.init(reuseIdentifier: nil)
+        button.setImage(UIImage(named: name), for: .normal)
         addSubview(button)
-        
-        button?.twinkling(twinkleInterval, minAlpha: 0.2)
-    }
-
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        button.flash(duration: flashDuration, minAlpha: 0.2)
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        button?.center = textLabel!.center
-        button.frame.origin.x = textLabel!.frame.maxX + 8.0
+        button.center = textLabel!.center
+        button.frame.origin.x = textLabel!.frame.maxX + 8.0 + compatibleSafeAreaInsets.left
     }
-    
+
     @objc private func buttonDidTap() {
-       delegate?.tableViewHeaderFooterViewWithButtonDidTap()
+       tapHandler?()
     }
-    
 }

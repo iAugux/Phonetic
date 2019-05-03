@@ -8,13 +8,11 @@
 
 import UIKit
 
-class PolyphonicTableViewCell: UITableViewCell {
-    
+final class PolyphonicTableViewCell: UITableViewCell {
     var polyphonicKey: String!
-    
-    @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var polyphonicLabel: UILabel!
-    @IBOutlet weak var polyphonicSwitch: UISwitch!
+    @IBOutlet var nameLabel: UILabel!
+    @IBOutlet var polyphonicLabel: UILabel!
+    @IBOutlet var polyphonicSwitch: UISwitch!
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -24,10 +22,7 @@ class PolyphonicTableViewCell: UITableViewCell {
     }
 
     @IBAction func polyphonicSwitchDidTap(_ sender: UISwitch) {
-        if let key = polyphonicKey {
-            UserDefaults.standard.set(sender.isOn, forKey: key)
-            UserDefaults.standard.synchronize()
-        }
+        guard let key = polyphonicKey else { return }
+        UserDefaults.standard.set(sender.isOn, forKey: key)
     }
-
 }

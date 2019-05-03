@@ -9,7 +9,6 @@
 import UIKit
 
 extension WalkthroughViewController: UICollectionViewDataSource {
-    
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
@@ -19,19 +18,14 @@ extension WalkthroughViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
         let cell = collectionView.dequeueReusableCell(with: QuickSearchKeyCell.self, for: indexPath)
-        
         cell.keyLabel.text = keys[indexPath.row]
-        
         return cell
     }
 }
 
 extension WalkthroughViewController: UICollectionViewDelegate {
-    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-
         switch indexPath.row {
         case 0:
             UserDefaults.standard.set(true, forKey: kEnableNickname)
@@ -44,14 +38,11 @@ extension WalkthroughViewController: UICollectionViewDelegate {
     }
 }
 
-
-class QuickSearchKeyCell: UICollectionViewCell {
-    
-    @IBOutlet weak var keyLabel: UILabel!
-    
-    @IBOutlet private weak var imageView: UIImageView! {
+final class QuickSearchKeyCell: UICollectionViewCell {
+    @IBOutlet var keyLabel: UILabel!
+    @IBOutlet private var imageView: UIImageView! {
         didSet {
-            let color = UIColor(red:0.953, green:0.176, blue:0.141, alpha:1.000) //UIColor(red: 0.5722, green: 0.0, blue: 0.9806, alpha: 1.0)
+            let color = UIColor(red:0.953, green:0.176, blue:0.141, alpha:1.000)
             imageView.backgroundColor = color
             imageView.layer.cornerRadius = 7.0
             imageView.layer.shadowColor = color.cgColor
@@ -66,10 +57,4 @@ class QuickSearchKeyCell: UICollectionViewCell {
         selectedBackgroundView = customBackgroundView
         selectedBackgroundView?.backgroundColor = UIColor.clear
     }
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-    }
-
-    
 }

@@ -9,64 +9,39 @@
 import UIKit
 import Device
 
-
-let kUseTones                     = "kUseTones"
-let kEnableAnimation              = "kEnableAnimation"
-let kFixPolyphonicChar            = "kFixPolyphonicChar"
-let kUpcasePinyin                 = "kUpcasePinyin"
-
-let kUseTonesDefaultBool          = false
+let kUseTones = "kUseTones"
+let kEnableAnimation = "kEnableAnimation"
+let kFixPolyphonicChar = "kFixPolyphonicChar"
+let kUpcasePinyin = "kUpcasePinyin"
+let kUseTonesDefaultBool = false
 let kFixPolyphonicCharDefaultBool = true
-let kUpcasePinyinDefaultBool      = false
-let kEnableAnimationDefaultBool   = Device.size() == Size.screen3_5Inch ? false : true
+let kUpcasePinyinDefaultBool = false
+let kEnableAnimationDefaultBool = Device.size() == Size.screen3_5Inch ? false : true
+let kVCWillDisappearNotification = "kVCWillDisappearNotification"
+var kShouldRepresentPolyphonicVC = false
 
-let kVCWillDisappearNotification  = "kVCWillDisappearNotification"
-
-var kShouldRepresentAdditionalVC  = false
-var kShouldRepresentPolyphonicVC  = false
-
-class SettingViewController: UIViewController {
-    
-    @IBOutlet weak var polyphonicButton: UIButton!
-    
+final class SettingViewController: UIViewController {
     private let userDefaults = UserDefaults.standard
-    
-    private var customBarButton: UIButton!
-    
-    
-    @IBOutlet weak var enableAnimationSwitch: UISwitch! {
-        didSet {
-            enableAnimationSwitch.shouldSwitch(kEnableAnimation, defaultBool: kEnableAnimationDefaultBool)
-        }
-    }
-    
-    @IBOutlet weak var useTonesSwitch: UISwitch! {
-        didSet {
-            useTonesSwitch.shouldSwitch(kUseTones, defaultBool: kUseTonesDefaultBool)
-        }
-    }
-    
-    @IBOutlet weak var fixPolyphonicCharSwitch: UISwitch! {
-        didSet {
-            fixPolyphonicCharSwitch.shouldSwitch(kFixPolyphonicChar, defaultBool: kFixPolyphonicCharDefaultBool)
-        }
-    }
-    
-    @IBOutlet weak var upcasePinyinSwitch: UISwitch! {
-        didSet {
-            upcasePinyinSwitch.shouldSwitch(kUpcasePinyin, defaultBool: kUpcasePinyinDefaultBool)
-        }
-    }
-    
-    
+    private lazy var customBarButton: UIButton = {
+        let button = UIButton(type: .custom)
+        button.tintColor = UIColor.white
+        button.setImage(#imageLiteral(resourceName: "additional_settings").templateRender, for: .normal)
+        return button
+    }()
+
+    @IBOutlet private var polyphonicButton: UIButton!
+    @IBOutlet private var enableAnimationSwitch: UISwitch! { didSet { enableAnimationSwitch.shouldSwitch(for: kEnableAnimation, default: kEnableAnimationDefaultBool) } }
+    @IBOutlet private var useTonesSwitch: UISwitch! { didSet { useTonesSwitch.shouldSwitch(for: kUseTones, default: kUseTonesDefaultBool) } }
+    @IBOutlet private var fixPolyphonicCharSwitch: UISwitch! { didSet { fixPolyphonicCharSwitch.shouldSwitch(for: kFixPolyphonicChar, default: kFixPolyphonicCharDefaultBool) } }
+    @IBOutlet var upcasePinyinSwitch: UISwitch! { didSet { upcasePinyinSwitch.shouldSwitch(for: kUpcasePinyin, default: kUpcasePinyinDefaultBool) } }
+
+    // MARK: Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        enableAnimationSwitch.onTintColor   = GLOBAL_CUSTOM_COLOR
-        useTonesSwitch.onTintColor          = GLOBAL_CUSTOM_COLOR
+        enableAnimationSwitch.onTintColor = GLOBAL_CUSTOM_COLOR
+        useTonesSwitch.onTintColor = GLOBAL_CUSTOM_COLOR
         fixPolyphonicCharSwitch.onTintColor = GLOBAL_CUSTOM_COLOR
-        upcasePinyinSwitch.onTintColor      = GLOBAL_CUSTOM_COLOR
-        
+        upcasePinyinSwitch.onTintColor = GLOBAL_CUSTOM_COLOR
         configureCustomBarButtonItem()
     }
     
@@ -75,90 +50,64 @@ class SettingViewController: UIViewController {
         NotificationCenter.default.post(name: Notification.Name(rawValue: kVCWillDisappearNotification), object: nil)
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "VCPresentPolyphonicVC" {
-            guard let destinationVC = segue.destination as? SettingsNavigationController else { return }
-            destinationVC.popoverPresentationController?.sourceRect = polyphonicButton.bounds
-            destinationVC.popoverPresentationController?.backgroundColor = kNavigationBarBackgroundColor
-        }
+        guard segue.identifier == "VCPresentPolyphonicVC" else { return }
+        guard let destinationVC = segue.destination as? UINavigationController else { return }
+        destinationVC.popoverPresentationController?.sourceRect = polyphonicButton.bounds
+        destinationVC.popoverPresentationController?.backgroundColor = GLOBAL_LIGHT_GRAY_COLOR
     }
-    
+
+    // MARK: Private
     private func configureCustomBarButtonItem() {
         guard let navBar = navigationController?.navigationBar else { return }
-        
-        customBarButton = UIButton(type: .custom)
-        customBarButton.tintColor = UIColor.white
-        customBarButton.setImage(UIImage(named: "additional_settings")?.withRenderingMode(.alwaysTemplate), for: UIControlState())
         customBarButton.addTarget(self, action: #selector(customBarButtonDidTap), for: .touchUpInside)
         navBar.addSubview(customBarButton)
-        customBarButton.snp.makeConstraints { (make) in
-            make.width.height.equalTo(25)
-            make.centerY.equalToSuperview()
-            make.left.equalTo(13)
+        customBarButton.snp.makeConstraints {
+            $0.width.height.equalTo(25)
+            $0.centerY.equalToSuperview()
+            $0.left.equalTo(13)
         }
     }
     
     @objc private func customBarButtonDidTap() {
-        if UIDevice.current.isPad {
-            presentPopoverController()
-            kShouldRepresentAdditionalVC = true
-        } else {
-            // dismiss current view controller first.
-            dismiss(animated: true) { () -> Void in
-                self.presentPopoverController()
-            }
-        }
+        UIDevice.current.isPad ? presentAdditionalSettingsViewController() : dismiss(animated: true, completion: { [weak self] in
+            self?.presentAdditionalSettingsViewController()
+        })
     }
     
-    private func presentPopoverController() {
-        guard let sourceView = customBarButton else { return }
-        
-        let vc = UIStoryboard.Main.instantiateViewController(with: SettingsNavigationController.self)
-        
+    private func presentAdditionalSettingsViewController() {
+        let vc = UIStoryboard.Main.instantiateViewController(withIdentifier: "SettingsNavigationController")
+        guard let view = AppDelegate.shared.window?.rootViewController?.view else { return }
         vc.modalPresentationStyle = .popover
         vc.popoverPresentationController?.canOverlapSourceViewRect = true
-        vc.popoverPresentationController?.sourceView = sourceView
-        vc.popoverPresentationController?.sourceRect = sourceView.bounds
-        vc.popoverPresentationController?.backgroundColor = kNavigationBarBackgroundColor
-        
-        UIApplication.topMostViewController?.present(vc, animated: true, completion:nil)
+        vc.popoverPresentationController?.sourceView = view
+        vc.popoverPresentationController?.sourceRect = CGRect(origin: view.center, size: CGSize.zero)
+        vc.popoverPresentationController?.permittedArrowDirections = UIPopoverArrowDirection(rawValue: 0)
+        vc.popoverPresentationController?.backgroundColor = GLOBAL_LIGHT_GRAY_COLOR
+        UIApplication.shared.topMostViewController?.present(vc, animated: true, completion:nil)
     }
     
-    // MARKS: - Actions of UISwitch
+    // MARK: - Actions of UISwitch
     @IBAction func enableAnimationSwitchDidTap(_ sender: UISwitch) {
         userDefaults.set(sender.isOn, forKey: kEnableAnimation)
-        userDefaults.synchronize()
     }
     
     @IBAction func useTonesSwitchDidTap(_ sender: UISwitch) {
         userDefaults.set(sender.isOn, forKey: kUseTones)
-        userDefaults.synchronize()
     }
     
     @IBAction func fixPolyphonicCharSwitchDidTap(_ sender: UISwitch) {
         userDefaults.set(sender.isOn, forKey: kFixPolyphonicChar)
-        userDefaults.synchronize()
     }
     
     @IBAction func upcasePinyinSwitchDidTap(_ sender: UISwitch) {
         userDefaults.set(sender.isOn, forKey: kUpcasePinyin)
-        userDefaults.synchronize()
     }
 }
 
-
 extension SettingViewController {
-    
     override func didRotate(from fromInterfaceOrientation: UIInterfaceOrientation) {
         guard UIDevice.current.isPad else { return }
-       
-        _ = kShouldRepresentAdditionalVC ? customBarButton?.sendActions(for: .touchUpInside) : ()
         _ = kShouldRepresentPolyphonicVC ? polyphonicButton?.sendActions(for: .touchUpInside) : ()
     }
 }
-

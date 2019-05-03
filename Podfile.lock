@@ -1,15 +1,24 @@
 PODS:
-  - Device (3.0.3)
-  - SnapKit (4.0.0)
+  - Device (3.1.2)
+  - Reveal-SDK (20)
+  - SnapKit (4.2.0)
 
 DEPENDENCIES:
   - Device
-  - SnapKit (~> 4.0)
+  - Reveal-SDK (= 20)
+  - SnapKit
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - Device
+    - Reveal-SDK
+    - SnapKit
 
 SPEC CHECKSUMS:
-  Device: 9a5264ee4e0f392e7153d2c46b10c8df46b7aad2
-  SnapKit: a42d492c16e80209130a3379f73596c3454b7694
+  Device: 62242076214c30fb5760174b3601cefafa70a481
+  Reveal-SDK: 43206a57f575632fd304e85385cc259b5d359e32
+  SnapKit: fe8a619752f3f27075cc9a90244d75c6c3f27e2a
 
-PODFILE CHECKSUM: f4e6eee9b8019f968c211e82167b5ea752dd5099
+PODFILE CHECKSUM: a7213dab67837b8adeb6414b6c0a30ee807a24de
 
-COCOAPODS: 1.4.0.rc.1
+COCOAPODS: 1.5.3

@@ -5,3 +5,15 @@
   Created by Augus on 2/20/16.
   Copyright © 2016 iAugus. All rights reserved.
 */
+
+NSContactsUsageDescription = "";
+
+"Contacts permission is required." = "'Phonetic Contacts' needs to write phonetic keys to your Contacts in order to sort your contacts.";
+
+"SharePhoneticContacts" = "Phonetic Contacts - 英文系统下中文名排序，拼音首字母快速搜索联系人";
+
+"TotalContacts" = "Contacts";
+"WhitelistTotalContacts" = "Whitelists";
+
+"WhitelistInfo" = "☆  Whitelist is global which means any functions in `Phonetic` will filter whitelists you selected directly.\n\n☆  Once you added phonetic last name and phonetic first name, these will also be shown here, and you can use them to search the specific contact in your plenty of contacts to set it as a whitelist. So do quick search key.";
+

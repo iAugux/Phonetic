@@ -9,24 +9,16 @@
 
 import UIKit
 
-
 func displayWalkthroughIfNeeded(_ transparent: Bool = true, completion: Closure? = nil) {
-
     guard !UserDefaults.standard.bool(forKey: displayedWalthroughKey) else { return }
-    
     displayWalkthrough(transparent, completion: completion)
 }
 
 func displayWalkthrough(_ transparent: Bool = true, completion: Closure? = nil) {
-        
     let pageViewController = WorkthroughSB.instantiateViewController(with: PageViewController.self)
-    
     transparent ? pageViewController.modalPresentationStyle = .overCurrentContext : ()
-    
     UIDevice.current.isPad ? pageViewController.modalTransitionStyle = .crossDissolve : ()
-    
-    UIApplication.topMostViewController?.present(pageViewController, animated: true, completion: {
+    UIApplication.shared.topMostViewController?.present(pageViewController, animated: true, completion: {
         completion?()        
     })
-    
 }

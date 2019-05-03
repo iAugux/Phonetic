@@ -1,3 +1,6 @@
+
+"SharePhoneticContacts" = "Phonetic Contacts - 英文系统下中文名排序，拼音首字母快速搜索联系人";
+
 /* */
 "OK" = "好";
 
@@ -12,6 +15,12 @@
 
 /* navigation item title - About */
 "About" = "关于";
+
+/* No comment provided by engineer. */
+"Back" = "返回";
+
+/* SettingsNavigationController title - Polyphonic Chararcters */
+"Polyphonic Characters" = "多音字";
 
 /* SettingsNavigationController title - Additional Settings */
 "Additional Settings" = "更多设置";
@@ -31,7 +40,7 @@
 "Cancel" = "取消";
 
 /* Table view header title */
-"Clean Phonetic Keys" = "清除通讯录字段";
+"Clean Contacts Keys" = "清除通讯录字段";
 
 /* UIAlertAction title - clean all phonetic keys */
 "Clean" = "清除";
@@ -47,6 +56,9 @@
 
 /* No comment provided by engineer. */
 "Nickname" = "昵称字段";
+
+/* No comment provided by engineer. */
+"Middle Name" = "中间名字段";
 
 /* No comment provided by engineer. */
 "Social Profiles" = "社交资料字段";
@@ -73,7 +85,7 @@
 "Keep `Settings Window` open after dismissing `Additional Settings Window`." = "“更多设置窗口”关闭后保持“设置窗口”开启。";
 
 /* No comment provided by engineer. */
-"Middle Name" = "中间名字段";
+"Notes" = "备注字段";
 
 /* No comment provided by engineer. */
 "Off" = "关";
@@ -131,7 +143,11 @@
 "e.g: Add a phonetic Nickname / %@ key for `叶梓萱` with `YZX`. Then you can enter `YZX` to search the specific name." = "比如：为 “叶梓萱” 添加 “YZX” 的昵称或%@，直接输入 “YZX” 就可以快速搜索到联系人。";
 
 /* Table view footer title */
-"⚠️ Be Careful. All of those keys including you manually added before will be removed!「Select keys you want to delete and go back to Main Interface, Long Press to clean」" = "⚠️ 请注意！包括之前手动添加的字段都将被清除掉。「选择需要删除的字段，回到主界面，长按执行按钮来清除」";
+"Be Careful. All of those keys including you manually added before will be removed!「Select keys you want to delete and go back to Main Interface, Long Press to clean」" = "请注意！包括之前手动添加的字段都将被清除掉。「选择需要删除的字段，回到主界面，长按执行按钮来清除」";
+
+"Please Note" = "请注意";
+"Only for contact which has company key but no name." = "仅用于只有公司名但没有名字的联系人。";
+"The company key will be automatically copied as a given name, then generating the Phonetic Given Name for sorting and the Quick Search key for searching." = "公司名字段将被自动复制作为联系人名字，然后自动生成用于排序的拼音以及用于快速搜索的拼音首字母";
 
 /* UIAlertController message */
 "Please tap the yellow button to complete settings. This message is only displayed once!" = "请点击黄色按钮来完成设置。本条消息只显示一次！";
@@ -186,19 +202,18 @@
 // 3D Touch items
 
 "Add Phonetic Keys" = "添加拼音字段";
-"Clean Phonetic Keys" = "清除拼音字段";
 
 
 "Animation Stopped..." = "动画已停止...";
 
 
-// MARK: - Walkthrough
+// Walkthrough
 
 "Tutorial" = "引导";
 "Skip" = "跳过";
 
 "Access Contacts" = "访问通讯录";
-"Contacts permission is required." = "通讯录权限是必要的";
+"Contacts permission is required." = "Phonetic Contacts 需要写入拼音字段到你的通讯录以便排序。";
 "Push Notification" = "推送通知";
 "Once the mission completed, you'll receive Notification." = "当任务完成时，你将收到通知提醒";
 "Choose a key for Quick Search. Default is「Nickname Key」." = "选择一个字段用于快速搜索，默认为「昵称字段」";
@@ -206,3 +221,38 @@
 "Tap the Settings icon to configure." = "点击设置图标来配置";
 "Ready to Go" = "准备就绪";
 "Get Started" = "开始";
+
+
+// Whitelist
+
+"Whitelists" = "白名单";
+"All" = "全部";
+"Search" = "搜索";
+"Remove All Whitelists" = "移除所有白名单";
+"TotalContacts" = "位联系人";
+"WhitelistTotalContacts" = "个白名单";
+"No Contacts" = "无联系人";
+"No Whitelists" = "无白名单";
+"Tips" = "提示";
+"WhitelistInfo" = "☆  白名单是全局的，意味着 Phonetic 的所有功能都会直接过滤掉你添加的白名单。\n\n☆  一旦你添加了姓氏和名字拼音，这些也将显示在这里，并且可以用它们来搜索白名单。同理快速搜索字段也是。";
+
+
+// Modify Contact
+
+"Phonetic last name" = "姓氏拼音";
+"Phonetic first name" = "名字拼音";
+"No key for Quick Search" = "没有设置用于快速搜索的字段";
+"Quick search key" = "快速搜索字段";
+
+//
+
+"User of iOS 10+ needs to locate it manually." = "iOS 10+ 的用户需要手动定位到设置";
+
+"Contacts" = "通讯录";
+
+// Choose Custom Language
+"Choose Language" = "选择语言";
+"Automatic" = "跟随系统";
+"English" = "英文";
+"Simplified Chinese" = "简体中文";
+"Traditional Chinese" = "繁体中文";

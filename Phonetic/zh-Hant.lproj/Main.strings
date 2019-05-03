@@ -1,13 +1,16 @@
 /* Class = "UILabel"; text = "Nickname for Quick Search"; ObjectID = "7Zz-a5-PCr"; */
 "7Zz-a5-PCr.text" = "暱稱欄位";
 
+/* Class = "UILabel"; text = "Nickname Phonetic Keys"; ObjectID = "mp6-Au-kB1"; */
+"mp6-Au-kB1.text" = "中間名欄位";
+
 /* Class = "UILabel"; text = "0%"; ObjectID = "7ea-gB-6zc"; */
 "7ea-gB-6zc.text" = "0%";
 
 /* Class = "UILabel"; text = "Feedback"; ObjectID = "9MY-ha-kA9"; */
 "9MY-ha-kA9.text" = "反饋";
 
-/* Class = "UITableViewSection"; footerTitle = "e.g: Add a phonetic middle name key for `叶梓萱` with `YZX`. Then you can enter `YZX` to search the specific name. "; ObjectID = "9Mp-D6-ANl"; */
+/* Class = "UITableViewSection"; footerTitle = "e.g: Add a nickname key for `叶梓萱` with `YZX`. Then you can enter `YZX` to search the specific name. "; ObjectID = "9Mp-D6-ANl"; */
 "9Mp-D6-ANl.footerTitle" = "比如：為 “葉梓萱” 添加 “YZ​​X” 的暱稱或%@，直接輸入 “YZX” 就可以快速搜索到聯繫人。";
 
 /* Class = "UITableViewSection"; headerTitle = "Quick Search"; ObjectID = "9Mp-D6-ANl"; */
@@ -34,8 +37,8 @@
 /* Class = "UILabel"; text = "Version"; ObjectID = "AO5-Q6-lZ2"; */
 "AO5-Q6-lZ2.text" = "Version";
 
-/* Class = "UILabel"; text = "Middle Name for Quick Search"; ObjectID = "Buy-mD-J4T"; */
-"Buy-mD-J4T.text" = "中間名欄位";
+/* Class = "UILabel"; text = "Notes for Quick Search"; ObjectID = "Buy-mD-J4T"; */
+"Buy-mD-J4T.text" = "附註欄位";
 
 /* Class = "UILabel"; text = "⬇︎"; ObjectID = "DwT-Qb-X56"; */
 "DwT-Qb-X56.text" = "⬇︎";
@@ -46,8 +49,8 @@
 /* Class = "UILabel"; text = "Status"; ObjectID = "EqW-Dx-MRg"; */
 "EqW-Dx-MRg.text" = "狀態";
 
-/* Class = "UILabel"; text = "Middle Name Phonetic Keys"; ObjectID = "FYS-C4-a9Y"; */
-"FYS-C4-a9Y.text" = "中間名欄位";
+/* Class = "UILabel"; text = "Notes Phonetic Keys"; ObjectID = "FYS-C4-a9Y"; */
+"FYS-C4-a9Y.text" = "附註欄位";
 
 /* Class = "UITableViewSection"; footerTitle = "If the device language is not Chinese, the switch will be forced open."; ObjectID = "KMY-XD-2W9"; */
 "KMY-XD-2W9.footerTitle" = "用於英文系統下通訊錄排序。如果設備的語言不是中文，開關將被強制打開。";
@@ -68,10 +71,10 @@
 "QL3-2P-rln.text" = "⬇︎";
 
 /* Class = "UILabel"; text = "Phonetic First & Last Name"; ObjectID = "RLV-Dq-gbJ"; */
-"RLV-Dq-gbJ.text" = "姓 & 名欄位";
+"RLV-Dq-gbJ.text" = "姓 & 名拼音";
 
 /* Class = "UILabel"; text = "Mail, Contacts, Calendars"; ObjectID = "Rn2-9L-hlr"; */
-"Rn2-9L-hlr.text" = "郵件、通訊錄、日曆";
+"Rn2-9L-hlr.text" = "郵件、聯絡資訊、日曆";
 
 /* Class = "UILabel"; text = "Job Title Phonetic Keys"; ObjectID = "S4U-eN-bqH"; */
 "S4U-eN-bqH.text" = "職位欄位";
@@ -165,3 +168,9 @@
 
 /* Class = "UILabel"; text = "Always Separate Pinyin"; ObjectID = "DR7-JE-aLH.text"; */
 "DR7-JE-aLH.text" = "總是隔開拼音";
+
+/* Class = "UILabel"; text = "For Company Key"; ObjectID = "qTG-dC-h2X.text"; */
+"qTG-dC-h2X.text" = "用於公司欄位";
+
+/* Class = "UILabel"; text = "I Want to Donate"; ObjectID = "391-Dy-SYl.text"; */
+"391-Dy-SYl.text" = "我想捐贈";

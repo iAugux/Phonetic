@@ -8,16 +8,12 @@
 
 import UIKit
 
-class BlurImageView: UIImageView {
-    
-    private var effectView: UIVisualEffectView!
+final class BlurImageView: UIImageView {
+    private lazy var effectView = UIVisualEffectView(effect: nil)
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-
-        if effectView == nil {
-            configureViews()
-        }
+        configureViews()
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -27,22 +23,18 @@ class BlurImageView: UIImageView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        effectView?.frame = bounds
+        effectView.frame = bounds
     }
     
     private func configureViews() {
         image = UIImage(named: "wave_placeholder")
         contentMode = .scaleToFill
-        
-        if UIDevice.current.isBlurSupported() && !UIAccessibilityIsReduceTransparencyEnabled() {
-            effectView = UIVisualEffectView(effect: UIBlurEffect(style: .light))
-            effectView.alpha = 0.98
+        if UIDevice.current.isBlurSupported && !UIAccessibility.isReduceTransparencyEnabled {
+            effectView.effect = UIBlurEffect(style: .light)
         } else {
-            effectView = UIVisualEffectView(effect: nil)
+            effectView.effect = nil
             effectView.backgroundColor = UIColor(red: 0.498, green: 0.498, blue: 0.498, alpha: 0.926)
         }
-        
-        effectView.frame = bounds
-        insertSubview(effectView, at: 0)
+        insertSubview(effectView, at: 0, pinningEdges: .all)
     }
 }

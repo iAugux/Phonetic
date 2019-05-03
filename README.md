@@ -1,5 +1,5 @@
 # Phonetic
-![Language](https://img.shields.io/badge/language-Swift%204-orange.svg)
+![Language](https://img.shields.io/badge/language-Swift%205-orange.svg)
 [![License](https://img.shields.io/badge/License-CC%20Attribution--NonCommercial-E5EC00.svg)](https://creativecommons.org/licenses/by-nc/4.0/)
 [![Homepage](https://img.shields.io/badge/Homepage-iAugus-9021C5.svg)](http://iAugus.com)
 [![Tweet](https://img.shields.io/badge/Tweet-%40iAugux-1B95E0.svg)](https://twitter.com/iaugux)
@@ -38,8 +38,8 @@ Phonetic on the App Store includes more features.
 ###### Thanks in advance.
 ## Requirements
 - iOS 9.0+
-- Swift 4
-- Xcode 9+
+- Swift 5
+- Xcode 10.1+
 
 ## Video Preview
 ##### On Youtube
@@ -82,8 +82,6 @@ Phonetic on the App Store includes more features.
 
 * [`Device`](https://github.com/Ekhoo/Device)
 
-* [`DGElasticPullToRefresh`](https://github.com/gontovnik/DGElasticPullToRefresh)
-
 * [`KDCircularProgress`](https://github.com/kaandedeoglu/KDCircularProgress)
 
 * [`SnapKit`](https://github.com/SnapKit/SnapKit)
@@ -93,7 +91,4 @@ Phonetic on the App Store includes more features.
 
 `Please do NOT repackage and submit to App Store.`
 
-Copyright © 2018 iAugus
-
-
-
+Copyright © 2019 iAugus

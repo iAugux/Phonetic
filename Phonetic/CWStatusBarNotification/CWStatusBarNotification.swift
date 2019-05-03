@@ -10,54 +10,54 @@ import UIKit
 
 // MARK: - enums
 
-@objc public enum CWNotificationStyle : Int {
+@objc public enum CWNotificationStyle: Int {
     case statusBarNotification
     case navigationBarNotification
 }
 
-@objc public enum CWNotificationAnimationStyle : Int {
+@objc public enum CWNotificationAnimationStyle: Int {
     case top
     case bottom
     case left
     case right
 }
 
-@objc public enum CWNotificationAnimationType : Int {
+@objc public enum CWNotificationAnimationType: Int {
     case replace
     case overlay
 }
 
 // MARK: - CWStatusBarNotification
 
-open class CWStatusBarNotification : NSObject {
+open class CWStatusBarNotification: NSObject {
     // MARK: - properties
     
-    private let fontSize : CGFloat = 10.0
+    private let fontSize: CGFloat = 10.0
 
-    private var tapGestureRecognizer : UITapGestureRecognizer!
-    private var dismissHandle : CWDelayedClosureHandle?
-    private var isCustomView : Bool
+    private var tapGestureRecognizer: UITapGestureRecognizer!
+    private var dismissHandle: CWDelayedClosureHandle?
+    private var isCustomView: Bool
     
-    open var notificationLabel : ScrollLabel?
-    open var statusBarView : UIView?
-    open var notificationTappedClosure : () -> ()
+    open var notificationLabel: ScrollLabel?
+    open var statusBarView: UIView?
+    open var notificationTappedClosure: () -> ()
     open var notificationIsShowing = false
     open var notificationIsDismissing = false
-    open var notificationWindow : CWWindowContainer?
+    open var notificationWindow: CWWindowContainer?
     
-    open var notificationLabelBackgroundColor : UIColor
-    open var notificationLabelTextColor : UIColor
-    open var notificationLabelFont : UIFont
-    open var notificationLabelHeight : CGFloat
-    open var customView : UIView?
-    open var multiline : Bool
-    open var supportedInterfaceOrientations : UIInterfaceOrientationMask
-    open var notificationAnimationDuration : TimeInterval
-    open var notificationStyle : CWNotificationStyle
-    open var notificationAnimationInStyle : CWNotificationAnimationStyle
-    open var notificationAnimationOutStyle : CWNotificationAnimationStyle
-    open var notificationAnimationType : CWNotificationAnimationType
-    open var preferredStatusBarStyle : UIStatusBarStyle
+    open var notificationLabelBackgroundColor: UIColor
+    open var notificationLabelTextColor: UIColor
+    open var notificationLabelFont: UIFont
+    open var notificationLabelHeight: CGFloat
+    open var customView: UIView?
+    open var multiline: Bool
+    open var supportedInterfaceOrientations: UIInterfaceOrientationMask
+    open var notificationAnimationDuration: TimeInterval
+    open var notificationStyle: CWNotificationStyle
+    open var notificationAnimationInStyle: CWNotificationAnimationStyle
+    open var notificationAnimationOutStyle: CWNotificationAnimationStyle
+    open var notificationAnimationType: CWNotificationAnimationType
+    open var preferredStatusBarStyle: UIStatusBarStyle
     
     // MARK: - setup
     
@@ -116,17 +116,14 @@ open class CWStatusBarNotification : NSObject {
         
         var statusBarHeight = UIApplication.shared.statusBarFrame
             .size.height
-        if systemVersionLessThan("8.0.0") && UIInterfaceOrientationIsLandscape(
-            UIApplication.shared.statusBarOrientation) {
-                statusBarHeight = UIApplication.shared.statusBarFrame
-                    .size.width
+        if systemVersionLessThan("8.0.0") && UIApplication.shared.statusBarOrientation.isLandscape {
+                statusBarHeight = UIApplication.shared.statusBarFrame.size.width
         }
-        return statusBarHeight > 0 ? statusBarHeight : 20
+        return statusBarHeight > 0 ? statusBarHeight: 20
     }
     
     private func getStatusBarWidth() -> CGFloat {
-        if systemVersionLessThan("8.0.0") && UIInterfaceOrientationIsLandscape(
-            UIApplication.shared.statusBarOrientation) {
+        if systemVersionLessThan("8.0.0") && UIApplication.shared.statusBarOrientation.isLandscape {
                 return UIScreen.main.bounds.size.height
         }
         return UIScreen.main.bounds.size.width
@@ -140,8 +137,7 @@ open class CWStatusBarNotification : NSObject {
     }
     
     private func getNavigationBarHeight() -> CGFloat {
-        if UIInterfaceOrientationIsPortrait(UIApplication.shared
-            .statusBarOrientation) || UI_USER_INTERFACE_IDIOM() == .pad {
+        if UIApplication.shared.statusBarOrientation.isPortrait || UI_USER_INTERFACE_IDIOM() == .pad {
                 return 44.0
         }
         return 30.0
@@ -199,13 +195,13 @@ open class CWStatusBarNotification : NSObject {
     
     // MARK: - on tap
     
-    @objc func notificationTapped(_ recognizer : UITapGestureRecognizer) {
+    @objc func notificationTapped(_ recognizer: UITapGestureRecognizer) {
         self.notificationTappedClosure()
     }
     
     // MARK: - display helpers
     
-    private func setupNotificationView(_ view : UIView) {
+    private func setupNotificationView(_ view: UIView) {
         view.clipsToBounds = true
         view.isUserInteractionEnabled = true
         view.addGestureRecognizer(self.tapGestureRecognizer)
@@ -221,9 +217,9 @@ open class CWStatusBarNotification : NSObject {
         }
     }
     
-    private func createNotificationLabelWithMessage(_ message : String) {
+    private func createNotificationLabelWithMessage(_ message: String) {
         self.notificationLabel = ScrollLabel()
-        self.notificationLabel?.numberOfLines = self.multiline ? 0 : 1
+        self.notificationLabel?.numberOfLines = self.multiline ? 0: 1
         self.notificationLabel?.text = message
         self.notificationLabel?.textAlignment = .center
         self.notificationLabel?.adjustsFontSizeToFitWidth = false
@@ -236,7 +232,7 @@ open class CWStatusBarNotification : NSObject {
         }
     }
     
-    private func createNotificationWithCustomView(_ view : UIView) {
+    private func createNotificationWithCustomView(_ view: UIView) {
         self.customView = UIView()
         // no autoresizing masks so that we can create constraints manually
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -268,9 +264,8 @@ open class CWStatusBarNotification : NSObject {
             frame: UIScreen.main.bounds)
         self.notificationWindow?.backgroundColor = UIColor.clear
         self.notificationWindow?.isUserInteractionEnabled = true
-        self.notificationWindow?.autoresizingMask = UIViewAutoresizing(
-            arrayLiteral: .flexibleWidth, .flexibleHeight)
-        self.notificationWindow?.windowLevel = UIWindowLevelStatusBar
+        self.notificationWindow?.autoresizingMask = UIView.AutoresizingMask(arrayLiteral: .flexibleWidth, .flexibleHeight)
+        self.notificationWindow?.windowLevel = UIWindow.Level.statusBar
         let rootViewController = CWViewController()
         rootViewController.localSupportedInterfaceOrientations =
             self.supportedInterfaceOrientations
@@ -293,7 +288,7 @@ open class CWStatusBarNotification : NSObject {
             self.notificationWindow?.rootViewController?.view
                 .addSubview(self.statusBarView!)
             self.notificationWindow?.rootViewController?.view
-                .sendSubview(toBack: self.statusBarView!)
+                .sendSubviewToBack(self.statusBarView!)
         }
     }
     
@@ -357,8 +352,8 @@ open class CWStatusBarNotification : NSObject {
     
     // MARK: - display notification
     
-    public func displayNotificationWithMessage(_ message : String,
-        completion : @escaping () -> ()) {
+    public func displayNotificationWithMessage(_ message: String,
+        completion: @escaping () -> ()) {
             guard !self.notificationIsShowing else {
                 return
             }
@@ -379,20 +374,19 @@ open class CWStatusBarNotification : NSObject {
                 return
             }
             self.notificationWindow?.rootViewController?.view.addSubview(label)
-            self.notificationWindow?.rootViewController?.view.bringSubview(
-                toFront: label)
+            self.notificationWindow?.rootViewController?.view.bringSubviewToFront(label)
             self.notificationWindow?.isHidden = false
             
             // checking for screen orientation change
             NotificationCenter.default.addObserver(self,
                 selector: #selector(CWStatusBarNotification.updateStatusBarFrame),
-                name: NSNotification.Name.UIApplicationDidChangeStatusBarFrame,
+                name: UIApplication.didChangeStatusBarFrameNotification,
                 object: nil)
             
             // checking for status bar change
             NotificationCenter.default.addObserver(self,
                 selector: #selector(CWStatusBarNotification.updateStatusBarFrame),
-                name: NSNotification.Name.UIApplicationWillChangeStatusBarFrame,
+                name: UIApplication.willChangeStatusBarFrameNotification,
                 object: nil)
             
             // animate
@@ -409,8 +403,8 @@ open class CWStatusBarNotification : NSObject {
             }
     }
     
-    public func displayNotificationWithMessage(_ message : String,
-        forDuration duration : TimeInterval) {
+    public func displayNotificationWithMessage(_ message: String,
+        forDuration duration: TimeInterval) {
             self.displayNotificationWithMessage(message) { () -> () in
                 self.dismissHandle = performClosureAfterDelay(duration, closure: {
                     () -> () in
@@ -420,21 +414,21 @@ open class CWStatusBarNotification : NSObject {
     }
     
     public func displayNotificationWithAttributedString(
-        _ attributedString : NSAttributedString, completion : @escaping () -> ()) {
+        _ attributedString: NSAttributedString, completion: @escaping () -> ()) {
             self.displayNotificationWithMessage(attributedString.string,
                 completion: completion)
             self.notificationLabel?.attributedText = attributedString
     }
     
     public func displayNotificationWithAttributedString(
-        _ attributedString : NSAttributedString,
-        forDuration duration : TimeInterval) {
+        _ attributedString: NSAttributedString,
+        forDuration duration: TimeInterval) {
             self.displayNotificationWithMessage(attributedString.string,
                 forDuration: duration)
             self.notificationLabel?.attributedText = attributedString
     }
     
-    public func displayNotificationWithView(_ view : UIView, completion : @escaping () -> ()) {
+    public func displayNotificationWithView(_ view: UIView, completion: @escaping () -> ()) {
         guard !self.notificationIsShowing else {
             return
         }
@@ -454,20 +448,20 @@ open class CWStatusBarNotification : NSObject {
         if let rootView = self.notificationWindow?.rootViewController?.view,
             let customView = self.customView {
                 rootView.addSubview(customView)
-                rootView.bringSubview(toFront: customView)
+                rootView.bringSubviewToFront(customView)
                 self.notificationWindow!.isHidden = false
         }
         
         // checking for screen orientation change
         NotificationCenter.default.addObserver(self,
             selector: #selector(CWStatusBarNotification.updateStatusBarFrame),
-            name: NSNotification.Name.UIApplicationDidChangeStatusBarFrame,
+            name: UIApplication.didChangeStatusBarFrameNotification,
             object: nil)
         
         // checking for status bar change
         NotificationCenter.default.addObserver(self,
             selector: #selector(CWStatusBarNotification.updateStatusBarFrame),
-            name: NSNotification.Name.UIApplicationWillChangeStatusBarFrame,
+            name: UIApplication.willChangeStatusBarFrameNotification,
             object: nil)
         
         // animate
@@ -479,16 +473,16 @@ open class CWStatusBarNotification : NSObject {
         }
     }
     
-    public func displayNotificationWithView(_ view : UIView,
-        forDuration duration : TimeInterval) {
+    public func displayNotificationWithView(_ view: UIView,
+        forDuration duration: TimeInterval) {
             self.displayNotificationWithView(view) { () -> () in
-                self.dismissHandle = performClosureAfterDelay(duration, closure: { () -> Void in
+                self.dismissHandle = performClosureAfterDelay(duration, closure: {
                     self.dismissNotification()
                 })
             }
     }
     
-    public func dismissNotificationWithCompletion(_ completion : (() -> ())?) {
+    public func dismissNotificationWithCompletion(_ completion: (() -> ())?) {
         cancelDelayedClosure(self.dismissHandle)
         self.notificationIsDismissing = true
         self.secondFrameChange()
@@ -509,11 +503,11 @@ open class CWStatusBarNotification : NSObject {
                 self.notificationIsShowing = false
                 self.notificationIsDismissing = false
                 NotificationCenter.default.removeObserver(self,
-                    name: NSNotification.Name.UIApplicationDidChangeStatusBarFrame,
-                    object: nil)
+                                                          name: UIApplication.didChangeStatusBarFrameNotification,
+                                                          object: nil)
                 NotificationCenter.default.removeObserver(self,
-                    name: NSNotification.Name.UIApplicationWillChangeStatusBarFrame,
-                    object: nil)
+                                                          name: UIApplication.willChangeStatusBarFrameNotification,
+                                                          object: nil)
                 if completion != nil {
                     completion!()
                 }

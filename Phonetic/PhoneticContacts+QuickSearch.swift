@@ -10,97 +10,76 @@ import Foundation
 import Contacts
 
 extension PhoneticContacts {
-    
     /**
      *  Search name by enter `WXD` (not case-sensitive), then following names will be listed by example.
      *  "王晓东"、"万孝德" ...
      */
-    func addPhoneticNameForQuickSearchIfNeeded(_ mutableContact: CNMutableContact, familyBrief: String, givenBrief: String) {
-        
+    func addPhoneticNameForQuickSearchIfNeeded(_ mutableContact: CNMutableContact, familyBrief: String = "", givenBrief: String = "") {
         guard let CNContactQuickSearchKey = ContactKeyForQuickSearch else { return }
-        
-        if let originalPhoneticName = mutableContact.value(forKey: CNContactQuickSearchKey) as? String {
-            
-            let newPhoneticName = familyBrief + givenBrief
-            
-            if overwriteExistingName {
-                mutableContact.setValue(newPhoneticName, forKey: CNContactQuickSearchKey)
-            } else {
-                if originalPhoneticName.isEmpty {
-                    mutableContact.setValue(newPhoneticName, forKey: CNContactQuickSearchKey)
-                }
-            }
+        guard let originalPhoneticName = mutableContact.value(forKey: CNContactQuickSearchKey) as? String else { return }
+        let newPhoneticName = familyBrief + givenBrief
+        if overwriteExistingName {
+            mutableContact.setValue(newPhoneticName, forKey: CNContactQuickSearchKey)
+        } else if originalPhoneticName.isEmpty {
+            mutableContact.setValue(newPhoneticName, forKey: CNContactQuickSearchKey)
         }
     }
 }
 
 extension PhoneticContacts {
- 
     var ContactKeyForQuickSearch: String? {
-        
-        if enableNickname {
-            return CNContactNicknameKey
+        if enableNickname { return CNContactNicknameKey }
+        guard enableCustomName else { return nil }
+        if userDefaults.value(forKey: kQuickSearchKeyRawValue) == nil {
+            userDefaults.set(QuickSearch.notes.rawValue, forKey: kQuickSearchKeyRawValue)
         }
-        
-        if enableCustomName {
-            if userDefaults.value(forKey: kQuickSearchKeyRawValue) == nil {
-                userDefaults.set(QuickSearch.middleName.rawValue, forKey: kQuickSearchKeyRawValue)
-                userDefaults.synchronize()
-            }
-            
-            if let quickSearchKey = userDefaults.value(forKey: kQuickSearchKeyRawValue) as? Int {
-                switch quickSearchKey {
-                case QuickSearch.middleName.rawValue:
-                    return CNContactPhoneticMiddleNameKey
-                
-                case QuickSearch.jobTitle.rawValue:
-                    return CNContactJobTitleKey
-                    
-                case QuickSearch.department.rawValue:
-                    return CNContactDepartmentNameKey
-                    
-                case QuickSearch.company.rawValue:
-                    return CNContactOrganizationNameKey
-                    
-                case QuickSearch.prefix.rawValue:
-                    return CNContactNamePrefixKey
-                    
-                case QuickSearch.suffix.rawValue:
-                    return CNContactNameSuffixKey
-                    
-                default: return nil
-                }
-            }
+        guard let quickSearchKey = userDefaults.value(forKey: kQuickSearchKeyRawValue) as? Int else { return nil }
+        switch quickSearchKey {
+        case QuickSearch.notes.rawValue:
+            return CNContactNoteKey
+        case QuickSearch.middleName.rawValue:
+            return CNContactPhoneticMiddleNameKey
+        case QuickSearch.prefix.rawValue:
+            return CNContactNamePrefixKey
+        case QuickSearch.suffix.rawValue:
+            return CNContactNameSuffixKey
+        default: return nil
         }
-        return nil
     }
 }
 
 extension PhoneticContacts {
-    
     var masterSwitchStatusIsOn: Bool {
         return userDefaults.bool(forKey: kAdditionalSettingsStatus, defaultValue: kAdditionalSettingsStatusDefaultBool)
     }
-    
+
     var enableNickname: Bool {
-        
         guard masterSwitchStatusIsOn else { return false }
-        
         return userDefaults.bool(forKey: kEnableNickname, defaultValue: kEnableNicknameDefaultBool)
     }
-    
+
     var enableCustomName: Bool {
-        
         guard masterSwitchStatusIsOn else { return false }
-        
         return userDefaults.bool(forKey: kEnableCustomName, defaultValue: kEnableCustomNameDefaultBool)
     }
-    
+
     private var overwriteExistingName: Bool {
-        
         guard masterSwitchStatusIsOn else { return false }
         guard enableNickname || enableCustomName else { return false }
-        
         return userDefaults.bool(forKey: kOverwriteAlreadyExists, defaultValue: kOverwriteAlreadyExistsDefaultBool)
+    }
+}
+
+extension CNContact {
+    func quickSearchBriefName(_ quickSearchKey: String) -> String? {
+        if quickSearchKey == CNContactNicknameKey { return nickname }
+        if quickSearchKey == CNContactNoteKey { return note }
+        if quickSearchKey == CNContactPhoneticMiddleNameKey { return phoneticMiddleName }
+        if quickSearchKey == CNContactJobTitleKey { return jobTitle }
+        if quickSearchKey == CNContactDepartmentNameKey { return departmentName }
+        if quickSearchKey == CNContactOrganizationNameKey { return organizationName }
+        if quickSearchKey == CNContactNamePrefixKey { return namePrefix }
+        if quickSearchKey == CNContactNameSuffixKey { return nameSuffix }
+        return nil
     }
 }

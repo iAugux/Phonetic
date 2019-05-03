@@ -35,11 +35,11 @@ public extension NSObject {
     // MARK: -
     // MARK: Vars
     
-    private struct dg_associatedKeys {
+    fileprivate struct dg_associatedKeys {
         static var observersArray = "observers"
     }
     
-    private var dg_observers: [[String : NSObject]] {
+    fileprivate var dg_observers: [[String : NSObject]] {
         get {
             if let observers = objc_getAssociatedObject(self, &dg_associatedKeys.observersArray) as? [[String : NSObject]] {
                 return observers
@@ -83,11 +83,11 @@ public extension UIScrollView {
     
     // MARK: - Vars
 
-    private struct dg_associatedKeys {
+    fileprivate struct dg_associatedKeys {
         static var pullToRefreshView = "pullToRefreshView"
     }
 
-    private var pullToRefreshView: DGElasticPullToRefreshView? {
+    fileprivate var pullToRefreshView: DGElasticPullToRefreshView? {
         get {
             return objc_getAssociatedObject(self, &dg_associatedKeys.pullToRefreshView) as? DGElasticPullToRefreshView
         }

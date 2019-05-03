@@ -8,9 +8,7 @@
 
 import UIKit
 
-
-class CustomSelectedBackgroundView: UIView {
-
+final class CustomSelectedBackgroundView: UIView {
     override func draw(_ rect: CGRect) {
         let aRef = UIGraphicsGetCurrentContext()
         aRef?.saveGState()
@@ -19,6 +17,5 @@ class CustomSelectedBackgroundView: UIView {
         UIColor.white.setFill()
         bezierPath.fill()
         aRef?.restoreGState()
-        
     }
 }

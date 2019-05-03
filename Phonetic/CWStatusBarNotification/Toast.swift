@@ -7,9 +7,7 @@
 
 import Foundation
 
-
 class Toast {
-    
     private static var notification: CWStatusBarNotification = {
         let notification = CWStatusBarNotification()
         notification.notificationAnimationInStyle = .top
@@ -18,11 +16,9 @@ class Toast {
     }()
     
     static func make(_ message: String, delay: TimeInterval = 0, interval: TimeInterval = 1.0) {
-        
         let make = {
             notification.displayNotificationWithMessage(message, forDuration: interval)
         }
-        
         if delay == 0 {
             make()
         } else {
@@ -31,5 +27,4 @@ class Toast {
             })
         }
     }
-    
 }

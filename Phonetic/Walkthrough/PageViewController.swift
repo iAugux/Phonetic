@@ -12,10 +12,9 @@
 
 import UIKit
 
-
 let WorkthroughSB = UIStoryboard(name: "Walkthrough", bundle: nil)
 
-class PageViewController: UIPageViewController {
+final class PageViewController: UIPageViewController {
     
     var maxIndex: Int!
     
@@ -61,64 +60,47 @@ class PageViewController: UIPageViewController {
     }
     
     private func viewControllerAtIndex(_ index: Int) -> WalkthroughViewController? {
-        
         if index == NSNotFound || index < 0 || index >= self.pageDescriptions.count { return nil }
-        
         let walkthroughViewController = WorkthroughSB.instantiateViewController(with: WalkthroughViewController.self)
-        
         walkthroughViewController.imageName = pageImages[index]
         walkthroughViewController.headerText = pageHeaders[index]
         walkthroughViewController.descriptionText = pageDescriptions[index]
         walkthroughViewController.index = index
-        
         viewControllerDidSetAt(index)
-
         return walkthroughViewController
     }
-    
 }
 
 
 extension PageViewController {
-    
     private func viewControllerDidSetAt(_ index: Int) {
-        
         switch index {
         case 0:
-            appDelegate.requestContactsAccess({ (accessGranted) in
-                if !accessGranted {
-                    appDelegate.requestContactsAccess()
-                }
+            AppDelegate.shared.requestContactsAccess({ (accessGranted) in
+                guard !accessGranted else { return }
+                AppDelegate.shared.requestContactsAccess()
             })
-            
         case 1:
             executeAfterDelay(0.5, closure: {
                 // register user notification settings
                 UIApplication.shared.registerUserNotificationSettings(UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil))
             })
-            
         default: break
         }
     }
-    
 }
 
-
 // MARK: - UIPageViewControllerDataSource
-
 extension PageViewController: UIPageViewControllerDataSource {
-    
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
         var index = (viewController as! WalkthroughViewController).index
         index -= 1
-        
         return self.viewControllerAtIndex(index)
     }
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
         var index = (viewController as! WalkthroughViewController).index
         index += 1
-        
         return self.viewControllerAtIndex(index)
     }
 }

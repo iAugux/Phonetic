@@ -6,4 +6,4 @@
   Copyright © 2016 iAugus. All rights reserved.
 */
 
-"NSContactsUsageDescription" = "Contacts permission is required.";
+"NSContactsUsageDescription" = "'Phonetic Contacts' needs to write phonetic keys to your Contacts in order to sort your contacts.";

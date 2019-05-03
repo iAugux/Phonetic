@@ -8,15 +8,12 @@
 
 import UIKit
 
-class AppIconImageView: UIImageView {
-    
+final class AppIconImageView: UIImageView {
+
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        image              = UIImage(named: "iTranslator")
-        clipsToBounds      = true
-        
-        let recognizer = UITapGestureRecognizer(target: self, action: #selector(iconDidTap))
-        addGestureRecognizer(recognizer)
+        image = UIImage(named: "iTranslator")
+        clipsToBounds = true
     }
     
     override func layoutSubviews() {
@@ -24,13 +21,10 @@ class AppIconImageView: UIImageView {
         layer.cornerRadius = frame.width * 0.23
     }
     
-    @objc func iconDidTap() {
-        parentViewController?.dismiss(animated: true, completion: { () -> Void in
-            let appURL = URL(string: "https://itunes.apple.com/app/id1063627763")
-            if UIApplication.shared.canOpenURL(appURL!) {
-                UIApplication.shared.openURL(appURL!)
-            }            
+    func iconDidTap() {
+        parentViewController?.dismiss(animated: true, completion: {
+            let appURL = URL(string: "https://itunes.apple.com/app/id1063627763")!
+            if UIApplication.shared.canOpenURL(appURL) { UIApplication.shared.openURL(appURL) }
         })
     }
-
 }
