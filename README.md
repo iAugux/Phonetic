@@ -8,7 +8,6 @@
 #### An iOS App to add phonetic keys with Pinyin for Chinese(SC & TC) names. Your Contacts will be sorted by alphabet automatically even under English System.
 
 ## App Store
-Phonetic on the App Store includes more features.
 <div>
 <a href="https://itunes.apple.com/app/id1078961574"> <img src="https://raw.githubusercontent.com/iAugux/ProjectScreenshots/master/Phonetic/AppStore.png" width="110px">
 </a>
@@ -39,7 +38,7 @@ Phonetic on the App Store includes more features.
 ## Requirements
 - iOS 9.0+
 - Swift 5
-- Xcode 10.1+
+- Xcode 13.4+
 
 ## Video Preview
 ##### On Youtube
@@ -72,23 +71,18 @@ Phonetic on the App Store includes more features.
 </div>
 
 ## Thanks to
-* [`PhoneticContacts`](https://github.com/lexrus/PhoneticContacts) by `Lexrus` for heavy inspiration.
+* [`PhoneticContacts`](https://github.com/lexrus/PhoneticContacts) by [`Lexrus`](https://github.com/lexrus) for heavy inspiration.
 
 * [`ARSLineProgress`](https://github.com/soberman/ARSLineProgress)
 
 * [`BlurActionSheet`](https://github.com/iAugux/BlurActionSheet)
 
-* [`CWStatusBarNotification`](https://github.com/cezarywojcik/CWStatusBarNotification/tree/swift)
-
-* [`Device`](https://github.com/Ekhoo/Device)
-
 * [`KDCircularProgress`](https://github.com/kaandedeoglu/KDCircularProgress)
 
-* [`SnapKit`](https://github.com/SnapKit/SnapKit)
-
+* [`StarWars.iOS`](https://github.com/Yalantis/StarWars.iOS)
 ## License
 `Phonetic` is available under the [`CC Attribution-NonCommercial  License`](https://creativecommons.org/licenses/by-nc/4.0/).
 
 `Please do NOT repackage and submit to App Store.`
 
-Copyright © 2019 iAugus
+Copyright © 2022 iAugus

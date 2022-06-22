@@ -1,0 +1,98 @@
+# file options
+--exclude Pods, fastlane, .vendor, .build
+
+# format options
+
+--swiftversion 5.2
+--allman false
+--binarygrouping 4,8
+--commas always
+--comments indent
+--decimalgrouping 3,5
+--elseposition same-line
+--empty void
+--exponentcase lowercase
+--exponentgrouping disabled
+--fractiongrouping disabled
+--header ignore
+--hexgrouping 4,8
+--hexliteralcase uppercase
+--ifdef indent
+--indent 4
+--indentcase false
+--importgrouping testable-bottom
+--linebreaks lf
+--octalgrouping 4,8
+--operatorfunc spaced
+--patternlet hoist
+--self remove
+--semicolons inline
+--stripunusedargs closure-only
+--trimwhitespace always
+--wraparguments preserve
+--wrapcollections beforefirst
+
+# rules
+
+--disable emptyBraces, blankLinesAroundMark, redundantRawValues, andOperator, hoistPatternLet, redundantSelf, redundantReturn
+--enable specifiers, consecutiveSpaces, duplicateImports, redundantExtensionACL, redundantInit, redundantLet, redundantVoidReturnType, strongOutlets, trailingCommas
+
+# https://github.com/nicklockwood/SwiftFormat/blob/master/Rules.md
+
+# isEmpty # replaces count == 0 checks with isEmpty, which is preferred for performance reasons.
+# blankLinesAtEndOfScope # removes trailing blank lines from inside braces, brackets, parens or chevrons.
+# blankLinesAtStartOfScope # removes leading blank lines from inside braces, brackets, parens or chevrons.
+# blankLinesBetweenScopes # adds a blank line before each class, struct, enum, extension, protocol or function.
+# --disable blankLinesAroundMark # adds a blank line before and after each MARK: comment.
+# braces # implements K&R (default, --allman false) or Allman-style indentation (--allman true).
+# consecutiveBlankLines # reduces multiple sequential blank lines to a single blank line.
+# consecutiveSpaces # reduces a sequence of spaces to a single space.
+# elseOnSameLine # controls whether an else, catch or while keyword after a } appears on the same line, depending on the --elseposition option (same-line (default) or next-line).
+# emptyBraces # removes all white space between otherwise empty braces.
+# indent # adjusts leading whitespace based on scope and line wrapping. Uses either tabs (--indent tab) or spaces (--indent 4). By default, case statements will be indented level with their containing switch, but this can be controlled with the --indentcase options. Also affects comments and #if ... statements, depending on the configuration of the --comments option (indent or ignore) and the --ifdef option (indent (default), noindent or ignore).
+# linebreakAtEndOfFile # ensures that the last line of the file is empty.
+# numberFormatting # handles case and grouping of number literals.
+# ranges # controls the spacing around range operators. By default, a space is added, but this can be configured using the --ranges option (spaced (default) or nospace).
+# redundantGet # removes unnecessary get { } clauses from inside read-only computed properties.
+# redundantLet # removes redundant let or var from ignored variables in bindings (which is a warning in Xcode).
+# redundantLetError # removes redundant let error from catch statements, where it is declared implicitly.
+# redundantNilInit # removes unnecessary nil initialization of Optional vars (which are nil by default anyway).
+# redundantParens # removes unnecessary parens from expressions and branch conditions.
+# redundantPattern # removes redundant pattern matching arguments for ignored variables.
+# --disable redundantRawValues # removes raw string values from enum cases when they match the case name.
+# redundantReturn # removes unnecessary return keyword from single-line closures.
+# redundantVoidReturnType # removes unnecessary Void return type from function declarations.
+# redundantInit # removes unnecessary init when instantiating Types.
+# semicolons # removes semicolons at the end of lines. Also replaces inline semicolons with a linebreak, depending on the --semicolons option (inline (default) or never).
+# --disable sortedImports # rearranges import statements so that they are sorted.
+# spaceAroundBraces # contextually adds or removes space around { ... }.
+# spaceAroundBrackets # contextually adjusts the space around [ ... ].
+# spaceAroundComments # adds space around /* ... */ comments and before // comments, depending on the --comments option (indent (default) or ignore).
+# spaceAroundGenerics # removes the space around < ... >.
+# spaceAroundOperators # contextually adjusts the space around infix operators. Also adds or removes the space between an operator function declaration and its arguments, depending on the --operatorfunc option (spaced (default) or nospace).
+# spaceAroundParens # contextually adjusts the space around ( ... ).
+# spaceInsideBraces # adds space inside { ... }.
+# --disable spaceInsideBrackets # removes the space inside [ ... ].
+# spaceInsideComments # adds a space inside /* ... */ comments and at the start of // comments, depending on the --comments option (indent (default) or ignore).
+# spaceInsideGenerics # removes the space inside < ... >.
+# spaceInsideParens # removes the space inside ( ... ).
+# --disable specifiers # normalizes the order for access specifiers, and other property/function/class/etc.
+# strongOutlets # removes the weak specifier from @IBOutlet properties, as per Apple's recommendation.
+# trailingClosures # converts the last closure argument in a function call to trailing closure syntax where possible (disabled by default because it can introduce ambiguity that prevents code from compiling).
+# trailingCommas # adds or removes trailing commas from the last item in an array or dictionary literal, depending on the --commas option (always (default) or inline).
+# trailingSpace # removes the whitespace at the end of a line, depending on the --trimwhitespace option (always (default) or nonblank-lines).
+# todos # ensures that TODO:, MARK: and FIXME: comments include the trailing colon (else they're ignored by Xcode).
+# unusedArguments # marks unused arguments in functions and closures with _ to make it clear they aren't used. Use the --stripunusedargs option to configure which argument types are affected (always (default), closure-only or unnamed-only).
+# void # standardizes the use of Void vs an empty tuple () to represent empty argument lists and return values, depending on the --empty option (void (default) or tuple).
+#
+# # Test
+# --disable wrapArguments #  wraps function arguments and collection literals depending on the --wraparguments and --wrapcollections options (beforefirst, afterfirst or preserve) and the --closingparen option (balanced (default) or same-line).
+#
+# --disable andOperator #
+#
+# # Disabled due to uncertainty of the rule consequences
+# --disable hoistPatternLet # moves let or var bindings inside patterns to the start of the expression, or vice-versa, depending on the --patternlet option (hoist or inline).
+# --disable linebreaks # normalizes all linebreaks to use the same character, depending on the --linebreaks option (cr, crlf or lf).
+#
+# # Disable to avoid breaking things like removing the explicit `self` and by that referrencing a local variable by mistake.
+# --disable redundantSelf # removes or inserts self prefix from class and instance member references, depending on the --self option.

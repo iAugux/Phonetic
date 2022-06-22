@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import SnapKit
 
 // MARK: - Popover view controller even on iPhones
 extension ViewController: UIPopoverPresentationControllerDelegate {
@@ -38,13 +37,13 @@ extension ViewController: UIPopoverPresentationControllerDelegate {
         case setting
     }
 
-    private struct Popover {
+    private enum Popover {
         static var popoverContent: UIViewController?
         static var popover: UIPopoverPresentationController?
         static var currentButton: PopoverButton?
         static let preferredContentWith: CGFloat = 220
         private static let preferredContentHeight: CGFloat = 260
-        private static let preferredMutableContentHeight = min(345, UIScreen.height * 0.66)
+        private static let preferredMutableContentHeight = min(310, UIScreen.height * 0.66)
         static let preferredContentSize = CGSize(width: preferredContentWith, height: preferredContentHeight)
         static let preferredMutableContentSize = CGSize(width: preferredContentWith, height: preferredMutableContentHeight)
     }
@@ -111,8 +110,7 @@ extension ViewController: UIPopoverPresentationControllerDelegate {
         titleLabel.font = UIFont.boldSystemFont(ofSize: 17.0)
         titleLabel.textColor = UIColor.white
         titleLabel.sizeToFit()
-        nav.navigationBar.addSubview(titleLabel)
-        titleLabel.snp.makeConstraints { $0.center.equalToSuperview() }
+        nav.navigationBar.addSubview(titleLabel, constrainedToCenterWithOffset: .zero)
     }
 
     private func enableToHideBarsOnSwipeIfNeeded(_ nav: UINavigationController, popoverButton: PopoverButton) {

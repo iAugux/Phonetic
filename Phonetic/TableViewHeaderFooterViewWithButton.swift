@@ -6,6 +6,7 @@
 //  Copyright © 2016 iAugus. All rights reserved.
 //
 
+import ASKit
 import UIKit
 
 final class TableViewHeaderFooterViewWithButton: UITableViewHeaderFooterView {
@@ -20,21 +21,22 @@ final class TableViewHeaderFooterViewWithButton: UITableViewHeaderFooterView {
         button.addTarget(self, action: #selector(buttonDidTap), for: .touchUpInside)
         return button
     }()
-    
-    convenience init(buttonImageName name: String, flashDuration: TimeInterval = 0.7) {
+
+    convenience init(buttonImageName name: String, flashDuration: TimeInterval = 1.5) {
         self.init(reuseIdentifier: nil)
         button.setImage(UIImage(named: name), for: .normal)
         addSubview(button)
-        button.flash(duration: flashDuration, minAlpha: 0.2)
+        button.flash(duration: flashDuration, minAlpha: 0.5)
     }
-    
+
     override func layoutSubviews() {
         super.layoutSubviews()
-        button.center = textLabel!.center
-        button.frame.origin.x = textLabel!.frame.maxX + 8.0 + compatibleSafeAreaInsets.left
+        guard let textLabel = textLabel else { return }
+        button.center = textLabel.center
+        button.frame.origin.x = textLabel.frame.maxX + 8.0 + compatibleSafeAreaInsets.left
     }
 
     @objc private func buttonDidTap() {
-       tapHandler?()
+        tapHandler?()
     }
 }

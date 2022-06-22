@@ -6,8 +6,8 @@
 //  Copyright © 2016 iAugus. All rights reserved.
 //
 
-import Foundation
 import Contacts
+import Foundation
 
 extension PhoneticContacts {
     /**
@@ -36,7 +36,11 @@ extension PhoneticContacts {
         guard let quickSearchKey = userDefaults.value(forKey: kQuickSearchKeyRawValue) as? Int else { return nil }
         switch quickSearchKey {
         case QuickSearch.notes.rawValue:
-            return CNContactNoteKey
+            if #available(iOS 13.0, *) {
+                return nil // Doesn't suport anymore
+            } else {
+                return CNContactNoteKey
+            }
         case QuickSearch.middleName.rawValue:
             return CNContactPhoneticMiddleNameKey
         case QuickSearch.prefix.rawValue:
@@ -73,7 +77,11 @@ extension PhoneticContacts {
 extension CNContact {
     func quickSearchBriefName(_ quickSearchKey: String) -> String? {
         if quickSearchKey == CNContactNicknameKey { return nickname }
-        if quickSearchKey == CNContactNoteKey { return note }
+        if #available(iOS 13.0, *) {
+            // doesn't support anymore
+        } else {
+            if quickSearchKey == CNContactNoteKey { return note }
+        }
         if quickSearchKey == CNContactPhoneticMiddleNameKey { return phoneticMiddleName }
         if quickSearchKey == CNContactJobTitleKey { return jobTitle }
         if quickSearchKey == CNContactDepartmentNameKey { return departmentName }

@@ -9,7 +9,7 @@
 import UIKit
 
 extension AppDelegate {
-    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
         let host = url.host
         if host ~= `Type`.execute.rawValue {
             execute()
@@ -29,7 +29,7 @@ extension AppDelegate {
         default: return
         }
     }
-    
+
     private enum `Type`: String {
         case execute
         case rollback
@@ -37,8 +37,14 @@ extension AppDelegate {
 
     // MARK: Springboard Shortcut Items (dynamic)
     func createShortcutItemsWithIcons() {
-        let executeIcon   = UIApplicationShortcutIcon(type: .add)
-        let rollbackIcon = UIApplicationShortcutIcon(templateImageName: "rollback_3d")
+        let executeIcon = UIApplicationShortcutIcon(type: .add)
+        let rollbackIcon: UIApplicationShortcutIcon = {
+            if #available(iOS 13.0, *) {
+                return UIApplicationShortcutIcon(systemImageName: "gobackward")
+            } else {
+                return UIApplicationShortcutIcon(templateImageName: "rollback_3d")
+            }
+        }()
         let executeItemTitle = NSLocalizedString("Add Phonetic Keys", comment: "")
         let rollbackItemTitle = NSLocalizedString("Clean Contacts Keys", comment: "")
         // create dynamic shortcut items
@@ -53,11 +59,11 @@ extension AppDelegate {
     private func execute() {
         viewController?.execute()
     }
-    
+
     private func rollback() {
         viewController?.clean()
     }
-    
+
     private var viewController: ViewController? {
         // ensure root vc is presenting.
         window?.rootViewController?.presentedViewController?.dismissWithoutAnimation()

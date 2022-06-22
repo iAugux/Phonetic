@@ -7,32 +7,23 @@
 //
 
 import UIKit
-import Device
 
 class BaseTableViewController: UITableViewController {
-    private let _color = UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1.0)
-    private lazy var blurBackgroundView = BlurImageView(frame: view.bounds)
-    
+    override var preferredStatusBarStyle: UIStatusBarStyle { return .lightContent }
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .phoneticLightGray
         navigationController?.navigationBar.tintColor = UIColor.white
         navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
-        navigationController?.navigationBar.isTranslucent = false
-        navigationController?.navigationBar.isBottomHairlineHidden = true
-        navigationController?.navigationBar.barTintColor = GLOBAL_LIGHT_GRAY_COLOR
-        tableView.backgroundView = blurBackgroundView
-        tableView.separatorColor = GLOBAL_LIGHT_GRAY_COLOR
-
+        tableView.separatorColor = UIColor.phoneticLightGray.darker(0.45)
+        tableView.backgroundColor = UIColor.phoneticLightGray.darker(0.3)
+        tableView.backgroundView = UIView()
         if #available(iOS 11.0, *) {
             tableView.estimatedSectionHeaderHeight = 0
             tableView.estimatedSectionFooterHeight = 0
         }
-        if let sv = UIApplication.shared.topMostViewController?.view {
-            tableView.configureRightBottomCornerScrollTrigger(superView: sv, color: GLOBAL_CUSTOM_COLOR.alpha(0.5))
-        }
     }
-
-    override var preferredStatusBarStyle: UIStatusBarStyle { return .lightContent }
 }
 
 // MARK: - Table View Delegate
@@ -41,14 +32,14 @@ extension BaseTableViewController {
         //  @fixed: iPad refusing to accept clear color
         cell.backgroundColor = UIColor.clear
     }
-    
+
     override func tableView(_ tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {
         // change label's text color of Footer View
-        (view as? UITableViewHeaderFooterView)?.textLabel?.textColor = _color
+        (view as? UITableViewHeaderFooterView)?.textLabel?.textColor = UIColor(hex: 0xD9D9D9)
     }
-    
+
     override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         // change label's text color of Header View
-        (view as? UITableViewHeaderFooterView)?.textLabel?.textColor = _color
+        (view as? UITableViewHeaderFooterView)?.textLabel?.textColor = UIColor(hex: 0xD9D9D9)
     }
 }

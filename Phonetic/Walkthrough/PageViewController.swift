@@ -6,50 +6,53 @@
 //  Copyright © 2016 iAugus. All rights reserved.
 //
 
-
 // REFERENCE: https://github.com/jorgecasariego/Walkthroughs
-
 
 import UIKit
 
 let WorkthroughSB = UIStoryboard(name: "Walkthrough", bundle: nil)
 
 final class PageViewController: UIPageViewController {
-    
     var maxIndex: Int!
-    
+
     private static let ACCESS_CONTACTS = NSLocalizedString("Access Contacts", comment: "")
     private static let REQUIRE_CONTACTS_PERMISSION = NSLocalizedString("Contacts permission is required.", comment: "")
-    
-    private let pageImages = ["access_contacts",
-                              "push_notification",
-                              "tutorial_screenshot",
-                              "access_settings",
-                              "tutorial_screenshot"]
-    
-    private let pageHeaders = [ACCESS_CONTACTS,
-                               NSLocalizedString("Push Notification", comment: ""),
-                               NSLocalizedString("Quick Search", comment: ""),
-                               NSLocalizedString("One More Step", comment: ""),
-                               NSLocalizedString("Ready to Go", comment: "")]
-    
-    private let pageDescriptions = [REQUIRE_CONTACTS_PERMISSION,
-                                    NSLocalizedString("Once the mission completed, you'll receive Notification.", comment: ""),
-                                    NSLocalizedString("Choose a key for Quick Search. Default is「Nickname Key」.", comment: ""),
-                                    NSLocalizedString("Tap the Settings icon to configure.", comment: ""),
-                                    ""]
-    
+
+    private let pageImages = [
+        "access_contacts",
+        "push_notification",
+        "tutorial_screenshot",
+        "access_settings",
+        "tutorial_screenshot",
+    ]
+
+    private let pageHeaders = [
+        ACCESS_CONTACTS,
+        NSLocalizedString("Push Notification", comment: ""),
+        NSLocalizedString("Quick Search", comment: ""),
+        NSLocalizedString("One More Step", comment: ""),
+        NSLocalizedString("Ready to Go", comment: ""),
+    ]
+
+    private let pageDescriptions = [
+        REQUIRE_CONTACTS_PERMISSION,
+        NSLocalizedString("Once the mission completed, you'll receive Notification.", comment: ""),
+        NSLocalizedString("Choose a key for Quick Search. Default is「Nickname Key」.", comment: ""),
+        NSLocalizedString("Tap the Settings icon to configure.", comment: ""),
+        "",
+    ]
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         maxIndex = pageHeaders.count - 1
-        
+
         // this class is the page view controller's data source itself
         self.dataSource = self
-        
+
         // create the first walkthrough vc
         if let startWalkThroughViewController = self.viewControllerAtIndex(0) {
-            setViewControllers([startWalkThroughViewController], direction: .forward, animated: true, completion: nil )
+            setViewControllers([startWalkThroughViewController], direction: .forward, animated: true, completion: nil)
         }
     }
 
@@ -58,7 +61,7 @@ final class PageViewController: UIPageViewController {
             setViewControllers([nextWalkthroughVC], direction: .forward, animated: true, completion: nil)
         }
     }
-    
+
     private func viewControllerAtIndex(_ index: Int) -> WalkthroughViewController? {
         if index == NSNotFound || index < 0 || index >= self.pageDescriptions.count { return nil }
         let walkthroughViewController = WorkthroughSB.instantiateViewController(with: WalkthroughViewController.self)
@@ -71,20 +74,19 @@ final class PageViewController: UIPageViewController {
     }
 }
 
-
 extension PageViewController {
     private func viewControllerDidSetAt(_ index: Int) {
         switch index {
         case 0:
-            AppDelegate.shared.requestContactsAccess({ (accessGranted) in
+            AppDelegate.shared.requestContactsAccess { accessGranted in
                 guard !accessGranted else { return }
                 AppDelegate.shared.requestContactsAccess()
-            })
+            }
         case 1:
-            executeAfterDelay(0.5, closure: {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 // register user notification settings
                 UIApplication.shared.registerUserNotificationSettings(UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil))
-            })
+            }
         default: break
         }
     }
@@ -97,7 +99,7 @@ extension PageViewController: UIPageViewControllerDataSource {
         index -= 1
         return self.viewControllerAtIndex(index)
     }
-    
+
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
         var index = (viewController as! WalkthroughViewController).index
         index += 1

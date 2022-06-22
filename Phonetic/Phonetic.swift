@@ -19,7 +19,7 @@ enum QuickSearch: Int {
     case suffix
     case middleName
     case cancel
-    
+
     var key: String {
         switch self {
         case .notes:
@@ -47,7 +47,7 @@ enum PhoneticKeys: String {
     case middleName
     case socialProfiles
     case instantMessageAddresses
-    
+
     var key: String {
         switch self {
         case .nickname:
@@ -74,41 +74,42 @@ enum PhoneticKeys: String {
     }
 }
 
-let kPhoneticFirstAndLastName         = "kPhoneticFirstAndLastName"
-let kQuickSearchKeyRawValue           = "kQuickSearchKeyRawValueRawValue"
-let kAdditionalSettingsStatus         = "kAdditionalSettingsStatus"
-let kEnableNickname                   = "kEnableNickname"
-let kEnableCustomName                 = "kEnableCustomName"
-let kOverwriteAlreadyExists           = "kOverwriteAlreadyExists"
-let kAlwaysSeparatePinyin             = "kAlwaysSeparatePinyin"
-let kMassageCompanyKey                = "kMassageCompanyKey"
-let kEnableAllCleanPhonetic           = "kEnableAllCleanPhonetic"
-let kCleanPhoneticNickname            = "kCleanPhoneticNickname"
-let kCleanNotesKey                    = "kCleanNotesKey"
-let kCleanPhoneticDepartment          = "kCleanPhoneticDepartment"
-let kCleanPhoneticCompany             = "kCleanPhoneticCompany"
-let kCleanPhoneticJobTitle            = "kCleanPhoneticJobTitle"
-let kCleanPhoneticPrefix              = "kCleanPhoneticPrefix"
-let kCleanPhoneticSuffix              = "kCleanPhoneticSuffix"
-let kCleanPhoneticMiddleName          = "kCleanPhoneticMiddleName"
-let kCleanSocialProfilesKeys          = "kCleanSocialProfilesKeys"
+let kWhitelistIdentifiersKey = "kWhitelistIdentifiersKey"
+let kPhoneticFirstAndLastName = "kPhoneticFirstAndLastName"
+let kQuickSearchKeyRawValue = "kQuickSearchKeyRawValueRawValue"
+let kAdditionalSettingsStatus = "kAdditionalSettingsStatus"
+let kEnableNickname = "kEnableNickname"
+let kEnableCustomName = "kEnableCustomName"
+let kOverwriteAlreadyExists = "kOverwriteAlreadyExists"
+let kAlwaysSeparatePinyin = "kAlwaysSeparatePinyin"
+let kMassageCompanyKey = "kMassageCompanyKey"
+let kEnableAllCleanPhonetic = "kEnableAllCleanPhonetic"
+let kCleanPhoneticNickname = "kCleanPhoneticNickname"
+let kCleanNotesKey = "kCleanNotesKey"
+let kCleanPhoneticDepartment = "kCleanPhoneticDepartment"
+let kCleanPhoneticCompany = "kCleanPhoneticCompany"
+let kCleanPhoneticJobTitle = "kCleanPhoneticJobTitle"
+let kCleanPhoneticPrefix = "kCleanPhoneticPrefix"
+let kCleanPhoneticSuffix = "kCleanPhoneticSuffix"
+let kCleanPhoneticMiddleName = "kCleanPhoneticMiddleName"
+let kCleanSocialProfilesKeys = "kCleanSocialProfilesKeys"
 let kCleanInstantMessageAddressesKeys = "kCleanInstantMessageAddressesKeys"
 
 let kPhoneticFirstAndLastNameDefaultBool = true
 let kAdditionalSettingsStatusDefaultBool = true
-let kEnableNicknameDefaultBool           = true
-let kEnableCustomNameDefaultBool         = false
-let kOverwriteAlreadyExistsDefaultBool   = false
-let kAlwaysSeparatePinyinDefaultBool     = false
-let kMassageCompanyKeyDefaultBool        = false
-let kEnableAllCleanPhoneticDefaultBool   = false
-let kCleanPhoneticNicknameDefaultBool    = false
-let kCleanNotesKeyDefaultBool            = false
-let kCleanPhoneticDepartmentDefaultBool  = false
-let kCleanPhoneticCompanyDefaultBool     = false
-let kCleanPhoneticJobTitleDefaultBool    = false
-let kCleanPhoneticMiddleNameDefaultBool  = false
-let kCleanPhoneticPrefixDefaultBool      = false
-let kCleanPhoneticSuffixDefaultBool      = false
-let kCleanSocialProfilesKeysDefaultBool  = false
-let kCleanInstantMessageKeysDefaultBool  = false
+let kEnableNicknameDefaultBool = true
+let kEnableCustomNameDefaultBool = false
+let kOverwriteAlreadyExistsDefaultBool = false
+let kAlwaysSeparatePinyinDefaultBool = false
+let kMassageCompanyKeyDefaultBool = false
+let kEnableAllCleanPhoneticDefaultBool = false
+let kCleanPhoneticNicknameDefaultBool = false
+let kCleanNotesKeyDefaultBool = false
+let kCleanPhoneticDepartmentDefaultBool = false
+let kCleanPhoneticCompanyDefaultBool = false
+let kCleanPhoneticJobTitleDefaultBool = false
+let kCleanPhoneticMiddleNameDefaultBool = false
+let kCleanPhoneticPrefixDefaultBool = false
+let kCleanPhoneticSuffixDefaultBool = false
+let kCleanSocialProfilesKeysDefaultBool = false
+let kCleanInstantMessageKeysDefaultBool = false

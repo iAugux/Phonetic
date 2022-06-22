@@ -7,16 +7,13 @@
 //
 
 import UIKit
-import Device
 
 let kUseTones = "kUseTones"
-let kEnableAnimation = "kEnableAnimation"
 let kFixPolyphonicChar = "kFixPolyphonicChar"
 let kUpcasePinyin = "kUpcasePinyin"
 let kUseTonesDefaultBool = false
 let kFixPolyphonicCharDefaultBool = true
 let kUpcasePinyinDefaultBool = false
-let kEnableAnimationDefaultBool = Device.size() == Size.screen3_5Inch ? false : true
 let kVCWillDisappearNotification = "kVCWillDisappearNotification"
 var kShouldRepresentPolyphonicVC = false
 
@@ -30,7 +27,6 @@ final class SettingViewController: UIViewController {
     }()
 
     @IBOutlet private var polyphonicButton: UIButton!
-    @IBOutlet private var enableAnimationSwitch: UISwitch! { didSet { enableAnimationSwitch.shouldSwitch(for: kEnableAnimation, default: kEnableAnimationDefaultBool) } }
     @IBOutlet private var useTonesSwitch: UISwitch! { didSet { useTonesSwitch.shouldSwitch(for: kUseTones, default: kUseTonesDefaultBool) } }
     @IBOutlet private var fixPolyphonicCharSwitch: UISwitch! { didSet { fixPolyphonicCharSwitch.shouldSwitch(for: kFixPolyphonicChar, default: kFixPolyphonicCharDefaultBool) } }
     @IBOutlet var upcasePinyinSwitch: UISwitch! { didSet { upcasePinyinSwitch.shouldSwitch(for: kUpcasePinyin, default: kUpcasePinyinDefaultBool) } }
@@ -38,68 +34,70 @@ final class SettingViewController: UIViewController {
     // MARK: Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        enableAnimationSwitch.onTintColor = GLOBAL_CUSTOM_COLOR
-        useTonesSwitch.onTintColor = GLOBAL_CUSTOM_COLOR
-        fixPolyphonicCharSwitch.onTintColor = GLOBAL_CUSTOM_COLOR
-        upcasePinyinSwitch.onTintColor = GLOBAL_CUSTOM_COLOR
+        useTonesSwitch.onTintColor = .vividColor
+        fixPolyphonicCharSwitch.onTintColor = .vividColor
+        upcasePinyinSwitch.onTintColor = .vividColor
+        polyphonicButton.flash(duration: 1.5, minAlpha: 0.4)
         configureCustomBarButtonItem()
     }
-    
+
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         NotificationCenter.default.post(name: Notification.Name(rawValue: kVCWillDisappearNotification), object: nil)
     }
-    
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard segue.identifier == "VCPresentPolyphonicVC" else { return }
         guard let destinationVC = segue.destination as? UINavigationController else { return }
         destinationVC.popoverPresentationController?.sourceRect = polyphonicButton.bounds
-        destinationVC.popoverPresentationController?.backgroundColor = GLOBAL_LIGHT_GRAY_COLOR
+        destinationVC.popoverPresentationController?.backgroundColor = .phoneticLightGray
     }
 
     // MARK: Private
     private func configureCustomBarButtonItem() {
         guard let navBar = navigationController?.navigationBar else { return }
         customBarButton.addTarget(self, action: #selector(customBarButtonDidTap), for: .touchUpInside)
-        navBar.addSubview(customBarButton)
-        customBarButton.snp.makeConstraints {
-            $0.width.height.equalTo(25)
-            $0.centerY.equalToSuperview()
-            $0.left.equalTo(13)
-        }
+        navBar.addSubview(customBarButton, pinningEdges: [.left], withInsets: UIEdgeInsets(uniform: 13))
+        customBarButton.constrainSize(to: CGSize(uniform: 25))
+        customBarButton.centerYAnchor.constraint(equalTo: navBar.centerYAnchor).isActive = true
+        customBarButton.flash(duration: 1.5, minAlpha: 0.4)
     }
-    
+
     @objc private func customBarButtonDidTap() {
         UIDevice.current.isPad ? presentAdditionalSettingsViewController() : dismiss(animated: true, completion: { [weak self] in
             self?.presentAdditionalSettingsViewController()
         })
     }
-    
+
     private func presentAdditionalSettingsViewController() {
         let vc = UIStoryboard.Main.instantiateViewController(withIdentifier: "SettingsNavigationController")
-        guard let view = AppDelegate.shared.window?.rootViewController?.view else { return }
-        vc.modalPresentationStyle = .popover
-        vc.popoverPresentationController?.canOverlapSourceViewRect = true
-        vc.popoverPresentationController?.sourceView = view
-        vc.popoverPresentationController?.sourceRect = CGRect(origin: view.center, size: CGSize.zero)
-        vc.popoverPresentationController?.permittedArrowDirections = UIPopoverArrowDirection(rawValue: 0)
-        vc.popoverPresentationController?.backgroundColor = GLOBAL_LIGHT_GRAY_COLOR
-        UIApplication.shared.topMostViewController?.present(vc, animated: true, completion:nil)
+        #if targetEnvironment(macCatalyst)
+            dismiss(animated: true) {
+                UIApplication.shared.topMostViewController?.present(vc)
+            }
+        #else
+            guard let view = AppDelegate.shared.window?.rootViewController?.view else { return }
+            if UIDevice.current.isPad {
+                vc.modalPresentationStyle = .popover
+                vc.popoverPresentationController?.canOverlapSourceViewRect = true
+                vc.popoverPresentationController?.sourceView = view
+                vc.popoverPresentationController?.sourceRect = CGRect(origin: view.center, size: CGSize.zero)
+                vc.popoverPresentationController?.permittedArrowDirections = UIPopoverArrowDirection(rawValue: 0)
+                vc.popoverPresentationController?.backgroundColor = .phoneticLightGray
+            }
+            UIApplication.shared.topMostViewController?.present(vc)
+        #endif
     }
-    
+
     // MARK: - Actions of UISwitch
-    @IBAction func enableAnimationSwitchDidTap(_ sender: UISwitch) {
-        userDefaults.set(sender.isOn, forKey: kEnableAnimation)
-    }
-    
     @IBAction func useTonesSwitchDidTap(_ sender: UISwitch) {
         userDefaults.set(sender.isOn, forKey: kUseTones)
     }
-    
+
     @IBAction func fixPolyphonicCharSwitchDidTap(_ sender: UISwitch) {
         userDefaults.set(sender.isOn, forKey: kFixPolyphonicChar)
     }
-    
+
     @IBAction func upcasePinyinSwitchDidTap(_ sender: UISwitch) {
         userDefaults.set(sender.isOn, forKey: kUpcasePinyin)
     }

@@ -23,34 +23,32 @@ final class PolyphonicViewController: BaseTableViewController {
         title = NSLocalizedString("Polyphonic Characters", comment: "SettingsNavigationController title - Polyphonic Chararcters")
         tableView.sectionIndexBackgroundColor = UIColor.clear
         tableView.sectionIndexColor = UIColor.white
-        masterSwitch.onTintColor = GLOBAL_CUSTOM_COLOR
+        masterSwitch.onTintColor = .vividColor
         masterSwitch.shouldSwitch(for: kEnableAllPolyphonicChars, default: true)
         UIDevice.current.isPad ? masterSwitchTrailingConstraint.constant = 42 : ()
-        configureScreenEdgeDismissGesture()
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        let image = #imageLiteral(resourceName: "close").withRenderingMode(.alwaysTemplate)
-        navigationItem.leftBarButtonItem = BarButtonItem(image: image, target: self, action: .dismissAnimated)
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: .close, style: .done, target: self, action: .dismissAnimated)
         names = [
-            "B" : [PolyphonicChar.b1, PolyphonicChar.b2, PolyphonicChar.b3],
-            "C" : [PolyphonicChar.c1, PolyphonicChar.c2, PolyphonicChar.c3],
-            "D" : [PolyphonicChar.d1],
-            "G" : [PolyphonicChar.g1, PolyphonicChar.g2, PolyphonicChar.g3, PolyphonicChar.g4],
-            "H" : [PolyphonicChar.h1],
-            "J" : [PolyphonicChar.j1, PolyphonicChar.j2],
-            "K" : [PolyphonicChar.k1],
-            "M" : [PolyphonicChar.m1, PolyphonicChar.m2],
-            "N" : [PolyphonicChar.n1],
-            "O" : [PolyphonicChar.o1],
-            "P" : [PolyphonicChar.p1, PolyphonicChar.p2],
-            "Q" : [PolyphonicChar.q1, PolyphonicChar.q2, PolyphonicChar.q3, PolyphonicChar.q4, PolyphonicChar.q5],
-            "R" : [PolyphonicChar.r1],
-            "S" : [PolyphonicChar.s1, PolyphonicChar.s2, PolyphonicChar.s3, PolyphonicChar.s4],
-            "X" : [PolyphonicChar.x1, PolyphonicChar.x2],
-            "Y" : [PolyphonicChar.y1, PolyphonicChar.y2, PolyphonicChar.y3, PolyphonicChar.y4],
-            "Z" : [PolyphonicChar.z1, PolyphonicChar.z2, PolyphonicChar.z3, PolyphonicChar.z4, PolyphonicChar.z5]
+            "B": [PolyphonicChar.b1, PolyphonicChar.b2, PolyphonicChar.b3],
+            "C": [PolyphonicChar.c1, PolyphonicChar.c2, PolyphonicChar.c3],
+            "D": [PolyphonicChar.d1],
+            "G": [PolyphonicChar.g1, PolyphonicChar.g2, PolyphonicChar.g3, PolyphonicChar.g4],
+            "H": [PolyphonicChar.h1],
+            "J": [PolyphonicChar.j1, PolyphonicChar.j2],
+            "K": [PolyphonicChar.k1],
+            "M": [PolyphonicChar.m1, PolyphonicChar.m2],
+            "N": [PolyphonicChar.n1],
+            "O": [PolyphonicChar.o1],
+            "P": [PolyphonicChar.p1, PolyphonicChar.p2],
+            "Q": [PolyphonicChar.q1, PolyphonicChar.q2, PolyphonicChar.q3, PolyphonicChar.q4, PolyphonicChar.q5],
+            "R": [PolyphonicChar.r1],
+            "S": [PolyphonicChar.s1, PolyphonicChar.s2, PolyphonicChar.s3, PolyphonicChar.s4],
+            "X": [PolyphonicChar.x1, PolyphonicChar.x2],
+            "Y": [PolyphonicChar.y1, PolyphonicChar.y2, PolyphonicChar.y3, PolyphonicChar.y4],
+            "Z": [PolyphonicChar.z1, PolyphonicChar.z2, PolyphonicChar.z3, PolyphonicChar.z4, PolyphonicChar.z5],
         ]
         nameSectionTitles = (names.allKeys as! [String]).sorted() as NSArray
     }
@@ -61,12 +59,12 @@ final class PolyphonicViewController: BaseTableViewController {
             setMasterLabelText(sender.isOn)
             UserDefaults.standard.set(sender.isOn, forKey: kEnableAllPolyphonicChars)
             // Just for UI, did not store values.
-            executeAfterDelay(0.2, closure: { [weak self] in
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { [weak self] in
                 guard let self = self else { return }
                 for cell in self.tableView.visibleCells {
                     if let cell = cell as? PolyphonicTableViewCell { cell.polyphonicSwitch.isOn = sender.isOn }
                 }
-            })
+            }
         }
     }
 
@@ -113,7 +111,7 @@ extension PolyphonicViewController {
 extension PolyphonicViewController {
     override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         super.tableView(tableView, willDisplayHeaderView: view, forSection: section)
-        (view as! UITableViewHeaderFooterView).contentView.backgroundColor = GLOBAL_LIGHT_GRAY_COLOR
+        (view as! UITableViewHeaderFooterView).contentView.backgroundColor = .phoneticLightGray
         headerViewContainer.frame.size = headerViewContainer.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
     }
 }
@@ -127,4 +125,3 @@ extension PolyphonicViewController {
         })
     }
 }
-

@@ -12,11 +12,11 @@ extension WalkthroughViewController: UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return keys.count
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(with: QuickSearchKeyCell.self, for: indexPath)
         cell.keyLabel.text = keys[indexPath.row]
@@ -42,7 +42,7 @@ final class QuickSearchKeyCell: UICollectionViewCell {
     @IBOutlet var keyLabel: UILabel!
     @IBOutlet private var imageView: UIImageView! {
         didSet {
-            let color = UIColor(red:0.953, green:0.176, blue:0.141, alpha:1.000)
+            let color = UIColor(red: 0.953, green: 0.176, blue: 0.141, alpha: 1.000)
             imageView.backgroundColor = color
             imageView.layer.cornerRadius = 7.0
             imageView.layer.shadowColor = color.cgColor
@@ -50,7 +50,7 @@ final class QuickSearchKeyCell: UICollectionViewCell {
             imageView.layer.shadowOpacity = 0.5
         }
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         let customBackgroundView = CustomSelectedBackgroundView()

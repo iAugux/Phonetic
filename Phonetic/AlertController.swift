@@ -6,12 +6,13 @@
 //  Copyright © 2016 iAugus. All rights reserved.
 //
 
+import ASKit
 import UIKit
 
 final class AlertController: NSObject {
     private static let ok = NSLocalizedString("OK", comment: "")
 
-    class func alert(_ title: String = "", message: String = "", actionTitle: String = ok, completionHandler: Closure?) {
+    class func alert(_ title: String = "", message: String = "", actionTitle: String = ok, completionHandler: Closure? = nil) {
         AlertController.alert(title, message: message, actionTitle: actionTitle, addCancelAction: false, completionHandler: completionHandler, canceledHandler: nil)
     }
 
@@ -61,5 +62,12 @@ final class AlertController: NSObject {
             alertController.addAction(okAction)
             UIApplication.shared.topMostViewController?.present(alertController, animated: true, completion: nil)
         }
+    }
+}
+
+extension UIAlertController {
+    override open func viewDidLoad() {
+        super.viewDidLoad()
+        view.tintColor = .systemBlue
     }
 }

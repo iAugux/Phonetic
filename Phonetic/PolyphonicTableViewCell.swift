@@ -18,7 +18,7 @@ final class PolyphonicTableViewCell: UITableViewCell {
         super.awakeFromNib()
         nameLabel.textColor = UIColor.white
         polyphonicLabel.textColor = UIColor.lightGray
-        polyphonicSwitch.onTintColor = GLOBAL_CUSTOM_COLOR
+        polyphonicSwitch.onTintColor = .vividColor
     }
 
     @IBAction func polyphonicSwitchDidTap(_ sender: UISwitch) {

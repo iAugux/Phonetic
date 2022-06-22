@@ -6,8 +6,8 @@
 //  Copyright © 2016 iAugus. All rights reserved.
 //
 
-import UIKit
 import Contacts
+import UIKit
 
 extension ViewController {
     func alertToChooseQuickSearchKeyIfNeeded() {
@@ -22,7 +22,7 @@ extension ViewController {
             let okAction = UIAlertAction(title: okActionTitle, style: .default, handler: { _ in
                 self.goSetting()
             })
-            let laterAction = UIAlertAction(title: laterActionTitle,style: .default, handler: nil)
+            let laterAction = UIAlertAction(title: laterActionTitle, style: .default, handler: nil)
             let cancelAction = UIAlertAction(title: cancelActionTitle, style: .cancel, handler: nil)
             alertController.addAction(okAction)
             alertController.addAction(cancelAction)
@@ -30,16 +30,16 @@ extension ViewController {
             UIApplication.shared.topMostViewController?.present(alertController, animated: true, completion: nil)
         }
     }
-    
+
     private func goSetting() {
         performSegue(withIdentifier: "rootVCPresentAdditionalVC", sender: self)
     }
-    
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "rootVCPresentAdditionalVC" {
             guard let destinationVC = segue.destination as? UINavigationController else { return }
             destinationVC.popoverPresentationController?.sourceRect = settingButton.bounds
-            destinationVC.popoverPresentationController?.backgroundColor = GLOBAL_LIGHT_GRAY_COLOR
+            destinationVC.popoverPresentationController?.backgroundColor = .phoneticLightGray
         }
     }
 }

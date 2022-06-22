@@ -13,17 +13,17 @@ struct DetectPreferredLanguage {
         guard let langCode = Locale.preferredLanguages.first else { return false }
         return isChineseLanguage(langCode)
     }
-    
+
     static var isSimplifiedChinese: Bool {
         guard let langCode = Locale.preferredLanguages.first else { return false }
         return langCode.contains("zh-Hans")
     }
-    
+
     // ["zh-Hant-US", "en-US", "zh-Hans-US", "zh-HK", "zh-TW"]
     private static func isChineseLanguage(_ id: String) -> Bool {
         guard !id.contains("zh-Hans") else { return true } // Chinese Mandrain
-        guard !id.contains("zh-TW")   else { return true } // Taiwan
-        guard !id.contains("zh-HK")   else { return true } // HongKong
+        guard !id.contains("zh-TW") else { return true } // Taiwan
+        guard !id.contains("zh-HK") else { return true } // HongKong
         guard !id.contains("zh-Hant") else { return true } // HongKong
         return false
     }
@@ -38,7 +38,7 @@ enum CustomLanguage: Int {
     case sc
     case tc
     case cancel
-    
+
     var langs: [String]? {
         switch self {
         case .auto: return nil
@@ -48,7 +48,7 @@ enum CustomLanguage: Int {
         case .cancel: return []
         }
     }
-    
+
     var description: String {
         switch self {
         case .auto: return NSLocalizedString("Automatic", comment: "")

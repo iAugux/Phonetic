@@ -256,3 +256,5 @@
 "English" = "英文";
 "Simplified Chinese" = "简体中文";
 "Traditional Chinese" = "繁体中文";
+
+"Due to the restriction on iOS 13+, we can't use the `Notes` key at this moment. Please disable the key in settings." = "因为在 iOS 13+ 上的限制，我们暂时无法使用 `备注` 字段，请在设置中关闭该字段。";

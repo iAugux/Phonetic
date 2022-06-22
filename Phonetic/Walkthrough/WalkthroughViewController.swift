@@ -28,7 +28,8 @@ final class WalkthroughViewController: UIViewController {
     lazy var keys: [String] = {
         var keys = [String]()
         keys.append(NSLocalizedString("Nickname", comment: ""))
-        for i in 0 ..< QuickSearch.cancel.rawValue {
+        // Temporarily set from 1 set filter `Note`
+        for i in 1 ..< QuickSearch.cancel.rawValue {
             keys.append(QuickSearch(rawValue: i)!.key)
         }
         return keys
@@ -98,7 +99,7 @@ final class WalkthroughViewController: UIViewController {
         let vc = UIStoryboard.Main.instantiateViewController(with: HelpManualViewController.self)
         let nav = UINavigationController(rootViewController: vc)
         nav.makeNavBarCompletelyTransparent()
-        vc.navigationItem.leftBarButtonItem = BarButtonItem(image: #imageLiteral(resourceName: "close").templateRender, target: self, action: .dismissAnimated)
+        vc.navigationItem.leftBarButtonItem = UIBarButtonItem(image: .close, style: .done, target: self, action: .dismissAnimated)
         present(nav, animated: true, completion: nil)
     }
 

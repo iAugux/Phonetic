@@ -6,37 +6,42 @@
 //  Copyright © 2016 iAugus. All rights reserved.
 //
 
-import UIKit
-import SnapKit
-import AVKit
+import ASKit
 import Components
-
-let GLOBAL_CUSTOM_COLOR = UIColor(red: 0.4, green: 0.8, blue: 1.0, alpha: 1.0)
-let GLOBAL_LIGHT_GRAY_COLOR = UIColor(red: 0.4, green: 0.4, blue: 0.4, alpha: 1.0)
-
-let IconColorOne = UIColor(red:0.592, green:0.396, blue:0.796, alpha:1.000)
-let IconColorTwo = UIColor(red:0.290, green:0.565, blue:0.886, alpha:1.000)
-let IconColorThree = UIColor(red:0.494, green:0.827, blue:0.129, alpha:1.000)
-let IconColorFour = UIColor(red:0.961, green:0.651, blue:0.137, alpha:1.000)
+import UIKit
 
 final class ViewController: UIViewController {
     @IBOutlet var executeButton: UIButton!
     @IBOutlet var blurView: UIVisualEffectView!
-    @IBOutlet var outputView: UITextView!
+    @IBOutlet var outputView: UILabel!
     @IBOutlet var percentageLabel: UILabel!
-    @IBOutlet var avPlayerPlaceholderView: UIImageView!
+    @IBOutlet var starsOverlay: StarsOverlay!
     @IBOutlet var settingButton: UIButton!
     @IBOutlet var infoButton: UIButton!
     @IBOutlet var progress: KDCircularProgress!
+    private var isStatusBarHidden = false
+
+    override var prefersStatusBarHidden: Bool {
+        return UIDevice.current.hasNotch ? isStatusBarHidden : false
+    }
+
+    override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
+        return .fade
+    }
 
     private var abortingAlertController: UIAlertController!
-    var avPlayerController: AVPlayerViewController!
-    var avPlayer: AVPlayer!
-    
+
     var isProcessing = false {
         didSet {
             settingButton.isEnabled = !isProcessing
             infoButton.isEnabled = !isProcessing
+            isStatusBarHidden = isProcessing
+            UIView.animate(withDuration: 0.25) {
+                self.setNeedsStatusBarAppearanceUpdate()
+                [self.settingButton, self.infoButton].forEach {
+                    $0.alpha = $0.isEnabled ? 1 : 0
+                }
+            }
             executeButton.isEnabled = !isProcessing
             enableExecuteButtonGestures(!isProcessing)
             // dismiss alert controller if it's already done.
@@ -45,31 +50,26 @@ final class ViewController: UIViewController {
             abortingAlertController = nil
         }
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         configureSubViews()
         NotificationCenter.default.addObserver(self, selector: #selector(showLabels), name: NSNotification.Name(rawValue: kVCWillDisappearNotification), object: nil)
     }
-    
+
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        pauseVideo()
+        stopAnimations()
     }
-    
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         displayWalkthroughIfNeeded()
     }
-    
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        avPlayer?.pause()
-        avPlayerPlaceholderView.subviews.first?.removeFromSuperview()
-        avPlayerController = nil
-        guard isProcessing else { return }
-        let message = NSLocalizedString("Animation Stopped...", comment: "")
-        Toast.make(message, delay: 0, interval: 5)
+        starsOverlay.stopAnimating()
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle { return .lightContent }
@@ -82,6 +82,7 @@ final class ViewController: UIViewController {
         gesture.numberOfTapsRequired = 2
         return gesture
     }()
+
     private lazy var swipeUp: UISwipeGestureRecognizer = {
         let gesture = UISwipeGestureRecognizer(target: self, action: #selector(abortActions))
         gesture.direction = .up
@@ -90,10 +91,14 @@ final class ViewController: UIViewController {
 
     // MARK: Private
     private func configureSubViews() {
+        if #available(iOS 13.0, *) {
+            outputView.font = .monospacedSystemFont(ofSize: 14, weight: .medium)
+        }
+        percentageLabel.font = .monospacedDigitSystemFont(ofSize: 20, weight: .semibold)
         // progress
-        progress.setColors(IconColorOne, IconColorTwo, IconColorThree, IconColorFour)
+        progress.setColors(.iconColorOne, .iconColorTwo, .iconColorThree, .iconColorFour)
         // execute button
-        executeButton.tintColor = GLOBAL_CUSTOM_COLOR
+        executeButton.tintColor = .vividColor
         executeButton.setImage(UIImage(named: "touch")?.withRenderingMode(.alwaysTemplate), for: .normal)
         // gestures
         executeButton.addGestureRecognizer(singleTap)
@@ -109,7 +114,7 @@ final class ViewController: UIViewController {
         blurView.effect = nil
         blurView.backgroundColor = UIColor(red: 0.498, green: 0.498, blue: 0.498, alpha: 0.926)
     }
-    
+
     private func enableExecuteButtonGestures(_ enable: Bool) {
         if !enable {
             executeButton.gestureRecognizers?.removeAll()
@@ -121,7 +126,7 @@ final class ViewController: UIViewController {
             executeButton.addGestureRecognizer(longPress)
         }
     }
-    
+
     @objc private func abortActions() {
         UIView.animate(withDuration: 0.45, delay: 0, options: [], animations: {
             self.executeButton.frame.origin.y -= 25
@@ -131,7 +136,7 @@ final class ViewController: UIViewController {
             }, completion: { _ in self.alertToAbortIfNeeded() })
         }
     }
-    
+
     func alertToAbortIfNeeded() {
         guard isProcessing else { return }
         let title = NSLocalizedString("Abort", comment: "UIAlertController - title")

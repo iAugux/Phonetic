@@ -6,21 +6,21 @@
 //  Copyright © 2016 iAugus. All rights reserved.
 //
 
-import UIKit
+import ASKit
 import MessageUI
 import SafariServices
-import Device
+import UIKit
 
 final class OtherSettingView: UIStackView, MFMailComposeViewControllerDelegate, SFSafariViewControllerDelegate {
     private var picker: MFMailComposeViewController!
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
         let recognizer = UITapGestureRecognizer(target: self, action: #selector(viewDidTap))
         addGestureRecognizer(recognizer)
         configureFollowingIcon()
     }
-    
+
     @objc private func viewDidTap() {
         parentViewController?.dismiss(animated: true, completion: {
             // simulate highlight
@@ -38,7 +38,7 @@ final class OtherSettingView: UIStackView, MFMailComposeViewControllerDelegate, 
             }
         })
     }
-    
+
     private func configureFollowingIcon() {
         let imageName = DetectPreferredLanguage.isSimplifiedChinese ? "weibo" : "twitter"
         let image = UIImage(named: imageName)
@@ -46,28 +46,28 @@ final class OtherSettingView: UIStackView, MFMailComposeViewControllerDelegate, 
             if $0.tag == 999, let imageView = $0 as? UIImageView { imageView.image = image }
         }
     }
-    
+
     // MARK: - follow me on Twitter or Weibo
     private func followMe() {
         DetectPreferredLanguage.isSimplifiedChinese ? followMeOnWeibo() : followMeOnTwitter()
     }
-    
+
     private func followMeOnTwitter() {
         let tweetbotURL = URL(string: "tweetbot://iAugux/user_profile/iAugux")!
         let twitterURL = URL(string: "twitter://user?screen_name=iAugux")!
         let urls = [tweetbotURL, twitterURL]
         for url in urls {
             if UIApplication.shared.canOpenURL(url) {
-                UIApplication.shared.openURL(url)
+                UIApplication.shared.open(url)
                 return
             }
         }
-        
+
         let safariVC = SFSafariViewController(url: URL(string: "https://twitter.com/iAugux")!)
         safariVC.delegate = self
         UIApplication.shared.topMostViewController?.present(safariVC, animated: true, completion: nil)
     }
-    
+
     private func followMeOnWeibo() {
         let id = "1778865900"
         /// I love `VVebo`, but... you know... Fuck Sina
@@ -79,7 +79,7 @@ final class OtherSettingView: UIStackView, MFMailComposeViewControllerDelegate, 
         let urls = [mokeURL, weiboURL]
         for url in urls {
             if UIApplication.shared.canOpenURL(url) {
-                UIApplication.shared.openURL(url)
+                UIApplication.shared.open(url)
                 return
             }
         }
@@ -87,7 +87,7 @@ final class OtherSettingView: UIStackView, MFMailComposeViewControllerDelegate, 
         safariVC.delegate = self
         UIApplication.shared.topMostViewController?.present(safariVC, animated: true, completion: nil)
     }
-    
+
     // MARK: - Rate me
     static func RateMe() {
         let id = "1078961574"
@@ -97,16 +97,15 @@ final class OtherSettingView: UIStackView, MFMailComposeViewControllerDelegate, 
         } else {
             url = APP.reviewURL(with: id)
         }
-        if UIApplication.shared.canOpenURL(url) { UIApplication.shared.openURL(url) }
+        if UIApplication.shared.canOpenURL(url) { UIApplication.shared.open(url) }
     }
-    
+
     // MARK: - feedback with Mail
     private func sendMail() {
         guard MFMailComposeViewController.canSendMail() else { return }
-        UINavigationBar.appearance().tintColor = GLOBAL_LIGHT_GRAY_COLOR
         picker = MFMailComposeViewController()
         picker.mailComposeDelegate = self
-        picker.setToRecipients(["iAugux@gmail.com"])
+        picker.setToRecipients(["iAugux+Phonetic@gmail.com"])
         picker.setSubject("Phonetic Contacts Feedback")
         guard let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String else { return }
         guard let build = Bundle.main.object(forInfoDictionaryKey: kCFBundleVersionKey as String) as? String else { return }
@@ -117,14 +116,14 @@ final class OtherSettingView: UIStackView, MFMailComposeViewControllerDelegate, 
         picker.setMessageBody(info, isHTML: true)
         UIApplication.shared.topMostViewController?.present(picker, animated: true, completion: nil)
     }
-    
+
     func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
         controller.dismiss(animated: true) { self.picker = nil }
     }
 }
 
-extension UIView {
-    fileprivate func simulateHighlight(withMinAlpha alpha: CGFloat = 0.5, completion: ((Bool) -> ())? = nil) {
+private extension UIView {
+    func simulateHighlight(withMinAlpha alpha: CGFloat = 0.5, completion: ((Bool) -> Void)? = nil) {
         UIView.animate(withDuration: 0.1, animations: {
             self.alpha = alpha
         }, completion: { _ in

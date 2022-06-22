@@ -6,26 +6,21 @@
 //  Copyright © 2016 iAugus. All rights reserved.
 //
 
-import Foundation
-import AVFoundation
-import AVKit
+import ASKit
+import UIKit
 
 extension ViewController {
-    private var enableAnimation: Bool {
-        if UserDefaults.standard.value(forKey: kEnableAnimation) == nil {
-            UserDefaults.standard.set(kEnableAnimationDefaultBool, forKey: kEnableAnimation)
-        }
-        return UserDefaults.standard.bool(forKey: kEnableAnimation)
-    }
-
-    private var shouldEnableAnimation: Bool {
-        guard enableAnimation else { return false }
-        // guarantee there is no audio playing in the background.
-        // e.g: Never pause your music. I don't want to bother you.
-        return !AVAudioSession.sharedInstance().isOtherAudioPlaying
-    }
-
     @objc func execute() {
+        let isQuickSearchNoteKey: Bool = {
+            guard !PhoneticContacts.shared.enableNickname else { return false }
+            guard PhoneticContacts.shared.enableCustomName else { return false }
+            guard let quickSearchKey = UserDefaults.standard.value(forKey: kQuickSearchKeyRawValue) as? Int else { return false }
+            return quickSearchKey == QuickSearch.notes.rawValue
+        }()
+        if #available(iOS 13.0, *), isQuickSearchNoteKey {
+            AlertController.alert(NSLocalizedString("Due to the restriction on iOS 13+, we can't use the `Notes` key at this moment. Please disable the key in settings.", comment: ""), actionTitle: .ok)
+            return
+        }
         AppDelegate.shared.requestContactsAccess { [weak self] granted in
             guard let self = self else { return }
             guard granted else { return }
@@ -35,13 +30,14 @@ extension ViewController {
             }
             self.initializeUI(true)
             self.isProcessing = true
-            self.playVideoIfNeeded()
-            PhoneticContacts.shared.execute(resultHandler: { currentResult, percentage -> Void in
+            self.playAnimations()
+            PhoneticContacts.shared.execute(resultHandler: { currentResult, percentage in
+                self.runProgressBar(false, percentage: percentage)
+                self.outputView.fadeTransition(0.45)
                 self.outputView.text = currentResult
                 self.percentageLabel.text = "\(Int(percentage))%"
-                self.runProgressBar(false, percentage: percentage)
-            }) { aborted -> Void in
-                self.avPlayer?.pause()
+            }) { aborted in
+                self.starsOverlay.stopAnimating()
                 self.promoptCompletion(aborted)
             }
         }
@@ -53,7 +49,11 @@ extension ViewController {
     }
 
     func clean() {
-        AppDelegate.shared.requestContactsAccess { [weak self] granted in
+        if #available(iOS 13.0, *), PhoneticContacts.shared.shouldCleanNotesKeys {
+            AlertController.alert(NSLocalizedString("Due to the restriction on iOS 13+, we can't use the `Notes` key at this moment. Please disable the key in settings.", comment: ""), actionTitle: .ok)
+            return
+        }
+        AppDelegate.shared.requestContactsAccess { [weak self] _ in
             guard let self = self else { return }
             guard !self.isProcessing else {
                 self.alertToAbortIfNeeded()
@@ -69,12 +69,12 @@ extension ViewController {
             let okAction = UIAlertAction(title: okActionTitle, style: .default) { _ in
                 self.initializeUI(false)
                 self.isProcessing = true
-                self.playVideoIfNeeded()
-                PhoneticContacts.shared.cleanMandarinLatinPhonetic(resultHandler: { currentResult, percentage -> Void in
+                self.playAnimations()
+                PhoneticContacts.shared.cleanMandarinLatinPhonetic(resultHandler: { _, percentage in
                     self.percentageLabel.text = "\(100 - Int(percentage))%"
                     self.runProgressBar(true, percentage: percentage)
-                }, completionHandler: { aborted -> Void in
-                    self.avPlayer?.pause()
+                }, completionHandler: { aborted in
+                    self.starsOverlay.stopAnimating()
                     self.promoptCompletion(aborted)
                 })
             }
@@ -84,52 +84,20 @@ extension ViewController {
         }
     }
 
-    // MARK: - Video
-    @objc func loopingVideo() {
-        guard UIApplication.shared.applicationState == .active && PhoneticContacts.shared.isProcessing else {
-            avPlayer?.pause()
-            avPlayerController = nil
-            return
-        }
-        avPlayer?.seek(to: CMTimeMakeWithSeconds(0, preferredTimescale: 1))
-        avPlayer?.play()
-    }
-
-    func pauseVideo() {
-        avPlayer?.pause()
+    // MARK: - Animations
+    func stopAnimations() {
+        starsOverlay.stopAnimating()
         hideBlurViewWithAnimation(false)
     }
 
-    func playVideoIfNeeded() {
+    func playAnimations() {
         hideBlurViewWithAnimation(true)
-        guard shouldEnableAnimation else {
-            // stop playing first if it's playing.
-            avPlayer?.pause()
-            avPlayerController = nil
-            return
-        }
-        // should play now.
-        if avPlayerController == nil { configureBackgroundVideo() }
-        avPlayer?.play()
-    }
-
-    private func configureBackgroundVideo() {
-        guard let url = Bundle.main.url(forResource: "wave", withExtension: "mp4") else { return }
-        avPlayer = AVPlayer(url: url)
-        avPlayerController = AVPlayerViewController()
-        avPlayerController.player = avPlayer
-        avPlayerController.view.frame = avPlayerPlaceholderView.bounds
-        avPlayerController.videoGravity = .resize
-        avPlayerController.view.isUserInteractionEnabled = false
-        avPlayerController.showsPlaybackControls = false
-        avPlayerPlaceholderView.addSubview(avPlayerController.view)
-        // loop video
-        NotificationCenter.default.addObserver(self, selector: #selector(loopingVideo), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: nil)
+        starsOverlay.startAnimating()
     }
 
     private func hideBlurViewWithAnimation(_ hidden: Bool) {
         UIView.animate(withDuration: 1.2) {
-            self.blurView?.effect = !hidden ? UIBlurEffect(style: .light) : nil
+            self.blurView?.effect = !hidden ? UIBlurEffect(style: .dark) : nil
         }
         hideLabels(hidden)
     }
