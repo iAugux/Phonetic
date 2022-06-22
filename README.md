@@ -1,5 +1,6 @@
 # Phonetic
-![Language](https://img.shields.io/badge/language-Swift%205-orange.svg)
+[![Build iOS](https://github.com/iAugux/Phonetic/actions/workflows/build_ios.yml/badge.svg)](https://github.com/iAugux/Phonetic/actions/workflows/build_ios.yml)
+![Language](https://img.shields.io/badge/language-Swift%205.5-orange.svg)
 [![License](https://img.shields.io/badge/License-CC%20Attribution--NonCommercial-E5EC00.svg)](https://creativecommons.org/licenses/by-nc/4.0/)
 [![Homepage](https://img.shields.io/badge/Homepage-iAugus-9021C5.svg)](http://iAugus.com)
 [![Tweet](https://img.shields.io/badge/Tweet-%40iAugux-1B95E0.svg)](https://twitter.com/iaugux)
