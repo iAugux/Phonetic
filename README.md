@@ -71,6 +71,10 @@
 <img src="https://raw.githubusercontent.com/iAugux/ProjectScreenshots/master/Phonetic/3.png" width="272" height="480"/>
 </div>
 
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=iAugux/Phonetic&type=Date)](https://star-history.com/#iAugux/Phonetic&Date)
+
 ## Thanks to
 * [`PhoneticContacts`](https://github.com/lexrus/PhoneticContacts) by [`Lexrus`](https://github.com/lexrus) for heavy inspiration.
 
