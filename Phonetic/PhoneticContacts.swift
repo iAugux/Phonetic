@@ -90,9 +90,7 @@ final class PhoneticContacts {
                         // modify Contact
                         if let family = mutableContact.value(forKey: CNContactFamilyNameKey) as? String {
                             if let phoneticFamily = self.phonetic(family, needFix: self.fixPolyphonicCharacters) {
-                                if self.shouldEnablePhoneticFirstAndLastName {
-                                    mutableContact.setValue(phoneticFamily.value, forKey: CNContactPhoneticFamilyNameKey)
-                                }
+                                self.updatePhoneticFamilyName(phoneticFamily.value, for: mutableContact)
                                 phoneticFamilyResult = phoneticFamily.value
                                 phoneticFamilyBrief = phoneticFamily.brief
                             }
@@ -100,9 +98,7 @@ final class PhoneticContacts {
 
                         if let given = mutableContact.value(forKey: CNContactGivenNameKey) as? String {
                             if let phoneticGiven = self.phonetic(given, needFix: false) {
-                                if self.shouldEnablePhoneticFirstAndLastName {
-                                    mutableContact.setValue(phoneticGiven.value, forKey: CNContactPhoneticGivenNameKey)
-                                }
+                                self.updatePhoneticGivenName(phoneticGiven.value, for: mutableContact)
                                 phoneticGivenResult = phoneticGiven.value
                                 phoneticGivenBrief = phoneticGiven.brief
                             }
@@ -118,9 +114,7 @@ final class PhoneticContacts {
                             if let company = mutableContact.value(forKey: CNContactOrganizationNameKey) as? String {
                                 mutableContact.setValue(company, forKey: CNContactGivenNameKey)
                                 if let phoneticCompany = self.phonetic(company, needFix: false) {
-                                    if self.shouldEnablePhoneticFirstAndLastName {
-                                        mutableContact.setValue(phoneticCompany.value, forKey: CNContactPhoneticGivenNameKey)
-                                    }
+                                    self.updatePhoneticCompanyName(phoneticCompany.value, for: mutableContact)
                                     self.addPhoneticNameForQuickSearchIfNeeded(mutableContact, givenBrief: phoneticCompany.brief)
                                     self.saveContact(mutableContact)
                                 }
@@ -400,6 +394,33 @@ extension PhoneticContacts {
     var shouldEnablePhoneticFirstAndLastName: Bool {
         guard DetectPreferredLanguage.isChineseLanguage else { return true }
         return userDefaults.bool(forKey: kPhoneticFirstAndLastName, defaultValue: kPhoneticFirstAndLastNameDefaultBool)
+    }
+
+    private var swapPhoneticFirstAndLastName: Bool {
+        return userDefaults.bool(forKey: kSwapPhoneticFirstAndLastName, defaultValue: kSwapPhoneticFirstAndLastNameDefaultBool)
+    }
+
+    private var phoneticFamilyNameKey: String {
+        return swapPhoneticFirstAndLastName ? CNContactPhoneticGivenNameKey : CNContactPhoneticFamilyNameKey
+    }
+
+    private var phoneticGivenNameKey: String {
+        return swapPhoneticFirstAndLastName ? CNContactPhoneticFamilyNameKey : CNContactPhoneticGivenNameKey
+    }
+
+    private func updatePhoneticFamilyName(_ value: String, for contact: CNMutableContact) {
+        guard shouldEnablePhoneticFirstAndLastName else { return }
+        contact.setValue(value, forKey: phoneticFamilyNameKey)
+    }
+
+    private func updatePhoneticGivenName(_ value: String, for contact: CNMutableContact) {
+        guard shouldEnablePhoneticFirstAndLastName else { return }
+        contact.setValue(value, forKey: phoneticGivenNameKey)
+    }
+
+    private func updatePhoneticCompanyName(_ value: String, for contact: CNMutableContact) {
+        guard shouldEnablePhoneticFirstAndLastName else { return }
+        contact.setValue(value, forKey: CNContactPhoneticGivenNameKey)
     }
 
     private var upcasePinyin: Bool {

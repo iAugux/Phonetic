@@ -42,6 +42,7 @@ final class AdditionalSettingsViewController: BaseTableViewController {
     @IBOutlet private var cleanInstantMessageAddressesKeysSwitch: UISwitch! { didSet { cleanInstantMessageAddressesKeysSwitch.shouldSwitch(for: kCleanInstantMessageAddressesKeys, default: kCleanInstantMessageKeysDefaultBool) } }
     @IBOutlet private var separatePinyinSwitch: UISwitch! { didSet { separatePinyinSwitch.shouldSwitch(for: kAlwaysSeparatePinyin, default: kAlwaysSeparatePinyinDefaultBool) } }
     @IBOutlet private var massageCompanyKeySwitch: UISwitch! { didSet { massageCompanyKeySwitch.shouldSwitch(for: kMassageCompanyKey, default: kMassageCompanyKeyDefaultBool) } }
+    @IBOutlet private var swapPhoneticFirstAndLastNameSwitch: UISwitch! { didSet { swapPhoneticFirstAndLastNameSwitch.shouldSwitch(for: kSwapPhoneticFirstAndLastName, default: kSwapPhoneticFirstAndLastNameDefaultBool) } }
 
     @IBOutlet private var phoneticFirstAndLastNameSwitch: UISwitch! {
         didSet {
@@ -67,6 +68,7 @@ final class AdditionalSettingsViewController: BaseTableViewController {
         configureQuickSearchSelectionViews()
         statusLabel.text = statusSwitch.isOn ? on : off
         phoneticFirstAndLastNameSwitch.isEnabled = DetectPreferredLanguage.isChineseLanguage
+        swapPhoneticFirstAndLastNameSwitch.isEnabled = phoneticFirstAndLastNameSwitch.isOn
         overwriteAlreadyExistsSwitch.isEnabled = statusSwitch.isOn && (nicknameSwitch.isOn || customNameSwitch.isOn)
         let switchers: [UISwitch] = [
             nicknameSwitch,
@@ -119,6 +121,11 @@ extension AdditionalSettingsViewController {
     // MARK: - Phonetic Contacts
     @IBAction func phoneticFirstAndLastNameSwitchDidTap(_ sender: UISwitch) {
         userDefaults.set(sender.isOn, forKey: kPhoneticFirstAndLastName)
+        swapPhoneticFirstAndLastNameSwitch.isEnabled = sender.isOn
+    }
+
+    @IBAction func swapPhoneticFirstAndLastNameSwitchDidTap(_ sender: UISwitch) {
+        userDefaults.set(sender.isOn, forKey: kSwapPhoneticFirstAndLastName)
     }
 
     // MARK: - Quick Search

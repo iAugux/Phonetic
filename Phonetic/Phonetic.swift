@@ -76,6 +76,7 @@ enum PhoneticKeys: String {
 
 let kWhitelistIdentifiersKey = "kWhitelistIdentifiersKey"
 let kPhoneticFirstAndLastName = "kPhoneticFirstAndLastName"
+let kSwapPhoneticFirstAndLastName = "kSwapPhoneticFirstAndLastName"
 let kQuickSearchKeyRawValue = "kQuickSearchKeyRawValueRawValue"
 let kAdditionalSettingsStatus = "kAdditionalSettingsStatus"
 let kEnableNickname = "kEnableNickname"
@@ -96,6 +97,7 @@ let kCleanSocialProfilesKeys = "kCleanSocialProfilesKeys"
 let kCleanInstantMessageAddressesKeys = "kCleanInstantMessageAddressesKeys"
 
 let kPhoneticFirstAndLastNameDefaultBool = true
+let kSwapPhoneticFirstAndLastNameDefaultBool = false
 let kAdditionalSettingsStatusDefaultBool = true
 let kEnableNicknameDefaultBool = true
 let kEnableCustomNameDefaultBool = false

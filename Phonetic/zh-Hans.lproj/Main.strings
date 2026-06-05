@@ -49,8 +49,8 @@
 /* Class = "UILabel"; text = "Notes Phonetic Keys"; ObjectID = "FYS-C4-a9Y"; */
 "FYS-C4-a9Y.text" = "备注字段";
 
-/* Class = "UITableViewSection"; footerTitle = "If the device language is not Chinese, the switch will be forced open."; ObjectID = "KMY-XD-2W9"; */
-"KMY-XD-2W9.footerTitle" = "用于英文系统下通讯录排序。如果设备的语言不是中文，开关将被强制打开。";
+/* Class = "UITableViewSection"; footerTitle = "Sort contacts under the English system. If the device language is not Chinese, phonetic names are always written. Swap Fields writes family-name pinyin to phonetic given name and given-name pinyin to phonetic family name."; ObjectID = "KMY-XD-2W9"; */
+"KMY-XD-2W9.footerTitle" = "用于英文系统下通讯录排序。如果设备的语言不是中文，姓 & 名拼音会始终写入。交换字段会把姓氏拼音写入名字拼音字段，把名字拼音写入姓氏拼音字段。";
 
 /* Class = "UITableViewSection"; headerTitle = "Phonetic Contacts"; ObjectID = "KMY-XD-2W9"; */
 "KMY-XD-2W9.headerTitle" = "Phonetic Contacts";
@@ -84,6 +84,9 @@
 
 /* Class = "UILabel"; text = "Double Tap or Long Press to Clean"; ObjectID = "VOa-VH-F2I"; */
 "VOa-VH-F2I.text" = "双击或长按清除";
+
+/* Class = "UILabel"; text = "Swap Phonetic First & Last Name Fields"; ObjectID = "WqF-sw-Pho"; */
+"WqF-sw-Pho.text" = "交换姓 & 名拼音字段";
 
 /* Class = "UILabel"; text = "Enable Animation"; ObjectID = "bdE-R0-bwA"; */
 "bdE-R0-bwA.text" = "开启动画";

@@ -1274,7 +1274,7 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection headerTitle="" footerTitle="Sort contacts under the English system. If the device language is not Chinese, the switch will be forced open." id="KMY-XD-2W9" userLabel="Phonetic Contacts">
+                            <tableViewSection headerTitle="" footerTitle="Sort contacts under the English system. If the device language is not Chinese, phonetic names are always written. Swap Fields writes family-name pinyin to phonetic given name and given-name pinyin to phonetic family name." id="KMY-XD-2W9" userLabel="Phonetic Contacts">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="44" id="7Yq-pL-A15">
                                         <rect key="frame" x="0.0" y="123" width="414" height="44"/>
@@ -1307,6 +1307,41 @@
                                                 <constraint firstItem="RLV-Dq-gbJ" firstAttribute="top" secondItem="fHz-hJ-NeK" secondAttribute="top" id="Z7X-PW-W6R"/>
                                                 <constraint firstItem="dV0-a0-Ofl" firstAttribute="leading" secondItem="RLV-Dq-gbJ" secondAttribute="trailing" constant="8" id="riB-uP-w4N"/>
                                                 <constraint firstAttribute="bottom" secondItem="RLV-Dq-gbJ" secondAttribute="bottom" id="tZm-Or-Q0F"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="44" id="xMk-sw-Pho">
+                                        <rect key="frame" x="0.0" y="167" width="414" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="xMk-sw-Pho" id="gCq-sw-Pho">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Swap Phonetic First &amp; Last Name Fields" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WqF-sw-Pho">
+                                                    <rect key="frame" x="16" y="0.0" width="325" height="44"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="nLs-sw-Pho">
+                                                    <rect key="frame" x="349" y="6.5" width="51" height="31"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="31" id="wOq-sw-Pho"/>
+                                                        <constraint firstAttribute="width" constant="49" id="lGf-sw-Pho"/>
+                                                    </constraints>
+                                                    <connections>
+                                                        <action selector="swapPhoneticFirstAndLastNameSwitchDidTap:" destination="814-Dy-ps6" eventType="valueChanged" id="pSc-sw-Pho"/>
+                                                    </connections>
+                                                </switch>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="nLs-sw-Pho" secondAttribute="trailing" constant="16" id="xKy-sw-Pho"/>
+                                                <constraint firstItem="WqF-sw-Pho" firstAttribute="leading" secondItem="gCq-sw-Pho" secondAttribute="leading" constant="16" id="jLf-sw-Pho"/>
+                                                <constraint firstItem="nLs-sw-Pho" firstAttribute="centerY" secondItem="gCq-sw-Pho" secondAttribute="centerY" id="yGx-sw-Pho"/>
+                                                <constraint firstItem="WqF-sw-Pho" firstAttribute="top" secondItem="gCq-sw-Pho" secondAttribute="top" id="uGg-sw-Pho"/>
+                                                <constraint firstItem="nLs-sw-Pho" firstAttribute="leading" secondItem="WqF-sw-Pho" secondAttribute="trailing" constant="8" id="sXg-sw-Pho"/>
+                                                <constraint firstAttribute="bottom" secondItem="WqF-sw-Pho" secondAttribute="bottom" id="mYu-sw-Pho"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
@@ -2017,6 +2052,7 @@
                         <outlet property="separatePinyinSwitch" destination="Vah-TB-c7O" id="xRI-te-4ah"/>
                         <outlet property="statusLabel" destination="UQ1-gf-Cd7" id="kR8-Vq-Ai2"/>
                         <outlet property="statusSwitch" destination="alP-kM-Gh6" id="xEt-e8-EEi"/>
+                        <outlet property="swapPhoneticFirstAndLastNameSwitch" destination="nLs-sw-Pho" id="bHr-sw-Pho"/>
                         <outlet property="tutorialButton" destination="fTL-FJ-i52" id="147-Xl-aYG"/>
                         <outlet property="whitelistLabel" destination="quO-Kc-PRq" id="7Tk-ED-Rna"/>
                     </connections>
