@@ -132,10 +132,13 @@ extension EditableContactViewController: UITextFieldDelegate {
 
 // MARK: - Orientation
 extension EditableContactViewController {
-    // fix postition error
-    override func didRotate(from fromInterfaceOrientation: UIInterfaceOrientation) {
+    /// fix postition error
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
         guard UIDevice.current.isPad else { return }
-        guard let view = AppDelegate.shared.window?.rootViewController?.view else { return }
-        UIApplication.shared.topMostViewController?.popoverPresentationController?.sourceRect = CGRect(origin: view.center, size: CGSize.zero)
+        coordinator.animate(alongsideTransition: nil) { _ in
+            guard let view = AppDelegate.shared.window?.rootViewController?.view else { return }
+            UIApplication.shared.topMostViewController?.popoverPresentationController?.sourceRect = CGRect(origin: view.center, size: CGSize.zero)
+        }
     }
 }

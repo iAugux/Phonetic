@@ -13,8 +13,13 @@ import UIKit
 
 public enum ARSLineProgress {
     public typealias CompletionBlock = () -> Void
-    public static var shown: Bool { return ars_currentLoader != nil ? true : false }
-    public static var statusShown: Bool { return ars_currentStatus != nil ? true : false }
+    public static var shown: Bool {
+        return ars_currentLoader != nil ? true : false
+    }
+
+    public static var statusShown: Bool {
+        return ars_currentStatus != nil ? true : false
+    }
 
     // MARK: Show Statuses
     /**
@@ -680,7 +685,14 @@ private func ars_hideLoader(_ loader: ARSLoader?, withCompletionBlock block: Clo
 
 private func ars_window() -> UIWindow? {
     var targetWindow: UIWindow?
-    let windows = UIApplication.shared.windows
+    let windows: [UIWindow]
+    if #available(iOS 13.0, *) {
+        windows = UIApplication.shared.connectedScenes
+            .compactMap { $0 as? UIWindowScene }
+            .flatMap(\.windows)
+    } else {
+        windows = [UIApplication.shared.delegate?.window ?? nil].compactMap { $0 }
+    }
     for window in windows {
         if window.screen != UIScreen.main { continue }
         if !window.isHidden && window.alpha == 0 { continue }

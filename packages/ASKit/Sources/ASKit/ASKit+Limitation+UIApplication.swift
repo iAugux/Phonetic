@@ -1,4 +1,4 @@
-//  ASKit.swift
+//  ASKit+Limitation+UIApplication.swift
 //  Created by Augus <iAugux@gmail.com>.
 //  Copyright © 2015-2020 iAugus. All rights reserved.
 
@@ -28,7 +28,7 @@ extension UIApplication {
                 .first?.windows
                 .filter(\.isKeyWindow).first
         } else {
-            return UIApplication.shared.keyWindow
+            return UIApplication.shared.delegate?.window ?? nil
         }
     }
 }
@@ -37,7 +37,9 @@ public extension UIApplication {
     /// The toppest view controller of presenting view controller
     var topMostViewController: UIViewController? {
         var topController = UIApplication.shared.compatibleKeyWindow?.rootViewController
-        while topController?.presentedViewController != nil { topController = topController?.presentedViewController }
+        while topController?.presentedViewController != nil {
+            topController = topController?.presentedViewController
+        }
         return topController
     }
 
@@ -50,18 +52,7 @@ public extension UIApplication {
 // MARK: UIViewController Extensions
 public extension UIViewController {
     var statusBarFrame: CGRect {
-        let compatibleKeyWindow: UIWindow? = {
-            if #available(iOS 13.0, *) {
-                return UIApplication.shared.connectedScenes
-                    .map { $0 as? UIWindowScene }
-                    .compactMap { $0 }
-                    .first?.windows
-                    .filter(\.isKeyWindow).first
-            } else {
-                return UIApplication.shared.keyWindow
-            }
-        }()
-        guard let window = compatibleKeyWindow else {
+        guard let window = UIApplication.shared.compatibleKeyWindow else {
             ASWarn("Window is nil")
             return .zero
         }
@@ -98,7 +89,7 @@ extension UIViewController {
             }
             return vc.findBestViewController()
         } else {
-            guard let rootVC = UIApplication.shared.delegate?.window??.rootViewController else { fatalError("Unable to find the root view controller") }
+            guard let rootVC = UIApplication.shared.compatibleKeyWindow?.rootViewController else { fatalError("Unable to find the root view controller") }
             return rootVC.findBestViewController()
         }
     }

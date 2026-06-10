@@ -23,12 +23,16 @@ private func < <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
     }
 }
 
-var whitelistIdentifiers: NSArray {
-    get { return UserDefaults.standard.array(forKey: kWhitelistIdentifiersKey) as NSArray? ?? NSArray() }
+var whitelistIdentifiers: [String] {
+    get { return UserDefaults.standard.array(forKey: kWhitelistIdentifiersKey) as? [String] ?? [] }
     set {
-        guard let newId = newValue.firstObject else { return }
-        let array = whitelistIdentifiers.mutableCopy() as! NSMutableArray
-        array.contains(newId) ? array.remove(newId) : array.add(newId)
+        guard let newId = newValue.first else { return }
+        var array = whitelistIdentifiers
+        if let index = array.firstIndex(of: newId) {
+            array.remove(at: index)
+        } else {
+            array.append(newId)
+        }
         UserDefaults.standard.set(array, forKey: kWhitelistIdentifiersKey)
     }
 }
@@ -38,7 +42,7 @@ final class WhitelistViewController: BaseTableViewController {
     private let DEFAULT_SEARCH_BAR_HEIGHT: CGFloat = 44.0
     private var alertController: UIAlertController!
     private var contacts: [CNContact]?
-    private var sortedContacts: NSArray?
+    private var sortedContacts: [[CNContact]]?
     private var filteredContacts: [CNContact]?
     private var whitelistContacts: [CNContact]?
     private var resignFirstResponderGesture: UITapGestureRecognizer?
@@ -71,8 +75,7 @@ final class WhitelistViewController: BaseTableViewController {
 
     private lazy var popoverContentNavigationController: UINavigationController = {
         let popoverContent = UIStoryboard(name: "Whitelist", bundle: nil).instantiateViewController(with: WhitelistInfoPopoverViewController.self)
-        let nav = UINavigationController(rootViewController: popoverContent)
-        return nav
+        return UINavigationController(rootViewController: popoverContent)
     }()
 
     override func loadView() {
@@ -116,9 +119,9 @@ final class WhitelistViewController: BaseTableViewController {
             self.contacts = PhoneticContacts.shared.allContactsForWhitelist
             guard self.contacts != nil else { return }
             // partition off contacts in order to be filled in different table view sections
-            self.sortedContacts = self.partitionObjects(self.contacts! as NSArray,
-                                                        collationStringSelector: NSSelectorFromString(CNContactFamilyNameKey),
-                                                        spareCollationStringSelector: NSSelectorFromString(CNContactGivenNameKey))
+            self.sortedContacts = self.partitionContacts(self.contacts!,
+                                                         collationStringSelector: NSSelectorFromString(CNContactFamilyNameKey),
+                                                         spareCollationStringSelector: NSSelectorFromString(CNContactGivenNameKey))
             DispatchQueue.main.async {
                 self.tableView.reloadData()
                 self.updateFooterTitle()
@@ -295,32 +298,26 @@ final class WhitelistViewController: BaseTableViewController {
 
 // MARK: - Sort contacts by alphabet in sections
 extension WhitelistViewController {
-    private func partitionObjects(_ array: NSArray, collationStringSelector selector: Selector, spareCollationStringSelector spareSelector: Selector) -> NSArray {
+    private func partitionContacts(_ contacts: [CNContact], collationStringSelector selector: Selector, spareCollationStringSelector spareSelector: Selector) -> [[CNContact]] {
         let collation = UILocalizedIndexedCollation.current()
         // section count is taken from sectionTitles and not sectionIndexTitles
         let sectionCount = collation.sectionTitles.count
-        let unsortedSections = NSMutableArray(capacity: sectionCount)
-        // create an array to hold the data for each section
-        for _ in collation.sectionTitles {
-            unsortedSections.add(NSMutableArray())
-        }
+        var unsortedSections = Array(repeating: [CNContact](), count: sectionCount)
         let numberOfSections = collation.sectionTitles.count
         // put each object into a section
-        for object in array {
+        for contact in contacts {
             // sorted by first selector (e.g: CNContactFamilyNameKey)
-            var index = collation.section(for: object, collationStringSelector: selector)
+            var index = collation.section(for: contact, collationStringSelector: selector)
             // if cannot be sorted by first selector, then use spare selector to sort. (e.g: CNContactGivenNameKey)
             if index == numberOfSections - 1 { // "#" section
-                index = collation.section(for: object, collationStringSelector: spareSelector)
+                index = collation.section(for: contact, collationStringSelector: spareSelector)
             }
-            (unsortedSections.object(at: index) as AnyObject?)?.add(object)
+            unsortedSections[index].append(contact)
         }
-        let sections = NSMutableArray(capacity: sectionCount)
         // sort each section
-        for section in unsortedSections {
-            sections.add(collation.sortedArray(from: section as! [AnyObject], collationStringSelector: selector))
+        return unsortedSections.map { section in
+            collation.sortedArray(from: section, collationStringSelector: selector) as? [CNContact] ?? []
         }
-        return sections
     }
 }
 
@@ -340,7 +337,7 @@ extension WhitelistViewController {
         if isSearchTextNotEmpty {
             return filteredContacts?.count ?? 0
         }
-        return (sortedContacts?[section] as? NSArray)?.count ?? 0
+        return sortedContacts?[section].count ?? 0
     }
 
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -348,7 +345,7 @@ extension WhitelistViewController {
             return nil
         }
         // only show section title while the section contains rows
-        guard let count = (sortedContacts?[section] as? NSArray)?.count, count != 0 else { return nil }
+        guard let count = sortedContacts?[section].count, count != 0 else { return nil }
         return UILocalizedIndexedCollation.current().sectionTitles[section]
     }
 
@@ -361,13 +358,13 @@ extension WhitelistViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(with: WhitelistTableViewCell.self, for: indexPath)
-        let currentContact: Any? = {
+        let currentContact: CNContact? = {
             if segmentedControl.selectedSegmentIndex == 1 {
                 return whitelistContacts?[indexPath.row]
             }
-            return isSearchTextNotEmpty ? filteredContacts?[indexPath.row] : (sortedContacts?[indexPath.section] as? NSArray)?[indexPath.row]
+            return isSearchTextNotEmpty ? filteredContacts?[indexPath.row] : sortedContacts?[indexPath.section][indexPath.row]
         }()
-        guard let contact = currentContact as? CNContact else { return UITableViewCell() }
+        guard let contact = currentContact else { return UITableViewCell() }
         // identifier
         cell.identifier = contact.identifier
         // name
@@ -474,30 +471,30 @@ extension WhitelistViewController: UISearchBarDelegate {
 
 // MARK: -
 extension WhitelistViewController: UIPopoverPresentationControllerDelegate {
-    override func willRotate(to toInterfaceOrientation: UIInterfaceOrientation, duration: TimeInterval) {
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
         // fix alertController's position
         alertController?.dismiss(animated: true, completion: {
             self.shouldAlertToRemoveWhitelistsAgain = !UIDevice.current.isPad
         })
-    }
+        coordinator.animate(alongsideTransition: nil) { _ in
+            // fix alertController's position
+            self.shouldAlertToRemoveWhitelistsAgain ? self.alertToRemoveAllWhitelistContacts() : ()
+            // fix popoverInfoController's position
+            /*
+             *  Must dismiss it first, because the controller will be behind WhitelistViewController after rotation on iPad or iPhone 6(s) Plus, and it's active.
+             *  If you present it again, app will crash due to 'Application tried to present modally an active controller'.
+             *  I don't know why it's behind WhitelistViewController, but I guess it's because I popped two times on window (WhitelistViewController + WhitelistInfoPopoverViewController).
+             */
+            self.popoverContentNavigationController.dismiss(animated: false, completion: { [weak self] in
+                self?.popoverInfoController()
+            })
 
-    override func didRotate(from fromInterfaceOrientation: UIInterfaceOrientation) {
-        // fix alertController's position
-        shouldAlertToRemoveWhitelistsAgain ? alertToRemoveAllWhitelistContacts() : ()
-        // fix popoverInfoController's position
-        /**
-         *  Must dismiss it first, because the controller will be behind WhitelistViewController after rotation on iPad or iPhone 6(s) Plus, and it's active.
-         *  If you present it again, app will crash due to 'Application tried to present modally an active controller'.
-         *  I don't know why it's behind WhitelistViewController, but I guess it's because I popped two times on window (WhitelistViewController + WhitelistInfoPopoverViewController).
-         */
-        popoverContentNavigationController.dismiss(animated: false, completion: { [weak self] in
-            self?.popoverInfoController()
-        })
-
-        // fix WhitelistViewController's position on iPad after rotation
-        guard UIDevice.current.isPad else { return }
-        guard let view = AppDelegate.shared.window?.rootViewController?.view else { return }
-        UIApplication.shared.topMostViewController?.popoverPresentationController?.sourceRect = CGRect(origin: view.center, size: CGSize.zero)
+            // fix WhitelistViewController's position on iPad after rotation
+            guard UIDevice.current.isPad else { return }
+            guard let view = AppDelegate.shared.window?.rootViewController?.view else { return }
+            UIApplication.shared.topMostViewController?.popoverPresentationController?.sourceRect = CGRect(origin: view.center, size: CGSize.zero)
+        }
     }
 
     @objc private func popoverInfoController() {

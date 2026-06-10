@@ -13,7 +13,7 @@ final class HelpManualViewController: UIViewController {
     @IBOutlet private var descriptionLabel: UILabel!
     @IBOutlet private var contactsLabel: UILabel! {
         didSet {
-            if #available(iOS 10.0, *) { contactsLabel.text = NSLocalizedString("Contacts", comment: "") }
+            contactsLabel.text = NSLocalizedString("Contacts", comment: "")
         }
     }
 
@@ -68,7 +68,8 @@ final class HelpManualViewController: UIViewController {
 }
 
 extension HelpManualViewController {
-    override func willRotate(to toInterfaceOrientation: UIInterfaceOrientation, duration: TimeInterval) {
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
         guard UIDevice.current.isPad else { return }
         dismissAnimated()
     }

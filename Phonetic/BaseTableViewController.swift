@@ -9,7 +9,9 @@
 import UIKit
 
 class BaseTableViewController: UITableViewController {
-    override var preferredStatusBarStyle: UIStatusBarStyle { return .lightContent }
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,10 +21,8 @@ class BaseTableViewController: UITableViewController {
         tableView.separatorColor = UIColor.phoneticLightGray.darker(0.45)
         tableView.backgroundColor = UIColor.phoneticLightGray.darker(0.3)
         tableView.backgroundView = UIView()
-        if #available(iOS 11.0, *) {
-            tableView.estimatedSectionHeaderHeight = 0
-            tableView.estimatedSectionFooterHeight = 0
-        }
+        tableView.estimatedSectionHeaderHeight = 0
+        tableView.estimatedSectionFooterHeight = 0
     }
 }
 

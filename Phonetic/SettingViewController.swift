@@ -27,9 +27,17 @@ final class SettingViewController: UIViewController {
     }()
 
     @IBOutlet private var polyphonicButton: UIButton!
-    @IBOutlet private var useTonesSwitch: UISwitch! { didSet { useTonesSwitch.shouldSwitch(for: kUseTones, default: kUseTonesDefaultBool) } }
-    @IBOutlet private var fixPolyphonicCharSwitch: UISwitch! { didSet { fixPolyphonicCharSwitch.shouldSwitch(for: kFixPolyphonicChar, default: kFixPolyphonicCharDefaultBool) } }
-    @IBOutlet var upcasePinyinSwitch: UISwitch! { didSet { upcasePinyinSwitch.shouldSwitch(for: kUpcasePinyin, default: kUpcasePinyinDefaultBool) } }
+    @IBOutlet private var useTonesSwitch: UISwitch! {
+        didSet { useTonesSwitch.shouldSwitch(for: kUseTones, default: kUseTonesDefaultBool) }
+    }
+
+    @IBOutlet private var fixPolyphonicCharSwitch: UISwitch! {
+        didSet { fixPolyphonicCharSwitch.shouldSwitch(for: kFixPolyphonicChar, default: kFixPolyphonicCharDefaultBool) }
+    }
+
+    @IBOutlet var upcasePinyinSwitch: UISwitch! {
+        didSet { upcasePinyinSwitch.shouldSwitch(for: kUpcasePinyin, default: kUpcasePinyinDefaultBool) }
+    }
 
     // MARK: Lifecycle
     override func viewDidLoad() {
@@ -104,8 +112,11 @@ final class SettingViewController: UIViewController {
 }
 
 extension SettingViewController {
-    override func didRotate(from fromInterfaceOrientation: UIInterfaceOrientation) {
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
         guard UIDevice.current.isPad else { return }
-        _ = kShouldRepresentPolyphonicVC ? polyphonicButton?.sendActions(for: .touchUpInside) : ()
+        coordinator.animate(alongsideTransition: nil) { _ in
+            _ = kShouldRepresentPolyphonicVC ? self.polyphonicButton?.sendActions(for: .touchUpInside) : ()
+        }
     }
 }

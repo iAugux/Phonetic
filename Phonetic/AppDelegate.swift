@@ -20,7 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         createShortcutItemsWithIcons()
         window?.tintColor = .vividColor
         // clear icon badge number if needed.
-        application.applicationIconBadgeNumber = 0
+        application.updateApplicationIconBadgeNumber(to: 0)
         application.beginBackgroundTask(withName: "showNotification", expirationHandler: nil)
         UISwitch.appearance().onTintColor = .vividColor
         return true
@@ -32,7 +32,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillEnterForeground(_ application: UIApplication) {
         // clear icon badge number
-        application.applicationIconBadgeNumber = 0
+        application.updateApplicationIconBadgeNumber(to: 0)
         guard let rootViewController = window?.rootViewController as? ViewController else { return }
         // replay if needed
         rootViewController.isProcessing ? rootViewController.playAnimations() : ()
@@ -40,7 +40,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 }
 
 extension AppDelegate {
-    // Detecting touching outside of the popover
+    /// Detecting touching outside of the popover
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard UIDevice.current.isPad else { return }
         ASLog("Touched Began")

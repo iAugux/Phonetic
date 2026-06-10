@@ -28,7 +28,7 @@ class SettingsNavigationController: UINavigationController {
 
         // 6(s) Plus or larger iPhones in the future (maybe).
         if Device.size() > .screen4_7Inch {
-            return UIApplication.shared.statusBarOrientation.isLandscape
+            return view.bounds.width > view.bounds.height
         }
 
         return false
@@ -42,18 +42,13 @@ class SettingsNavigationController: UINavigationController {
 
     override func loadView() {
         super.loadView()
-        completelyTransparentBar()
+        makeNavBarCompletelyTransparent()
         navigationBar.backgroundColor = GLOBAL_LIGHT_GRAY_COLOR
         navigationBar.tintColor = GLOBAL_CUSTOM_COLOR.darker(0.9)
 
         configureCustomNavBar()
         configureCustomBarButtonIfNeeded()
         configureCustomTitleLabel()
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 
     func resetToDefaultCustomTitleLabelInterface() {
@@ -65,7 +60,7 @@ class SettingsNavigationController: UINavigationController {
         guard customBarButton == nil else { return }
 
         customBarButton = UIButton(type: .custom)
-        customBarButton.setImage(#imageLiteral(resourceName: "close").withRenderingMode(.alwaysTemplate), for: UIControlState())
+        customBarButton.setImage(#imageLiteral(resourceName: "close").withRenderingMode(.alwaysTemplate), for: .normal)
         customBarButton.tintColor = UIColor.white
         customBarButton.contentMode = .center
         customBarButton.addTarget(self, action: #selector(customBarButtonDidTap), for: .touchUpInside)

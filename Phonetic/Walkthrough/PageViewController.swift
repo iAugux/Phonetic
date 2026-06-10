@@ -85,7 +85,7 @@ extension PageViewController {
         case 1:
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 // register user notification settings
-                UIApplication.shared.registerUserNotificationSettings(UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil))
+                UIApplication.shared.requestUserNotificationAuthorization()
             }
         default: break
         }

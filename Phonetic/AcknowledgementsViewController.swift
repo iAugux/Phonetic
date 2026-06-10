@@ -12,13 +12,19 @@ import SafariServices
 import UIKit
 
 final class AcknowledgementsViewController: UITableViewController, SFSafariViewControllerDelegate {
+    private struct Acknowledgement: Decodable {
+        let title: String
+        let license: String
+        let link: String
+    }
+
     @IBOutlet private var swiftIconButton: UIButton! {
         didSet {
             swiftIconButton.addTarget(self, action: #selector(checkSwiftOrg), for: .touchUpInside)
         }
     }
 
-    private var acknowledgements: [NSDictionary] = []
+    private var acknowledgements: [Acknowledgement] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,11 +39,13 @@ final class AcknowledgementsViewController: UITableViewController, SFSafariViewC
             assert(true, "Failed to load Acknowledgements.plist")
             return
         }
-        guard let array = NSArray(contentsOf: plistURL) as? [NSDictionary] else { return }
-        acknowledgements = array
+        guard let data = try? Data(contentsOf: plistURL) else { return }
+        acknowledgements = (try? PropertyListDecoder().decode([Acknowledgement].self, from: data)) ?? []
     }
 
-    override var preferredStatusBarStyle: UIStatusBarStyle { return .lightContent }
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
 
     // MARK: - Table view data source
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -51,14 +59,13 @@ final class AcknowledgementsViewController: UITableViewController, SFSafariViewC
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(with: AcknowledgementCell.self, for: indexPath)
         let acknowledgement = acknowledgements[indexPath.row]
-        cell.titleLabel.text = acknowledgement.object(forKey: "title") as? String
-        cell.licenseLabel.text = acknowledgement.object(forKey: "license") as? String
+        cell.titleLabel.text = acknowledgement.title
+        cell.licenseLabel.text = acknowledgement.license
         return cell
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let url = acknowledgements[indexPath.row].object(forKey: "link") as? String else { return }
-        check(url)
+        check(acknowledgements[indexPath.row].link)
     }
 
     private func check(_ urlString: String) {

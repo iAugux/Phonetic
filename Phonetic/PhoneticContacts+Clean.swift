@@ -94,7 +94,7 @@ extension PhoneticContacts {
     }
 
     private func removeKeysArrayIfNeeded(_ mutableContact: CNMutableContact, shouldClean: Bool, key: String) {
-        guard shouldClean, let _ = mutableContact.value(forKey: key) as? NSArray else { return }
+        guard shouldClean, mutableContact.value(forKey: key) is [Any] else { return }
         mutableContact.setValue([], forKey: key)
     }
 }

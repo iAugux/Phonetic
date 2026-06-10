@@ -17,7 +17,7 @@ final class PhoneticContacts {
         ASLog("Register Notifications")
         // register user notification settings
         DispatchQueue.main.async {
-            UIApplication.shared.registerUserNotificationSettings(UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil))
+            UIApplication.shared.requestUserNotificationAuthorization()
         }
         NotificationCenter.default.addObserver(self, selector: #selector(reinstateBackgroundTask), name: UIApplication.didBecomeActiveNotification, object: nil)
     }
@@ -50,12 +50,6 @@ final class PhoneticContacts {
 
     private var aborted = false
     private lazy var backgroundTask = UIBackgroundTaskIdentifier.invalid
-    private lazy var localNotification: UILocalNotification = {
-        let localNotification = UILocalNotification()
-        localNotification.soundName = UILocalNotificationDefaultSoundName
-        return localNotification
-    }()
-
     typealias ResultHandler = (_ currentResult: String?, _ percentage: Double) -> Void
     func execute(resultHandler: @escaping ResultHandler, completionHandler: @escaping Handler<Bool>) {
         contactsTotalCount = getContactsTotalCount
@@ -146,8 +140,8 @@ final class PhoneticContacts {
                 let isWhitelist = whitelists.contains(contact.identifier)
                 if !isWhitelist {
                     // modify Contact
-                    /// only clean who has Mandarin Latin.
-                    /// Some english names may also have phonetic keys which you don't want to be cleaned.
+                    // only clean who has Mandarin Latin.
+                    // Some english names may also have phonetic keys which you don't want to be cleaned.
                     if let family = mutableContact.value(forKey: CNContactFamilyNameKey) as? String {
                         if self.antiPhonetic(family) {
                             mutableContact.setValue("", forKey: CNContactPhoneticFamilyNameKey)
@@ -176,11 +170,10 @@ final class PhoneticContacts {
 
     func fetchAllContacts(keysToFetch keys: [CNKeyDescriptor]) -> [CNContact] {
         let containers = (try? contactStore.containers(matching: nil)) ?? []
-        let contacts = containers.flatMap { container -> [CNContact] in
+        return containers.flatMap { container -> [CNContact] in
             let predicate = CNContact.predicateForContactsInContainer(withIdentifier: container.identifier)
             return (try? contactStore.unifiedContacts(matching: predicate, keysToFetch: keys)) ?? []
         }
-        return contacts
     }
 
     func fetchContactWithIdentifiers(_ identifiers: [String], keysToFetch: [CNKeyDescriptor]) -> [CNContact]? {
@@ -196,11 +189,9 @@ final class PhoneticContacts {
                 // completed not aborted
                 if !ss.aborted {
                     ASLog("Mission Completed")
-                    ss.localNotification.fireDate = Date()
-                    ss.localNotification.alertBody = NSLocalizedString("Mission Completed !", comment: "Local Notification - alert body")
-                    UIApplication.shared.scheduleLocalNotification(ss.localNotification)
+                    UIApplication.shared.scheduleLocalNotification(alertBody: NSLocalizedString("Mission Completed !", comment: "Local Notification - alert body"))
                     // reset icon badge number to zero for OCD
-                    UIApplication.shared.applicationIconBadgeNumber = 0
+                    UIApplication.shared.updateApplicationIconBadgeNumber(to: 0)
                 }
             default:
                 break
@@ -211,14 +202,13 @@ final class PhoneticContacts {
 
     private func handlingResult(_ handle: @escaping ResultHandler, result: String?, index: Int, total: Int) {
         let percentage = currentPercentage(index, total: total)
-        DispatchQueue.main.async { [weak self] in
-            guard let ss = self else { return }
+        DispatchQueue.main.async {
             switch UIApplication.shared.applicationState {
             case .active:
                 handle(result, percentage)
             case .background:
                 // set icon badge number as current percentage.
-                UIApplication.shared.applicationIconBadgeNumber = Int(percentage)
+                UIApplication.shared.updateApplicationIconBadgeNumber(to: Int(percentage))
                 // handling results while it is almost completing to correct the UI of percentage.
                 if percentage > 95 {
                     handle(result, percentage)
@@ -226,9 +216,7 @@ final class PhoneticContacts {
                 let remainingTime = UIApplication.shared.backgroundTimeRemaining
                 // App is about to be terminated, send notification.
                 if remainingTime < 10 {
-                    ss.localNotification.fireDate = Date()
-                    ss.localNotification.alertBody = NSLocalizedString("Phonetic is about to be terminated! Please open it again to complete the mission.", comment: "Local Notification - App terminated notification")
-                    UIApplication.shared.scheduleLocalNotification(ss.localNotification)
+                    UIApplication.shared.scheduleLocalNotification(alertBody: NSLocalizedString("Phonetic is about to be terminated! Please open it again to complete the mission.", comment: "Local Notification - App terminated notification"))
                 }
                 ASLog("Background time remaining \(remainingTime) seconds")
             default: break
@@ -378,7 +366,7 @@ private extension PhoneticContacts {
     func registerBackgroundTask() {
         backgroundTask = UIApplication.shared.beginBackgroundTask {
             [unowned self] in
-                self.endBackgroundTask()
+            self.endBackgroundTask()
         }
         assert(backgroundTask != .invalid)
     }

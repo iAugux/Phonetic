@@ -33,8 +33,7 @@ extension PhoneticContacts {
         }
         var keys = keysToFetchForWhitelist
         keys.append(CNContactPhoneNumbersKey)
-        let contacts = try? contactStore.unifiedContacts(matching: CNContact.predicateForContacts(matchingName: str), keysToFetch: keys as [CNKeyDescriptor])
-        return contacts
+        return try? contactStore.unifiedContacts(matching: CNContact.predicateForContacts(matchingName: str), keysToFetch: keys as [CNKeyDescriptor])
     }
 
     func fetchContactsMatchingWith(_ str: String, closure: @escaping ([CNContact]) -> Void) {
@@ -75,10 +74,8 @@ extension PhoneticContacts {
         }
     }
 
-    func fetchContactsWithIdentifiers(_ identifiers: NSArray) -> [CNContact]? {
-        guard let identifiers = identifiers as? [String] else { return nil }
-        let contacts = try? contactStore.unifiedContacts(matching: CNContact.predicateForContacts(withIdentifiers: identifiers), keysToFetch: keysToFetchForWhitelist as [CNKeyDescriptor])
-        return contacts
+    func fetchContactsWithIdentifiers(_ identifiers: [String]) -> [CNContact]? {
+        return try? contactStore.unifiedContacts(matching: CNContact.predicateForContacts(withIdentifiers: identifiers), keysToFetch: keysToFetchForWhitelist as [CNKeyDescriptor])
     }
 }
 

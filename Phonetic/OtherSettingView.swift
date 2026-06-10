@@ -42,8 +42,8 @@ final class OtherSettingView: UIStackView, MFMailComposeViewControllerDelegate, 
     private func configureFollowingIcon() {
         let imageName = DetectPreferredLanguage.isSimplifiedChinese ? "weibo" : "twitter"
         let image = UIImage(named: imageName)
-        subviews.forEach {
-            if $0.tag == 999, let imageView = $0 as? UIImageView { imageView.image = image }
+        for subview in subviews {
+            if subview.tag == 999, let imageView = subview as? UIImageView { imageView.image = image }
         }
     }
 
@@ -70,10 +70,10 @@ final class OtherSettingView: UIStackView, MFMailComposeViewControllerDelegate, 
 
     private func followMeOnWeibo() {
         let id = "1778865900"
-        /// I love `VVebo`, but... you know... Fuck Sina
-        /// What's the url scheme of WeicoPro?
-        /// com.weico.weicopro4://???
-        /// weico3://???
+        // I love `VVebo`, but... you know... Fuck Sina
+        // What's the url scheme of WeicoPro?
+        // com.weico.weicopro4://???
+        // weico3://???
         let mokeURL = URL(string: "moke:///user?id=" + id)!
         let weiboURL = URL(string: "sinaweibo://userinfo?uid=" + id)!
         let urls = [mokeURL, weiboURL]
@@ -92,11 +92,7 @@ final class OtherSettingView: UIStackView, MFMailComposeViewControllerDelegate, 
     static func RateMe() {
         let id = "1078961574"
         let url: URL
-        if #available(iOS 11.0, *) {
-            url = APP.appStoreURL(with: id)
-        } else {
-            url = APP.reviewURL(with: id)
-        }
+        url = APP.appStoreURL(with: id)
         if UIApplication.shared.canOpenURL(url) { UIApplication.shared.open(url) }
     }
 

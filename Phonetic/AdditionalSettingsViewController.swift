@@ -19,30 +19,90 @@ final class AdditionalSettingsViewController: BaseTableViewController {
     @IBOutlet private var quickSearchSelectionIndicator: UIImageView!
     @IBOutlet private var quickSearchSelectionLabel: UILabel!
     @IBOutlet private var statusLabel: UILabel!
-    @IBOutlet private var whitelistLabel: UILabel! { didSet { whitelistLabel.text = NSLocalizedString("Whitelists", comment: "") } }
-    @IBOutlet private var chooseLanguageLabel: UILabel! { didSet { chooseLanguageLabel.text = NSLocalizedString("Choose Language", comment: "") } }
+    @IBOutlet private var whitelistLabel: UILabel! {
+        didSet { whitelistLabel.text = NSLocalizedString("Whitelists", comment: "") }
+    }
+
+    @IBOutlet private var chooseLanguageLabel: UILabel! {
+        didSet { chooseLanguageLabel.text = NSLocalizedString("Choose Language", comment: "") }
+    }
+
     @IBOutlet private var chooseLanguageCell: CustomTableViewCell!
-    @IBOutlet private var tutorialButton: UIButton! { didSet { tutorialButton.setTitle(NSLocalizedString("Tutorial", comment: ""), for: .normal) } }
-    @IBOutlet private var statusSwitch: UISwitch! { didSet { statusSwitch.shouldSwitch(for: kAdditionalSettingsStatus, default: kAdditionalSettingsStatusDefaultBool) } }
-    @IBOutlet private var nicknameSwitch: UISwitch! { didSet { nicknameSwitch.shouldSwitch(for: kEnableNickname, default: kEnableNicknameDefaultBool) } }
-    @IBOutlet private var customNameSwitch: UISwitch! { didSet { customNameSwitch.shouldSwitch(for: kEnableCustomName, default: kEnableCustomNameDefaultBool) } }
-    @IBOutlet private var overwriteAlreadyExistsSwitch: UISwitch! { didSet { overwriteAlreadyExistsSwitch.shouldSwitch(for: kOverwriteAlreadyExists, default: kOverwriteAlreadyExistsDefaultBool) } }
-    @IBOutlet private var enableAllCleanPhoneticSwitch: UISwitch! { didSet { enableAllCleanPhoneticSwitch.shouldSwitch(for: kEnableAllCleanPhonetic, default: kEnableAllCleanPhoneticDefaultBool) } }
+    @IBOutlet private var tutorialButton: UIButton! {
+        didSet { tutorialButton.setTitle(NSLocalizedString("Tutorial", comment: ""), for: .normal) }
+    }
 
-    @IBOutlet private var cleanPhoneticNicknameSwitch: UISwitch! { didSet { cleanPhoneticNicknameSwitch.shouldSwitch(for: kCleanPhoneticNickname, default: kCleanPhoneticNicknameDefaultBool) } }
+    @IBOutlet private var statusSwitch: UISwitch! {
+        didSet { statusSwitch.shouldSwitch(for: kAdditionalSettingsStatus, default: kAdditionalSettingsStatusDefaultBool) }
+    }
 
-    @IBOutlet private var cleanMiddleNameKeySwitch: UISwitch! { didSet { cleanMiddleNameKeySwitch.shouldSwitch(for: kCleanPhoneticMiddleName, default: kCleanPhoneticMiddleNameDefaultBool) } }
-    @IBOutlet private var cleanNotesKeySwitch: UISwitch! { didSet { cleanNotesKeySwitch.shouldSwitch(for: kCleanNotesKey, default: kCleanNotesKeyDefaultBool) } }
-    @IBOutlet private var cleanPhoneticDepartmentSwitch: UISwitch! { didSet { cleanPhoneticDepartmentSwitch.shouldSwitch(for: kCleanPhoneticDepartment, default: kCleanPhoneticDepartmentDefaultBool) } }
-    @IBOutlet private var cleanPhoneticCompanySwitch: UISwitch! { didSet { cleanPhoneticCompanySwitch.shouldSwitch(for: kCleanPhoneticCompany, default: kCleanPhoneticCompanyDefaultBool) } }
-    @IBOutlet private var cleanPhoneticJobTitleSwitch: UISwitch! { didSet { cleanPhoneticJobTitleSwitch.shouldSwitch(for: kCleanPhoneticJobTitle, default: kCleanPhoneticJobTitleDefaultBool) } }
-    @IBOutlet private var cleanPhoneticPrefixSwitch: UISwitch! { didSet { cleanPhoneticPrefixSwitch.shouldSwitch(for: kCleanPhoneticPrefix, default: kCleanPhoneticPrefixDefaultBool) } }
-    @IBOutlet private var cleanPhoneticSuffixSwitch: UISwitch! { didSet { cleanPhoneticSuffixSwitch.shouldSwitch(for: kCleanPhoneticSuffix, default: kCleanPhoneticSuffixDefaultBool) } }
-    @IBOutlet private var cleanSocialProfilesKeysSwitch: UISwitch! { didSet { cleanSocialProfilesKeysSwitch.shouldSwitch(for: kCleanSocialProfilesKeys, default: kCleanSocialProfilesKeysDefaultBool) } }
-    @IBOutlet private var cleanInstantMessageAddressesKeysSwitch: UISwitch! { didSet { cleanInstantMessageAddressesKeysSwitch.shouldSwitch(for: kCleanInstantMessageAddressesKeys, default: kCleanInstantMessageKeysDefaultBool) } }
-    @IBOutlet private var separatePinyinSwitch: UISwitch! { didSet { separatePinyinSwitch.shouldSwitch(for: kAlwaysSeparatePinyin, default: kAlwaysSeparatePinyinDefaultBool) } }
-    @IBOutlet private var massageCompanyKeySwitch: UISwitch! { didSet { massageCompanyKeySwitch.shouldSwitch(for: kMassageCompanyKey, default: kMassageCompanyKeyDefaultBool) } }
-    @IBOutlet private var swapPhoneticFirstAndLastNameSwitch: UISwitch! { didSet { swapPhoneticFirstAndLastNameSwitch.shouldSwitch(for: kSwapPhoneticFirstAndLastName, default: kSwapPhoneticFirstAndLastNameDefaultBool) } }
+    @IBOutlet private var nicknameSwitch: UISwitch! {
+        didSet { nicknameSwitch.shouldSwitch(for: kEnableNickname, default: kEnableNicknameDefaultBool) }
+    }
+
+    @IBOutlet private var customNameSwitch: UISwitch! {
+        didSet { customNameSwitch.shouldSwitch(for: kEnableCustomName, default: kEnableCustomNameDefaultBool) }
+    }
+
+    @IBOutlet private var overwriteAlreadyExistsSwitch: UISwitch! {
+        didSet { overwriteAlreadyExistsSwitch.shouldSwitch(for: kOverwriteAlreadyExists, default: kOverwriteAlreadyExistsDefaultBool) }
+    }
+
+    @IBOutlet private var enableAllCleanPhoneticSwitch: UISwitch! {
+        didSet { enableAllCleanPhoneticSwitch.shouldSwitch(for: kEnableAllCleanPhonetic, default: kEnableAllCleanPhoneticDefaultBool) }
+    }
+
+    @IBOutlet private var cleanPhoneticNicknameSwitch: UISwitch! {
+        didSet { cleanPhoneticNicknameSwitch.shouldSwitch(for: kCleanPhoneticNickname, default: kCleanPhoneticNicknameDefaultBool) }
+    }
+
+    @IBOutlet private var cleanMiddleNameKeySwitch: UISwitch! {
+        didSet { cleanMiddleNameKeySwitch.shouldSwitch(for: kCleanPhoneticMiddleName, default: kCleanPhoneticMiddleNameDefaultBool) }
+    }
+
+    @IBOutlet private var cleanNotesKeySwitch: UISwitch! {
+        didSet { cleanNotesKeySwitch.shouldSwitch(for: kCleanNotesKey, default: kCleanNotesKeyDefaultBool) }
+    }
+
+    @IBOutlet private var cleanPhoneticDepartmentSwitch: UISwitch! {
+        didSet { cleanPhoneticDepartmentSwitch.shouldSwitch(for: kCleanPhoneticDepartment, default: kCleanPhoneticDepartmentDefaultBool) }
+    }
+
+    @IBOutlet private var cleanPhoneticCompanySwitch: UISwitch! {
+        didSet { cleanPhoneticCompanySwitch.shouldSwitch(for: kCleanPhoneticCompany, default: kCleanPhoneticCompanyDefaultBool) }
+    }
+
+    @IBOutlet private var cleanPhoneticJobTitleSwitch: UISwitch! {
+        didSet { cleanPhoneticJobTitleSwitch.shouldSwitch(for: kCleanPhoneticJobTitle, default: kCleanPhoneticJobTitleDefaultBool) }
+    }
+
+    @IBOutlet private var cleanPhoneticPrefixSwitch: UISwitch! {
+        didSet { cleanPhoneticPrefixSwitch.shouldSwitch(for: kCleanPhoneticPrefix, default: kCleanPhoneticPrefixDefaultBool) }
+    }
+
+    @IBOutlet private var cleanPhoneticSuffixSwitch: UISwitch! {
+        didSet { cleanPhoneticSuffixSwitch.shouldSwitch(for: kCleanPhoneticSuffix, default: kCleanPhoneticSuffixDefaultBool) }
+    }
+
+    @IBOutlet private var cleanSocialProfilesKeysSwitch: UISwitch! {
+        didSet { cleanSocialProfilesKeysSwitch.shouldSwitch(for: kCleanSocialProfilesKeys, default: kCleanSocialProfilesKeysDefaultBool) }
+    }
+
+    @IBOutlet private var cleanInstantMessageAddressesKeysSwitch: UISwitch! {
+        didSet { cleanInstantMessageAddressesKeysSwitch.shouldSwitch(for: kCleanInstantMessageAddressesKeys, default: kCleanInstantMessageKeysDefaultBool) }
+    }
+
+    @IBOutlet private var separatePinyinSwitch: UISwitch! {
+        didSet { separatePinyinSwitch.shouldSwitch(for: kAlwaysSeparatePinyin, default: kAlwaysSeparatePinyinDefaultBool) }
+    }
+
+    @IBOutlet private var massageCompanyKeySwitch: UISwitch! {
+        didSet { massageCompanyKeySwitch.shouldSwitch(for: kMassageCompanyKey, default: kMassageCompanyKeyDefaultBool) }
+    }
+
+    @IBOutlet private var swapPhoneticFirstAndLastNameSwitch: UISwitch! {
+        didSet { swapPhoneticFirstAndLastNameSwitch.shouldSwitch(for: kSwapPhoneticFirstAndLastName, default: kSwapPhoneticFirstAndLastNameDefaultBool) }
+    }
 
     @IBOutlet private var phoneticFirstAndLastNameSwitch: UISwitch! {
         didSet {
@@ -462,10 +522,13 @@ extension AdditionalSettingsViewController {
 
 // MARK: - Rotation
 extension AdditionalSettingsViewController {
-    override func didRotate(from fromInterfaceOrientation: UIInterfaceOrientation) {
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
         guard UIDevice.current.isPad else { return }
-        guard let view = AppDelegate.shared.window?.rootViewController?.view else { return }
-        navigationController?.popoverPresentationController?.sourceRect = CGRect(origin: view.center, size: CGSize.zero)
+        coordinator.animate(alongsideTransition: nil) { _ in
+            guard let view = AppDelegate.shared.window?.rootViewController?.view else { return }
+            self.navigationController?.popoverPresentationController?.sourceRect = CGRect(origin: view.center, size: CGSize.zero)
+        }
     }
 }
 

@@ -35,7 +35,7 @@
 # rules
 
 --disable emptyBraces, blankLinesAroundMark, redundantRawValues, andOperator, hoistPatternLet, redundantSelf, redundantReturn
---enable specifiers, consecutiveSpaces, duplicateImports, redundantExtensionACL, redundantInit, redundantLet, redundantVoidReturnType, strongOutlets, trailingCommas
+--enable modifierOrder, consecutiveSpaces, duplicateImports, redundantExtensionACL, redundantInit, redundantLet, redundantVoidReturnType, strongOutlets, trailingCommas
 
 # https://github.com/nicklockwood/SwiftFormat/blob/master/Rules.md
 
@@ -76,7 +76,7 @@
 # spaceInsideComments # adds a space inside /* ... */ comments and at the start of // comments, depending on the --comments option (indent (default) or ignore).
 # spaceInsideGenerics # removes the space inside < ... >.
 # spaceInsideParens # removes the space inside ( ... ).
-# --disable specifiers # normalizes the order for access specifiers, and other property/function/class/etc.
+# --disable modifierOrder # normalizes the order for access specifiers, and other property/function/class/etc.
 # strongOutlets # removes the weak specifier from @IBOutlet properties, as per Apple's recommendation.
 # trailingClosures # converts the last closure argument in a function call to trailing closure syntax where possible (disabled by default because it can introduce ambiguity that prevents code from compiling).
 # trailingCommas # adds or removes trailing commas from the last item in an array or dictionary literal, depending on the --commas option (always (default) or inline).

@@ -27,7 +27,8 @@ final class WhitelistInfoPopoverViewController: UIViewController {
         }
     }
 
-    override func willRotate(to toInterfaceOrientation: UIInterfaceOrientation, duration: TimeInterval) {
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
         // dismiss current view controller on iPad while rotating, or the WhitelistViewController's position can not be fixed after rotating.
         guard UIDevice.current.isPad else { return }
         dismissAnimated()

@@ -10,17 +10,17 @@ import UIKit
 
 // MARK: - Popover view controller even on iPhones
 extension ViewController: UIPopoverPresentationControllerDelegate {
-    @objc internal func popoverInfoViewController() {
+    @objc func popoverInfoViewController() {
         popoverPresentViewController(PopoverButton.info)
         hideLabels(true)
     }
 
-    @objc internal func popoverSettingViewController() {
+    @objc func popoverSettingViewController() {
         popoverPresentViewController(PopoverButton.setting)
         hideLabels(true)
     }
 
-    @objc internal func showLabels() {
+    @objc func showLabels() {
         hideLabels(false)
     }
 
@@ -49,20 +49,23 @@ extension ViewController: UIPopoverPresentationControllerDelegate {
     }
 
     // MARK: - fix size of popover view
-    override func didRotate(from fromInterfaceOrientation: UIInterfaceOrientation) {
-        if Popover.currentButton == .info {
-            // fix popoverContent's size
-            Popover.popoverContent?.preferredContentSize = Popover.preferredContentSize
-            // fix popover's source location
-            Popover.popover?.sourceRect = infoButton.frame
-        } else {
-            Popover.popoverContent?.preferredContentSize = Popover.preferredMutableContentSize
-            Popover.popover?.sourceRect = settingButton.frame
-        }
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        coordinator.animate(alongsideTransition: nil) { _ in
+            if Popover.currentButton == .info {
+                // fix popoverContent's size
+                Popover.popoverContent?.preferredContentSize = Popover.preferredContentSize
+                // fix popover's source location
+                Popover.popover?.sourceRect = self.infoButton.frame
+            } else {
+                Popover.popoverContent?.preferredContentSize = Popover.preferredMutableContentSize
+                Popover.popover?.sourceRect = self.settingButton.frame
+            }
 
-        Popover.popover?.sourceRect.origin.y += 5
-        guard let nav = Popover.popoverContent?.navigationController, let button = Popover.currentButton else { return }
-        enableToHideBarsOnSwipeIfNeeded(nav, popoverButton: button)
+            Popover.popover?.sourceRect.origin.y += 5
+            guard let nav = Popover.popoverContent?.navigationController, let button = Popover.currentButton else { return }
+            self.enableToHideBarsOnSwipeIfNeeded(nav, popoverButton: button)
+        }
     }
 
     // MARK: - configure popover controller
@@ -115,7 +118,7 @@ extension ViewController: UIPopoverPresentationControllerDelegate {
 
     private func enableToHideBarsOnSwipeIfNeeded(_ nav: UINavigationController, popoverButton: PopoverButton) {
         if popoverButton == .setting {
-            nav.hidesBarsOnSwipe = UIDevice.current.isPad ? false : UIApplication.shared.statusBarOrientation.isLandscape
+            nav.hidesBarsOnSwipe = UIDevice.current.isPad ? false : view.bounds.width > view.bounds.height
         } else {
             nav.hidesBarsOnSwipe = false
         }

@@ -18,8 +18,13 @@ public typealias HandlerII<T, U> = (T, U) -> Void
 @inline(never) // prevents the passed argument from being optimized away by the compiler
 public func touch(_ any: Any?) {}
 /// Returns `f(x)` if `x` is non-`nil`; otherwise returns `nil`
-@discardableResult public func given<T, U>(_ x: T?, _ f: (T) -> U?) -> U? { return x != nil ? f(x!) : nil }
-@discardableResult public func given<T, U, V>(_ x: T?, _ y: U?, _ f: (T, U) -> V?) -> V? { return (x != nil && y != nil) ? f(x!, y!) : nil }
+@discardableResult public func given<T, U>(_ x: T?, _ f: (T) -> U?) -> U? {
+    return x != nil ? f(x!) : nil
+}
+
+@discardableResult public func given<T, U, V>(_ x: T?, _ y: U?, _ f: (T, U) -> V?) -> V? {
+    return (x != nil && y != nil) ? f(x!, y!) : nil
+}
 
 /// Initializes and configures a given NSObject.
 /// This utility method can be used to cut down boilerplate code.
@@ -50,20 +55,26 @@ public enum ASVerticalDirection { case up, down }
 /// Check is this a 64bit device
 public let IS_64_BIT = MemoryLayout<Int>.size == MemoryLayout<Int64>.size
 /// This will always return `.zero` in share extension
-public let iPhoneXExtraMargins: UIEdgeInsets = { if #available(iOS 11.0, *) { return UIWindow().safeAreaInsets } else { return .zero } }()
+public let iPhoneXExtraMargins: UIEdgeInsets = UIWindow().safeAreaInsets
 
 // MARK: - Swift.Optional + Extensions
 public extension Swift.Optional where Wrapped: Numeric {
-    var zeroIfNil: Wrapped { return self == nil ? .zero : self! }
+    var zeroIfNil: Wrapped {
+        return self == nil ? .zero : self!
+    }
 }
 
 public extension Swift.Optional where Wrapped == String {
-    var emptyIfNil: String { return self == nil ? "" : self! }
+    var emptyIfNil: String {
+        return self == nil ? "" : self!
+    }
 }
 
 // MARK: - NSObject + Extensions
 public extension NSObject {
-    var className: String { String(describing: Self.self) }
+    var className: String {
+        String(describing: Self.self)
+    }
 }
 
 // MARK: - String + Extensions
@@ -109,7 +120,9 @@ public extension UIStoryboard {
         return instantiateViewController(withIdentifier: String(describing: vc.self)) as! T
     }
 
-    static var Main: UIStoryboard { return UIStoryboard(name: "Main", bundle: nil) }
+    static var Main: UIStoryboard {
+        return UIStoryboard(name: "Main", bundle: nil)
+    }
 }
 
 public extension UITableView {
@@ -214,23 +227,24 @@ public extension UICollectionView {
 
 public extension UIView {
     /// Load view from nib. Note: Nib name must be equal to the class name.
-    static func loadFromNib() -> Self { return loadFromNib(self) }
-    private static func loadFromNib<T: UIView>(_ type: T.Type) -> T {
-        return Bundle.main.loadNibNamed(String(describing: type), owner: nil, options: nil)![0] as! T
+    static func loadFromNib() -> Self {
+        return loadFromNib(self)
     }
 
-    @available(iOS, renamed: "loadFromNib")
-    static func loadFromNibAndClass<T: UIView>(_ view: T.Type, owner: Any? = nil, options: [UINib.OptionsKey: Any]? = nil) -> T? {
-        let name = String(describing: view.self)
-        guard let nib = Bundle.main.loadNibNamed(name, owner: owner, options: options) else { return nil }
-        return nib.first as? T
+    private static func loadFromNib<T: UIView>(_ type: T.Type) -> T {
+        return Bundle.main.loadNibNamed(String(describing: type), owner: nil, options: nil)![0] as! T
     }
 }
 
 // MARK: - UIScreen Extensions
 public extension UIScreen {
-    static var width: CGFloat { return UIScreen.main.bounds.width }
-    static var height: CGFloat { return UIScreen.main.bounds.height }
+    static var width: CGFloat {
+        return UIScreen.main.bounds.width
+    }
+
+    static var height: CGFloat {
+        return UIScreen.main.bounds.height
+    }
 }
 
 // MARK: - CGRect Extensions
@@ -243,9 +257,18 @@ public extension CGRect {
 
 // MARK: - UITableView, UICollectionView, UITableViewCell, UICollectionViewCell, IndexPath extensions
 public extension UITableView {
-    var centerPoint: CGPoint { return CGPoint(x: center.x + contentOffset.x, y: center.y + contentOffset.y) }
-    var centerCellIndexPath: IndexPath? { return indexPathForRow(at: centerPoint) }
-    var visibleIndexPath: [IndexPath] { return visibleCells.compactMap { indexPath(for: $0) } }
+    var centerPoint: CGPoint {
+        return CGPoint(x: center.x + contentOffset.x, y: center.y + contentOffset.y)
+    }
+
+    var centerCellIndexPath: IndexPath? {
+        return indexPathForRow(at: centerPoint)
+    }
+
+    var visibleIndexPath: [IndexPath] {
+        return visibleCells.compactMap { indexPath(for: $0) }
+    }
+
     func cellForRow(at location: CGPoint) -> UITableViewCell? {
         guard let indexPath = indexPathForRow(at: location) else { return nil }
         return cellForRow(at: indexPath)
@@ -264,7 +287,9 @@ public extension UITableView {
 public extension UITableViewCell {
     var relatedTableView: UITableView? {
         var view = superview
-        while view != nil && !(view is UITableView) { view = view?.superview }
+        while view != nil && !(view is UITableView) {
+            view = view?.superview
+        }
         return view as? UITableView
     }
 
@@ -274,21 +299,31 @@ public extension UITableViewCell {
 }
 
 public extension UICollectionView {
-    var centerPoint: CGPoint { return CGPoint(x: center.x + contentOffset.x, y: center.y + contentOffset.y) }
-    var centerItemIndexPath: IndexPath? { return indexPathForItem(at: centerPoint) }
-    var visibleIndexPath: [IndexPath] { return visibleCells.compactMap { indexPath(for: $0) } }
+    var centerPoint: CGPoint {
+        return CGPoint(x: center.x + contentOffset.x, y: center.y + contentOffset.y)
+    }
+
+    var centerItemIndexPath: IndexPath? {
+        return indexPathForItem(at: centerPoint)
+    }
+
+    var visibleIndexPath: [IndexPath] {
+        return visibleCells.compactMap { indexPath(for: $0) }
+    }
 }
 
 public extension UICollectionViewCell {
     var relatedCollectionView: UICollectionView? {
         var view = superview
-        while view != nil && !(view is UICollectionView) { view = view?.superview }
+        while view != nil && !(view is UICollectionView) {
+            view = view?.superview
+        }
         return view as? UICollectionView
     }
 }
 
 public extension IndexPath {
-    // Actually there is no difference between `row` and `item`.
+    /// Actually there is no difference between `row` and `item`.
     func offsetBy(row: Int, section: Int = 0) -> IndexPath {
         return IndexPath(row: self.row + row, section: self.section + section)
     }
@@ -319,7 +354,9 @@ public extension UITabBar {
     func indexOfItem(at point: CGPoint) -> Int? {
         var frames: [CGRect] = subviews.compactMap { if let v = $0 as? UIControl { return v.frame } else { return nil } }
         frames.sort { $0.origin.x < $1.origin.x }
-        for (index, rect) in frames.enumerated() { if rect.contains(point) { return index } }
+        for (index, rect) in frames.enumerated() {
+            if rect.contains(point) { return index }
+        }
         return nil
     }
 }
@@ -328,16 +365,22 @@ public extension UITabBar {
 public extension UIDevice {
     /// Normally, we don't need to detect iPhone X family device.
     /// Didn't use `UIApplication.shard.window` so that we can use it in app extensions.
-    var hasNotch: Bool { return UIWindow().compatibleSafeAreaInsets.bottom > 0 }
-    @available(iOS, deprecated, message: "please use: `hasNotch`")
-    var isIPhoneX: Bool { return UIDevice.current.userInterfaceIdiom == .phone && UIScreen.main.nativeBounds.height == 2436 }
-    var isPad: Bool { return UIDevice.current.userInterfaceIdiom == .pad }
-    var isSimulator: Bool { let code = hardwareVersion; return code == "i386" || code == "x86_64" }
+    var hasNotch: Bool {
+        return UIWindow().compatibleSafeAreaInsets.bottom > 0
+    }
+
+    var isPad: Bool {
+        return UIDevice.current.userInterfaceIdiom == .pad
+    }
+
+    var isSimulator: Bool {
+        let code = hardwareVersion; return code == "i386" || code == "x86_64"
+    }
+
     var hardwareVersion: String {
         var systemInfo = utsname()
         uname(&systemInfo)
-        let versionCode = String(utf8String: NSString(bytes: &systemInfo.machine, length: Int(_SYS_NAMELEN), encoding: String.Encoding.ascii.rawValue)!.utf8String!)!
-        return versionCode
+        return String(utf8String: NSString(bytes: &systemInfo.machine, length: Int(_SYS_NAMELEN), encoding: String.Encoding.ascii.rawValue)!.utf8String!)!
     }
 }
 
@@ -370,11 +413,25 @@ public extension UIDevice {
 
 // MARK: - UIView + AutoLayout
 public extension UIView {
-    var compatibleSafeAreaInsets: UIEdgeInsets { if #available(iOS 11.0, *) { return safeAreaInsets } else { return .zero } }
-    var safeTopAnchor: NSLayoutYAxisAnchor { if #available(iOS 11.0, *) { return safeAreaLayoutGuide.topAnchor } else { return topAnchor } }
-    var safeLeftAnchor: NSLayoutXAxisAnchor { if #available(iOS 11.0, *) { return safeAreaLayoutGuide.leftAnchor } else { return leftAnchor } }
-    var safeRightAnchor: NSLayoutXAxisAnchor { if #available(iOS 11.0, *) { return safeAreaLayoutGuide.rightAnchor } else { return rightAnchor } }
-    var safeBottomAnchor: NSLayoutYAxisAnchor { if #available(iOS 11.0, *) { return safeAreaLayoutGuide.bottomAnchor } else { return bottomAnchor } }
+    var compatibleSafeAreaInsets: UIEdgeInsets {
+        return safeAreaInsets
+    }
+
+    var safeTopAnchor: NSLayoutYAxisAnchor {
+        return safeAreaLayoutGuide.topAnchor
+    }
+
+    var safeLeftAnchor: NSLayoutXAxisAnchor {
+        return safeAreaLayoutGuide.leftAnchor
+    }
+
+    var safeRightAnchor: NSLayoutXAxisAnchor {
+        return safeAreaLayoutGuide.rightAnchor
+    }
+
+    var safeBottomAnchor: NSLayoutYAxisAnchor {
+        return safeAreaLayoutGuide.bottomAnchor
+    }
 }
 
 public extension NSLayoutConstraint {
@@ -385,14 +442,37 @@ public extension NSLayoutConstraint {
 }
 
 public extension UILayoutPriority {
-    static var pseudoRequired: UILayoutPriority { return UILayoutPriority(rawValue: 999) }
-    static var lowCompressionResistance: UILayoutPriority { return UILayoutPriority(rawValue: 740) }
-    static var defaultCompressionResistance: UILayoutPriority { return UILayoutPriority(rawValue: 750) }
-    static var highCompressionResistance: UILayoutPriority { return UILayoutPriority(rawValue: 760) }
-    static var medium: UILayoutPriority { return UILayoutPriority(rawValue: 500) }
-    static var lowHuggingPriority: UILayoutPriority { return UILayoutPriority(rawValue: 240) }
-    static var defaultHuggingPriority: UILayoutPriority { return UILayoutPriority(rawValue: 250) }
-    static var highHuggingPriority: UILayoutPriority { return UILayoutPriority(rawValue: 260) }
+    static var pseudoRequired: UILayoutPriority {
+        return UILayoutPriority(rawValue: 999)
+    }
+
+    static var lowCompressionResistance: UILayoutPriority {
+        return UILayoutPriority(rawValue: 740)
+    }
+
+    static var defaultCompressionResistance: UILayoutPriority {
+        return UILayoutPriority(rawValue: 750)
+    }
+
+    static var highCompressionResistance: UILayoutPriority {
+        return UILayoutPriority(rawValue: 760)
+    }
+
+    static var medium: UILayoutPriority {
+        return UILayoutPriority(rawValue: 500)
+    }
+
+    static var lowHuggingPriority: UILayoutPriority {
+        return UILayoutPriority(rawValue: 240)
+    }
+
+    static var defaultHuggingPriority: UILayoutPriority {
+        return UILayoutPriority(rawValue: 250)
+    }
+
+    static var highHuggingPriority: UILayoutPriority {
+        return UILayoutPriority(rawValue: 260)
+    }
 }
 
 public extension UIView {
@@ -451,17 +531,13 @@ public extension UIView {
             return constraints
         }
         guard useSafeArea else { return nonSafeAreaCondition() }
-        if #available(iOS 11.0, *) {
-            var constraints: [NSLayoutConstraint] = []
-            if edges.contains(.left) { constraints.append(leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: insets.left)) }
-            if edges.contains(.top) { constraints.append(topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: insets.top)) }
-            if edges.contains(.right) { constraints.append(trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -insets.right)) }
-            if edges.contains(.bottom) { constraints.append(bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -insets.bottom)) }
-            NSLayoutConstraint.activate(constraints)
-            return constraints
-        } else {
-            return nonSafeAreaCondition()
-        }
+        var constraints: [NSLayoutConstraint] = []
+        if edges.contains(.left) { constraints.append(leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: insets.left)) }
+        if edges.contains(.top) { constraints.append(topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: insets.top)) }
+        if edges.contains(.right) { constraints.append(trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -insets.right)) }
+        if edges.contains(.bottom) { constraints.append(bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -insets.bottom)) }
+        NSLayoutConstraint.activate(constraints)
+        return constraints
     }
 
     func addSubview(_ subview: UIView, constrainedToCenterWithOffset offset: CGPoint) {
@@ -520,11 +596,7 @@ public extension UIView {
     }
 
     func copiedView<T: UIView>() -> T {
-        if #available(iOS 11.0, *) {
-            return try! NSKeyedUnarchiver.unarchivedObject(ofClass: T.self, from: NSKeyedArchiver.archivedData(withRootObject: self, requiringSecureCoding: false))!
-        } else {
-            return NSKeyedUnarchiver.unarchiveObject(with: NSKeyedArchiver.archivedData(withRootObject: self)) as! T
-        }
+        return try! NSKeyedUnarchiver.unarchivedObject(ofClass: T.self, from: NSKeyedArchiver.archivedData(withRootObject: self, requiringSecureCoding: false))!
     }
 
     /// Set current view's absolute center to other view's center
@@ -533,8 +605,13 @@ public extension UIView {
         frame.origin.y = view.bounds.midY - frame.height / 2
     }
 
-    func addGestureRecognizers(_ gestures: [UIGestureRecognizer]) { gestures.forEach { addGestureRecognizer($0) } }
-    func addGestureRecognizers(_ gestures: UIGestureRecognizer...) { addGestureRecognizers(gestures) }
+    func addGestureRecognizers(_ gestures: [UIGestureRecognizer]) {
+        gestures.forEach { addGestureRecognizer($0) }
+    }
+
+    func addGestureRecognizers(_ gestures: UIGestureRecognizer...) {
+        addGestureRecognizers(gestures)
+    }
 }
 
 extension UIView {
@@ -552,7 +629,9 @@ extension UIView {
 // MARK: - UIGestureRecognizer Extensions
 extension UIGestureRecognizer {
     /// Disable and re-enable again to cancel the gesture.
-    func cancel() { isEnabled = false; isEnabled = true }
+    func cancel() {
+        isEnabled = false; isEnabled = true
+    }
 }
 
 // MARK: - UIFeedbackGenerator Extensions
@@ -625,7 +704,7 @@ public extension UIView {
 
 // MARK: - HitTest
 public extension UIView {
-    /// REFERENCE: http://stackoverflow.com/a/34774177/4656574
+    // REFERENCE: http://stackoverflow.com/a/34774177/4656574
     /**
      1. We should not send touch events for hidden or transparent views, or views with userInteractionEnabled set to NO;
      2. If touch is inside self, self will be considered as potential result.
@@ -736,21 +815,11 @@ public extension UIView {
 public extension UIView {
     func roundCorners(_ corners: CACornerMask = .allCorners, radius: CGFloat, border: (color: UIColor, width: CGFloat)? = nil) {
         clipsToBounds = true
-        if #available(iOS 11.0, *) {
-            layer.cornerRadius = radius
-            layer.maskedCorners = corners
-            if let border = border {
-                layer.borderColor = border.color.cgColor
-                layer.borderWidth = border.width
-            }
-        } else {
-            let path = UIBezierPath(roundedRect: bounds, byRoundingCorners: corners.toRectCorner, cornerRadii: CGSize(width: radius, height: radius))
-            let mask = CAShapeLayer()
-            mask.path = path.cgPath
-            layer.mask = mask
-            if let border = border {
-                addBorder(mask, borderColor: border.color, borderWidth: border.width)
-            }
+        layer.cornerRadius = radius
+        layer.maskedCorners = corners
+        if let border = border {
+            layer.borderColor = border.color.cgColor
+            layer.borderWidth = border.width
         }
     }
 
@@ -766,11 +835,26 @@ public extension UIView {
 }
 
 public extension CACornerMask {
-    static var topLeft: CACornerMask { return .layerMinXMinYCorner }
-    static var topRight: CACornerMask { return .layerMaxXMinYCorner }
-    static var bottomLeft: CACornerMask { return .layerMinXMaxYCorner }
-    static var bottomRight: CACornerMask { return .layerMaxXMaxYCorner }
-    static var allCorners: CACornerMask { return [.layerMinXMinYCorner, .layerMaxXMinYCorner, .layerMinXMaxYCorner, .layerMaxXMaxYCorner] }
+    static var topLeft: CACornerMask {
+        return .layerMinXMinYCorner
+    }
+
+    static var topRight: CACornerMask {
+        return .layerMaxXMinYCorner
+    }
+
+    static var bottomLeft: CACornerMask {
+        return .layerMinXMaxYCorner
+    }
+
+    static var bottomRight: CACornerMask {
+        return .layerMaxXMaxYCorner
+    }
+
+    static var allCorners: CACornerMask {
+        return [.layerMinXMinYCorner, .layerMaxXMinYCorner, .layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+    }
+
     var toRectCorner: UIRectCorner {
         var corners = UIRectCorner()
         if contains(.topLeft) { corners.insert(.topLeft) }
@@ -896,7 +980,7 @@ extension Array {
     private func split(subCollectionCount: Int) -> [[Element]] {
         precondition(subCollectionCount > 1, "Can't split the array unless you ask for > 1")
         var output: [[Element]] = []
-        (0 ..< subCollectionCount).forEach { outputIndex in
+        for outputIndex in 0 ..< subCollectionCount {
             let indexesToKeep = stride(from: outputIndex, to: count, by: subCollectionCount)
             let subCollection = enumerated().filter { indexesToKeep.contains($0.offset) }.map(\.element)
             output.append(subCollection)
@@ -937,17 +1021,23 @@ public extension Collection {
 }
 
 public extension Collection where Element: Numeric {
-    var sum: Element { return reduce(0, +) }
+    var sum: Element {
+        return reduce(0, +)
+    }
 }
 
 public extension Collection where Element: BinaryInteger {
     /// Returns `0` if it's empty
-    var average: Double { return isEmpty ? 0 : Double(sum) / Double(count) }
+    var average: Double {
+        return isEmpty ? 0 : Double(sum) / Double(count)
+    }
 }
 
 public extension Collection where Element: BinaryFloatingPoint {
     /// Returns `0` if it's empty
-    var average: Element { return isEmpty ? 0 : sum / Element(count) }
+    var average: Element {
+        return isEmpty ? 0 : sum / Element(count)
+    }
 }
 
 public extension Array {
@@ -958,14 +1048,6 @@ public extension Array {
             }
         }
         return nil
-    }
-
-    @available(iOS, deprecated, message: "prefer: 'array[ifPresent: index]'")
-    /// Find the element at the specific index
-    /// No need to use this to find the first element, just use `aArray.first`
-    func object(_ atIndex: Int) -> Element? {
-        guard atIndex >= startIndex && atIndex < endIndex else { return nil }
-        return self[atIndex]
     }
 
     mutating func append(newElements: [Element]) {
@@ -982,19 +1064,6 @@ public extension Array where Element: Equatable {
 public extension Sequence where Iterator.Element: Hashable {
     var unique: [Iterator.Element] {
         return Array(Set(self))
-    }
-}
-
-public extension Sequence {
-    // REFERENCE: https://stackoverflow.com/questions/31220002/how-to-group-by-the-elements-of-an-array-in-swift
-    @available(swift, deprecated: 4.0, message: "Please use 'Dictionary(grouping:, by:)'")
-    func group<U: Hashable>(by key: (Iterator.Element) -> U) -> [U: [Iterator.Element]] {
-        var categories: [U: [Iterator.Element]] = [:]
-        for element in self {
-            let key = key(element)
-            if case nil = categories[key]?.append(element) { categories[key] = [element] }
-        }
-        return categories
     }
 }
 
@@ -1033,42 +1102,95 @@ public extension Array {
 
 // MARK: - Clamp number
 public extension Comparable {
-    func clamped(lower: Self) -> Self { return self < lower ? lower : self }
-    func clamped(upper: Self) -> Self { return self > upper ? upper : self }
-    func clamped(lower: Self, upper: Self) -> Self { return min(max(self, lower), upper) }
-    func clamped(_ value1: Self, _ value2: Self) -> Self { return min(max(self, min(value1, value2)), max(value1, value2)) }
+    func clamped(lower: Self) -> Self {
+        return self < lower ? lower : self
+    }
+
+    func clamped(upper: Self) -> Self {
+        return self > upper ? upper : self
+    }
+
+    func clamped(lower: Self, upper: Self) -> Self {
+        return min(max(self, lower), upper)
+    }
+
+    func clamped(_ value1: Self, _ value2: Self) -> Self {
+        return min(max(self, min(value1, value2)), max(value1, value2))
+    }
 }
 
 // MARK: - Reutrn bool value
-public extension Numeric { var bool: Bool { return self != .zero } }
-public extension Bool { init<T: Numeric>(_ numeric: T) { self.init(numeric != .zero) } }
+public extension Numeric { var bool: Bool {
+    return self != .zero
+} }
+public extension Bool { init<T: Numeric>(_ numeric: T) {
+    self.init(numeric != .zero)
+} }
 // MARK: - Custom operators
 /// "augus" == ("augus", "n") is true
-public func == (lhs: String?, rhs: (String, String)) -> Bool { return lhs == rhs.0 || lhs == rhs.1 }
-/// "augus" ~= ("Augus", "n") is true
-public func ~= (lhs: String?, rhs: (String, String)) -> Bool { return lhs ~= rhs.0 || lhs ~= rhs.1 }
-/// "augus" ~= "Augus" is true
-public func ~= (lhs: String?, rhs: String?) -> Bool { if lhs == rhs { return true }; return lhs?.lowercased() == rhs?.lowercased() }
-/// "123" == 123 is true
-public func == (lhs: String, rhs: Int) -> Bool { return Int(lhs) == rhs }
-/// 123 == "123" is true
-public func == (lhs: Int, rhs: String) -> Bool { return lhs == Int(rhs) }
-/// 1 ~= [2, 3, 1] is true
-public func ~= <T: Comparable>(lhs: T?, rhs: [T]) -> Bool { return lhs != nil ? rhs.contains(lhs!) : false }
-/// Dictionary operator
-public func += <K, V>(lhs: inout [K: V], rhs: [K: V]) { for (k, v) in rhs { lhs[k] = v } }
-/// Dictionary operator
-public func + <K, V>(_ lhs: [K: V], _ rhs: [K: V]) -> [K: V] { var temp = lhs; temp += rhs; return temp }
+public func == (lhs: String?, rhs: (String, String)) -> Bool {
+    return lhs == rhs.0 || lhs == rhs.1
+}
 
-public func * (_ size: CGSize, _ ratio: CGFloat) -> CGSize { return CGSize(width: size.width * ratio, height: size.height * ratio) }
-public func / (_ size: CGSize, _ ratio: CGFloat) -> CGSize { return size * (1 / ratio) }
-public func + (_ lhs: CGSize, _ rhs: CGSize) -> CGSize { return CGSize(width: lhs.width + rhs.width, height: lhs.height + rhs.height) }
+/// "augus" ~= ("Augus", "n") is true
+public func ~= (lhs: String?, rhs: (String, String)) -> Bool {
+    return lhs ~= rhs.0 || lhs ~= rhs.1
+}
+
+/// "augus" ~= "Augus" is true
+public func ~= (lhs: String?, rhs: String?) -> Bool {
+    if lhs == rhs { return true }; return lhs?.lowercased() == rhs?.lowercased()
+}
+
+/// "123" == 123 is true
+public func == (lhs: String, rhs: Int) -> Bool {
+    return Int(lhs) == rhs
+}
+
+/// 123 == "123" is true
+public func == (lhs: Int, rhs: String) -> Bool {
+    return lhs == Int(rhs)
+}
+
+/// 1 ~= [2, 3, 1] is true
+public func ~= <T: Comparable>(lhs: T?, rhs: [T]) -> Bool {
+    return lhs != nil ? rhs.contains(lhs!) : false
+}
+
+/// Dictionary operator
+public func += <K, V>(lhs: inout [K: V], rhs: [K: V]) {
+    for (k, v) in rhs {
+        lhs[k] = v
+    }
+}
+
+/// Dictionary operator
+public func + <K, V>(_ lhs: [K: V], _ rhs: [K: V]) -> [K: V] {
+    var temp = lhs; temp += rhs; return temp
+}
+
+public func * (_ size: CGSize, _ ratio: CGFloat) -> CGSize {
+    return CGSize(width: size.width * ratio, height: size.height * ratio)
+}
+
+public func / (_ size: CGSize, _ ratio: CGFloat) -> CGSize {
+    return size * (1 / ratio)
+}
+
+public func + (_ lhs: CGSize, _ rhs: CGSize) -> CGSize {
+    return CGSize(width: lhs.width + rhs.width, height: lhs.height + rhs.height)
+}
 
 postfix operator °
 protocol IntegerInitializable: ExpressibleByIntegerLiteral { init(_: Int) }
 extension Int: IntegerInitializable {
-    public static postfix func ° (lhs: Int) -> CGFloat { return CGFloat(lhs) * .pi / 180 }
-    public static postfix func ° (lhs: Int) -> Double { return Double(lhs) * .pi / 180 }
+    public static postfix func ° (lhs: Int) -> CGFloat {
+        return CGFloat(lhs) * .pi / 180
+    }
+
+    public static postfix func ° (lhs: Int) -> Double {
+        return Double(lhs) * .pi / 180
+    }
 }
 
 // MARK: - Calculations
@@ -1093,62 +1215,137 @@ public protocol Arithmetic: Comparable {
 
 extension Int: Arithmetic {
     @available(*, deprecated, message: "unnecessary")
-    public var int: Int { return self } // `Int()` is unnecessary here, but just for convenience
-    public var double: Double { return Double(self) }
-    public var cgFloat: CGFloat { return CGFloat(self) }
+    public var int: Int {
+        return self
+    } // `Int()` is unnecessary here, but just for convenience
+    public var double: Double {
+        return Double(self)
+    }
+
+    public var cgFloat: CGFloat {
+        return CGFloat(self)
+    }
 }
 
 extension Int8: Arithmetic {
-    public var int: Int { return Int(self) }
-    public var double: Double { return Double(self) }
-    public var cgFloat: CGFloat { return CGFloat(self) }
+    public var int: Int {
+        return Int(self)
+    }
+
+    public var double: Double {
+        return Double(self)
+    }
+
+    public var cgFloat: CGFloat {
+        return CGFloat(self)
+    }
 }
 
 extension Int16: Arithmetic {
-    public var int: Int { return Int(self) }
-    public var double: Double { return Double(self) }
-    public var cgFloat: CGFloat { return CGFloat(self) }
+    public var int: Int {
+        return Int(self)
+    }
+
+    public var double: Double {
+        return Double(self)
+    }
+
+    public var cgFloat: CGFloat {
+        return CGFloat(self)
+    }
 }
 
 extension Int32: Arithmetic {
-    public var int: Int { return Int(self) }
-    public var double: Double { return Double(self) }
-    public var cgFloat: CGFloat { return CGFloat(self) }
+    public var int: Int {
+        return Int(self)
+    }
+
+    public var double: Double {
+        return Double(self)
+    }
+
+    public var cgFloat: CGFloat {
+        return CGFloat(self)
+    }
 }
 
 extension Int64: Arithmetic {
-    public var int: Int { return Int(self) }
-    public var double: Double { return Double(self) }
-    public var cgFloat: CGFloat { return CGFloat(self) }
+    public var int: Int {
+        return Int(self)
+    }
+
+    public var double: Double {
+        return Double(self)
+    }
+
+    public var cgFloat: CGFloat {
+        return CGFloat(self)
+    }
 }
 
 extension Float: Arithmetic {
-    public var int: Int { return Int(self) }
-    public var double: Double { return Double(self) }
-    public var cgFloat: CGFloat { return CGFloat(self) }
+    public var int: Int {
+        return Int(self)
+    }
+
+    public var double: Double {
+        return Double(self)
+    }
+
+    public var cgFloat: CGFloat {
+        return CGFloat(self)
+    }
 }
 
 extension Double: Arithmetic {
-    public var int: Int { return Int(self) }
+    public var int: Int {
+        return Int(self)
+    }
+
     @available(*, deprecated, message: "unnecessary")
-    public var double: Double { return self } // `Double()` is unnecessary here, but just for convenience
-    public var cgFloat: CGFloat { return CGFloat(self) }
+    public var double: Double {
+        return self
+    } // `Double()` is unnecessary here, but just for convenience
+    public var cgFloat: CGFloat {
+        return CGFloat(self)
+    }
 }
 
 extension CGFloat: Arithmetic {
-    public var int: Int { return Int(self) }
-    public var double: Double { return Double(self) }
+    public var int: Int {
+        return Int(self)
+    }
+
+    public var double: Double {
+        return Double(self)
+    }
+
     @available(*, deprecated, message: "unnecessary")
-    public var cgFloat: CGFloat { return self } // `CGFloat()` is unnecessary here, but just for convenience
+    public var cgFloat: CGFloat {
+        return self
+    } // `CGFloat()` is unnecessary here, but just for convenience
 }
 
-public func plus<T: Arithmetic>(_ a: T, _ b: T) -> T { return a + b }
-public func minus<T: Arithmetic>(_ a: T, _ b: T) -> T { return a - b }
-public func multiply<T: Arithmetic>(_ a: T, _ b: T) -> T { return a * b }
-public func divide<T: Arithmetic>(_ a: T, _ b: T) -> T { return a / b }
+public func plus<T: Arithmetic>(_ a: T, _ b: T) -> T {
+    return a + b
+}
+
+public func minus<T: Arithmetic>(_ a: T, _ b: T) -> T {
+    return a - b
+}
+
+public func multiply<T: Arithmetic>(_ a: T, _ b: T) -> T {
+    return a * b
+}
+
+public func divide<T: Arithmetic>(_ a: T, _ b: T) -> T {
+    return a / b
+}
 
 public extension Double {
-    func floatingPointValueToInt() -> Int? { return isFinite ? Int(self) : nil }
+    func floatingPointValueToInt() -> Int? {
+        return isFinite ? Int(self) : nil
+    }
 }
 
 public extension Double {
@@ -1173,19 +1370,32 @@ public extension Float {
 
 // MARK: - String, NSAttributedString Extensions
 public extension String {
-    func trimmed() -> String { return trimmingCharacters(in: .whitespacesAndNewlines) }
-    @available(swift, obsoleted: 1.0, message: "use 'trimmedNilIfEmpty == nil'")
-    var isBlank: Bool { preconditionFailure() }
-    var trimmedNilIfEmpty: String? { let t = trimmed(); return t.isEmpty ? nil : t }
+    func trimmed() -> String {
+        return trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+
+    var trimmedNilIfEmpty: String? {
+        let t = trimmed(); return t.isEmpty ? nil : t
+    }
+
     func replacingOccurrences(of: [String], with: String) -> String {
         var str = self
         of.forEach { str = str.replacingOccurrences(of: $0, with: with) }
         return str
     }
 
-    var boolValue: Bool { return NSString(string: self).boolValue }
-    var encodeURLComponent: String { return self.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? self }
-    var decodeURLComponent: String { return self.components(separatedBy: "+").joined(separator: " ").removingPercentEncoding ?? self }
+    var boolValue: Bool {
+        return NSString(string: self).boolValue
+    }
+
+    var encodeURLComponent: String {
+        return self.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? self
+    }
+
+    var decodeURLComponent: String {
+        return self.components(separatedBy: "+").joined(separator: " ").removingPercentEncoding ?? self
+    }
+
     var isValidEmail: Bool {
         let emailRegEx = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$"
         return NSPredicate(format: "SELF MATCHES %@", emailRegEx).evaluate(with: self)
@@ -1219,8 +1429,12 @@ public extension NSAttributedString {
 public extension NSAttributedString {
     func trimmedNewlines() -> NSAttributedString {
         var att = self
-        while att.string.first == "\n" { att = att.attributedSubstring(from: NSRange(location: 1, length: att.string.count - 1)) }
-        while att.string.last == "\n" { att = att.attributedSubstring(from: NSRange(location: 0, length: att.string.count - 1)) }
+        while att.string.first == "\n" {
+            att = att.attributedSubstring(from: NSRange(location: 1, length: att.string.count - 1))
+        }
+        while att.string.last == "\n" {
+            att = att.attributedSubstring(from: NSRange(location: 0, length: att.string.count - 1))
+        }
         return att
     }
 }
@@ -1273,16 +1487,6 @@ public extension UIColor {
         self.init(red: red, green: green, blue: blue, alpha: alpha)
     }
 
-    @available(*, deprecated, message: "please use: `init(hex: UInt)`")
-    convenience init?(hex: String, alpha: CGFloat = 1.0) {
-        let formatted = hex.replacingOccurrences(of: ["0x", "#"], with: "")
-        guard let hex = Int(formatted, radix: 16) else { return nil }
-        let red = CGFloat(CGFloat((hex & 0xFF0000) >> 16) / 255.0)
-        let green = CGFloat(CGFloat((hex & 0x00FF00) >> 8) / 255.0)
-        let blue = CGFloat(CGFloat((hex & 0x0000FF) >> 0) / 255.0)
-        self.init(red: red, green: green, blue: blue, alpha: alpha)
-    }
-
     func toHexString(uppercased: Bool = false) -> String {
         var r: CGFloat = 0
         var g: CGFloat = 0
@@ -1303,11 +1507,26 @@ public extension UIColor {
         return a
     }
 
-    var components: UnsafePointer<CGFloat> { return cgColor.__unsafeComponents! }
-    var cRed: CGFloat { return components[0] }
-    var cGreen: CGFloat { return components[1] }
-    var cBlue: CGFloat { return components[2] }
-    func alpha(_ alpha: CGFloat) -> UIColor { return withAlphaComponent(alpha) }
+    var components: UnsafePointer<CGFloat> {
+        return cgColor.__unsafeComponents!
+    }
+
+    var cRed: CGFloat {
+        return components[0]
+    }
+
+    var cGreen: CGFloat {
+        return components[1]
+    }
+
+    var cBlue: CGFloat {
+        return components[2]
+    }
+
+    func alpha(_ alpha: CGFloat) -> UIColor {
+        return withAlphaComponent(alpha)
+    }
+
     /// Compare two colors
     ///
     /// - Parameters:
@@ -1359,7 +1578,9 @@ public extension UIColor {
 }
 
 public extension CGColor {
-    var uiColor: UIColor { return UIColor(cgColor: self) }
+    var uiColor: UIColor {
+        return UIColor(cgColor: self)
+    }
 }
 
 // MARK: - UIAlertController Extension
@@ -1374,18 +1595,41 @@ public extension UIViewController {
 
 // MARK: - App
 public enum APP {
-    public static var version: String? { return Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String }
-    public static var build: String? { return Bundle.main.object(forInfoDictionaryKey: kCFBundleVersionKey as String) as? String }
-    public static func appStoreURL(with id: String) -> URL { return URL(string: appStorePath(with: id))! }
-    public static func reviewURL(with id: String) -> URL { return URL(string: appStorePath(with: id) + "?action=write-review")! }
-    public static func reviewsPageURL(with id: String) -> URL { return URL(string: "https://itunes.apple.com/app/viewContentsUserReviews?id=\(id)")! }
-    private static func appStorePath(with id: String) -> String { return "https://itunes.apple.com/app/id\(id)" }
+    public static var version: String? {
+        return Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String
+    }
+
+    public static var build: String? {
+        return Bundle.main.object(forInfoDictionaryKey: kCFBundleVersionKey as String) as? String
+    }
+
+    public static func appStoreURL(with id: String) -> URL {
+        return URL(string: appStorePath(with: id))!
+    }
+
+    public static func reviewURL(with id: String) -> URL {
+        return URL(string: appStorePath(with: id) + "?action=write-review")!
+    }
+
+    public static func reviewsPageURL(with id: String) -> URL {
+        return URL(string: "https://itunes.apple.com/app/viewContentsUserReviews?id=\(id)")!
+    }
+
+    private static func appStorePath(with id: String) -> String {
+        return "https://itunes.apple.com/app/id\(id)"
+    }
 }
 
 public enum Environment {
     case development, production, sandbox
-    public var isRelease: Bool { return self == .production }
-    public var isDebug: Bool { return self == .development }
+    public var isRelease: Bool {
+        return self == .production
+    }
+
+    public var isDebug: Bool {
+        return self == .development
+    }
+
     public static var current: Environment {
         #if DEBUG
             return .development
@@ -1437,9 +1681,14 @@ public extension String {
 
 public extension String {
     /// Returns the actual url if the path is valid, otherwise returns a fake url `URL("https://")!`.
-    var url: URL { return URL(string: self) ?? URL(string: "https://")! }
+    var url: URL {
+        return URL(string: self) ?? URL(string: "https://")!
+    }
+
     /// Returns an optional url if the path is valid.
-    var optionalURL: URL? { return URL(string: self) }
+    var optionalURL: URL? {
+        return URL(string: self)
+    }
 }
 
 public extension String {
@@ -1473,7 +1722,9 @@ public extension String {
 }
 
 public extension StringProtocol {
-    func nsRange(of text: String) -> NSRange? { return range(of: text).map { NSRange($0, in: self) } }
+    func nsRange(of text: String) -> NSRange? {
+        return range(of: text).map { NSRange($0, in: self) }
+    }
 }
 
 // MARK: - URL Extensions
@@ -1522,22 +1773,59 @@ public extension URL {
 
 // MARK: - Uniform
 public extension UIEdgeInsets {
-    init(uniform inset: CGFloat) { self.init(top: inset, left: inset, bottom: inset, right: inset) }
-    init(uniform inset: Double) { let inset = CGFloat(inset); self.init(top: inset, left: inset, bottom: inset, right: inset) }
-    init(uniform inset: Int) { let inset = CGFloat(inset); self.init(top: inset, left: inset, bottom: inset, right: inset) }
-    init(horizontal: CGFloat = 0, vertical: CGFloat = 0) { self.init(top: vertical, left: horizontal, bottom: vertical, right: horizontal) }
-    init(horizontal: Double = 0, vertical: Double = 0) { let h = CGFloat(horizontal); let v = CGFloat(vertical); self.init(top: v, left: h, bottom: v, right: h) }
-    init(horizontal: Int = 0, vertical: Int = 0) { let h = CGFloat(horizontal); let v = CGFloat(vertical); self.init(top: v, left: h, bottom: v, right: h) }
-    init(top: CGFloat) { self.init(top: top, left: 0, bottom: 0, right: 0) }
-    init(left: CGFloat) { self.init(top: 0, left: left, bottom: 0, right: 0) }
-    init(bottom: CGFloat) { self.init(top: 0, left: 0, bottom: bottom, right: 0) }
-    init(right: CGFloat) { self.init(top: 0, left: 0, bottom: 0, right: right) }
+    init(uniform inset: CGFloat) {
+        self.init(top: inset, left: inset, bottom: inset, right: inset)
+    }
+
+    init(uniform inset: Double) {
+        let inset = CGFloat(inset); self.init(top: inset, left: inset, bottom: inset, right: inset)
+    }
+
+    init(uniform inset: Int) {
+        let inset = CGFloat(inset); self.init(top: inset, left: inset, bottom: inset, right: inset)
+    }
+
+    init(horizontal: CGFloat = 0, vertical: CGFloat = 0) {
+        self.init(top: vertical, left: horizontal, bottom: vertical, right: horizontal)
+    }
+
+    init(horizontal: Double = 0, vertical: Double = 0) {
+        let h = CGFloat(horizontal); let v = CGFloat(vertical); self.init(top: v, left: h, bottom: v, right: h)
+    }
+
+    init(horizontal: Int = 0, vertical: Int = 0) {
+        let h = CGFloat(horizontal); let v = CGFloat(vertical); self.init(top: v, left: h, bottom: v, right: h)
+    }
+
+    init(top: CGFloat) {
+        self.init(top: top, left: 0, bottom: 0, right: 0)
+    }
+
+    init(left: CGFloat) {
+        self.init(top: 0, left: left, bottom: 0, right: 0)
+    }
+
+    init(bottom: CGFloat) {
+        self.init(top: 0, left: 0, bottom: bottom, right: 0)
+    }
+
+    init(right: CGFloat) {
+        self.init(top: 0, left: 0, bottom: 0, right: right)
+    }
 }
 
 public extension CGSize {
-    init(uniform value: CGFloat) { self.init(width: value, height: value) }
-    init(uniform value: Double) { self.init(width: value, height: value) }
-    init(uniform value: Int) { self.init(width: value, height: value) }
+    init(uniform value: CGFloat) {
+        self.init(width: value, height: value)
+    }
+
+    init(uniform value: Double) {
+        self.init(width: value, height: value)
+    }
+
+    init(uniform value: Int) {
+        self.init(width: value, height: value)
+    }
 }
 
 // MARK: - CoreGraphics
@@ -1551,7 +1839,10 @@ public extension CGRect {
         self.init(origin: origin, size: size)
     }
 
-    var center: CGPoint { return CGPoint(x: origin.x + width / 2, y: origin.y + height / 2) }
+    var center: CGPoint {
+        return CGPoint(x: origin.x + width / 2, y: origin.y + height / 2)
+    }
+
     var randomPoint: CGPoint {
         let x = CGFloat(arc4random_uniform(UInt32(width))) + origin.x
         let y = CGFloat(arc4random_uniform(UInt32(height))) + origin.y
@@ -1593,17 +1884,27 @@ public func CGPointsOnOneLine(_ point1: CGPoint, _ point2: CGPoint, _ point3: CG
     return point3.y == k * point3.x + b
 }
 
-public func CGPointsOnOneLine(_ points: CGPoint...) -> Bool { return CGPointsOnOneLine(points) }
+public func CGPointsOnOneLine(_ points: CGPoint...) -> Bool {
+    return CGPointsOnOneLine(points)
+}
+
 public func CGPointsOnOneLine(_ points: [CGPoint]) -> Bool {
     guard points.count > 2 else { return true }
     guard points.count > 3 else { return CGPointsOnOneLine(points[0], points[1], points[2]) }
-    for point in points[3 ..< points.count] { if !CGPointsOnOneLine(point, points[0], points[1]) { return false } }
+    for point in points[3 ..< points.count] {
+        if !CGPointsOnOneLine(point, points[0], points[1]) { return false }
+    }
     return true
 }
 
-public func CGPointNotIn(rects: CGRect..., point: CGPoint) -> Bool { return CGPointNotIn(rects: rects, point: point) }
+public func CGPointNotIn(rects: CGRect..., point: CGPoint) -> Bool {
+    return CGPointNotIn(rects: rects, point: point)
+}
+
 public func CGPointNotIn(rects: [CGRect], point: CGPoint) -> Bool {
-    for rect in rects { if rect.contains(point) { return false } }
+    for rect in rects {
+        if rect.contains(point) { return false }
+    }
     return true
 }
 
@@ -1623,7 +1924,9 @@ private func touchArea(_ point: CGPoint, center: CGPoint) -> Double {
     return sumOfSquares(point.x - center.x) + sumOfSquares(point.y - center.y)
 }
 
-private func sumOfSquares(_ x: CGFloat) -> Double { return pow(Double(x), 2) }
+private func sumOfSquares(_ x: CGFloat) -> Double {
+    return pow(Double(x), 2)
+}
 
 // MARK: - UserDefaults Extensions
 public extension UserDefaults {
@@ -1654,38 +1957,15 @@ public extension UserDefaults {
 
     func color(forKey key: String) -> UIColor? {
         return given(data(forKey: key)) { data in
-            if #available(iOS 11.0, *) {
-                return try? NSKeyedUnarchiver.unarchivedObject(ofClass: UIColor.self, from: data)
-            } else {
-                return NSKeyedUnarchiver.unarchiveObject(with: data) as? UIColor
-            }
+            return try? NSKeyedUnarchiver.unarchivedObject(ofClass: UIColor.self, from: data)
         }
     }
 
     func setColor(_ color: UIColor?, forKey key: String) {
         let data: Data? = given(color) { color in
-            if #available(iOS 11.0, *) {
-                return try? NSKeyedArchiver.archivedData(withRootObject: color, requiringSecureCoding: false)
-            } else {
-                return NSKeyedArchiver.archivedData(withRootObject: color)
-            }
+            return try? NSKeyedArchiver.archivedData(withRootObject: color, requiringSecureCoding: false)
         }
         set(data, forKey: key)
-    }
-
-    @available(swift, deprecated: 11.0, obsoleted: 50.0, message: "Please take advantage of 'Codable'")
-    func setArchivedData(_ object: Any?, forKey key: String) {
-        given(object) {
-            let data = NSKeyedArchiver.archivedData(withRootObject: $0)
-            set(data, forKey: key)
-        }
-    }
-
-    @available(swift, deprecated: 11.0, obsoleted: 50.0, message: "Please take advantage of 'Codable'")
-    func unarchiveObjectWithData(forKey key: String) -> Any? {
-        guard let object = object(forKey: key) else { return nil }
-        guard let data = object as? Data else { return nil }
-        return NSKeyedUnarchiver.unarchiveObject(with: data)
     }
 }
 
@@ -1707,8 +1987,8 @@ public extension UIImageView {
     }
 
     @IBInspectable var ignoresInvertColors: Bool {
-        get { if #available(iOS 11.0, *) { return accessibilityIgnoresInvertColors } else { return false } }
-        set { if #available(iOS 11.0, *) { accessibilityIgnoresInvertColors = newValue } }
+        get { return accessibilityIgnoresInvertColors }
+        set { accessibilityIgnoresInvertColors = newValue }
     }
 }
 
@@ -1737,15 +2017,22 @@ public extension UIImage {
         self.init(cgImage: image?.cgImage)
     }
 
-    @available(iOS 13.0, *)
+    @available(iOS 13.0, macCatalyst 13.1, *)
     convenience init?(systemName: String, pointSize: CGFloat, weight: UIImage.SymbolWeight = .regular) {
         self.init(systemName: systemName, withConfiguration: UIImage.SymbolConfiguration(pointSize: pointSize, weight: weight))
     }
 
-    var originalRender: UIImage { return withRenderingMode(.alwaysOriginal) }
-    var templateRender: UIImage { return withRenderingMode(.alwaysTemplate) }
+    var originalRender: UIImage {
+        return withRenderingMode(.alwaysOriginal)
+    }
 
-    func roundedScaledToSize(_ size: CGSize) -> UIImage { return (resize(to: size) ?? self).rounded() }
+    var templateRender: UIImage {
+        return withRenderingMode(.alwaysTemplate)
+    }
+
+    func roundedScaledToSize(_ size: CGSize) -> UIImage {
+        return (resize(to: size) ?? self).rounded()
+    }
 
     func rounded(radius: CGFloat? = nil) -> UIImage {
         let imageLayer = CALayer()
@@ -1861,8 +2148,7 @@ public extension UIImage {
         bitmapContext.setFillColor(color.cgColor)
         bitmapContext.fill(bounds)
         guard let cImage = bitmapContext.makeImage() else { return nil }
-        let coloredImage = UIImage(cgImage: cImage)
-        return coloredImage
+        return UIImage(cgImage: cImage)
     }
 
     /// Invert the color of the image, then return the new image
@@ -1897,10 +2183,22 @@ public extension Selector {
 
 // MARK: - - Dismiss view controller
 public extension UIViewController {
-    @objc func dismissAnimated() { dismiss(animated: true, completion: nil) }
-    @objc func dismissWithoutAnimation() { dismiss(animated: false, completion: nil) }
-    @objc func popViewControllerAnimated() { _ = navigationController?.popViewController(animated: true) }
-    @objc func popViewControllerWithoutAnimation() { _ = navigationController?.popViewController(animated: false) }
+    @objc func dismissAnimated() {
+        dismiss(animated: true, completion: nil)
+    }
+
+    @objc func dismissWithoutAnimation() {
+        dismiss(animated: false, completion: nil)
+    }
+
+    @objc func popViewControllerAnimated() {
+        _ = navigationController?.popViewController(animated: true)
+    }
+
+    @objc func popViewControllerWithoutAnimation() {
+        _ = navigationController?.popViewController(animated: false)
+    }
+
     func presentViewControllerWithPushAnimation(destinationVC: UIViewController, duration: TimeInterval = 0.25) {
         let transition = CATransition()
         transition.duration = duration
@@ -1939,7 +2237,10 @@ public extension UIViewController {
 // MARK: - UIViewController Extensions
 public extension UIViewController {
     /// Load view from nib. Note: File's Owner must be equal to the class name.
-    static func loadFromNib() -> Self { return loadFromNib(self) }
+    static func loadFromNib() -> Self {
+        return loadFromNib(self)
+    }
+
     private static func loadFromNib<T: UIViewController>(_ type: T.Type) -> T {
         return Bundle.main.loadNibNamed(String(describing: type), owner: self, options: nil)![0] as! T
     }
@@ -1952,7 +2253,7 @@ public extension UIViewController {
 
 // MARK: - Top Most View Controller
 /// Description: the toppest view controller of presenting view controller
-/// How to use:  UIApplication.shared.keyWindow?.rootViewController?.topMostViewController
+/// How to use:  UIApplication.shared.compatibleKeyWindow?.rootViewController?.topMostViewController
 /// Where to use: There are lots of kinds of controllers (UINavigationControllers, UITabbarControllers, UIViewController)
 extension UIViewController {
     @objc var topMostViewController: UIViewController? {
@@ -1974,7 +2275,9 @@ extension UITabBarController {
 
     var topVisibleViewController: UIViewController? {
         var top = selectedViewController
-        while top?.presentedViewController != nil { top = top?.presentedViewController }
+        while top?.presentedViewController != nil {
+            top = top?.presentedViewController
+        }
         return top
     }
 }
@@ -1994,9 +2297,6 @@ public extension UINavigationController {
         view.backgroundColor = UIColor.clear
         navigationBar.backgroundColor = UIColor.clear
     }
-
-    @available(iOS, deprecated, message: "please use: `makeNavBarCompletelyTransparent`")
-    func completelyTransparentBar() { makeNavBarCompletelyTransparent() }
 }
 
 // MARK: - UINavigationBar Extensions
@@ -2031,23 +2331,17 @@ public extension UINavigationBar {
 
 // MARK: - UIScrollView Extensions
 public extension UIScrollView {
-    var isAtBottom: Bool { return contentOffset.y == contentSize.height - bounds.size.height }
+    var isAtBottom: Bool {
+        return contentOffset.y == contentSize.height - bounds.size.height
+    }
+
     var isOnTop: Bool {
-        if #available(iOS 11.0, *) {
-            return contentOffset.y == -safeAreaInsets.top
-        } else {
-            return contentOffset.y == -contentInset.top
-        }
+        return contentOffset.y == -safeAreaInsets.top
     }
 
     @discardableResult
     func scrollToTop(animated: Bool = true) -> CGPoint {
-        let topOffset: CGFloat
-        if #available(iOS 11.0, *) {
-            topOffset = -safeAreaInsets.top
-        } else {
-            topOffset = -contentInset.top
-        }
+        let topOffset = -safeAreaInsets.top
         let point = CGPoint(x: 0, y: topOffset)
         setContentOffset(point, animated: animated)
         return point
@@ -2087,21 +2381,48 @@ public extension UIScrollView {
 // MARK: - PathUtilities
 public enum PathUtilities {}
 public extension PathUtilities {
-    static var documentDirectoryPath: String { return NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] }
-    static var documentDirectoryURL: URL { return URL(fileURLWithPath: documentDirectoryPath, isDirectory: true) }
-    static func documentURLForFile(_ named: String) -> URL { return documentDirectoryURL.appendingPathComponent(named) }
-    static var libraryDirectoryPath: String { return NSSearchPathForDirectoriesInDomains(.libraryDirectory, .userDomainMask, true)[0] }
-    static func libraryPathForFile(_ named: String) -> String { return (libraryDirectoryPath as NSString).appendingPathComponent(named) }
+    static var documentDirectoryPath: String {
+        return NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
+    }
+
+    static var documentDirectoryURL: URL {
+        return URL(fileURLWithPath: documentDirectoryPath, isDirectory: true)
+    }
+
+    static func documentURLForFile(_ named: String) -> URL {
+        return documentDirectoryURL.appendingPathComponent(named)
+    }
+
+    static var libraryDirectoryPath: String {
+        return NSSearchPathForDirectoriesInDomains(.libraryDirectory, .userDomainMask, true)[0]
+    }
+
+    static func libraryPathForFile(_ named: String) -> String {
+        return (libraryDirectoryPath as NSString).appendingPathComponent(named)
+    }
+
     static func documentPath(forResource: String, of type: String) -> URL {
         let documentsDirectory = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
         let resourcePath = ((documentsDirectory as NSString).appendingPathComponent(forResource) as NSString).appendingPathExtension(type)
         return URL(fileURLWithPath: resourcePath!)
     }
 
-    static var temporaryDirectoryPath: String { return NSTemporaryDirectory() }
-    static var cacheDirectoryPath: String { return NSSearchPathForDirectoriesInDomains(.cachesDirectory, .userDomainMask, true)[0] }
-    static func cacheURLForFile(_ named: String) -> URL { return URL(fileURLWithPath: cacheDirectoryPath).appendingPathComponent(named) }
-    static func cachePathForFile(_ named: String) -> String { return cacheURLForFile(named).absoluteString }
+    static var temporaryDirectoryPath: String {
+        return NSTemporaryDirectory()
+    }
+
+    static var cacheDirectoryPath: String {
+        return NSSearchPathForDirectoriesInDomains(.cachesDirectory, .userDomainMask, true)[0]
+    }
+
+    static func cacheURLForFile(_ named: String) -> URL {
+        return URL(fileURLWithPath: cacheDirectoryPath).appendingPathComponent(named)
+    }
+
+    static func cachePathForFile(_ named: String) -> String {
+        return cacheURLForFile(named).absoluteString
+    }
+
     static func appGroupDocumentPath(_ appGroupId: String) -> String? {
         guard let url = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: appGroupId) else { return nil }
         return url.absoluteString.replacingOccurrences(of: "file:", with: "", options: .literal, range: nil)
@@ -2172,8 +2493,14 @@ public extension PathUtilities {
 public typealias GradientPoints = (startPoint: CGPoint, endPoint: CGPoint)
 public enum GradientOrientation {
     case topRightBottomLeft, topLeftBottomRight, horizontal, vertical
-    fileprivate var startPoint: CGPoint { return points.startPoint }
-    fileprivate var endPoint: CGPoint { return points.endPoint }
+    fileprivate var startPoint: CGPoint {
+        return points.startPoint
+    }
+
+    fileprivate var endPoint: CGPoint {
+        return points.endPoint
+    }
+
     private var points: GradientPoints {
         switch self {
         case .topRightBottomLeft: return (CGPoint(x: 0.0, y: 1.0), CGPoint(x: 1.0, y: 0.0))
@@ -2243,7 +2570,9 @@ public extension UIStackView {
 
 public final class ASSpacer: UIView {
     @available(*, unavailable)
-    required init?(coder: NSCoder) { fatalError() }
+    required init?(coder: NSCoder) {
+        fatalError()
+    }
 
     /// Create a fixed size view, usually used in stack view.
     /// Set both width and height, so it can be used in both horizontal and vertical stack view.
@@ -2326,7 +2655,9 @@ public extension UILabel {
 // MARK: - Target Action Handler
 public extension Selector {
     /// Selectors can be used as unique `void *` keys, this gets that key.
-    var key: UnsafeRawPointer { return unsafeBitCast(self, to: UnsafeRawPointer.self) }
+    var key: UnsafeRawPointer {
+        return unsafeBitCast(self, to: UnsafeRawPointer.self)
+    }
 }
 
 public extension NSObject {
@@ -2342,9 +2673,17 @@ public extension NSObject {
 public class TargetActionHandler: NSObject {
     private let action: Closure
     fileprivate var removeAction: Closure?
-    fileprivate init(_ action: @escaping () -> Void) { self.action = action }
-    @objc fileprivate func invoke() { action() }
-    public func remove() { removeAction?() }
+    fileprivate init(_ action: @escaping () -> Void) {
+        self.action = action
+    }
+
+    @objc fileprivate func invoke() {
+        action()
+    }
+
+    public func remove() {
+        removeAction?()
+    }
 }
 
 public extension UIGestureRecognizer {
@@ -2404,7 +2743,10 @@ public extension UIBarButtonItem {
 // MARK: - ASTextField
 /// An UITextField with custom insets.
 public class ASTextField: UITextField {
-    public var insets: UIEdgeInsets = .zero { didSet { setNeedsDisplay() } }
+    public var insets: UIEdgeInsets = .zero {
+        didSet { setNeedsDisplay() }
+    }
+
     public convenience init(insets: UIEdgeInsets, textAlignment: NSTextAlignment = .left) {
         self.init()
         self.textAlignment = textAlignment
@@ -2423,7 +2765,10 @@ public class ASTextField: UITextField {
 // MARK: - ASLabel
 /// An UILabel with custom insets.
 public class ASLabel: UILabel {
-    public var insets: UIEdgeInsets = .zero { didSet { setNeedsDisplay() } }
+    public var insets: UIEdgeInsets = .zero {
+        didSet { setNeedsDisplay() }
+    }
+
     public convenience init(padding: UIEdgeInsets) {
         self.init()
         self.insets = padding
@@ -2495,97 +2840,17 @@ public enum Swizzler {
         NSLog("[\(filename.lastPathComponent):\(line)] \(function) - ❌ Error: \(String(describing: message))")
     }
 
-    public func ASPrint(_ any: Any?) { print(any ?? "nil") }
-    public func ASPrint(_ any: Any?, prefix: String = "", suffix: String = "") { print(prefix + String(describing: any) + suffix) }
-
-    // MARK: - Depracated
-    @available(iOS, deprecated, message: "please use: ASLog")
-    public func asLog(_ message: Any?, filename: NSString = #file, function: String = #function, line: Int = #line) {
-        NSLog("[\(filename.lastPathComponent):\(line)] \(function) - \(String(describing: message))")
+    public func ASPrint(_ any: Any?) {
+        print(any ?? "nil")
     }
 
-    @available(iOS, deprecated, message: "please use: ASPrint")
-    public func asPrint(_ any: Any?) { print(any ?? "nil") }
-    @available(iOS, deprecated, message: "please use: ASPrint")
-    public func asPrint(_ any: Any?, prefix: String = "", suffix: String = "") { print(prefix + String(describing: any) + suffix) }
+    public func ASPrint(_ any: Any?, prefix: String = "", suffix: String = "") {
+        print(prefix + String(describing: any) + suffix)
+    }
 #else
     public func ASLog(_ message: Any?, filename: NSString = #file, function: String = #function, line: Int = #line) {}
     public func ASWarn(_ message: Any?, filename: NSString = #file, function: String = #function, line: Int = #line) {}
     public func ASError(_ message: Any?, filename: NSString = #file, function: String = #function, line: Int = #line) {}
     public func ASPrint(_ any: Any?) {}
     public func ASPrint(_ any: Any?, prefix: String = "", suffix: String = "") {}
-
-    // MARK: - Depracated
-    @available(iOS, deprecated, message: "please use: ASLog")
-    public func asLog(_ message: Any?, filename: NSString = #file, function: String = #function, line: Int = #line) {}
-    @available(iOS, deprecated, message: "please use: ASPrint")
-    public func asPrint(_ any: Any?) {}
-    @available(iOS, deprecated, message: "please use: ASPrint")
-    public func asPrint(_ any: Any?, prefix: String = "", suffix: String = "") {}
 #endif
-
-// MARK: - Deprecated
-public extension UIViewController {
-    @available(iOS, deprecated, message: "Will be removed!")
-    func configureScreenEdgeDismissGesture(_ edges: UIRectEdge = .left, animated: Bool = true, alsoForPad: Bool = true) {
-        let action = animated ? #selector(dismissAnimated) : #selector(dismissWithoutAnimation)
-        configureScreenEdgeGestures(edges, alsoForPad: alsoForPad, action: action)
-    }
-
-    @available(iOS, deprecated, message: "Will be removed!")
-    func configureScreenEdgePopGesture(_ edges: UIRectEdge = .left, animated: Bool = true, alsoForPad: Bool = true) {
-        let action = animated ? #selector(popViewControllerAnimated) : #selector(popViewControllerWithoutAnimation)
-        configureScreenEdgeGestures(edges, alsoForPad: alsoForPad, action: action)
-    }
-
-    @available(iOS, deprecated, message: "Will be removed!")
-    func configureScreenEdgeGestures(_ edges: UIRectEdge = .left, alsoForPad: Bool = true, action: Selector) {
-        if UIDevice.current.userInterfaceIdiom == .pad && !alsoForPad { return }
-        view.isUserInteractionEnabled = true
-        func left() {
-            let gesture = UIScreenEdgePanGestureRecognizer(target: self, action: action)
-            gesture.edges = .left
-            view.addGestureRecognizer(gesture)
-        }
-        func right() {
-            let gesture = UIScreenEdgePanGestureRecognizer(target: self, action: action)
-            gesture.edges = .right
-            view.addGestureRecognizer(gesture)
-        }
-        if edges == .left {
-            left()
-        } else if edges == .right {
-            right()
-        } else if edges == [.left, .right] {
-            left()
-            right()
-        }
-    }
-
-    /// one of these two parameters must not be nil
-    @available(iOS, deprecated, message: "Will be removed!")
-    func configureEdgeGestures(leftEdgeAction: Selector? = nil, rightEdgeAction: Selector? = nil, alsoForPad: Bool = true) {
-        if let la = leftEdgeAction { configureScreenEdgeGestures(.left, alsoForPad: alsoForPad, action: la) }
-        if let ra = rightEdgeAction { configureScreenEdgeGestures(.right, alsoForPad: alsoForPad, action: ra) }
-    }
-}
-
-public extension UIButton {
-    @available(iOS, deprecated, message: "Will be removed!")
-    func hideAndDisableButton(_ flag: Bool, duration: TimeInterval = 0.3, animated: Bool = false, closure: Closure? = nil) {
-        isEnabled = !flag
-        isAccessibilityElement = isEnabled
-        guard animated else {
-            isHidden = flag
-            closure?()
-            return
-        }
-        UIView.animate(withDuration: duration, animations: {
-            self.alpha = flag ? 0 : 1
-        }) { _ in
-            self.isHidden = flag
-            self.alpha = 1
-            closure?()
-        }
-    }
-}
