@@ -1,1 +1,1 @@
-/Users/Augus/Documents/Developer/env/scripts/bump_project_version.sh
+../../../../env/scripts/bump_project_version.sh
