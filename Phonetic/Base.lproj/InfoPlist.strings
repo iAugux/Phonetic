@@ -1,9 +1,0 @@
-/* 
-  InfoPlist.strings
-  Phonetic
-
-  Created by Augus on 7/18/16.
-  Copyright © 2016 iAugus. All rights reserved.
-*/
-
-"NSContactsUsageDescription" = "'Phonetic Contacts' needs to write phonetic keys to your Contacts in order to sort your contacts.";

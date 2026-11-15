@@ -1,0 +1,42 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "CFBundleName" : {
+      "comment" : "Bundle name",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Phonetic"
+          }
+        }
+      },
+      "shouldTranslate" : false
+    },
+    "NSContactsUsageDescription" : {
+      "comment" : "Privacy - Contacts Usage Description",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Phonetic needs access to your contacts to add pinyin, save search initials, and clear the fields you select."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Phonetic 需要访问通讯录，以添加姓名拼音、保存搜索首字母，并清除你选择的字段。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Phonetic 需要取用聯絡人，以加入姓名拼音、儲存搜尋用的姓名首字母，並清除你選取的欄位。"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.1"
+}

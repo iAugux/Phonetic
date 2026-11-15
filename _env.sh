@@ -1,0 +1,1 @@
+/Users/Augus/Documents/Developer/env/scripts/_env.sh

@@ -1,0 +1,140 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+ENV['FASTLANE_XCODEBUILD_SETTINGS_TIMEOUT'] = '10'
+ENV['FASTLANE_XCODEBUILD_SETTINGS_RETRIES'] = '6'
+Spaceship::ConnectAPI::App.const_set('ESSENTIAL_INCLUDES', 'appStoreVersions')
+
+default_platform(:ios)
+
+current_app_version = "26.10.20"
+app_bundle_name = "Phonetic"
+
+# Common method to load API key for both iOS and macOS
+def retrieve_api_key
+  auth_folder_path = File.expand_path("~/Documents/auth")
+  key_id_path = File.join(auth_folder_path, "itc_key_config.yml")
+
+  # Read the key_id and issuer_id from the api_key_config.yml file
+  key_id_config = YAML.load_file(key_id_path)
+  key_id = key_id_config["key_id"]
+  issuer_id = key_id_config["issuer_id"]
+
+  key_filename = "itc_auth_key.p8"
+  key_filepath = File.join(auth_folder_path, key_filename)
+
+  # Print key_filepath, key_id, and issuer_id for debugging
+  puts "Using API key: #{key_filepath}"
+  puts "Using key_id: #{key_id}"
+  puts "Using issuer_id: #{issuer_id}"
+  
+  api_key = app_store_connect_api_key(
+    key_id: "#{key_id}",
+    issuer_id: "#{issuer_id}",
+    key_filepath: key_filepath,
+    duration: 1200, # optional (maximum 1200)
+    in_house: false # optional but may be required if using match/sigh
+  )
+end
+
+# Git push
+def gitpush
+  push_to_git_remote(
+    remote: "origin", # optional, default: "origin"
+    tags: false, # optional, default: true
+    no_verify: true, # optional, default: false
+  )
+end
+
+platform :ios do
+  desc "Update metadata on the apple connect for iOS"
+  lane :metadata do 
+    # Delete pkg file for macOS otherwise fastlane may not upload iOS metadata 😞
+    File.delete("../#{app_bundle_name}.pkg") if File.exist?("../#{app_bundle_name}.pkg")
+    retrieve_api_key
+    deliver(
+      app_version: current_app_version,
+      copyright: "2016-#{Time.now.year} iAugus",
+      platform: "ios",
+      metadata_path: "./fastlane/metadata/ios",
+      screenshots_path: "./fastlane/screenshots/ios",
+      skip_screenshots: true,
+      skip_metadata: false,
+      skip_binary_upload: true,
+      automatic_release: false,
+      precheck_include_in_app_purchases: false,
+      force: true # Skip HTML report verification
+    )
+  end
+
+  desc "Push a new beta build to TestFlight for iOS"
+  lane :beta do
+    # Ensure that your git status is not dirty
+    ensure_git_status_clean
+    retrieve_api_key
+    # Increment the build number (not the version number)
+    # Providing the xcodeproj is optional
+    increment_build_number(
+      xcodeproj: "#{app_bundle_name}.xcodeproj",
+      build_number: [latest_testflight_build_number.to_i, get_build_number.to_i].max + 1
+    )
+    # Commit the version bump
+    commit_version_bump(
+      xcodeproj: "#{app_bundle_name}.xcodeproj",
+      no_verify: true
+    )
+    # Delete pkg file for macOS
+    File.delete("../#{app_bundle_name}.pkg") if File.exist?("../#{app_bundle_name}.pkg")
+    build_ios_app(
+      scheme: "#{app_bundle_name}",
+      export_xcargs: '-allowProvisioningUpdates',
+      xcargs: '-allowProvisioningUpdates'
+    )
+    upload_to_testflight(
+      app_platform: "ios",
+      skip_submission: true
+    )
+  end
+
+  desc "Submit latest build for Apple Review for iOS"
+  lane :review do 
+    retrieve_api_key
+    deliver(
+      platform: "ios",
+      metadata_path: "./fastlane/metadata/ios",
+      screenshots_path: "./fastlane/screenshots/ios",
+      submit_for_review: true,
+      automatic_release: false,
+      phased_release: true,
+      skip_metadata: true,
+      skip_screenshots: true,
+      skip_binary_upload: true,
+      precheck_include_in_app_purchases: false,
+      run_precheck_before_submit: false,
+      force: true, # Skip HTML report verification
+      submission_information: {
+        add_id_info_uses_idfa: false
+      }
+    )
+    gitpush
+  end
+
+  desc "Update metadate & build & submit for review for iOS"
+  lane :all do
+    metadata
+    beta
+    review
+  end
+end
