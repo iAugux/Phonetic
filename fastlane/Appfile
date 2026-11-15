@@ -1,0 +1,8 @@
+app_identifier("com.iAugus.Phonetic") # The bundle identifier of your app
+apple_id("iaugux@gmail.com") # Your Apple email address
+
+itc_team_id("118051329") # App Store Connect Team ID
+team_id("J4Z2NCTR3S") # Developer Portal Team ID
+
+# For more information about the Appfile, see:
+#     https://docs.fastlane.tools/advanced/#appfile

@@ -2,27 +2,59 @@ name: Build iOS
 
 on:
   push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+    branches: [master]
+
+permissions:
+  contents: read
 
 jobs:
-  build:
-    name: Build
-    runs-on: macos-11
-    strategy:
-        matrix:
-          destination: ['platform=iOS Simulator,OS=15.0,name=iPhone 13 Pro']
+  test:
+    name: Build and test
+    runs-on: xcode-27
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
-      - name: Setup Xcode version
-        uses: maxim-lobanov/setup-xcode@v1.3.0
-        with: 
-          xcode-version: '13.0'
-      - name: Build
+        uses: actions/checkout@v7
+      - name: Select an available iPhone simulator
+        id: simulator
+        shell: bash
         run: |
-          ls -la
-          xcodebuild clean build -project Phonetic.xcodeproj -scheme "Phonetic" -destination "${destination}" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO ONLY_ACTIVE_ARCH=NO
-        env: 
-         destination: ${{ matrix.destination }}
+          python3 - <<'PY'
+          import json
+          import os
+          import subprocess
+
+          def version(value):
+              return tuple(int(part) for part in value.split("."))
+
+          catalog = json.loads(subprocess.check_output(["xcrun", "simctl", "list", "--json"]))
+          sdk = version(subprocess.check_output(
+              ["xcrun", "--sdk", "iphonesimulator", "--show-sdk-version"], text=True).strip())
+          runtimes = sorted(catalog["runtimes"], key=lambda runtime: version(runtime["version"]), reverse=True)
+          for runtime in runtimes:
+              if not runtime["identifier"].startswith("com.apple.CoreSimulator.SimRuntime.iOS-"):
+                  continue
+              if not runtime.get("isAvailable") or version(runtime["version"])[:2] > sdk[:2]:
+                  continue
+              devices = [device for device in catalog["devices"].get(runtime["identifier"], [])
+                         if device.get("isAvailable") and device.get("deviceTypeIdentifier", "").startswith(
+                             "com.apple.CoreSimulator.SimDeviceType.iPhone-")]
+              if not devices:
+                  continue
+              device = min(devices, key=lambda device: (device.get("state") != "Booted", device["name"], device["udid"]))
+              with open(os.environ["GITHUB_OUTPUT"], "a") as output:
+                  output.write(f'udid={device["udid"]}\n')
+              print(f'Selected {device["name"]} ({runtime["version"]}), UDID: {device["udid"]}')
+              break
+          else:
+              raise SystemExit("No available iPhone simulator is compatible with the selected Xcode SDK.")
+          PY
+      - name: Build and test
+        run: |
+          xcodebuild test \
+            -project Phonetic.xcodeproj \
+            -scheme Phonetic \
+            -configuration Debug \
+            -destination 'platform=iOS Simulator,id=${{ steps.simulator.outputs.udid }}' \
+            -parallel-testing-enabled NO \
+            CODE_SIGNING_ALLOWED=NO \
+            SWIFT_EMIT_LOC_STRINGS=NO

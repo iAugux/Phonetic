@@ -1,6 +1,6 @@
 # Phonetic
 [![Build iOS](https://github.com/iAugux/Phonetic/actions/workflows/build_ios.yml/badge.svg)](https://github.com/iAugux/Phonetic/actions/workflows/build_ios.yml)
-![Language](https://img.shields.io/badge/language-Swift%205.5-orange.svg)
+![Language](https://img.shields.io/badge/language-Swift%206-orange.svg)
 [![License](https://img.shields.io/badge/License-CC%20Attribution--NonCommercial-E5EC00.svg)](https://creativecommons.org/licenses/by-nc/4.0/)
 [![Homepage](https://img.shields.io/badge/Homepage-iAugus-9021C5.svg)](http://iAugus.com)
 [![Tweet](https://img.shields.io/badge/Tweet-%40iAugux-1B95E0.svg)](https://twitter.com/iaugux)
@@ -22,7 +22,7 @@
 ###### Helping add more polyphonic characters will be welcome.
 
 ##### 2. Supporting Nickname keys
-###### e.g: If the original name is `叶紫萱`, the nickname will be `YZX`. After adding the key, you can quickly search the name by entering `YZX`(not case-sensitive).
+###### e.g: If the original name is `林沐晴`, the nickname will be `LMQ`. After adding the key, you can quickly search the name by entering `LMQ`(not case-sensitive).
 
 <div>
 <img src="https://raw.githubusercontent.com/iAugux/ProjectScreenshots/master/Phonetic/nickname.gif" width="272" height=480"/>
@@ -37,9 +37,9 @@
 ##### 2. Add Manual to lead developers to help add more polyphonic characters
 ###### Thanks in advance.
 ## Requirements
-- iOS 9.0+
-- Swift 5
-- Xcode 13.4+
+- iOS 17.0+
+- Swift 6
+- Xcode 27+
 
 ## Video Preview
 ##### On Youtube
@@ -76,18 +76,15 @@
 [![Star History Chart](https://api.star-history.com/svg?repos=iAugux/Phonetic&type=Date)](https://star-history.com/#iAugux/Phonetic&Date)
 
 ## Thanks to
-* [`PhoneticContacts`](https://github.com/lexrus/PhoneticContacts) by [`Lexrus`](https://github.com/lexrus) for heavy inspiration.
+* [`PhoneticContacts`](https://github.com/lexrus/PhoneticContacts) by `Lexrus` for heavy inspiration.
 
-* [`ARSLineProgress`](https://github.com/soberman/ARSLineProgress)
 
-* [`BlurActionSheet`](https://github.com/iAugux/BlurActionSheet)
 
-* [`KDCircularProgress`](https://github.com/kaandedeoglu/KDCircularProgress)
 
-* [`StarWars.iOS`](https://github.com/Yalantis/StarWars.iOS)
+
 ## License
 `Phonetic` is available under the [`CC Attribution-NonCommercial  License`](https://creativecommons.org/licenses/by-nc/4.0/).
 
 `Please do NOT repackage and submit to App Store.`
 
-Copyright © 2022 iAugus
+Copyright © 2019 iAugus

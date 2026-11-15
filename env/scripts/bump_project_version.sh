@@ -1,0 +1,1 @@
+/Users/Augus/Documents/Developer/env/scripts/bump_project_version.sh
