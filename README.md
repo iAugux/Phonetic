@@ -78,10 +78,6 @@ Bug reports and contributions are welcome. For pronunciation corrections, includ
 <img src="https://raw.githubusercontent.com/iAugux/ProjectScreenshots/master/Phonetic/2.png" alt="Older Phonetic interface, screen 2" width="272" height="1045">
 </div>
 
-<div>
-<img src="https://raw.githubusercontent.com/iAugux/ProjectScreenshots/master/Phonetic/3.png" alt="Older Phonetic interface, screen 3" width="272" height="480">
-</div>
-
 ## Star History
 
 [![Star History Chart](https://api.star-history.com/svg?repos=iAugux/Phonetic&type=Date)](https://star-history.com/#iAugux/Phonetic&Date)
