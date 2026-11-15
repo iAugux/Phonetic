@@ -32,8 +32,8 @@ private final class ProcessingService: ContactProcessingService {
         await execute(resultHandler: resultHandler)
     }
 
-    func progress(_ percentage: Double) {
-        resultHandler?(nil, percentage)
+    func progress(_ percentage: Double, result: String? = nil) {
+        resultHandler?(result, percentage)
     }
 
     func finish(aborted: Bool) {
@@ -69,6 +69,23 @@ private final class CompletionDelay {
 
 @MainActor
 struct AppStateTests {
+    @Test("Progress-only callbacks preserve the last pinyin result and success still finishes at 100 percent")
+    static func progressPreservesResult() async throws {
+        let engine = ProcessingService(), delay = CompletionDelay()
+        let state = state(engine: engine, delay: delay)
+        defer { engine.finish(aborted: true); delay.release() }
+        state.execute()
+        try await waitUntil { engine.starts == 1 }
+        engine.progress(25, result: "Lin Mu Qing")
+        engine.progress(75)
+        #expect(state.percentage == 75 && state.statusText == "Lin Mu Qing")
+        engine.finish(aborted: false)
+        try await waitUntil { delay.waiting }
+        #expect(state.percentage == 100 && state.statusText == ContactOperationOutcome.completed.status)
+        delay.release()
+        try await waitUntil { !state.isProcessing }
+    }
+
     @Test("Processing failures expose an actionable error instead of reporting completion")
     static func failedProcessing() async throws {
         let engine = ProcessingService(), delay = CompletionDelay()

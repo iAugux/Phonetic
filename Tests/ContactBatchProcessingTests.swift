@@ -157,9 +157,9 @@ private final class BatchFixture {
         try? FileManager.default.removeItem(at: root)
     }
 
-    func run(clearing: Bool) async -> ContactOperationOutcome {
-        if clearing { return await engine.cleanMandarinLatinPhonetic { _, _ in } }
-        return await engine.execute { _, _ in }
+    func run(clearing: Bool, resultHandler: @escaping PhoneticContacts.ResultHandler = { _, _ in }) async -> ContactOperationOutcome {
+        if clearing { return await engine.cleanMandarinLatinPhonetic(resultHandler: resultHandler) }
+        return await engine.execute(resultHandler: resultHandler)
     }
 }
 
@@ -340,6 +340,68 @@ struct ContactBatchProcessingTests {
         #expect(client.updates.last?.checked == 3 && client.updates.last?.total == 3)
         #expect(client.completions == [true] && f.source.writes == 1)
         #expect(try await f.history.versions().first?.status == .completed)
+    }
+
+    @Test("Foreground progress advances once per checked contact, including trailing skips", arguments: [false, true])
+    static func foregroundProgress(clearing: Bool) async throws {
+        let protected = contact()
+        let f = try BatchFixture(contacts: [contact(), protected, CNMutableContact(), CNMutableContact()])
+        defer { f.cleanup() }
+        f.defaults.set([protected.identifier], forKey: kWhitelistIdentifiersKey)
+        var updates: [(String?, Double)] = []
+        let outcome = await f.run(clearing: clearing) { updates.append(($0, $1)) }
+        #expect(outcome == .completed)
+        #expect(updates.map { $0.1 } == [25, 50, 75, 100])
+        #expect(updates.map { $0.0 } == Array(repeating: clearing ? nil : "Lin Mu Qing", count: 4))
+        #expect(f.source.writes == 1)
+    }
+
+    @Test("All-whitelisted batches report foreground progress without producing result text", arguments: [false, true])
+    static func allWhitelistedProgress(clearing: Bool) async throws {
+        let contacts = [contact(), contact()]
+        let f = try BatchFixture(contacts: contacts)
+        defer { f.cleanup() }
+        f.defaults.set(contacts.map(\.identifier), forKey: kWhitelistIdentifiersKey)
+        var updates: [(String?, Double)] = []
+        #expect(await f.run(clearing: clearing) { updates.append(($0, $1)) } == .completed)
+        #expect(updates.map { $0.1 } == [50, 100] && updates.allSatisfy { $0.0 == nil })
+        #expect(f.source.writes == 0)
+        #expect(try await f.history.versions().isEmpty)
+    }
+
+    @Test("Company conversion reports its result and trailing empty contacts keep it visible")
+    static func companyProgress() async throws {
+        let company = CNMutableContact()
+        company.organizationName = "林"
+        let f = try BatchFixture(contacts: [company, CNMutableContact()])
+        defer { f.cleanup() }
+        f.defaults.set(true, forKey: kMassageCompanyKey)
+        var updates: [(String?, Double)] = []
+        #expect(await f.run(clearing: false) { updates.append(($0, $1)) } == .completed)
+        #expect(updates.map { $0.1 } == [50, 100])
+        #expect(updates.map { $0.0 } == ["Lin", "Lin"] && f.source.writes == 1)
+    }
+
+    @Test("Empty batches finish at 100 percent in AppState", arguments: [false, true])
+    static func emptyBatchCompletion(clearing: Bool) async throws {
+        let f = try BatchFixture(contacts: [])
+        defer { f.cleanup() }
+        let state = AppState(contactProvider: { f.engine }, requestAccess: { true }, announce: { _ in }, waitForCompletion: {})
+        if clearing { state.performClean() } else { state.execute() }
+        try await waitUntil { state.lastOutcome == .completed && !state.isProcessing }
+        #expect(state.percentage == 100 && state.statusText == ContactOperationOutcome.completed.status)
+        #expect(f.source.writes == 0)
+    }
+
+    @Test("A partial batch failure keeps actual foreground progress instead of forcing 100 percent")
+    static func partialFailureProgress() async throws {
+        let f = try BatchFixture(contacts: [contact(), contact(), contact(), contact()], failWrite: 2)
+        defer { f.cleanup() }
+        let state = AppState(contactProvider: { f.engine }, requestAccess: { true }, announce: { _ in }, waitForCompletion: {})
+        state.execute()
+        try await waitUntil { state.lastOutcome != nil && !state.isProcessing }
+        #expect(state.lastOutcome == .failed(.saveFailed) && state.percentage == 25)
+        #expect(f.source.writes == 1)
     }
 
     @Test("Editor saves use the injected history and release the engine for subsequent batches")

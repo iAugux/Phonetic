@@ -102,7 +102,7 @@ final class AppState: ObservableObject {
             self.isProcessing = true
 
             let aborted = await self.contactProvider().execute { currentResult, percentage in
-                self.statusText = currentResult ?? ""
+                if let currentResult { self.statusText = currentResult }
                 self.percentage = percentage
             }
             self.promptCompletion(aborted)

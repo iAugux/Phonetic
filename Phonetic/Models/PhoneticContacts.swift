@@ -81,7 +81,7 @@ final class PhoneticContacts: @unchecked Sendable {
     private enum ProcessingEvent: Sendable {
         case count(Int)
         case visited(checked: Int, total: Int)
-        case result(String?, Double)
+        case result(String)
     }
 
     @MainActor func execute(resultHandler: @escaping ResultHandler) async -> ContactOperationOutcome {
@@ -183,6 +183,7 @@ final class PhoneticContacts: @unchecked Sendable {
 
     @MainActor private func processContactEvents(clearing: Bool, session: ContactVersionSession, task: ContactProcessingTask, resultHandler: @escaping ResultHandler) async -> ContactOperationOutcome {
         let (events, continuation) = AsyncStream<ProcessingEvent>.makeStream()
+        var latestResult: String?
         // Consume one ordered stream so completion cannot overtake queued progress updates.
         async let worker = processContactStore(clearing: clearing, session: session, continuation: continuation)
         for await event in events {
@@ -192,8 +193,10 @@ final class PhoneticContacts: @unchecked Sendable {
                 task.update(checked: 0, total: count)
             case .visited(let checked, let total):
                 task.update(checked: checked, total: total)
-            case .result(let result, let percentage):
-                handlingResult(resultHandler, result: result, percentage: percentage)
+                // Publish once per checked contact, including skips, without losing the last result.
+                handlingResult(resultHandler, result: latestResult, percentage: currentPercentage(checked, total: total))
+            case .result(let result):
+                latestResult = result
             }
         }
         return await worker
@@ -253,7 +256,7 @@ final class PhoneticContacts: @unchecked Sendable {
                     do { try session.save(original: contact, modified: mutableContact) }
                     catch { outcome = .failed((error as? ContactVersionError) ?? .saveFailed); stop.pointee = true; return }
                     let result = phoneticFamilyResult + " " + phoneticGivenResult
-                    continuation.yield(.result(result, self.currentPercentage(index, total: count)))
+                    continuation.yield(.result(result))
 
                 } else if self.massageCompanyKey, !contact.organizationName.isEmpty, mutableContact.isKeyAvailable(CNContactOrganizationNameKey), let company = mutableContact.value(forKey: CNContactOrganizationNameKey) as? String {
                     mutableContact.setValue(company, forKey: CNContactGivenNameKey)
@@ -264,6 +267,7 @@ final class PhoneticContacts: @unchecked Sendable {
                         self.addPhoneticNameForQuickSearchIfNeeded(mutableContact, givenBrief: phoneticCompany.brief)
                         do { try session.save(original: contact, modified: mutableContact) }
                         catch { outcome = .failed((error as? ContactVersionError) ?? .saveFailed); stop.pointee = true; return }
+                        continuation.yield(.result(phoneticCompany.value))
                     }
                 }
             }
@@ -298,7 +302,6 @@ final class PhoneticContacts: @unchecked Sendable {
                 self.removePhoneticKeysIfNeeded(mutableContact)
                 do { try session.save(original: contact, modified: mutableContact) }
                 catch { outcome = .failed((error as? ContactVersionError) ?? .saveFailed); stop.pointee = true; return }
-                continuation.yield(.result(nil, self.currentPercentage(index, total: count)))
             }
             continuation.yield(.visited(checked: index, total: count))
             index += 1
@@ -382,6 +385,7 @@ final class PhoneticContacts: @unchecked Sendable {
     }
 
     private func currentPercentage(_ index: Int, total: Int) -> Double {
+        guard total > 0 else { return 100 }
         let percentage = Double(index) / Double(total) * 100
         return min(percentage, 100)
     }
