@@ -3,6 +3,17 @@ import Contacts
 import Foundation
 import os
 import Testing
+import UIKit
+
+private let lowTimeWarning = String(localized: "Background time is running low. Open Phonetic to continue processing.")
+private let completionNotice = String(localized: "Your contacts have been updated.")
+
+@MainActor
+private final class BatchNotificationEnvironment {
+    var state: UIApplication.State = .background
+    var remainingTime: TimeInterval = 5
+    var notifications: [String] = []
+}
 
 private final class BatchGate: @unchecked Sendable {
     // Synchronous Contacts callbacks wait on a worker thread; the test always opens the gate.
@@ -46,15 +57,17 @@ private final class BatchContactStore: CNContactStore, ContactVersionSource, @un
     let failEnumeration: Bool
     let gate: BatchGate?
     let pauseAfterWrite: Bool
+    let pauseWriteNumber: Int
 
     init(contacts: [CNContact], failWrite: Int? = nil, failAfterWrite: Bool = false,
-         failEnumeration: Bool = false, gate: BatchGate? = nil, pauseAfterWrite: Bool = false) {
+         failEnumeration: Bool = false, gate: BatchGate? = nil, pauseAfterWrite: Bool = false, pauseWriteNumber: Int = 1) {
         state = OSAllocatedUnfairLock(uncheckedState: State(contacts: contacts.map { $0.copy() as! CNContact }))
         self.failWrite = failWrite
         self.failAfterWrite = failAfterWrite
         self.failEnumeration = failEnumeration
         self.gate = gate
         self.pauseAfterWrite = pauseAfterWrite
+        self.pauseWriteNumber = pauseWriteNumber
         super.init()
     }
 
@@ -79,7 +92,7 @@ private final class BatchContactStore: CNContactStore, ContactVersionSource, @un
             state.writes += 1
             return state.writes
         }
-        if written == 1, pauseAfterWrite { gate?.wait() }
+        if written == pauseWriteNumber, pauseAfterWrite { gate?.wait() }
         if written == failWrite, failAfterWrite { throw ContactVersionError.saveFailed }
     }
 
@@ -135,13 +148,17 @@ private final class BatchFixture {
 
     init(contacts: [CNContact], failWrite: Int? = nil, failAfterWrite: Bool = false,
          failEnumeration: Bool = false, gate: BatchGate? = nil, pauseAfterWrite: Bool = false,
-         processingTask: ContactProcessingTask? = nil) throws {
+         processingTask: ContactProcessingTask? = nil, pauseWriteNumber: Int = 1,
+         notificationEnvironment: BatchNotificationEnvironment? = nil) throws {
         defaults = try #require(UserDefaults(suiteName: suite))
         source = BatchContactStore(contacts: contacts, failWrite: failWrite, failAfterWrite: failAfterWrite,
-                                   failEnumeration: failEnumeration, gate: gate, pauseAfterWrite: pauseAfterWrite)
+                                   failEnumeration: failEnumeration, gate: gate, pauseAfterWrite: pauseAfterWrite, pauseWriteNumber: pauseWriteNumber)
         history = ContactVersionStore(root: root, source: source)
         engine = PhoneticContacts(userDefaults: defaults, contactStore: source, versionStore: history,
-                                  processingTask: processingTask ?? ContactProcessingTask(client: nil))
+                                  processingTask: processingTask ?? ContactProcessingTask(client: nil),
+                                  applicationState: { notificationEnvironment?.state ?? UIApplication.shared.applicationState },
+                                  backgroundTimeRemaining: { notificationEnvironment?.remainingTime ?? UIApplication.shared.backgroundTimeRemaining },
+                                  notificationHandler: { notificationEnvironment?.notifications.append($0) })
         defaults.set(false, forKey: kFixPolyphonicChar)
         defaults.set(false, forKey: kUseTones)
         defaults.set(false, forKey: kUpcasePinyin)
@@ -340,6 +357,58 @@ struct ContactBatchProcessingTests {
         #expect(client.updates.last?.checked == 3 && client.updates.last?.total == 3)
         #expect(client.completions == [true] && f.source.writes == 1)
         #expect(try await f.history.versions().first?.status == .completed)
+    }
+
+    @Test("Low-background-time warnings occur once per operation despite skips and rejected concurrent work", arguments: [false, true])
+    static func backgroundWarningOnce(clearing: Bool) async throws {
+        let gate = BatchGate(), environment = BatchNotificationEnvironment()
+        let protected = contact()
+        let f = try BatchFixture(contacts: [contact(), contact(), contact(), protected, CNMutableContact()],
+                                 gate: gate, pauseAfterWrite: true, pauseWriteNumber: 2, notificationEnvironment: environment)
+        defer { gate.open(); f.cleanup() }
+        f.defaults.set([protected.identifier], forKey: kWhitelistIdentifiersKey)
+        let run = Task { await f.run(clearing: clearing) }
+        try await waitUntil { gate.entered && environment.notifications == [lowTimeWarning] }
+        #expect(await f.run(clearing: !clearing) == .failed(.busy))
+        gate.open()
+        #expect(await run.value == .completed)
+        #expect(environment.notifications == [lowTimeWarning, completionNotice])
+        #expect(await f.run(clearing: clearing) == .completed)
+        #expect(environment.notifications == [lowTimeWarning, completionNotice, lowTimeWarning, completionNotice])
+        #expect(f.source.writes == 3)
+    }
+
+    @Test("Foreground and inactive processing never submit background warnings", arguments: [UIApplication.State.active, .inactive])
+    static func foregroundDoesNotWarn(state: UIApplication.State) async throws {
+        let environment = BatchNotificationEnvironment()
+        environment.state = state
+        let f = try BatchFixture(contacts: [contact(), CNMutableContact()], notificationEnvironment: environment)
+        defer { f.cleanup() }
+        #expect(await f.run(clearing: false) == .completed)
+        #expect(environment.notifications.isEmpty && f.source.writes == 1)
+    }
+
+    @Test("Adequate background time suppresses warnings without suppressing completion", arguments: [10.0, 60.0])
+    static func adequateBackgroundTime(remainingTime: Double) async throws {
+        let environment = BatchNotificationEnvironment()
+        environment.remainingTime = remainingTime
+        let f = try BatchFixture(contacts: [contact(), CNMutableContact()], notificationEnvironment: environment)
+        defer { f.cleanup() }
+        #expect(await f.run(clearing: false) == .completed)
+        #expect(environment.notifications == [completionNotice])
+    }
+
+    @Test("Native processing owns notifications after attaching, even with low UIKit background time", arguments: [false, true])
+    static func nativeTaskSuppressesWarnings(clearing: Bool) async throws {
+        let gate = BatchGate(), client = BatchProcessingClient(), environment = BatchNotificationEnvironment()
+        let f = try BatchFixture(contacts: [contact(), CNMutableContact()], gate: gate,
+                                 processingTask: ContactProcessingTask(client: client), notificationEnvironment: environment)
+        defer { gate.open(); f.cleanup() }
+        let run = Task { await f.run(clearing: clearing) }
+        try await waitUntil { gate.entered && client.attached }
+        gate.open()
+        #expect(await run.value == .completed)
+        #expect(environment.notifications.isEmpty && client.completions == [true])
     }
 
     @Test("Foreground progress advances once per checked contact, including trailing skips", arguments: [false, true])

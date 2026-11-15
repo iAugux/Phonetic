@@ -15,11 +15,17 @@ final class PhoneticContacts: @unchecked Sendable {
     static let shared = PhoneticContacts()
 
     init(userDefaults: UserDefaults, contactStore: CNContactStore = CNContactStore(),
-         versionStore: ContactVersionStore = .shared, processingTask: ContactProcessingTask? = nil) {
+         versionStore: ContactVersionStore = .shared, processingTask: ContactProcessingTask? = nil,
+         applicationState: @escaping @MainActor @Sendable () -> UIApplication.State = { UIApplication.shared.applicationState },
+         backgroundTimeRemaining: @escaping @MainActor @Sendable () -> TimeInterval = { UIApplication.shared.backgroundTimeRemaining },
+         notificationHandler: (@MainActor @Sendable (String) -> Void)? = nil) {
         self.userDefaults = userDefaults
         self.contactStore = contactStore
         self.versionStore = versionStore
         self.injectedProcessingTask = processingTask
+        self.applicationState = applicationState
+        self.backgroundTimeRemaining = backgroundTimeRemaining
+        self.notificationHandler = notificationHandler
     }
 
     private convenience init() {
@@ -45,6 +51,9 @@ final class PhoneticContacts: @unchecked Sendable {
     let userDefaults: UserDefaults
     private let versionStore: ContactVersionStore
     private let injectedProcessingTask: ContactProcessingTask?
+    private let applicationState: @MainActor @Sendable () -> UIApplication.State
+    private let backgroundTimeRemaining: @MainActor @Sendable () -> TimeInterval
+    private let notificationHandler: (@MainActor @Sendable (String) -> Void)?
     @MainActor private var processingTask: ContactProcessingTask { injectedProcessingTask ?? .shared }
     @MainActor var contactsTotalCount: Int = 0
     var keysToFetch: [String] {
@@ -72,6 +81,7 @@ final class PhoneticContacts: @unchecked Sendable {
     }
 
     @MainActor private var operationInFlight = false
+    @MainActor private var didWarnAboutBackgroundTime = false
 
     @MainActor private var backgroundTask = UIBackgroundTaskIdentifier.invalid
     @MainActor private var backgroundTaskToken: UUID?
@@ -102,6 +112,7 @@ final class PhoneticContacts: @unchecked Sendable {
                                                       preview: ContactRestorePreview? = nil, work: @escaping @MainActor (ContactVersionSession) async -> ContactOperationOutcome) async -> ContactOperationOutcome {
         guard !operationInFlight else { return .failed(.busy) }
         operationInFlight = true
+        didWarnAboutBackgroundTime = false
         isProcessing = true
         defer { operationInFlight = false; isProcessing = false }
         let store = versionStore
@@ -342,7 +353,11 @@ final class PhoneticContacts: @unchecked Sendable {
             .map { $0.contact }
     }
 
-    private func scheduleLocalNotification(body: String) {
+    @MainActor private func scheduleLocalNotification(body: String) {
+        if let notificationHandler {
+            notificationHandler(body)
+            return
+        }
         let notificationContent = UNMutableNotificationContent()
         notificationContent.sound = UNNotificationSound.default
         notificationContent.body = body
@@ -356,7 +371,7 @@ final class PhoneticContacts: @unchecked Sendable {
 
     @MainActor private func handlingCompletion(aborted: Bool, usedSystemTask: Bool) {
         isProcessing = false
-        if UIApplication.shared.applicationState == .background, !aborted {
+        if applicationState() == .background, !aborted {
             logger.debug("Mission completed")
             if !usedSystemTask {
                 scheduleLocalNotification(body: String(localized: "Your contacts have been updated."))
@@ -366,7 +381,7 @@ final class PhoneticContacts: @unchecked Sendable {
     }
 
     @MainActor private func handlingResult(_ handle: ResultHandler, result: String?, percentage: Double) {
-        switch UIApplication.shared.applicationState {
+        switch applicationState() {
         case .active:
             handle(result, percentage)
         case .background:
@@ -374,8 +389,10 @@ final class PhoneticContacts: @unchecked Sendable {
             if percentage > 95 {
                 handle(result, percentage)
             }
-            let remainingTime = UIApplication.shared.backgroundTimeRemaining
-            if remainingTime < 10, !processingTask.isUsingSystemTask {
+            let remainingTime = backgroundTimeRemaining()
+            if remainingTime < 10, !processingTask.isUsingSystemTask, !didWarnAboutBackgroundTime {
+                // Mark before submission; further progress or foreground/background changes must not repeat the warning.
+                didWarnAboutBackgroundTime = true
                 scheduleLocalNotification(body: String(localized: "Background time is running low. Open Phonetic to continue processing."))
             }
             logger.debug("Background time remaining \(remainingTime) seconds")
