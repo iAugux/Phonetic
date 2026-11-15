@@ -19,7 +19,7 @@ Spaceship::ConnectAPI::App.const_set('ESSENTIAL_INCLUDES', 'appStoreVersions')
 
 default_platform(:ios)
 
-current_app_version = "26.10.20"
+current_app_version = "26.11.15"
 app_bundle_name = "Phonetic"
 
 # Common method to load API key for both iOS and macOS
