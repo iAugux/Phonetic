@@ -428,8 +428,8 @@ struct WalkthroughView: View {
             }
         case .ready:
             VStack(alignment: .leading, spacing: 16) {
-                feature("Tap once to add pinyin", symbol: "hand.tap", color: step.accent)
-                feature("Double-tap or hold to clear fields", symbol: "arrow.uturn.backward", color: step.accent)
+                feature("Tap “Add Pinyin” to get started", symbol: "textformat.abc", color: step.accent)
+                feature("Tap “Clear Contact Fields” to review", symbol: "eraser", color: step.accent)
                 feature("Skip selected contacts with the whitelist", symbol: "star", color: step.accent)
             }
         }
@@ -685,7 +685,7 @@ private enum WalkthroughStep: Int, CaseIterable {
         case .notifications: "Follow progress as Phonetic updates your contacts. If system progress isn't available, you can enable notifications for completion alerts."
         case .quickSearch: "Search for LMQ to find 林沐晴. Choose a contact field for search initials."
         case .displayNames: "If you save search initials in Nickname, turn off Prefer Nicknames to keep contact names on display."
-        case .ready: "Return to the main screen and tap once to add pinyin to your contacts."
+        case .ready: "Return to the main screen and choose an action."
         }
     }
 

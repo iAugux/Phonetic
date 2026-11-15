@@ -2314,24 +2314,25 @@
         }
       }
     },
-    "Double-tap or hold to clear fields" : {
+    "Tap “Clear Contact Fields” to review" : {
+      "comment" : "Walkthrough instruction for opening the Clear Contact Fields confirmation before clearing contacts.",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Double-tap or hold to clear fields"
+            "value" : "Tap “Clear Contact Fields” to review"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "双击或长按清除字段"
+            "value" : "点按“清除联系人字段”查看清理项目"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "點兩下或長按清除欄位"
+            "value" : "點一下「清除聯絡人欄位」檢視清除項目"
           }
         }
       }
@@ -3578,24 +3579,25 @@
         }
       }
     },
-    "Return to the main screen and tap once to add pinyin to your contacts." : {
+    "Return to the main screen and choose an action." : {
+      "comment" : "Final walkthrough page. Main screen means Phonetic's own home screen.",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Return to the main screen and tap once to add pinyin to your contacts."
+            "value" : "Return to the main screen and choose an action."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "回到主界面，轻点一下即可为联系人添加拼音。"
+            "value" : "返回首页，选择添加拼音或清除字段。"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "回到主畫面，點一下即可為聯絡人加入拼音。"
+            "value" : "返回主畫面，選擇加入拼音或清除欄位。"
           }
         }
       }
@@ -4144,24 +4146,25 @@
         }
       }
     },
-    "Tap once to add pinyin" : {
+    "Tap “Add Pinyin” to get started" : {
+      "comment" : "Walkthrough instruction. Keep the quoted action name consistent with the Add Pinyin button.",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tap once to add pinyin"
+            "value" : "Tap “Add Pinyin” to get started"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "轻点一下，添加拼音"
+            "value" : "点按“添加拼音”开始处理"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "點一下，加入拼音"
+            "value" : "點一下「加入拼音」開始處理"
           }
         }
       }
