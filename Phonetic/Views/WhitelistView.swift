@@ -190,11 +190,6 @@ struct WhitelistView: View {
         List {
             ForEach(filteredContacts, id: \.identifier) { contact in
                 contactRow(contact)
-                    .contentShape(Rectangle())
-                    .onTapGesture {
-                        guard selectedSegment == 1 else { return }
-                        selectedContact = contact
-                    }
                     .listRowInsets(EdgeInsets(top: 10, leading: 16, bottom: 10, trailing: 8))
             }
         }
@@ -203,39 +198,17 @@ struct WhitelistView: View {
 
     private func contactRow(_ contact: CNContact) -> some View {
         HStack(spacing: 12) {
-            // Avatar
-            if let imageData = contact.thumbnailImageData, let uiImage = UIImage(data: imageData) {
-                Image(uiImage: uiImage)
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: 44, height: 44)
-                    .clipShape(Circle())
+            if selectedSegment == 1 {
+                Button {
+                    selectedContact = contact
+                } label: {
+                    contactIdentity(contact)
+                }
+                .buttonStyle(.plain)
+                .accessibilityLabel(Text(contact.whitelistDisplayName))
+                .accessibilityHint(Text("Edit Contact"))
             } else {
-                Image(systemName: "person.crop.circle")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 44, height: 44)
-                    .foregroundStyle(.secondary)
-            }
-
-            // Names
-            VStack(alignment: .leading, spacing: 3) {
-                Text(contact.whitelistDisplayName)
-                    .font(.body.weight(.medium))
-
-                let phonetic = "\(contact.phoneticFamilyName) \(contact.phoneticGivenName)".trimmingCharacters(in: .whitespaces)
-                if !phonetic.isEmpty {
-                    Text(phonetic)
-                        .font(.footnote)
-                        .foregroundStyle(.secondary)
-                }
-
-                if let key = PhoneticContacts.shared.ContactKeyForQuickSearch,
-                   let brief = contact.quickSearchBriefName(key), !brief.isEmpty {
-                    Text(brief)
-                        .font(.caption)
-                        .foregroundStyle(AppColor.accent)
-                }
+                contactIdentity(contact)
             }
 
             Spacer()
@@ -258,6 +231,46 @@ struct WhitelistView: View {
             .accessibilityValue(Text(contact.whitelistDisplayName))
             .accessibilityAddTraits(isWhitelisted ? .isSelected : [])
         }
+    }
+
+    private func contactIdentity(_ contact: CNContact) -> some View {
+        HStack(spacing: 12) {
+            if let imageData = contact.thumbnailImageData, let uiImage = UIImage(data: imageData) {
+                Image(uiImage: uiImage)
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: 44, height: 44)
+                    .clipShape(Circle())
+                    .accessibilityHidden(true)
+            } else {
+                Image(systemName: "person.crop.circle")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 44, height: 44)
+                    .foregroundStyle(.secondary)
+                    .accessibilityHidden(true)
+            }
+
+            VStack(alignment: .leading, spacing: 3) {
+                Text(contact.whitelistDisplayName)
+                    .font(.body.weight(.medium))
+
+                let phonetic = "\(contact.phoneticFamilyName) \(contact.phoneticGivenName)".trimmingCharacters(in: .whitespaces)
+                if !phonetic.isEmpty {
+                    Text(phonetic)
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
+                }
+
+                if let key = PhoneticContacts.shared.ContactKeyForQuickSearch,
+                   let brief = contact.quickSearchBriefName(key), !brief.isEmpty {
+                    Text(brief)
+                        .font(.caption)
+                        .foregroundStyle(AppColor.accent)
+                }
+            }
+        }
+        .contentShape(Rectangle())
     }
 
     private func loadWhitelist() {
