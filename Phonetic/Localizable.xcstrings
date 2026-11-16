@@ -1,370 +1,24 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "Only corrects polyphonic characters in family names, not given names.": {
-      "extractionState" : "manual",
+    "[ Lin Muqing ] ➟ [ Lin MuQing ]" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Only corrects polyphonic characters in family names, not given names."
+            "value" : "[ Lin Muqing ] ➟ [ Lin MuQing ]"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "仅修正姓氏中的多音字读音，不影响名字。"
+            "value" : "[ Lin Muqing ] ➟ [ Lin MuQing ]"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "僅修正姓氏中的多音字讀音，不影響名字。"
-          }
-        }
-      }
-    },
-    "Limited Contacts Access" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Limited Contacts Access"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "通讯录访问受限"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "聯絡人存取受限"
-          }
-        }
-      }
-    },
-    "Only contacts shared with Phonetic are visible. Choose more contacts to manage your whitelist." : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Only contacts shared with Phonetic are visible. Choose more contacts to manage your whitelist."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "目前仅显示已与 Phonetic 共享的联系人。选择更多联系人以管理白名单。"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "目前只顯示已與 Phonetic 分享的聯絡人。選擇更多聯絡人以管理白名單。"
-          }
-        }
-      }
-    },
-    "Choose Contacts" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Choose Contacts"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "选择联系人"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "選擇聯絡人"
-          }
-        }
-      }
-    },
-    "Contacts Unavailable" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Contacts Unavailable"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "无法读取联系人"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "無法讀取聯絡人"
-          }
-        }
-      }
-    },
-    "Allow contacts access in Settings to view and manage your whitelist." : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Allow contacts access in Settings to view and manage your whitelist."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "请在设置中允许访问通讯录，以查看和管理白名单。"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "請在設定中允許存取聯絡人，以檢視和管理白名單。"
-          }
-        }
-      }
-    },
-    "Your contacts could not be loaded. Try again." : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Your contacts could not be loaded. Try again."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "无法加载联系人，请重试。"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "無法載入聯絡人，請再試一次。"
-          }
-        }
-      }
-    },
-    "Selected Fields: %lld" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Selected Fields: %lld"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "已选字段：%lld"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "已選欄位：%lld"
-          }
-        }
-      }
-    },
-    "Select at least one field to restore." : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Select at least one field to restore."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "请至少选择一个要恢复的字段。"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "請至少選擇一個要還原的欄位。"
-          }
-        }
-      }
-    },
-    "Pinyin Example" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Pinyin Example"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "拼音示例"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "拼音範例"
-          }
-        }
-      }
-    },
-    "Last Result" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Last Result"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "最近结果"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "最近結果"
-          }
-        }
-      }
-    },
-    "Oldest history is removed automatically when space is needed. Your contacts are not changed." : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Oldest history is removed automatically when space is needed. Your contacts are not changed."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "空间不足时会自动清理最旧的历史记录，联系人不会改变。"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "空間不足時會自動清理最舊的歷史記錄，聯絡人不會改變。"
-          }
-        }
-      }
-    },
-    "This operation needs more history space than the storage limit allows. Changes already made are kept." : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "This operation needs more history space than the storage limit allows. Changes already made are kept."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "本次操作需要的历史记录空间超过容量上限。已完成的修改会保留。"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "本次操作需要的歷史記錄空間超過容量上限。已完成的修改會保留。"
-          }
-        }
-      }
-    },
-    "Older History Cleared" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Older History Cleared"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "旧历史已清理"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "舊記錄已清理"
-          }
-        }
-      }
-    },
-    "New changes will appear here. Earlier deleted history cannot be restored." : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "New changes will appear here. Earlier deleted history cannot be restored."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "新修改会显示在这里。已删除的早期历史无法恢复。"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "新修改會顯示在這裡。已刪除的早期記錄無法復原。"
-          }
-        }
-      }
-    },
-    "History Storage" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "History Storage"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "历史记录空间"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "歷史記錄空間"
+            "value" : "[ Lin Muqing ] ➟ [ Lin MuQing ]"
           }
         }
       }
@@ -388,121 +42,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@ / %@"
-          }
-        }
-      }
-    },
-    "Earliest Available Version" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Earliest Available Version"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "最早可恢复版本"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "最早可復原版本"
-          }
-        }
-      }
-    },
-    "The selected fields have been restored." : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "The selected fields have been restored."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "所选字段已恢复。"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "所選欄位已復原。"
-          }
-        }
-      }
-    },
-    "No fields were restored. Fields skipped because they changed or became unavailable: %lld." : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "No fields were restored. Fields skipped because they changed or became unavailable: %lld."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "未恢复任何字段。因内容发生变化或无法访问而跳过的字段：%lld。"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "未復原任何欄位。因內容發生變化或無法取用而略過的欄位：%lld。"
-          }
-        }
-      }
-    },
-    "Keep Editing" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Keep Editing"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "继续编辑"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "繼續編輯"
-          }
-        }
-      }
-    },
-    "Change history could not be saved or recovered. Processing stopped. Changes already made to your contacts are kept." : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Change history could not be saved or recovered. Processing stopped. Changes already made to your contacts are kept."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "无法保存或恢复修改记录，处理已停止。已完成的联系人修改会保留。"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "無法儲存或復原修改記錄，處理已停止。已完成的聯絡人修改會保留。"
           }
         }
       }
@@ -549,1152 +88,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "有聯絡人無法儲存。已完成的修改已記入版本記錄。"
-          }
-        }
-      }
-    },
-    "Another contact operation is running. Wait for it to finish." : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Another contact operation is running. Wait for it to finish."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "另一个联系人操作正在进行，请等待其完成。"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "另一個聯絡人操作正在進行，請等待其完成。"
-          }
-        }
-      }
-    },
-    "Allow contacts access in Settings to view a restore preview or recover pending changes." : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Allow contacts access in Settings to view a restore preview or recover pending changes."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "请在系统设置中允许访问通讯录，以查看恢复预览或核对未完成的修改记录。"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "請在系統設定中允許取用聯絡人，以查看復原預覽或核對未完成的修改記錄。"
-          }
-        }
-      }
-    },
-    "Version history has changed. Reload the history or restore preview before continuing." : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Version history has changed. Reload the history or restore preview before continuing."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "版本历史已发生变化，请重新加载历史记录或恢复预览后再继续。"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "版本記錄已發生變化，請重新載入歷史記錄或復原預覽後再繼續。"
-          }
-        }
-      }
-    },
-    "Unable to Update Contacts" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Unable to Update Contacts"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "无法更新联系人"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "無法更新聯絡人"
-          }
-        }
-      }
-    },
-    "First Name" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "First Name"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "名字"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "名字"
-          }
-        }
-      }
-    },
-    "Last Name" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Last Name"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "姓氏"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "姓氏"
-          }
-        }
-      }
-    },
-    "Edit Contact" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Edit Contact"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "编辑联系人"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "編輯聯絡人"
-          }
-        }
-      }
-    },
-    "Restore Version" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Restore Version"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "恢复版本"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "復原版本"
-          }
-        }
-      }
-    },
-    "In Progress" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "In Progress"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "进行中"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "進行中"
-          }
-        }
-      }
-    },
-    "Partially Completed" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Partially Completed"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "部分完成"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "部分完成"
-          }
-        }
-      }
-    },
-    "Interrupted" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Interrupted"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "已中断"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "已中斷"
-          }
-        }
-      }
-    },
-    "Saving Contact" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Saving Contact"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "正在保存联系人"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "正在儲存聯絡人"
-          }
-        }
-      }
-    },
-    "Restoring Contact Fields" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Restoring Contact Fields"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "正在恢复联系人字段"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "正在復原聯絡人欄位"
-          }
-        }
-      }
-    },
-    "History Unavailable" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "History Unavailable"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "无法读取历史记录"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "無法讀取歷史記錄"
-          }
-        }
-      }
-    },
-    "Try Again" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Try Again"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "重试"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "重試"
-          }
-        }
-      }
-    },
-    "Loading History" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Loading History"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "正在加载历史记录"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "正在載入歷史記錄"
-          }
-        }
-      }
-    },
-    "No Changes Yet" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "No Changes Yet"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "暂无修改记录"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "尚無修改記錄"
-          }
-        }
-      }
-    },
-    "Changes made by Phonetic will appear here. You can preview and restore an earlier version." : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Changes made by Phonetic will appear here. You can preview and restore an earlier version."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Phonetic 所做的修改会显示在这里，你可以预览并恢复到较早的版本。"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Phonetic 所做的修改會顯示在這裡，你可以預覽並復原至較早的版本。"
-          }
-        }
-      }
-    },
-    "Version %lld" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Version %lld"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "版本 %lld"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "版本 %lld"
-          }
-        }
-      }
-    },
-    "Latest" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Latest"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "最新"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "最新"
-          }
-        }
-      }
-    },
-    "Contacts: %lld · Fields: %lld" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Contacts: %lld · Fields: %lld"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "联系人：%lld · 字段：%lld"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "聯絡人：%lld · 欄位：%lld"
-          }
-        }
-      }
-    },
-    "Restored toward Version %lld" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Restored toward Version %lld"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "恢复目标：版本 %lld"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "復原目標：版本 %lld"
-          }
-        }
-      }
-    },
-    "Before First Change" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Before First Change"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "首次修改前"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "首次修改前"
-          }
-        }
-      }
-    },
-    "Version 0" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Version 0"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "版本 0"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "版本 0"
-          }
-        }
-      }
-    },
-    "Only fields changed by Phonetic can be restored. Restoring creates a new version. History stays on this device and is removed if you delete the app." : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Only fields changed by Phonetic can be restored. Restoring creates a new version. History stays on this device and is removed if you delete the app."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "仅能恢复 Phonetic 修改过的字段。恢复操作会生成新版本。历史记录仅保存在此设备上，删除 App 后也会删除。"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "僅能復原 Phonetic 修改過的欄位。復原操作會產生新版本。歷史記錄僅儲存在此裝置上，刪除 App 後也會刪除。"
-          }
-        }
-      }
-    },
-    "Version History" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Version History"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "版本历史"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "版本記錄"
-          }
-        }
-      }
-    },
-    "Review each field before restoring. Contacts that were deleted or are no longer accessible cannot be restored." : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Review each field before restoring. Contacts that were deleted or are no longer accessible cannot be restored."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "恢复前请核对各字段。已删除或无法访问的联系人不能恢复。"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "復原前請核對各欄位。已刪除或無法取用的聯絡人無法復原。"
-          }
-        }
-      }
-    },
-    "Preview Unavailable" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Preview Unavailable"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "无法生成预览"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "無法產生預覽"
-          }
-        }
-      }
-    },
-    "No Fields to Restore" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "No Fields to Restore"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "没有需要恢复的字段"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "沒有需要復原的欄位"
-          }
-        }
-      }
-    },
-    "There are no remaining Phonetic changes to undo after this version." : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "There are no remaining Phonetic changes to undo after this version."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "此版本之后已没有需要撤回的 Phonetic 修改。"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "此版本之後已沒有需要復原的 Phonetic 修改。"
-          }
-        }
-      }
-    },
-    "Fields changed outside Phonetic are unselected. Select them only if you want to replace their current values. Fields changed again after this preview will be skipped." : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Fields changed outside Phonetic are unselected. Select them only if you want to replace their current values. Fields changed again after this preview will be skipped."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "在 Phonetic 以外修改过的字段默认不选中。只有希望替换其当前值时才选择它们。预览后再次发生变化的字段会跳过。"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "在 Phonetic 以外修改過的欄位預設不勾選。只有希望取代其目前值時才選取它們。預覽後再次發生變化的欄位會略過。"
-          }
-        }
-      }
-    },
-    "Preparing Preview" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Preparing Preview"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "正在生成预览"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "正在產生預覽"
-          }
-        }
-      }
-    },
-    "Restore Preview" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Restore Preview"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "恢复预览"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "復原預覽"
-          }
-        }
-      }
-    },
-    "Restore Selected Fields" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Restore Selected Fields"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "恢复所选字段"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "復原所選欄位"
-          }
-        }
-      }
-    },
-    "Restore These Fields?" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Restore These Fields?"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "恢复这些字段？"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "復原這些欄位？"
-          }
-        }
-      }
-    },
-    "Restore" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Restore"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "恢复"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "復原"
-          }
-        }
-      }
-    },
-    "This includes fields changed outside Phonetic. Their current values will be replaced. A new version will record the restore." : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "This includes fields changed outside Phonetic. Their current values will be replaced. A new version will record the restore."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "所选字段中包含在 Phonetic 以外修改过的内容，其当前值将被替换。本次恢复会记为新版本。"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "所選欄位中包含在 Phonetic 以外修改過的內容，其目前值將被取代。本次復原會記為新版本。"
-          }
-        }
-      }
-    },
-    "The selected fields will be restored. A new version will record the restore." : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "The selected fields will be restored. A new version will record the restore."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "将恢复所选字段，本次恢复会记为新版本。"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "將復原所選欄位，本次復原會記為新版本。"
-          }
-        }
-      }
-    },
-    "Restore Result" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Restore Result"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "恢复结果"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "復原結果"
-          }
-        }
-      }
-    },
-    "Changed outside Phonetic or not verified" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Changed outside Phonetic or not verified"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "在 Phonetic 以外有修改，或尚未核实"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "在 Phonetic 以外有修改，或尚未核實"
-          }
-        }
-      }
-    },
-    "Contact unavailable — skipped" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Contact unavailable — skipped"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "联系人无法访问，将跳过"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "聯絡人無法取用，將略過"
-          }
-        }
-      }
-    },
-    "Empty" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Empty"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "空"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "空"
-          }
-        }
-      }
-    },
-    "Current" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Current"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "当前值"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "目前值"
-          }
-        }
-      }
-    },
-    "Restore To" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Restore To"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "恢复为"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "復原為"
-          }
-        }
-      }
-    },
-    "Restore finished. Fields skipped because they changed or became unavailable: %lld." : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Restore finished. Fields skipped because they changed or became unavailable: %lld."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "恢复已结束。因发生变化或无法访问而跳过的字段：%lld。"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "復原已結束。因發生變化或無法取用而略過的欄位：%lld。"
-          }
-        }
-      }
-    },
-    "Stopped. Any changes already made are recorded in Version History." : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Stopped. Any changes already made are recorded in Version History."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "已停止。已完成的修改已记入版本历史。"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "已停止。已完成的修改已記入版本記錄。"
-          }
-        }
-      }
-    },
-    "Choose where to save search initials. Overwriting replaces existing text in that field when adding pinyin." : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Choose where to save search initials. Overwriting replaces existing text in that field when adding pinyin."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "选择保存搜索首字母的字段。启用覆盖后，添加拼音时会替换该字段中已有的文字。"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "選擇儲存搜尋首字母的欄位。啟用覆寫後，加入拼音時會取代該欄位中現有的文字。"
-          }
-        }
-      }
-    },
-    "Use Company as Name copies the company name into the first name field for contacts with no first or last name when adding pinyin." : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Use Company as Name copies the company name into the first name field for contacts with no first or last name when adding pinyin."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "启用“无姓名时使用公司名称”后，添加拼音时会将公司名称写入没有姓氏和名字的联系人的名字字段。"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "啟用「無姓名時使用公司名稱」後，加入拼音時會將公司名稱寫入沒有姓氏和名字的聯絡人的名字欄位。"
-          }
-        }
-      }
-    },
-    "These options apply the next time you clear contact fields. Selected fields will be emptied, including text you entered manually. Select Common Fields controls the eight fields from Nickname through Name Suffix; social profiles and instant messaging accounts are managed separately." : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "These options apply the next time you clear contact fields. Selected fields will be emptied, including text you entered manually. Select Common Fields controls the eight fields from Nickname through Name Suffix; social profiles and instant messaging accounts are managed separately."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "这些选项在下次清除联系人字段时生效。选中字段的内容会被清空，包括手动输入的文字。“选择常用字段”仅控制昵称至姓名后缀这八项，社交资料和即时通讯账号需单独设置。"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "這些選項會在下次清除聯絡人欄位時生效。所選欄位的內容會被清空，包括手動輸入的文字。「選取常用欄位」僅控制暱稱至姓名後綴這八項，社群個人檔案和即時通訊帳號需另外設定。"
-          }
-        }
-      }
-    },
-    "[ Lin Muqing ] ➟ [ Lin MuQing ]" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "[ Lin Muqing ] ➟ [ Lin MuQing ]"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "[ Lin Muqing ] ➟ [ Lin MuQing ]"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "[ Lin Muqing ] ➟ [ Lin MuQing ]"
           }
         }
       }
@@ -1907,6 +300,52 @@
         }
       }
     },
+    "Allow contacts access in Settings to view a restore preview or recover pending changes." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Allow contacts access in Settings to view a restore preview or recover pending changes."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请在系统设置中允许访问通讯录，以查看恢复预览或核对未完成的修改记录。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "請在系統設定中允許取用聯絡人，以查看復原預覽或核對未完成的修改記錄。"
+          }
+        }
+      }
+    },
+    "Allow contacts access in Settings to view and manage your whitelist." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Allow contacts access in Settings to view and manage your whitelist."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请在设置中允许访问通讯录，以查看和管理白名单。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "請在設定中允許存取聯絡人，以檢視和管理白名單。"
+          }
+        }
+      }
+    },
     "Allow Phonetic to access your contacts in Settings to add pinyin and edit contact fields." : {
       "localizations" : {
         "en" : {
@@ -1951,6 +390,29 @@
         }
       }
     },
+    "Another contact operation is running. Wait for it to finish." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Another contact operation is running. Wait for it to finish."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "另一个联系人操作正在进行，请等待其完成。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "另一個聯絡人操作正在進行，請等待其完成。"
+          }
+        }
+      }
+    },
     "Background time is running low. Open Phonetic to continue processing." : {
       "localizations" : {
         "en" : {
@@ -1973,6 +435,29 @@
         }
       }
     },
+    "Before First Change" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Before First Change"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "首次修改前"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "首次修改前"
+          }
+        }
+      }
+    },
     "Cancel" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1985,6 +470,75 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "取消"
+          }
+        }
+      }
+    },
+    "Change history could not be saved or recovered. Processing stopped. Changes already made to your contacts are kept." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Change history could not be saved or recovered. Processing stopped. Changes already made to your contacts are kept."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无法保存或恢复修改记录，处理已停止。已完成的联系人修改会保留。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "無法儲存或復原修改記錄，處理已停止。已完成的聯絡人修改會保留。"
+          }
+        }
+      }
+    },
+    "Changed outside Phonetic or not verified" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Changed outside Phonetic or not verified"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在 Phonetic 以外有修改，或尚未核实"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在 Phonetic 以外有修改，或尚未核實"
+          }
+        }
+      }
+    },
+    "Changes made by Phonetic will appear here. You can preview and restore an earlier version." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Changes made by Phonetic will appear here. You can preview and restore an earlier version."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Phonetic 所做的修改会显示在这里，你可以预览并恢复到较早的版本。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Phonetic 所做的修改會顯示在這裡，你可以預覽並復原至較早的版本。"
           }
         }
       }
@@ -2007,6 +561,51 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "選擇一個聯絡人欄位來儲存搜尋用的姓名首字母，建議使用暱稱欄位。之後可以在設定中更改。"
+          }
+        }
+      }
+    },
+    "Choose Contacts" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choose Contacts"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "选择联系人"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "選擇聯絡人"
+          }
+        }
+      }
+    },
+    "Choose where to save search initials. Overwriting replaces existing text in that field when adding pinyin." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choose where to save search initials. Overwriting replaces existing text in that field when adding pinyin."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "选择保存搜索首字母的字段。启用覆盖后，添加拼音时会替换该字段中已有的文字。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "選擇儲存搜尋首字母的欄位。啟用覆寫後，加入拼音時會取代該欄位中現有的文字。"
           }
         }
       }
@@ -2225,6 +824,29 @@
         }
       }
     },
+    "Contact unavailable — skipped" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Contact unavailable — skipped"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "联系人无法访问，将跳过"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "聯絡人無法取用，將略過"
+          }
+        }
+      }
+    },
     "Contacts Access Needed" : {
       "localizations" : {
         "en" : {
@@ -2270,6 +892,52 @@
         }
       }
     },
+    "Contacts Unavailable" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Contacts Unavailable"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无法读取联系人"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "無法讀取聯絡人"
+          }
+        }
+      }
+    },
+    "Contacts: %lld · Fields: %lld" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Contacts: %lld · Fields: %lld"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "联系人：%lld · 字段：%lld"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "聯絡人：%lld · 欄位：%lld"
+          }
+        }
+      }
+    },
     "Continue" : {
       "localizations" : {
         "en" : {
@@ -2288,6 +956,29 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "繼續"
+          }
+        }
+      }
+    },
+    "Current" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Current"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "当前值"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "目前值"
           }
         }
       }
@@ -2314,25 +1005,71 @@
         }
       }
     },
-    "Tap “Clear Contact Fields” to review" : {
-      "comment" : "Walkthrough instruction for opening the Clear Contact Fields confirmation before clearing contacts.",
+    "Earliest Available Version" : {
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tap “Clear Contact Fields” to review"
+            "value" : "Earliest Available Version"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "点按“清除联系人字段”查看清理项目"
+            "value" : "最早可恢复版本"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "點一下「清除聯絡人欄位」檢視清除項目"
+            "value" : "最早可復原版本"
+          }
+        }
+      }
+    },
+    "Edit Contact" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Edit Contact"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "编辑联系人"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "編輯聯絡人"
+          }
+        }
+      }
+    },
+    "Empty" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Empty"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "空"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "空"
           }
         }
       }
@@ -2464,6 +1201,52 @@
         }
       }
     },
+    "Fields changed outside Phonetic are unselected. Select them only if you want to replace their current values. Fields changed again after this preview will be skipped." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fields changed outside Phonetic are unselected. Select them only if you want to replace their current values. Fields changed again after this preview will be skipped."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在 Phonetic 以外修改过的字段默认不选中。只有希望替换其当前值时才选择它们。预览后再次发生变化的字段会跳过。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在 Phonetic 以外修改過的欄位預設不勾選。只有希望取代其目前值時才選取它們。預覽後再次發生變化的欄位會略過。"
+          }
+        }
+      }
+    },
+    "First Name" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "First Name"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "名字"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "名字"
+          }
+        }
+      }
+    },
     "Fix Polyphone" : {
       "localizations" : {
         "en" : {
@@ -2527,6 +1310,52 @@
     "GitHub" : {
       "shouldTranslate" : false
     },
+    "History Storage" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "History Storage"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "历史记录空间"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "歷史記錄空間"
+          }
+        }
+      }
+    },
+    "History Unavailable" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "History Unavailable"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无法读取历史记录"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "無法讀取歷史記錄"
+          }
+        }
+      }
+    },
     "If you enjoy using Phonetic Contacts, would you mind taking a moment to rate it? It won't take more than one minute. Thanks a lot!" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -2562,6 +1391,29 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "使用暱稱欄位儲存搜尋用的姓名首字母時，請關閉「偏好暱稱」，讓聯絡人繼續顯示姓名。"
+          }
+        }
+      }
+    },
+    "In Progress" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "In Progress"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "进行中"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "進行中"
           }
         }
       }
@@ -2676,6 +1528,29 @@
         }
       }
     },
+    "Interrupted" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Interrupted"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已中断"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已中斷"
+          }
+        }
+      }
+    },
     "Job Title" : {
       "localizations" : {
         "en" : {
@@ -2737,6 +1612,29 @@
         }
       }
     },
+    "Keep Editing" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keep Editing"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "继续编辑"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "繼續編輯"
+          }
+        }
+      }
+    },
     "Keep names.\nOne small change." : {
       "localizations" : {
         "en" : {
@@ -2781,6 +1679,98 @@
         }
       }
     },
+    "Last Name" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Last Name"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "姓氏"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "姓氏"
+          }
+        }
+      }
+    },
+    "Last Result" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Last Result"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "最近结果"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "最近結果"
+          }
+        }
+      }
+    },
+    "Latest" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Latest"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "最新"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "最新"
+          }
+        }
+      }
+    },
+    "Limited Contacts Access" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Limited Contacts Access"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "通讯录访问受限"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "聯絡人存取受限"
+          }
+        }
+      }
+    },
     "Loading Contacts" : {
       "localizations" : {
         "en" : {
@@ -2799,6 +1789,29 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "正在載入聯絡人"
+          }
+        }
+      }
+    },
+    "Loading History" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loading History"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在加载历史记录"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在載入歷史記錄"
           }
         }
       }
@@ -2847,6 +1860,29 @@
         }
       }
     },
+    "New changes will appear here. Earlier deleted history cannot be restored." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "New changes will appear here. Earlier deleted history cannot be restored."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "新修改会显示在这里。已删除的早期历史无法恢复。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "新修改會顯示在這裡。已刪除的早期記錄無法復原。"
+          }
+        }
+      }
+    },
     "Nickname" : {
       "localizations" : {
         "en" : {
@@ -2869,6 +1905,29 @@
         }
       }
     },
+    "No Changes Yet" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No Changes Yet"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "暂无修改记录"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "尚無修改記錄"
+          }
+        }
+      }
+    },
     "No Contacts" : {
       "localizations" : {
         "en" : {
@@ -2887,6 +1946,52 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "尚無聯絡人"
+          }
+        }
+      }
+    },
+    "No Fields to Restore" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No Fields to Restore"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "没有需要恢复的字段"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "沒有需要復原的欄位"
+          }
+        }
+      }
+    },
+    "No fields were restored. Fields skipped because they changed or became unavailable: %lld." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No fields were restored. Fields skipped because they changed or became unavailable: %lld."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未恢复任何字段。因内容发生变化或无法访问而跳过的字段：%lld。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未復原任何欄位。因內容發生變化或無法取用而略過的欄位：%lld。"
           }
         }
       }
@@ -3050,6 +2155,121 @@
         }
       }
     },
+    "Older History Cleared" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Older History Cleared"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "旧历史已清理"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "舊記錄已清理"
+          }
+        }
+      }
+    },
+    "Oldest history is removed automatically when space is needed. Your contacts are not changed." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Oldest history is removed automatically when space is needed. Your contacts are not changed."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "空间不足时会自动清理最旧的历史记录，联系人不会改变。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "空間不足時會自動清理最舊的歷史記錄，聯絡人不會改變。"
+          }
+        }
+      }
+    },
+    "Only contacts shared with Phonetic are visible. Choose more contacts to manage your whitelist." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Only contacts shared with Phonetic are visible. Choose more contacts to manage your whitelist."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "目前仅显示已与 Phonetic 共享的联系人。选择更多联系人以管理白名单。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "目前只顯示已與 Phonetic 分享的聯絡人。選擇更多聯絡人以管理白名單。"
+          }
+        }
+      }
+    },
+    "Only corrects polyphonic characters in family names, not given names." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Only corrects polyphonic characters in family names, not given names."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "仅修正姓氏中的多音字读音，不影响名字。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "僅修正姓氏中的多音字讀音，不影響名字。"
+          }
+        }
+      }
+    },
+    "Only fields changed by Phonetic can be restored. Restoring creates a new version. History stays on this device and is removed if you delete the app." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Only fields changed by Phonetic can be restored. Restoring creates a new version. History stays on this device and is removed if you delete the app."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "仅能恢复 Phonetic 修改过的字段。恢复操作会生成新版本。历史记录仅保存在此设备上，删除 App 后也会删除。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "僅能復原 Phonetic 修改過的欄位。復原操作會產生新版本。歷史記錄僅儲存在此裝置上，刪除 App 後也會刪除。"
+          }
+        }
+      }
+    },
     "Open App Settings" : {
       "localizations" : {
         "en" : {
@@ -3160,6 +2380,29 @@
         }
       }
     },
+    "Partially Completed" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Partially Completed"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "部分完成"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "部分完成"
+          }
+        }
+      }
+    },
     "Phonetic Contacts" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -3253,6 +2496,29 @@
         }
       }
     },
+    "Pinyin Example" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pinyin Example"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "拼音示例"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "拼音範例"
+          }
+        }
+      }
+    },
     "Pinyin for easy sorting" : {
       "localizations" : {
         "en" : {
@@ -3331,6 +2597,52 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "正在準備通訊錄"
+          }
+        }
+      }
+    },
+    "Preparing Preview" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Preparing Preview"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在生成预览"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在產生預覽"
+          }
+        }
+      }
+    },
+    "Preview Unavailable" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Preview Unavailable"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无法生成预览"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "無法產生預覽"
           }
         }
       }
@@ -3579,6 +2891,236 @@
         }
       }
     },
+    "Restore" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Restore"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "恢复"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "復原"
+          }
+        }
+      }
+    },
+    "Restore finished. Fields skipped because they changed or became unavailable: %lld." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Restore finished. Fields skipped because they changed or became unavailable: %lld."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "恢复已结束。因发生变化或无法访问而跳过的字段：%lld。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "復原已結束。因發生變化或無法取用而略過的欄位：%lld。"
+          }
+        }
+      }
+    },
+    "Restore Preview" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Restore Preview"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "恢复预览"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "復原預覽"
+          }
+        }
+      }
+    },
+    "Restore Result" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Restore Result"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "恢复结果"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "復原結果"
+          }
+        }
+      }
+    },
+    "Restore Selected Fields" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Restore Selected Fields"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "恢复所选字段"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "復原所選欄位"
+          }
+        }
+      }
+    },
+    "Restore These Fields?" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Restore These Fields?"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "恢复这些字段？"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "復原這些欄位？"
+          }
+        }
+      }
+    },
+    "Restore To" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Restore To"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "恢复为"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "復原為"
+          }
+        }
+      }
+    },
+    "Restore Version" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Restore Version"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "恢复版本"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "復原版本"
+          }
+        }
+      }
+    },
+    "Restored toward Version %lld" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Restored toward Version %lld"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "恢复目标：版本 %lld"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "復原目標：版本 %lld"
+          }
+        }
+      }
+    },
+    "Restoring Contact Fields" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Restoring Contact Fields"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在恢复联系人字段"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在復原聯絡人欄位"
+          }
+        }
+      }
+    },
     "Return to the main screen and choose an action." : {
       "comment" : "Final walkthrough page. Main screen means Phonetic's own home screen.",
       "localizations" : {
@@ -3598,6 +3140,29 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "返回主畫面，選擇加入拼音或清除欄位。"
+          }
+        }
+      }
+    },
+    "Review each field before restoring. Contacts that were deleted or are no longer accessible cannot be restored." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Review each field before restoring. Contacts that were deleted or are no longer accessible cannot be restored."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "恢复前请核对各字段。已删除或无法访问的联系人不能恢复。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "復原前請核對各欄位。已刪除或無法取用的聯絡人無法復原。"
           }
         }
       }
@@ -3756,6 +3321,29 @@
         }
       }
     },
+    "Saving Contact" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Saving Contact"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在保存联系人"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在儲存聯絡人"
+          }
+        }
+      }
+    },
     "Search" : {
       "localizations" : {
         "en" : {
@@ -3800,6 +3388,29 @@
         }
       }
     },
+    "Select at least one field to restore." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Select at least one field to restore."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请至少选择一个要恢复的字段。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "請至少選擇一個要還原的欄位。"
+          }
+        }
+      }
+    },
     "Select Common Fields" : {
       "localizations" : {
         "en" : {
@@ -3818,6 +3429,29 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "選取常用欄位"
+          }
+        }
+      }
+    },
+    "Selected Fields: %lld" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Selected Fields: %lld"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已选字段：%lld"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已選欄位：%lld"
           }
         }
       }
@@ -4124,24 +3758,25 @@
         }
       }
     },
-    "Tap a star in All to add a contact to your whitelist." : {
+    "Stopped. Any changes already made are recorded in Version History." : {
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tap a star in All to add a contact to your whitelist."
+            "value" : "Stopped. Any changes already made are recorded in Version History."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "在“全部”中轻点星标，即可将联系人加入白名单。"
+            "value" : "已停止。已完成的修改已记入版本历史。"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "在「全部」中點一下星號，即可將聯絡人加入白名單。"
+            "value" : "已停止。已完成的修改已記入版本記錄。"
           }
         }
       }
@@ -4169,6 +3804,51 @@
         }
       }
     },
+    "Tap “Clear Contact Fields” to review" : {
+      "comment" : "Walkthrough instruction for opening the Clear Contact Fields confirmation before clearing contacts.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tap “Clear Contact Fields” to review"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "点按“清除联系人字段”查看清理项目"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "點一下「清除聯絡人欄位」檢視清除項目"
+          }
+        }
+      }
+    },
+    "Tap a star in All to add a contact to your whitelist." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tap a star in All to add a contact to your whitelist."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在“全部”中轻点星标，即可将联系人加入白名单。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在「全部」中點一下星號，即可將聯絡人加入白名單。"
+          }
+        }
+      }
+    },
     "Tap to add pinyin" : {
       "localizations" : {
         "en" : {
@@ -4187,6 +3867,97 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "點一下加入拼音"
+          }
+        }
+      }
+    },
+    "The selected fields have been restored." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The selected fields have been restored."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "所选字段已恢复。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "所選欄位已復原。"
+          }
+        }
+      }
+    },
+    "The selected fields will be restored. A new version will record the restore." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The selected fields will be restored. A new version will record the restore."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "将恢复所选字段，本次恢复会记为新版本。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "將復原所選欄位，本次復原會記為新版本。"
+          }
+        }
+      }
+    },
+    "There are no remaining Phonetic changes to undo after this version." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "There are no remaining Phonetic changes to undo after this version."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "此版本之后已没有需要撤回的 Phonetic 修改。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "此版本之後已沒有需要復原的 Phonetic 修改。"
+          }
+        }
+      }
+    },
+    "These options apply the next time you clear contact fields. Selected fields will be emptied, including text you entered manually. Select Common Fields controls the eight fields from Nickname through Name Suffix; social profiles and instant messaging accounts are managed separately." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "These options apply the next time you clear contact fields. Selected fields will be emptied, including text you entered manually. Select Common Fields controls the eight fields from Nickname through Name Suffix; social profiles and instant messaging accounts are managed separately."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "这些选项在下次清除联系人字段时生效。选中字段的内容会被清空，包括手动输入的文字。“选择常用字段”仅控制昵称至姓名后缀这八项，社交资料和即时通讯账号需单独设置。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "這些選項會在下次清除聯絡人欄位時生效。所選欄位的內容會被清空，包括手動輸入的文字。「選取常用欄位」僅控制暱稱至姓名後綴這八項，社群個人檔案和即時通訊帳號需另外設定。"
           }
         }
       }
@@ -4235,6 +4006,29 @@
         }
       }
     },
+    "This includes fields changed outside Phonetic. Their current values will be replaced. A new version will record the restore." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This includes fields changed outside Phonetic. Their current values will be replaced. A new version will record the restore."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "所选字段中包含在 Phonetic 以外修改过的内容，其当前值将被替换。本次恢复会记为新版本。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "所選欄位中包含在 Phonetic 以外修改過的內容，其目前值將被取代。本次復原會記為新版本。"
+          }
+        }
+      }
+    },
     "This only clears the whitelist. Your contacts won't be deleted." : {
       "localizations" : {
         "en" : {
@@ -4253,6 +4047,29 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "僅清空白名單，不會刪除通訊錄中的聯絡人。"
+          }
+        }
+      }
+    },
+    "This operation needs more history space than the storage limit allows. Changes already made are kept." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This operation needs more history space than the storage limit allows. Changes already made are kept."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "本次操作需要的历史记录空间超过容量上限。已完成的修改会保留。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "本次操作需要的歷史記錄空間超過容量上限。已完成的修改會保留。"
           }
         }
       }
@@ -4298,6 +4115,29 @@
     "Trello" : {
       "shouldTranslate" : false
     },
+    "Try Again" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Try Again"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "重试"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "重試"
+          }
+        }
+      }
+    },
     "Tutorial" : {
       "localizations" : {
         "zh-Hans" : {
@@ -4310,6 +4150,29 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "引導"
+          }
+        }
+      }
+    },
+    "Unable to Update Contacts" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unable to Update Contacts"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无法更新联系人"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "無法更新聯絡人"
           }
         }
       }
@@ -4376,6 +4239,28 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "無姓名時使用公司名稱"
+          }
+        }
+      }
+    },
+    "Use Company as Name copies the company name into the first name field for contacts with no first or last name when adding pinyin." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Use Company as Name copies the company name into the first name field for contacts with no first or last name when adding pinyin."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "启用“无姓名时使用公司名称”后，添加拼音时会将公司名称写入没有姓氏和名字的联系人的名字字段。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "啟用「無姓名時使用公司名稱」後，加入拼音時會將公司名稱寫入沒有姓氏和名字的聯絡人的名字欄位。"
           }
         }
       }
@@ -4485,6 +4370,98 @@
         }
       }
     },
+    "Version %lld" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Version %lld"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "版本 %lld"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "版本 %lld"
+          }
+        }
+      }
+    },
+    "Version 0" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Version 0"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "版本 0"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "版本 0"
+          }
+        }
+      }
+    },
+    "Version History" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Version History"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "版本历史"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "版本記錄"
+          }
+        }
+      }
+    },
+    "Version history has changed. Reload the history or restore preview before continuing." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Version history has changed. Reload the history or restore preview before continuing."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "版本历史已发生变化，请重新加载历史记录或恢复预览后再继续。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "版本記錄已發生變化，請重新載入歷史記錄或復原預覽後再繼續。"
+          }
+        }
+      }
+    },
     "We'll let you\nknow." : {
       "localizations" : {
         "en" : {
@@ -4564,6 +4541,29 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "一切就緒。"
+          }
+        }
+      }
+    },
+    "Your contacts could not be loaded. Try again." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your contacts could not be loaded. Try again."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无法加载联系人，请重试。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "無法載入聯絡人，請再試一次。"
           }
         }
       }
