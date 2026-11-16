@@ -12,6 +12,7 @@ struct EditableContactView: View {
     @State private var phoneticFamilyName: String = ""
     @State private var phoneticGivenName: String = ""
     @State private var quickSearchKeyText: String = ""
+    @State private var hasLoadedContact = false
     @State private var isSaving = false
     @State private var showSaveError = false
     @State private var saveError = ""
@@ -20,6 +21,18 @@ struct EditableContactView: View {
 
     private var currentQuickSearchKey: String? {
         PhoneticContacts.shared.ContactKeyForQuickSearch
+    }
+
+    private var hasChanges: Bool {
+        guard hasLoadedContact else { return false }
+
+        if phoneticFamilyName.trimmingCharacters(in: .whitespaces) != contact.phoneticFamilyName ||
+            phoneticGivenName.trimmingCharacters(in: .whitespaces) != contact.phoneticGivenName {
+            return true
+        }
+
+        guard let key = currentQuickSearchKey else { return false }
+        return quickSearchKeyText.trimmingCharacters(in: .whitespaces) != (contact.quickSearchBriefName(key) ?? "")
     }
 
     private func quickSearchStorageHint(for key: String) -> LocalizedStringKey? {
@@ -154,12 +167,11 @@ struct EditableContactView: View {
                     .disabled(isSaving)
                 }
 
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button("Save") {
-                        saveContact()
+                ToolbarItem(placement: .confirmationAction) {
+                    Button(action: saveContact) {
+                        Label("Save", systemImage: "checkmark")
                     }
-                    .foregroundStyle(AppColor.accent)
-                    .disabled(isSaving)
+                    .disabled(isSaving || !hasChanges)
                 }
             }
             .onAppear {
@@ -168,6 +180,7 @@ struct EditableContactView: View {
                 if let key = currentQuickSearchKey {
                     quickSearchKeyText = contact.quickSearchBriefName(key) ?? ""
                 }
+                hasLoadedContact = true
             }
         }
     }
