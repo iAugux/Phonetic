@@ -25,14 +25,33 @@ struct EditableContactView: View {
 
     private var hasChanges: Bool {
         guard hasLoadedContact else { return false }
+        return Self.fieldsHaveChanges(
+            contact: contact,
+            phoneticFamilyName: phoneticFamilyName,
+            phoneticGivenName: phoneticGivenName,
+            quickSearchText: quickSearchKeyText,
+            quickSearchKey: currentQuickSearchKey
+        )
+    }
 
-        if phoneticFamilyName.trimmingCharacters(in: .whitespaces) != contact.phoneticFamilyName ||
-            phoneticGivenName.trimmingCharacters(in: .whitespaces) != contact.phoneticGivenName {
+    static func fieldsHaveChanges(
+        contact: CNContact,
+        phoneticFamilyName: String,
+        phoneticGivenName: String,
+        quickSearchText: String,
+        quickSearchKey: String?
+    ) -> Bool {
+        func normalized(_ value: String) -> String {
+            value.trimmingCharacters(in: .whitespaces)
+        }
+
+        if normalized(phoneticFamilyName) != normalized(contact.phoneticFamilyName) ||
+            normalized(phoneticGivenName) != normalized(contact.phoneticGivenName) {
             return true
         }
 
-        guard let key = currentQuickSearchKey else { return false }
-        return quickSearchKeyText.trimmingCharacters(in: .whitespaces) != (contact.quickSearchBriefName(key) ?? "")
+        guard let quickSearchKey else { return false }
+        return normalized(quickSearchText) != normalized(contact.quickSearchBriefName(quickSearchKey) ?? "")
     }
 
     private func quickSearchStorageHint(for key: String) -> LocalizedStringKey? {
