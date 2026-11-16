@@ -1,5 +1,6 @@
 @testable import Phonetic
 import Foundation
+import os
 import Testing
 
 @MainActor
@@ -359,5 +360,105 @@ struct ContactProcessingTaskTests {
         run.cancel()
         #expect(await run.value == .stopped)
         #expect(client.submissions.isEmpty && work.starts == 0 && work.cancellations == 1)
+    }
+
+    @Test("Identical or non-advancing progress values are skipped")
+    static func duplicateProgressSkipped() async throws {
+        let client = ProcessingTaskClient(), work = ProcessingWork()
+        let manager = ContactProcessingTask(client: client)
+        let run = Task { await manager.run(operation: .addPinyin, onCancel: work.cancel, work: work.run) }
+        defer { manager.cancel(); work.finish(.stopped) }
+        try await waitUntil { client.submissions.count == 1 && work.starts == 1 }
+        let id = try #require(client.submissions.first)
+        client.onLaunch?(id)
+        let baseline = client.updates.count
+        manager.update(checked: 5, total: 10)
+        #expect(client.updates.count == baseline + 1)
+        // Same or smaller values should not produce another update.
+        manager.update(checked: 5, total: 10)
+        manager.update(checked: 3, total: 10)
+        #expect(client.updates.count == baseline + 1)
+        work.finish()
+        _ = await run.value
+    }
+
+    @Test("Progress fractionCompleted remains bounded and monotonic when transitioning bounds")
+    static func progressFractionMonotonicity() {
+        guard #available(iOS 26.0, *) else { return }
+        let handle = NativeProcessingTaskHandle()
+        let client = SystemContinuedProcessingClient(cancelScheduledRequest: { _ in })
+        client.attach(handle)
+        let progress = handle.progress
+
+        let recordedFractions = OSAllocatedUnfairLock(initialState: [progress.fractionCompleted])
+        let observation = progress.observe(\.fractionCompleted) { p, _ in
+            recordedFractions.withLock { $0.append(p.fractionCompleted) }
+        }
+        defer { observation.invalidate() }
+
+        // Attach mid-stream at 155/314
+        client.update(id: handle.identifier, checked: 155, total: 314, title: "Processing", subtitle: "155/314")
+        for i: Int64 in 156...314 {
+            client.update(id: handle.identifier, checked: i, total: 314, title: "Processing", subtitle: "\(i)/314")
+        }
+        client.complete(id: handle.identifier, success: true)
+
+        let fractions = recordedFractions.withLock { $0 }
+        #expect(fractions.count > 1)
+        for i in 1..<fractions.count {
+            #expect(fractions[i] >= fractions[i - 1], "Fraction regressed at step \(i): \(fractions[i - 1]) -> \(fractions[i])")
+            #expect(fractions[i] >= 0.0 && fractions[i] <= 1.0, "Fraction out of bounds: \(fractions[i])")
+        }
+        #expect(fractions.last == 1.0)
+    }
+
+    @Test("Cancelling a scheduler request preserves the native task until final completion", arguments: [true, false])
+    static func nativeTaskSurvivesRequestCancellation(success: Bool) async throws {
+        guard #available(iOS 26.0, *) else { return }
+        let handle = NativeProcessingTaskHandle()
+        var cancelledIDs: [String] = []
+        let client = SystemContinuedProcessingClient(cancelScheduledRequest: { cancelledIDs.append($0) })
+        let id = handle.identifier
+        client.attach(handle)
+        client.update(id: id, checked: 0, total: 10, title: "Processing", subtitle: "Preparing")
+        client.update(id: id, checked: 4, total: 10, title: "Processing", subtitle: "4/10")
+        client.cancelRequest(id: id)
+        #expect(cancelledIDs == [id])
+        #expect(handle.completions.isEmpty)
+        #expect(handle.progress.completedUnitCount == 4)
+
+        let finalChecked: Int64 = success ? 10 : 4
+        let finalSubtitle = success ? "Completed" : "Stopped"
+        client.update(id: id, checked: finalChecked, total: 10, title: "Processing", subtitle: finalSubtitle)
+        client.complete(id: id, success: success)
+        #expect(handle.completions == [success])
+        #expect(handle.progress.completedUnitCount == finalChecked)
+        #expect(handle.progress.totalUnitCount == 10)
+        #expect(handle.subtitles.last == finalSubtitle)
+
+        let updateCount = handle.subtitles.count
+        try await Task.sleep(for: .milliseconds(300))
+        client.update(id: id, checked: 5, total: 10, title: "Processing", subtitle: "Stale")
+        client.complete(id: id, success: !success)
+        #expect(handle.completions == [success])
+        #expect(handle.subtitles.count == updateCount)
+        #expect(handle.progress.completedUnitCount == finalChecked)
+    }
+}
+
+@available(iOS 26.0, *)
+@MainActor
+private final class NativeProcessingTaskHandle: ContinuedProcessingTaskHandle {
+    let identifier = UUID().uuidString
+    let progress = Progress(totalUnitCount: 1)
+    var subtitles: [String] = []
+    var completions: [Bool] = []
+
+    func updateTitle(_ title: String, subtitle: String) {
+        subtitles.append(subtitle)
+    }
+
+    func setTaskCompleted(success: Bool) {
+        completions.append(success)
     }
 }

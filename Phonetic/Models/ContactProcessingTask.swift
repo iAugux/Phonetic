@@ -2,6 +2,8 @@ import BackgroundTasks
 import Foundation
 import OSLog
 
+private let logger = Logger(subsystem: "com.iAugus.Phonetic", category: "ContactProcessingTask")
+
 enum ContactProcessingOperation {
     case addPinyin, clearFields, editContact, restore
 
@@ -65,7 +67,6 @@ final class ContactProcessingTask {
     private var job: Job?
     private var finishedJobs: [String: (outcome: ContactOperationOutcome, operation: ContactProcessingOperation, checked: Int64, total: Int64)] = [:]
     private var finishedIDs: [String] = []
-    private let logger = Logger(subsystem: "com.iAugus.Phonetic", category: "ContactProcessingTask")
 
     var isUsingSystemTask: Bool {
         job?.usesSystemTask == true
@@ -115,9 +116,12 @@ final class ContactProcessingTask {
 
     func update(checked: Int, total: Int) {
         guard let job, !job.cancelled else { return }
-        job.checked = max(job.checked, Int64(max(0, checked)))
-        job.total = max(job.checked, Int64(max(1, total)))
-        job.subtitle = String(localized: "Contacts checked: \(job.checked) / \(total)")
+        let newChecked = max(job.checked, Int64(max(0, checked)))
+        let newTotal = max(newChecked, Int64(max(1, total)))
+        guard newChecked != job.checked || newTotal != job.total else { return }
+        job.checked = newChecked
+        job.total = newTotal
+        job.subtitle = String(localized: "Contacts checked: \(job.checked) / \(job.total)")
         guard job.usesSystemTask else { return }
         client?.update(id: job.id, checked: job.checked, total: job.total, title: job.operation.title,
                        subtitle: job.subtitle)
@@ -200,11 +204,49 @@ final class ContactProcessingTask {
 
 @available(iOS 26.0, *)
 @MainActor
-private final class SystemContinuedProcessingClient: ContinuedProcessingClient {
+protocol ContinuedProcessingTaskHandle: AnyObject {
+    var identifier: String { get }
+    var progress: Progress { get }
+    func updateTitle(_ title: String, subtitle: String)
+    func setTaskCompleted(success: Bool)
+}
+
+@available(iOS 26.0, *)
+extension BGContinuedProcessingTask: ContinuedProcessingTaskHandle {}
+
+@available(iOS 26.0, *)
+@MainActor
+final class SystemContinuedProcessingClient: ContinuedProcessingClient {
     private enum ClientError: Error { case registrationFailed }
-    private var tasks: [String: BGContinuedProcessingTask] = [:]
+
+    private final class TaskState {
+        let task: any ContinuedProcessingTaskHandle
+        var pendingUpdate: Task<Void, Never>?
+        var lastUpdateInstant: ContinuousClock.Instant?
+        var latestChecked: Int64 = 0
+        var latestTotal: Int64 = 1
+        var latestTitle: String = ""
+        var latestSubtitle: String = ""
+        var lastAppliedSubtitle: String = ""
+
+        init(task: any ContinuedProcessingTaskHandle) {
+            self.task = task
+        }
+    }
+
+    private var states: [String: TaskState] = [:]
     private var onLaunch: (@MainActor (String) -> Void)?
     private var onExpiration: (@MainActor (String) -> Void)?
+    private let cancelScheduledRequest: (String) -> Void
+
+    init(cancelScheduledRequest: @escaping (String) -> Void = { BGTaskScheduler.shared.cancel(taskRequestWithIdentifier: $0) }) {
+        self.cancelScheduledRequest = cancelScheduledRequest
+    }
+
+    func attach(_ task: any ContinuedProcessingTaskHandle) {
+        states[task.identifier] = TaskState(task: task)
+        task.progress.totalUnitCount = 1
+    }
 
     func prepare(onLaunch: @escaping @MainActor (String) -> Void, onExpiration: @escaping @MainActor (String) -> Void) -> Bool {
         self.onLaunch = onLaunch
@@ -224,11 +266,10 @@ private final class SystemContinuedProcessingClient: ContinuedProcessingClient {
                     return
                 }
                 let id = task.identifier
-                self.tasks[id] = task
-                task.progress.totalUnitCount = 1
+                self.attach(task)
                 task.expirationHandler = { [weak self] in
                     Task { @MainActor in
-                        guard self?.tasks[id] != nil else { return }
+                        guard self?.states[id] != nil else { return }
                         onExpiration(id)
                     }
                 }
@@ -251,17 +292,76 @@ private final class SystemContinuedProcessingClient: ContinuedProcessingClient {
     }
 
     func update(id: String, checked: Int64, total: Int64, title: String, subtitle: String) {
-        guard let task = tasks[id] else { return }
-        task.progress.totalUnitCount = total
-        task.progress.completedUnitCount = checked
-        task.updateTitle(title, subtitle: subtitle)
+        guard let state = states[id] else { return }
+        state.latestChecked = max(state.latestChecked, checked)
+        state.latestTotal = max(state.latestChecked, max(1, total))
+        state.latestTitle = title
+        state.latestSubtitle = subtitle
+
+        if let last = state.lastUpdateInstant {
+            let elapsed = ContinuousClock.now - last
+            if elapsed >= .milliseconds(250) {
+                state.pendingUpdate?.cancel()
+                state.pendingUpdate = nil
+                applyUpdate(to: state)
+            } else if state.pendingUpdate == nil {
+                let remaining = .milliseconds(250) - elapsed
+                state.pendingUpdate = Task { [weak self, weak state] in
+                    try? await Task.sleep(for: remaining)
+                    guard let self, let state, !Task.isCancelled else { return }
+                    state.pendingUpdate = nil
+                    self.applyUpdate(to: state)
+                }
+            }
+        } else {
+            // First update applies immediately to establish task boundaries.
+            applyUpdate(to: state)
+        }
+    }
+
+    private func applyUpdate(to state: TaskState) {
+        state.lastUpdateInstant = .now
+        let task = state.task
+        let safeTotal = max(1, state.latestTotal)
+        let safeChecked = min(max(0, state.latestChecked), safeTotal)
+
+        // Establish a larger denominator before advancing to avoid a transient value above 100%.
+        if task.progress.totalUnitCount < safeTotal {
+            task.progress.totalUnitCount = safeTotal
+            if task.progress.completedUnitCount < safeChecked {
+                task.progress.completedUnitCount = safeChecked
+            }
+        } else {
+            if task.progress.completedUnitCount < safeChecked {
+                task.progress.completedUnitCount = safeChecked
+            }
+            if task.progress.totalUnitCount != safeTotal {
+                task.progress.totalUnitCount = safeTotal
+            }
+        }
+
+        if state.lastAppliedSubtitle != state.latestSubtitle {
+            state.lastAppliedSubtitle = state.latestSubtitle
+            task.updateTitle(state.latestTitle, subtitle: state.latestSubtitle)
+        }
+
+        logger.debug("System task \(task.identifier) progress: \(safeChecked)/\(safeTotal), fraction=\(task.progress.fractionCompleted, format: .fixed(precision: 3))")
     }
 
     func complete(id: String, success: Bool) {
-        tasks.removeValue(forKey: id)?.setTaskCompleted(success: success)
+        guard let state = states.removeValue(forKey: id) else { return }
+        state.pendingUpdate?.cancel()
+        state.pendingUpdate = nil
+        applyUpdate(to: state)
+        state.task.setTaskCompleted(success: success)
     }
 
     func cancelRequest(id: String) {
-        BGTaskScheduler.shared.cancel(taskRequestWithIdentifier: id)
+        if let state = states[id] {
+            state.pendingUpdate?.cancel()
+            state.pendingUpdate = nil
+            applyUpdate(to: state)
+        }
+        cancelScheduledRequest(id)
     }
 }
