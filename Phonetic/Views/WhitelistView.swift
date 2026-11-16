@@ -9,6 +9,7 @@ import UIKit
 struct WhitelistView: View {
     @Environment(\.openURL) private var openURL
     @Environment(\.scenePhase) private var scenePhase
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @State private var contacts: [CNContact] = []
     @State private var searchText: String = ""
     @State private var selectedSegment: Int = 0 // 0: All, 1: Whitelists
@@ -87,17 +88,20 @@ struct WhitelistView: View {
                 } actions: {
                     Button("Choose Contacts") { showContactAccessPicker = true }
                 }
-            } else if filteredContacts.isEmpty {
-                if !searchText.isEmpty {
-                    ContentUnavailableView.search(text: searchText)
-                } else if selectedSegment == 1 {
-                    ContentUnavailableView("No Whitelisted Contacts", systemImage: "star", description: Text("Tap a star in All to add a contact to your whitelist."))
-                } else {
-                    ContentUnavailableView("No Contacts", systemImage: "person.crop.circle")
-                }
             } else {
                 contactList
                     .contentMargins(.top, 8, for: .scrollContent)
+                    .overlay {
+                        if filteredContacts.isEmpty {
+                            if !searchText.isEmpty {
+                                ContentUnavailableView.search(text: searchText)
+                            } else if selectedSegment == 1 {
+                                ContentUnavailableView("No Whitelisted Contacts", systemImage: "star", description: Text("Tap a star in All to add a contact to your whitelist."))
+                            } else {
+                                ContentUnavailableView("No Contacts", systemImage: "person.crop.circle")
+                            }
+                        }
+                    }
             }
         }
         .background(AppColor.pageBackground)
@@ -296,10 +300,12 @@ struct WhitelistView: View {
     }
 
     private func toggleWhitelist(_ id: String) {
-        if whitelistSet.contains(id) {
-            whitelistSet.remove(id)
-        } else {
-            whitelistSet.insert(id)
+        withAnimation(reduceMotion ? nil : .easeInOut(duration: 0.3)) {
+            if whitelistSet.contains(id) {
+                whitelistSet.remove(id)
+            } else {
+                whitelistSet.insert(id)
+            }
         }
         UserDefaults.standard.set(Array(whitelistSet), forKey: kWhitelistIdentifiersKey)
     }
