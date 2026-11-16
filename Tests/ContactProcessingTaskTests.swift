@@ -382,7 +382,7 @@ struct ContactProcessingTaskTests {
         _ = await run.value
     }
 
-    @Test("Progress fractionCompleted remains bounded and monotonic when transitioning bounds")
+    @Test("Progress remains bounded and monotonic when attaching late with a fixed total")
     static func progressFractionMonotonicity() {
         guard #available(iOS 26.0, *) else { return }
         let handle = NativeProcessingTaskHandle()
@@ -443,6 +443,69 @@ struct ContactProcessingTaskTests {
         #expect(handle.completions == [success])
         #expect(handle.subtitles.count == updateCount)
         #expect(handle.progress.completedUnitCount == finalChecked)
+    }
+
+    @Test("System client flushes coalesced updates automatically when throttle window elapses")
+    static func throttledUpdatesFlushAutomatically() async throws {
+        guard #available(iOS 26.0, *) else { return }
+        let handle = NativeProcessingTaskHandle()
+        let client = SystemContinuedProcessingClient(cancelScheduledRequest: { _ in })
+        let id = handle.identifier
+        client.attach(handle)
+
+        // Zero total boundary: safeTotal must normalize to at least 1 without dividing by zero.
+        client.update(id: id, checked: 0, total: 0, title: "Processing", subtitle: "Preparing")
+        #expect(handle.progress.totalUnitCount == 1)
+        #expect(handle.progress.completedUnitCount == 0)
+        #expect(handle.progress.fractionCompleted == 0.0)
+        #expect(handle.subtitles == ["Preparing"])
+
+        // Rapid updates within the 250ms window must be coalesced and not applied immediately.
+        client.update(id: id, checked: 10, total: 100, title: "Processing", subtitle: "10/100")
+        client.update(id: id, checked: 20, total: 100, title: "Processing", subtitle: "20/100")
+        client.update(id: id, checked: 35, total: 100, title: "Processing", subtitle: "35/100")
+        #expect(handle.progress.completedUnitCount == 0)
+        #expect(handle.subtitles == ["Preparing"])
+
+        try await waitUntil {
+            handle.progress.completedUnitCount == 35 && handle.subtitles.last == "35/100"
+        }
+        #expect(handle.progress.completedUnitCount == 35)
+        #expect(handle.progress.totalUnitCount == 100)
+        #expect(handle.subtitles.last == "35/100")
+
+        client.complete(id: id, success: true)
+        #expect(handle.completions == [true])
+    }
+
+    @Test("Increasing the total after progress is published exposes a known intermediate regression")
+    static func growingTotalProgressRegression() async throws {
+        guard #available(iOS 26.0, *) else { return }
+        let handle = NativeProcessingTaskHandle()
+        let client = SystemContinuedProcessingClient(cancelScheduledRequest: { _ in })
+        let id = handle.identifier
+        client.attach(handle)
+        defer { client.complete(id: id, success: true) }
+        client.update(id: id, checked: 10, total: 10, title: "Processing", subtitle: "10/10")
+
+        let recordedFractions = OSAllocatedUnfairLock(initialState: [handle.progress.fractionCompleted])
+        let observation = handle.progress.observe(\.fractionCompleted) { progress, _ in
+            recordedFractions.withLock { $0.append(progress.fractionCompleted) }
+        }
+        defer { observation.invalidate() }
+
+        client.update(id: id, checked: 11, total: 11, title: "Processing", subtitle: "11/11")
+        try await waitUntil {
+            handle.progress.completedUnitCount == 11 && handle.subtitles.last == "11/11"
+        }
+
+        let fractions = recordedFractions.withLock { $0 }
+        #expect(fractions.count > 1)
+        #expect(fractions.allSatisfy { (0...1).contains($0) })
+        #expect(fractions.last == 1)
+        withKnownIssue("Growing the total can lower the published fraction between property assignments; this PR only guarantees monotonic progress for a fixed total.") {
+            #expect(zip(fractions, fractions.dropFirst()).allSatisfy { $0 <= $1 })
+        }
     }
 }
 
