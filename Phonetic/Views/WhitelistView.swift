@@ -205,7 +205,6 @@ struct WhitelistView: View {
                     contactIdentity(contact)
                 }
                 .buttonStyle(.plain)
-                .frame(maxWidth: .infinity, alignment: .leading)
                 .accessibilityLabel(Text(contact.whitelistDisplayName))
                 .accessibilityHint(Text("Edit Contact"))
             } else {
