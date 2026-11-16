@@ -9,6 +9,7 @@ import UIKit
 struct WhitelistView: View {
     @Environment(\.openURL) private var openURL
     @Environment(\.scenePhase) private var scenePhase
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @State private var contacts: [CNContact] = []
     @State private var searchText: String = ""
     @State private var selectedSegment: Int = 0 // 0: All, 1: Whitelists
@@ -87,17 +88,20 @@ struct WhitelistView: View {
                 } actions: {
                     Button("Choose Contacts") { showContactAccessPicker = true }
                 }
-            } else if filteredContacts.isEmpty {
-                if !searchText.isEmpty {
-                    ContentUnavailableView.search(text: searchText)
-                } else if selectedSegment == 1 {
-                    ContentUnavailableView("No Whitelisted Contacts", systemImage: "star", description: Text("Tap a star in All to add a contact to your whitelist."))
-                } else {
-                    ContentUnavailableView("No Contacts", systemImage: "person.crop.circle")
-                }
             } else {
                 contactList
                     .contentMargins(.top, 8, for: .scrollContent)
+                    .overlay {
+                        if filteredContacts.isEmpty {
+                            if !searchText.isEmpty {
+                                ContentUnavailableView.search(text: searchText)
+                            } else if selectedSegment == 1 {
+                                ContentUnavailableView("No Whitelisted Contacts", systemImage: "star", description: Text("Tap a star in All to add a contact to your whitelist."))
+                            } else {
+                                ContentUnavailableView("No Contacts", systemImage: "person.crop.circle")
+                            }
+                        }
+                    }
             }
         }
         .background(AppColor.pageBackground)
@@ -190,11 +194,6 @@ struct WhitelistView: View {
         List {
             ForEach(filteredContacts, id: \.identifier) { contact in
                 contactRow(contact)
-                    .contentShape(Rectangle())
-                    .onTapGesture {
-                        guard selectedSegment == 1 else { return }
-                        selectedContact = contact
-                    }
                     .listRowInsets(EdgeInsets(top: 10, leading: 16, bottom: 10, trailing: 8))
             }
         }
@@ -203,42 +202,22 @@ struct WhitelistView: View {
 
     private func contactRow(_ contact: CNContact) -> some View {
         HStack(spacing: 12) {
-            // Avatar
-            if let imageData = contact.thumbnailImageData, let uiImage = UIImage(data: imageData) {
-                Image(uiImage: uiImage)
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: 44, height: 44)
-                    .clipShape(Circle())
+            if selectedSegment == 1 {
+                Button {
+                    selectedContact = contact
+                } label: {
+                    contactIdentity(contact)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .contentShape(Rectangle())
+                }
+                .buttonStyle(.plain)
+                .accessibilityLabel(Text(contact.whitelistDisplayName))
+                .accessibilityValue(Text(verbatim: contactAccessibilityDetails(contact)))
+                .accessibilityHint(Text("Edit Contact"))
             } else {
-                Image(systemName: "person.crop.circle")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 44, height: 44)
-                    .foregroundStyle(.secondary)
+                contactIdentity(contact)
+                Spacer()
             }
-
-            // Names
-            VStack(alignment: .leading, spacing: 3) {
-                Text(contact.whitelistDisplayName)
-                    .font(.body.weight(.medium))
-
-                let phonetic = "\(contact.phoneticFamilyName) \(contact.phoneticGivenName)".trimmingCharacters(in: .whitespaces)
-                if !phonetic.isEmpty {
-                    Text(phonetic)
-                        .font(.footnote)
-                        .foregroundStyle(.secondary)
-                }
-
-                if let key = PhoneticContacts.shared.ContactKeyForQuickSearch,
-                   let brief = contact.quickSearchBriefName(key), !brief.isEmpty {
-                    Text(brief)
-                        .font(.caption)
-                        .foregroundStyle(AppColor.accent)
-                }
-            }
-
-            Spacer()
 
             // Whitelist toggle
             let isWhitelisted = whitelistSet.contains(contact.identifier)
@@ -260,16 +239,73 @@ struct WhitelistView: View {
         }
     }
 
+    private func contactIdentity(_ contact: CNContact) -> some View {
+        HStack(spacing: 12) {
+            if let imageData = contact.thumbnailImageData, let uiImage = UIImage(data: imageData) {
+                Image(uiImage: uiImage)
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: 44, height: 44)
+                    .clipShape(Circle())
+                    .accessibilityHidden(true)
+            } else {
+                Image(systemName: "person.crop.circle")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 44, height: 44)
+                    .foregroundStyle(.secondary)
+                    .accessibilityHidden(true)
+            }
+
+            VStack(alignment: .leading, spacing: 3) {
+                Text(contact.whitelistDisplayName)
+                    .font(.body.weight(.medium))
+
+                let phonetic = "\(contact.phoneticFamilyName) \(contact.phoneticGivenName)".trimmingCharacters(in: .whitespaces)
+                if !phonetic.isEmpty {
+                    Text(phonetic)
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
+                }
+
+                if let key = PhoneticContacts.shared.ContactKeyForQuickSearch,
+                   let brief = contact.quickSearchBriefName(key), !brief.isEmpty {
+                    Text(brief)
+                        .font(.caption)
+                        .foregroundStyle(AppColor.accent)
+                }
+            }
+        }
+        .contentShape(Rectangle())
+    }
+
+    private func contactAccessibilityDetails(_ contact: CNContact) -> String {
+        var details: [String] = []
+        if !contact.phoneticFamilyName.isEmpty {
+            details.append("\(String(localized: "Phonetic last name")): \(contact.phoneticFamilyName)")
+        }
+        if !contact.phoneticGivenName.isEmpty {
+            details.append("\(String(localized: "Phonetic first name")): \(contact.phoneticGivenName)")
+        }
+        if let key = PhoneticContacts.shared.ContactKeyForQuickSearch,
+           let brief = contact.quickSearchBriefName(key), !brief.isEmpty {
+            details.append("\(String(localized: "Quick Search Text")): \(brief)")
+        }
+        return details.joined(separator: ", ")
+    }
+
     private func loadWhitelist() {
         let array = UserDefaults.standard.array(forKey: kWhitelistIdentifiersKey) as? [String] ?? []
         whitelistSet = Set(array)
     }
 
     private func toggleWhitelist(_ id: String) {
-        if whitelistSet.contains(id) {
-            whitelistSet.remove(id)
-        } else {
-            whitelistSet.insert(id)
+        withAnimation(reduceMotion ? nil : .easeInOut(duration: 0.3)) {
+            if whitelistSet.contains(id) {
+                whitelistSet.remove(id)
+            } else {
+                whitelistSet.insert(id)
+            }
         }
         UserDefaults.standard.set(Array(whitelistSet), forKey: kWhitelistIdentifiersKey)
     }

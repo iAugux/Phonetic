@@ -3849,28 +3849,6 @@
         }
       }
     },
-    "Tap to add pinyin" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tap to add pinyin"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "轻点添加拼音"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "點一下加入拼音"
-          }
-        }
-      }
-    },
     "The selected fields have been restored." : {
       "extractionState" : "manual",
       "localizations" : {
@@ -4261,50 +4239,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "啟用「無姓名時使用公司名稱」後，加入拼音時會將公司名稱寫入沒有姓氏和名字的聯絡人的名字欄位。"
-          }
-        }
-      }
-    },
-    "Use Nickname" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Use Nickname"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "使用昵称字段"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "使用暱稱欄位"
-          }
-        }
-      }
-    },
-    "Use Selected Field" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Use Selected Field"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "使用所选字段"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "使用所選欄位"
           }
         }
       }

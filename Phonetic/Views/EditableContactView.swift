@@ -6,6 +6,7 @@ import SwiftUI
 
 struct EditableContactView: View {
     @Environment(\.dismiss) private var dismiss
+    @ScaledMetric(relativeTo: .subheadline) private var inputMinimumHeight: CGFloat = 44
     let contact: CNContact
     var onSaved: (() -> Void)?
 
@@ -106,13 +107,14 @@ struct EditableContactView: View {
                                     .font(.caption)
                                     .foregroundStyle(.secondary)
 
-                                TextField("Phonetic last name", text: $phoneticFamilyName, prompt: Text("Enter pronunciation"))
+                                TextField("Phonetic last name", text: $phoneticFamilyName, prompt: Text("Enter pronunciation").font(.subheadline))
                                     .focused($focusedField, equals: .family)
                                     .autocorrectionDisabled()
                                     .textFieldStyle(.plain)
                                     .font(.subheadline)
                                     .padding(.vertical, 8)
                                     .padding(.horizontal, 10)
+                                    .frame(minHeight: inputMinimumHeight)
                                     .background(AppColor.inputBackground)
                                     .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
                             }
@@ -123,13 +125,14 @@ struct EditableContactView: View {
                                     .font(.caption)
                                     .foregroundStyle(.secondary)
 
-                                TextField("Phonetic first name", text: $phoneticGivenName, prompt: Text("Enter pronunciation"))
+                                TextField("Phonetic first name", text: $phoneticGivenName, prompt: Text("Enter pronunciation").font(.subheadline))
                                     .focused($focusedField, equals: .given)
                                     .autocorrectionDisabled()
                                     .textFieldStyle(.plain)
                                     .font(.subheadline)
                                     .padding(.vertical, 8)
                                     .padding(.horizontal, 10)
+                                    .frame(minHeight: inputMinimumHeight)
                                     .background(AppColor.inputBackground)
                                     .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
                             }
@@ -141,13 +144,14 @@ struct EditableContactView: View {
                                         .font(.caption)
                                         .foregroundStyle(.secondary)
 
-                                    TextField("Quick Search Text", text: $quickSearchKeyText, prompt: Text("Enter initials or a name"))
+                                    TextField("Quick Search Text", text: $quickSearchKeyText, prompt: Text("Enter initials or a name").font(.subheadline))
                                         .focused($focusedField, equals: .quickSearch)
                                         .autocorrectionDisabled()
                                         .textFieldStyle(.plain)
                                         .font(.subheadline)
                                         .padding(.vertical, 8)
                                         .padding(.horizontal, 10)
+                                        .frame(minHeight: inputMinimumHeight)
                                         .background(AppColor.inputBackground)
                                         .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
 
