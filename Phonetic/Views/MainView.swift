@@ -307,8 +307,12 @@ struct MainView: View {
     }
 
     private var executeButtonTitle: Text {
-        if appState.isShowingCompletion { return Text(verbatim: appState.statusText) }
-        if appState.canAbortProcessing { return Text("Stop Processing") }
+        if appState.isShowingCompletion {
+            return Text(verbatim: appState.statusText)
+        }
+        if appState.canAbortProcessing {
+            return Text("Stop Processing")
+        }
         return Text("Add Pinyin")
     }
 

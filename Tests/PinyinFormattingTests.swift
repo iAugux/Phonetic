@@ -16,11 +16,10 @@ struct PinyinFormattingTests {
             defaults.set(upcase, forKey: kUpcasePinyin)
             let family = try #require(engine.phonetic("林", needFix: false))
             let given = try #require(engine.phonetic("沐晴", needFix: false))
-            let expected: String
-            if useTones {
-                expected = separated ? "Mù Qíng" : (upcase ? "MùQíng" : "Mùqíng")
+            let expected: String = if useTones {
+                separated ? "Mù Qíng" : (upcase ? "MùQíng" : "Mùqíng")
             } else {
-                expected = separated ? "Mu Qing" : (upcase ? "MuQing" : "Muqing")
+                separated ? "Mu Qing" : (upcase ? "MuQing" : "Muqing")
             }
             #expect(given.value == expected)
             #expect(family.value == (useTones ? "Lín" : "Lin"))

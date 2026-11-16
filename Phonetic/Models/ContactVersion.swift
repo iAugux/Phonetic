@@ -19,7 +19,12 @@ enum ContactVersionError: Error, LocalizedError, Sendable, Equatable {
 
 enum ContactOperationOutcome: Sendable, Equatable {
     case completed, stopped, failed(ContactVersionError)
-    var succeeded: Bool { if case .completed = self { return true }; return false }
+    var succeeded: Bool {
+        if case .completed = self {
+            return true
+        }; return false
+    }
+
     var status: String {
         switch self {
         case .completed: String(localized: "Completed")
@@ -71,7 +76,9 @@ enum ContactVersionField: String, Codable, CaseIterable, Sendable {
         }
     }
 
-    var isText: Bool { self != .socialProfiles && self != .instantMessageAddresses }
+    var isText: Bool {
+        self != .socialProfiles && self != .instantMessageAddresses
+    }
 }
 
 /// Only the field being changed is retained. Array archives preserve CNLabeledValue identifiers.
@@ -81,7 +88,9 @@ struct ContactVersionValue: Codable, Sendable, Equatable {
     let comparison: Data
     let summary: String
 
-    static func == (lhs: Self, rhs: Self) -> Bool { lhs.comparison == rhs.comparison && (lhs.text != nil) == (rhs.text != nil) }
+    static func == (lhs: Self, rhs: Self) -> Bool {
+        lhs.comparison == rhs.comparison && (lhs.text != nil) == (rhs.text != nil)
+    }
 
     static func read(_ field: ContactVersionField, from contact: CNContact) throws -> Self {
         guard contact.isKeyAvailable(field.key) else { throw ContactVersionError.historyUnavailable }
@@ -109,7 +118,7 @@ struct ContactVersionValue: Codable, Sendable, Equatable {
         let archive = try NSKeyedArchiver.archivedData(withRootObject: wrapper, requiringSecureCoding: true)
         let encoder = JSONEncoder()
         encoder.outputFormatting = .sortedKeys
-        return Self(text: nil, archive: archive, comparison: try encoder.encode(entries), summary: summary)
+        return try Self(text: nil, archive: archive, comparison: encoder.encode(entries), summary: summary)
     }
 
     func apply(_ field: ContactVersionField, to contact: CNMutableContact) throws {
@@ -132,7 +141,9 @@ struct ContactVersionChange: Codable, Sendable, Identifiable {
     let before: ContactVersionValue
     let after: ContactVersionValue
     var uncertain = false
-    var id: String { contactID + ":" + field.rawValue }
+    var id: String {
+        contactID + ":" + field.rawValue
+    }
 }
 
 enum ContactVersionKind: String, Codable, Sendable {
@@ -182,7 +193,9 @@ struct ContactRestoreEntry: Sendable, Identifiable {
     let change: ContactVersionChange
     let current: ContactVersionValue?
     let isConflict: Bool
-    var id: String { change.id }
+    var id: String {
+        change.id
+    }
 }
 
 struct ContactRestorePreview: Sendable {
@@ -200,8 +213,12 @@ protocol ContactVersionSource: Sendable {
 struct SystemContactVersionSource: ContactVersionSource {
     func hasAccess() -> Bool {
         let status = CNContactStore.authorizationStatus(for: .contacts)
-        if status == .authorized { return true }
-        if #available(iOS 18.0, *), status == .limited { return true }
+        if status == .authorized {
+            return true
+        }
+        if #available(iOS 18.0, *), status == .limited {
+            return true
+        }
         return false
     }
 

@@ -5,8 +5,13 @@ struct ContactVersionsView: View {
     @State private var isLoading = false
     @State private var errorMessage: String?
 
-    private var versions: [ContactVersion] { history?.versions ?? [] }
-    private var earliestOrdinal: Int { history?.earliestOrdinal ?? 0 }
+    private var versions: [ContactVersion] {
+        history?.versions ?? []
+    }
+
+    private var earliestOrdinal: Int {
+        history?.earliestOrdinal ?? 0
+    }
 
     var body: some View {
         List {
@@ -17,7 +22,9 @@ struct ContactVersionsView: View {
                     Button("Try Again") { Task { await load() } }
                 }
             } else if history != nil {
-                if let history { storageSection(history) }
+                if let history {
+                    storageSection(history)
+                }
                 if versions.isEmpty {
                     if earliestOrdinal == 0 {
                         ContentUnavailableView("No Changes Yet", systemImage: "clock.arrow.circlepath",
@@ -27,22 +34,30 @@ struct ContactVersionsView: View {
                                                description: Text("New changes will appear here. Earlier deleted history cannot be restored."))
                     }
                 }
-                if !versions.isEmpty || earliestOrdinal > 0 { versionSection }
+                if !versions.isEmpty || earliestOrdinal > 0 {
+                    versionSection
+                }
             }
         }
         .overlay {
-            if history == nil && (isLoading || errorMessage == nil) {
+            if history == nil, isLoading || errorMessage == nil {
                 DelayedProgressView("Loading History")
             }
         }
         .navigationTitle("Version History")
         .refreshable { await load() }
         .task {
-            if history == nil { await load() }
+            if history == nil {
+                await load()
+            }
         }
         .alert("History Unavailable", isPresented: Binding(
             get: { history != nil && errorMessage != nil },
-            set: { if !$0 { errorMessage = nil } }
+            set: {
+                if !$0 {
+                    errorMessage = nil
+                }
+            }
         )) {
             Button("OK", role: .cancel) { errorMessage = nil }
         } message: {
@@ -108,8 +123,11 @@ struct ContactVersionsView: View {
                 ContactRestoreView(targetOrdinal: earliestOrdinal) { Task { await load() } }
             } label: {
                 VStack(alignment: .leading, spacing: 6) {
-                    if earliestOrdinal == 0 { Text("Before First Change") }
-                    else { Text("Earliest Available Version") }
+                    if earliestOrdinal == 0 {
+                        Text("Before First Change")
+                    } else {
+                        Text("Earliest Available Version")
+                    }
                     Text("Version \(earliestOrdinal)").font(.caption).foregroundStyle(.secondary)
                 }
             }
@@ -123,8 +141,7 @@ struct ContactVersionsView: View {
         isLoading = true
         defer { isLoading = false }
         errorMessage = nil
-        do { history = try await ContactVersionStore.shared.overview() }
-        catch { errorMessage = (error as? ContactVersionError ?? .historyUnavailable).localizedDescription }
+        do { history = try await ContactVersionStore.shared.overview() } catch { errorMessage = (error as? ContactVersionError ?? .historyUnavailable).localizedDescription }
     }
 }
 
@@ -156,7 +173,7 @@ private struct ContactRestoreView: View {
 
     var body: some View {
         Group {
-            if preview == nil && errorMessage == nil {
+            if preview == nil, errorMessage == nil {
                 DelayedProgressView("Preparing Preview")
             } else {
                 List {
@@ -270,11 +287,17 @@ private struct ContactRestoreView: View {
             .padding(.vertical, 16)
     }
 
-    @ViewBuilder private func restoreRow(_ entry: ContactRestoreEntry) -> some View {
+    private func restoreRow(_ entry: ContactRestoreEntry) -> some View {
         VStack(alignment: .leading, spacing: 8) {
             Toggle(entry.change.field.title, isOn: Binding(
                 get: { selected.contains(entry.id) },
-                set: { if $0 { selected.insert(entry.id) } else { selected.remove(entry.id) } }
+                set: {
+                    if $0 {
+                        selected.insert(entry.id)
+                    } else {
+                        selected.remove(entry.id)
+                    }
+                }
             ))
             .disabled(entry.current == nil)
             .tint(AppColor.accent)
@@ -296,8 +319,11 @@ private struct ContactRestoreView: View {
     private func valueRow(_ title: LocalizedStringKey, value: ContactVersionValue) -> some View {
         VStack(alignment: .leading, spacing: 2) {
             Text(title).font(.caption).foregroundStyle(.secondary)
-            if value.summary.isEmpty { Text("Empty").foregroundStyle(.secondary) }
-            else { Text(verbatim: value.summary).textSelection(.enabled) }
+            if value.summary.isEmpty {
+                Text("Empty").foregroundStyle(.secondary)
+            } else {
+                Text(verbatim: value.summary).textSelection(.enabled)
+            }
         }
     }
 

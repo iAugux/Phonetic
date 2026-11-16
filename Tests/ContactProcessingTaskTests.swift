@@ -45,7 +45,9 @@ private final class ProcessingTaskClient: ContinuedProcessingClient {
     func resolveAllSubmissions() {
         let pending = pendingSubmissions.values
         pendingSubmissions.removeAll()
-        for completion in pending { completion.resume() }
+        for completion in pending {
+            completion.resume()
+        }
     }
 
     func update(id: String, checked: Int64, total: Int64, title: String, subtitle: String) {
@@ -193,10 +195,14 @@ struct ContactProcessingTaskTests {
         try await waitUntil { client.submissions.count == 1 && work.starts == 1 }
         let id = try #require(client.submissions.first)
         manager.update(checked: 1, total: 3)
-        if !lateLaunch { client.onLaunch?(id) }
+        if !lateLaunch {
+            client.onLaunch?(id)
+        }
         work.finish(.failed(.saveFailed))
         #expect(await run.value == .failed(.saveFailed))
-        if lateLaunch { client.onLaunch?(id) }
+        if lateLaunch {
+            client.onLaunch?(id)
+        }
         #expect(client.completions.first?.1 == false && client.updates.last?.checked == 1)
         #expect(client.updates.last?.total == 3 && work.starts == 1)
         #expect(client.updates.last?.subtitle == ContactOperationOutcome.failed(.saveFailed).status)

@@ -102,7 +102,9 @@ final class AppState: ObservableObject {
             self.isProcessing = true
 
             let aborted = await self.contactProvider().execute { currentResult, percentage in
-                if let currentResult { self.statusText = currentResult }
+                if let currentResult {
+                    self.statusText = currentResult
+                }
                 self.percentage = percentage
             }
             self.promptCompletion(aborted)
@@ -195,7 +197,9 @@ final class AppState: ObservableObject {
         // Keep the final progress visible without offering cancellation after work has ended.
         isShowingCompletion = true
         showAbortAlert = false
-        if outcome.succeeded { percentage = 100 }
+        if outcome.succeeded {
+            percentage = 100
+        }
         let text = outcome.status
         lastOutcome = outcome
         if case .failed(let error) = outcome {

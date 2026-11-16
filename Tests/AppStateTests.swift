@@ -240,11 +240,10 @@ struct AppStateTests {
         state.showChooseQuickSearchAlert = true
         state.showCleanAlert = true
         state.showAbortAlert = true
-        let accepted: Bool
-        if shortcut {
-            accepted = state.handleShortcut(UIApplicationShortcutItem(type: action, localizedTitle: action))
+        let accepted: Bool = if shortcut {
+            state.handleShortcut(UIApplicationShortcutItem(type: action, localizedTitle: action))
         } else {
-            accepted = try state.handleOpenURL(#require(URL(string: "phonetic://\(action.uppercased())"))) { navigationCompleted = true }
+            try state.handleOpenURL(#require(URL(string: "phonetic://\(action.uppercased())"))) { navigationCompleted = true }
         }
         #expect(accepted && accessRequests == 0 && engine.starts == 0 && !navigationCompleted)
         #expect(!state.showSettings && !state.showAdditionalSettings && !state.showWalkthrough)

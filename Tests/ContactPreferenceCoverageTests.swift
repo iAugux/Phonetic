@@ -19,7 +19,9 @@ private final class PreferenceFixture {
     init() throws {
         defaults = try #require(UserDefaults(suiteName: suite))
         engine = PhoneticContacts(userDefaults: defaults)
-        for option in cleanOptions { defaults.set(false, forKey: option.key) }
+        for option in cleanOptions {
+            defaults.set(false, forKey: option.key)
+        }
     }
 
     deinit { defaults.removePersistentDomain(forName: suite) }
@@ -27,9 +29,16 @@ private final class PreferenceFixture {
 
 struct ContactPreferenceCoverageTests {
     @Test("Whitelist brief reads the requested contact field without falling back to another",
-          arguments: [CNContactNicknameKey, CNContactNoteKey, CNContactPhoneticMiddleNameKey,
-                      CNContactJobTitleKey, CNContactDepartmentNameKey, CNContactOrganizationNameKey,
-                      CNContactNamePrefixKey, CNContactNameSuffixKey])
+          arguments: [
+              CNContactNicknameKey,
+              CNContactNoteKey,
+              CNContactPhoneticMiddleNameKey,
+              CNContactJobTitleKey,
+              CNContactDepartmentNameKey,
+              CNContactOrganizationNameKey,
+              CNContactNamePrefixKey,
+              CNContactNameSuffixKey,
+          ])
     static func briefFieldLookup(key: String) {
         let contact = CNMutableContact()
         contact.nickname = "Other field"
@@ -79,12 +88,16 @@ struct ContactPreferenceCoverageTests {
           arguments: [false, true])
     static func cleanFieldExtremes(allSelected: Bool) throws {
         let f = try PreferenceFixture()
-        for option in cleanOptions { f.defaults.set(allSelected, forKey: option.key) }
+        for option in cleanOptions {
+            f.defaults.set(allSelected, forKey: option.key)
+        }
         let message = f.engine.messageOfCurrentKeysNeedToBeCleaned
         let paragraphs = message.components(separatedBy: "\n\n")
         #expect(paragraphs.count == (allSelected ? cleanOptions.count + 1 : 1))
         #expect(!message.hasSuffix("\n") && !message.isEmpty)
-        if allSelected { #expect(Array(paragraphs.dropFirst()) == cleanOptions.map { $0.title.key }) }
+        if allSelected {
+            #expect(Array(paragraphs.dropFirst()) == cleanOptions.map { $0.title.key })
+        }
     }
 }
 

@@ -17,8 +17,7 @@ struct DelayedProgressView: View {
             .accessibilityHidden(!isVisible)
             .task {
                 isVisible = false
-                do { try await Task.sleep(for: .milliseconds(350)) }
-                catch { return }
+                do { try await Task.sleep(for: .milliseconds(350)) } catch { return }
                 guard !Task.isCancelled else { return }
                 isVisible = true
             }

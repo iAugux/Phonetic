@@ -6,9 +6,17 @@ import UIKit
 @MainActor
 private final class LayoutProcessingService: ContactProcessingService {
     var isProcessing = false
-    var messageOfCurrentKeysNeedToBeCleaned: String { "" }
-    func execute(resultHandler: @escaping PhoneticContacts.ResultHandler) async -> ContactOperationOutcome { .completed }
-    func cleanMandarinLatinPhonetic(resultHandler: @escaping PhoneticContacts.ResultHandler) async -> ContactOperationOutcome { .completed }
+    var messageOfCurrentKeysNeedToBeCleaned: String {
+        ""
+    }
+
+    func execute(resultHandler: @escaping PhoneticContacts.ResultHandler) async -> ContactOperationOutcome {
+        .completed
+    }
+
+    func cleanMandarinLatinPhonetic(resultHandler: @escaping PhoneticContacts.ResultHandler) async -> ContactOperationOutcome {
+        .completed
+    }
 }
 
 @MainActor
