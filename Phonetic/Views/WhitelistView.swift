@@ -203,15 +203,17 @@ struct WhitelistView: View {
                     selectedContact = contact
                 } label: {
                     contactIdentity(contact)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .contentShape(Rectangle())
                 }
                 .buttonStyle(.plain)
                 .accessibilityLabel(Text(contact.whitelistDisplayName))
+                .accessibilityValue(Text(verbatim: contactAccessibilityDetails(contact)))
                 .accessibilityHint(Text("Edit Contact"))
             } else {
                 contactIdentity(contact)
+                Spacer()
             }
-
-            Spacer()
 
             // Whitelist toggle
             let isWhitelisted = whitelistSet.contains(contact.identifier)
@@ -271,6 +273,21 @@ struct WhitelistView: View {
             }
         }
         .contentShape(Rectangle())
+    }
+
+    private func contactAccessibilityDetails(_ contact: CNContact) -> String {
+        var details: [String] = []
+        if !contact.phoneticFamilyName.isEmpty {
+            details.append("\(String(localized: "Phonetic last name")): \(contact.phoneticFamilyName)")
+        }
+        if !contact.phoneticGivenName.isEmpty {
+            details.append("\(String(localized: "Phonetic first name")): \(contact.phoneticGivenName)")
+        }
+        if let key = PhoneticContacts.shared.ContactKeyForQuickSearch,
+           let brief = contact.quickSearchBriefName(key), !brief.isEmpty {
+            details.append("\(String(localized: "Quick Search Text")): \(brief)")
+        }
+        return details.joined(separator: ", ")
     }
 
     private func loadWhitelist() {
