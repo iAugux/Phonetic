@@ -68,7 +68,9 @@ struct WhitelistView: View {
                     Text("Allow contacts access in Settings to view and manage your whitelist.")
                 } actions: {
                     Button("Open Settings") {
-                        if let url = URL(string: UIApplication.openSettingsURLString) { openURL(url) }
+                        if let url = URL(string: UIApplication.openSettingsURLString) {
+                            openURL(url)
+                        }
                     }
                 }
             } else if let errorMessage, contacts.isEmpty {
@@ -104,14 +106,18 @@ struct WhitelistView: View {
         .navigationBarTitleDisplayMode(.inline)
         .alert("Contacts Unavailable", isPresented: Binding(
             get: { errorMessage != nil && !contacts.isEmpty },
-            set: { if !$0 { errorMessage = nil } }
+            set: {
+                if !$0 {
+                    errorMessage = nil
+                }
+            }
         )) {
             Button("Try Again") { refreshContacts() }
             Button("Cancel", role: .cancel) { errorMessage = nil }
         } message: { Text(errorMessage ?? "") }
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
-                if WhitelistAccessPresentation.isLimited(authorizationStatus) && !contacts.isEmpty {
+                if WhitelistAccessPresentation.isLimited(authorizationStatus), !contacts.isEmpty {
                     Button("Choose Contacts", systemImage: "person.crop.circle.badge.plus") {
                         showContactAccessPicker = true
                     }
@@ -171,7 +177,9 @@ struct WhitelistView: View {
             refreshContacts()
         }
         .onChange(of: scenePhase) { _, phase in
-            if phase == .active { refreshContacts() }
+            if phase == .active {
+                refreshContacts()
+            }
         }
         .onDisappear {
             refreshCoordinator.cancel()
@@ -277,18 +285,19 @@ struct WhitelistView: View {
         isLoading = contacts.isEmpty
         errorMessage = nil
         defer {
-            if isLatest() { isLoading = false }
+            if isLatest() {
+                isLoading = false
+            }
         }
         do {
             let engine = PhoneticContacts.shared
             let status = CNContactStore.authorizationStatus(for: .contacts)
-            let granted: Bool
-            if status == .notDetermined {
-                granted = try await engine.contactStore.requestAccess(for: .contacts)
+            let granted: Bool = if status == .notDetermined {
+                try await engine.contactStore.requestAccess(for: .contacts)
             } else if #available(iOS 18.0, *), status == .limited {
-                granted = true
+                true
             } else {
-                granted = status == .authorized
+                status == .authorized
             }
             try Task.checkCancellation()
             guard isLatest() else { return }
@@ -357,7 +366,9 @@ final class WhitelistContactRefreshCoordinator {
 
 enum WhitelistAccessPresentation {
     static func isLimited(_ status: CNAuthorizationStatus) -> Bool {
-        if #available(iOS 18.0, *) { return status == .limited }
+        if #available(iOS 18.0, *) {
+            return status == .limited
+        }
         return false
     }
 

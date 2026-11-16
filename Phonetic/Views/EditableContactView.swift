@@ -12,6 +12,7 @@ struct EditableContactView: View {
     @State private var phoneticFamilyName: String = ""
     @State private var phoneticGivenName: String = ""
     @State private var quickSearchKeyText: String = ""
+    @State private var hasLoadedContact = false
     @State private var isSaving = false
     @State private var showSaveError = false
     @State private var saveError = ""
@@ -20,6 +21,37 @@ struct EditableContactView: View {
 
     private var currentQuickSearchKey: String? {
         PhoneticContacts.shared.ContactKeyForQuickSearch
+    }
+
+    private var hasChanges: Bool {
+        guard hasLoadedContact else { return false }
+        return Self.fieldsHaveChanges(
+            contact: contact,
+            phoneticFamilyName: phoneticFamilyName,
+            phoneticGivenName: phoneticGivenName,
+            quickSearchText: quickSearchKeyText,
+            quickSearchKey: currentQuickSearchKey
+        )
+    }
+
+    static func fieldsHaveChanges(
+        contact: CNContact,
+        phoneticFamilyName: String,
+        phoneticGivenName: String,
+        quickSearchText: String,
+        quickSearchKey: String?
+    ) -> Bool {
+        func normalized(_ value: String) -> String {
+            value.trimmingCharacters(in: .whitespaces)
+        }
+
+        if normalized(phoneticFamilyName) != normalized(contact.phoneticFamilyName) ||
+            normalized(phoneticGivenName) != normalized(contact.phoneticGivenName) {
+            return true
+        }
+
+        guard let quickSearchKey else { return false }
+        return normalized(quickSearchText) != normalized(contact.quickSearchBriefName(quickSearchKey) ?? "")
     }
 
     private func quickSearchStorageHint(for key: String) -> LocalizedStringKey? {
@@ -154,12 +186,11 @@ struct EditableContactView: View {
                     .disabled(isSaving)
                 }
 
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button("Save") {
-                        saveContact()
+                ToolbarItem(placement: .confirmationAction) {
+                    Button(action: saveContact) {
+                        Label("Save", systemImage: "checkmark")
                     }
-                    .foregroundStyle(AppColor.accent)
-                    .disabled(isSaving)
+                    .disabled(isSaving || !hasChanges)
                 }
             }
             .onAppear {
@@ -168,6 +199,7 @@ struct EditableContactView: View {
                 if let key = currentQuickSearchKey {
                     quickSearchKeyText = contact.quickSearchBriefName(key) ?? ""
                 }
+                hasLoadedContact = true
             }
         }
     }

@@ -16,8 +16,12 @@ private final class VersionSource: ContactVersionSource {
         var failAfterSave = false
         var beforeSave: (@Sendable () throws -> Void)?
     }
+
     let state = OSAllocatedUnfairLock(uncheckedState: State())
-    func hasAccess() -> Bool { state.withLockUnchecked { $0.allowed } }
+    func hasAccess() -> Bool {
+        state.withLockUnchecked { $0.allowed }
+    }
+
     func read(identifier: String, fields: [ContactVersionField]) throws -> CNContact? {
         try state.withLockUnchecked {
             guard $0.allowed else { throw ContactVersionError.accessNeeded }
@@ -28,25 +32,45 @@ private final class VersionSource: ContactVersionSource {
             return $0.contacts[identifier]?.copy() as? CNContact
         }
     }
+
     func save(_ contact: CNMutableContact) throws {
         try state.withLockUnchecked {
             try $0.beforeSave?()
-            if $0.failBeforeSave { throw ContactVersionError.saveFailed }
+            if $0.failBeforeSave {
+                throw ContactVersionError.saveFailed
+            }
             $0.contacts[contact.identifier] = contact.mutableCopy() as? CNMutableContact
             $0.writes += 1
-            if $0.failAfterSave { throw ContactVersionError.saveFailed }
+            if $0.failAfterSave {
+                throw ContactVersionError.saveFailed
+            }
         }
     }
-    func put(_ contact: CNContact) { state.withLockUnchecked { $0.contacts[contact.identifier] = contact.mutableCopy() as? CNMutableContact } }
-    func nickname(_ id: String) -> String? { state.withLockUnchecked { $0.contacts[id]?.nickname } }
-    var writes: Int { state.withLockUnchecked { $0.writes } }
+
+    func put(_ contact: CNContact) {
+        state.withLockUnchecked { $0.contacts[contact.identifier] = contact.mutableCopy() as? CNMutableContact }
+    }
+
+    func nickname(_ id: String) -> String? {
+        state.withLockUnchecked { $0.contacts[id]?.nickname }
+    }
+
+    var writes: Int {
+        state.withLockUnchecked { $0.writes }
+    }
 }
 
 private struct VersionFixture {
     let root = FileManager.default.temporaryDirectory.appendingPathComponent("ContactVersionsTests-\(UUID().uuidString)")
     let source = VersionSource()
-    var store: ContactVersionStore { ContactVersionStore(root: root, source: source) }
-    func cleanup() { try? FileManager.default.removeItem(at: root) }
+    var store: ContactVersionStore {
+        ContactVersionStore(root: root, source: source)
+    }
+
+    func cleanup() {
+        try? FileManager.default.removeItem(at: root)
+    }
+
     func contact(_ nickname: String = "original") -> CNMutableContact {
         let contact = CNMutableContact()
         contact.givenName = "Ada"
@@ -54,6 +78,7 @@ private struct VersionFixture {
         source.put(contact)
         return contact
     }
+
     func change(_ contact: CNContact, to value: String, session: ContactVersionSession) throws {
         let mutable = contact.mutableCopy() as! CNMutableContact
         mutable.nickname = value
@@ -312,7 +337,7 @@ struct ContactVersionTests {
         contact.familyName = "陈"
         contact.givenName = "业斌"
         contact.nickname = "original"
-        let modified = contact.mutableCopy() as! CNMutableContact
+        let modified = try #require(contact.mutableCopy() as? CNMutableContact)
         modified.nickname = "CYB"
         let chineseEdit = try ContactVersionSession.edit(original: contact, modified: modified)
         let name = try #require(chineseEdit.changes.first?.contactName)
@@ -323,7 +348,7 @@ struct ContactVersionTests {
         contact.middleName = "M."
         contact.familyName = "Lovelace"
         contact.organizationName = "Fallback Company"
-        let englishModified = contact.mutableCopy() as! CNMutableContact
+        let englishModified = try #require(contact.mutableCopy() as? CNMutableContact)
         englishModified.nickname = "search initials"
         let englishEdit = try ContactVersionSession.edit(original: contact, modified: englishModified)
         let fullName = try #require(englishEdit.changes.first?.contactName)
@@ -338,10 +363,10 @@ struct ContactVersionTests {
         contact.familyName = "陈"
         contact.givenName = "业斌"
         f.source.put(contact)
-        let modified = contact.mutableCopy() as! CNMutableContact
+        let modified = try #require(contact.mutableCopy() as? CNMutableContact)
         modified.nickname = "CYB"
-        let change = ContactVersionChange(contactID: contact.identifier, contactName: "业斌 陈", field: .nickname,
-                                          before: try ContactVersionValue.read(.nickname, from: contact), after: try ContactVersionValue.read(.nickname, from: modified))
+        let change = try ContactVersionChange(contactID: contact.identifier, contactName: "业斌 陈", field: .nickname,
+                                              before: ContactVersionValue.read(.nickname, from: contact), after: ContactVersionValue.read(.nickname, from: modified))
         let session = try await store.begin(kind: .editContact)
         try session.save([change])
         try await store.finish(session, outcome: .completed)
@@ -495,7 +520,7 @@ struct ContactVersionTests {
         try f.change(contact, to: "generated", session: session)
         try f.change(deleted, to: "generated", session: session)
         try await store.finish(session, outcome: .completed)
-        let external = contact.mutableCopy() as! CNMutableContact
+        let external = try #require(contact.mutableCopy() as? CNMutableContact)
         external.nickname = "manual"
         f.source.put(external)
         _ = f.source.state.withLockUnchecked { $0.contacts.removeValue(forKey: deleted.identifier) }
@@ -520,7 +545,7 @@ struct ContactVersionTests {
         try f.change(contact, to: "generated", session: session)
         try await store.finish(session, outcome: .completed)
         let preview = try await store.preview(targetOrdinal: 0)
-        let external = contact.mutableCopy() as! CNMutableContact
+        let external = try #require(contact.mutableCopy() as? CNMutableContact)
         external.nickname = "newer"
         f.source.put(external)
         let restore = try await store.begin(kind: .restore, targetOrdinal: preview.targetOrdinal, expectedHead: preview.headID, checkHead: true)
@@ -542,7 +567,7 @@ struct ContactVersionTests {
     static func liveValidation() async throws {
         let f = VersionFixture(); defer { f.cleanup() }
         let store = f.store, contact = f.contact()
-        let external = contact.mutableCopy() as! CNMutableContact
+        let external = try #require(contact.mutableCopy() as? CNMutableContact)
         external.givenName = "New Name"
         f.source.put(external)
         let session = try await store.begin(kind: .editContact)
@@ -595,7 +620,7 @@ struct ContactVersionTests {
         let session = try await store.begin(kind: .addPinyin)
         f.source.state.withLockUnchecked { $0.failAfterSave = true }
         #expect(throws: ContactVersionError.saveFailed) { try f.change(contact, to: "generated", session: session) }
-        let external = contact.mutableCopy() as! CNMutableContact
+        let external = try #require(contact.mutableCopy() as? CNMutableContact)
         external.nickname = "manual"
         f.source.put(external)
         f.source.state.withLockUnchecked { $0.allowed = false }
@@ -631,7 +656,7 @@ struct ContactVersionTests {
     static func manualEditorSave() async throws {
         let f = VersionFixture(); defer { f.cleanup() }
         let store = f.store, contact = f.contact()
-        let modified = contact.mutableCopy() as! CNMutableContact
+        let modified = try #require(contact.mutableCopy() as? CNMutableContact)
         modified.nickname = "edited"
         modified.phoneticGivenName = "Ada"
         let edit = try ContactVersionSession.edit(original: contact, modified: modified)
@@ -652,10 +677,10 @@ struct ContactVersionTests {
     static func staleManualEditorSave() async throws {
         let f = VersionFixture(); defer { f.cleanup() }
         let store = f.store, contact = f.contact()
-        let modified = contact.mutableCopy() as! CNMutableContact
+        let modified = try #require(contact.mutableCopy() as? CNMutableContact)
         modified.nickname = "edited"
         let edit = try ContactVersionSession.edit(original: contact, modified: modified)
-        let external = contact.mutableCopy() as! CNMutableContact
+        let external = try #require(contact.mutableCopy() as? CNMutableContact)
         external.jobTitle = "External edit"
         f.source.put(external)
         let session = try await store.begin(kind: .editContact)
@@ -670,7 +695,7 @@ struct ContactVersionTests {
         let f = VersionFixture(), other = VersionFixture()
         defer { f.cleanup(); other.cleanup() }
         let store = f.store, otherStore = other.store, contact = f.contact()
-        let modified = contact.mutableCopy() as! CNMutableContact
+        let modified = try #require(contact.mutableCopy() as? CNMutableContact)
         modified.nickname = "edited"
         let edit = try ContactVersionSession.edit(original: contact, modified: modified)
         let session = try await store.begin(kind: .editContact)

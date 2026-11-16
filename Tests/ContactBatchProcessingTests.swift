@@ -30,7 +30,9 @@ private final class BatchGate: @unchecked Sendable {
     func wait() {
         condition.lock()
         waiting = true
-        while !opened { condition.wait() }
+        while !opened {
+            condition.wait()
+        }
         condition.unlock()
     }
 
@@ -71,14 +73,22 @@ private final class BatchContactStore: CNContactStore, ContactVersionSource, @un
         super.init()
     }
 
-    var writes: Int { state.withLockUnchecked { $0.writes } }
-    var enumerations: Int { state.withLockUnchecked { $0.enumerations } }
+    var writes: Int {
+        state.withLockUnchecked { $0.writes }
+    }
+
+    var enumerations: Int {
+        state.withLockUnchecked { $0.enumerations }
+    }
+
     var allowed: Bool {
         get { state.withLockUnchecked { $0.allowed } }
         set { state.withLockUnchecked { $0.allowed = newValue } }
     }
 
-    func hasAccess() -> Bool { allowed }
+    func hasAccess() -> Bool {
+        allowed
+    }
 
     func read(identifier: String, fields: [ContactVersionField]) throws -> CNContact? {
         state.withLockUnchecked { $0.contacts.first { $0.identifier == identifier }?.copy() as? CNContact }
@@ -86,14 +96,20 @@ private final class BatchContactStore: CNContactStore, ContactVersionSource, @un
 
     func save(_ contact: CNMutableContact) throws {
         let written = try state.withLockUnchecked { state in
-            if state.writes + 1 == failWrite, !failAfterWrite { throw ContactVersionError.saveFailed }
+            if state.writes + 1 == failWrite, !failAfterWrite {
+                throw ContactVersionError.saveFailed
+            }
             let index = try #require(state.contacts.firstIndex { $0.identifier == contact.identifier })
             state.contacts[index] = contact.copy() as! CNContact
             state.writes += 1
             return state.writes
         }
-        if written == pauseWriteNumber, pauseAfterWrite { gate?.wait() }
-        if written == failWrite, failAfterWrite { throw ContactVersionError.saveFailed }
+        if written == pauseWriteNumber, pauseAfterWrite {
+            gate?.wait()
+        }
+        if written == failWrite, failAfterWrite {
+            throw ContactVersionError.saveFailed
+        }
     }
 
     override func enumerateContacts(with fetchRequest: CNContactFetchRequest, usingBlock block: (CNContact, UnsafeMutablePointer<ObjCBool>) -> Void) throws {
@@ -102,12 +118,18 @@ private final class BatchContactStore: CNContactStore, ContactVersionSource, @un
             state.enumerations += 1
             return state.contacts.map { $0.copy() as! CNContact }
         }
-        if !counting, !pauseAfterWrite { gate?.wait() }
+        if !counting, !pauseAfterWrite {
+            gate?.wait()
+        }
         for contact in contacts {
             var stop: ObjCBool = false
             block(contact, &stop)
-            if stop.boolValue { break }
-            if !counting, failEnumeration { throw ContactVersionError.saveFailed }
+            if stop.boolValue {
+                break
+            }
+            if !counting, failEnumeration {
+                throw ContactVersionError.saveFailed
+            }
         }
     }
 }
@@ -133,7 +155,10 @@ private final class BatchProcessingClient: ContinuedProcessingClient {
         updates.append((checked, total))
     }
 
-    func complete(id: String, success: Bool) { completions.append(success) }
+    func complete(id: String, success: Bool) {
+        completions.append(success)
+    }
+
     func cancelRequest(id: String) {}
 }
 
@@ -175,7 +200,9 @@ private final class BatchFixture {
     }
 
     func run(clearing: Bool, resultHandler: @escaping PhoneticContacts.ResultHandler = { _, _ in }) async -> ContactOperationOutcome {
-        if clearing { return await engine.cleanMandarinLatinPhonetic(resultHandler: resultHandler) }
+        if clearing {
+            return await engine.cleanMandarinLatinPhonetic(resultHandler: resultHandler)
+        }
         return await engine.execute(resultHandler: resultHandler)
     }
 }
@@ -221,7 +248,9 @@ struct ContactBatchProcessingTests {
     @Test("Clearing preserves Latin phonetics, unselected fields, and all whitelist values")
     static func clearBatch() async throws {
         let person = contact(), latin = contact(family: "Lovelace", given: "Ada"), protected = contact()
-        for contact in [person, latin, protected] { contact.nickname = "Keep nickname"; contact.note = "Clear note" }
+        for contact in [person, latin, protected] {
+            contact.nickname = "Keep nickname"; contact.note = "Clear note"
+        }
         let f = try BatchFixture(contacts: [person, latin, protected])
         defer { f.cleanup() }
         f.defaults.set([protected.identifier], forKey: kWhitelistIdentifiersKey)
@@ -286,7 +315,9 @@ struct ContactBatchProcessingTests {
         f.source.allowed = busy
         #expect(await f.run(clearing: false) == .failed(busy ? .busy : .accessNeeded))
         #expect(f.source.enumerations == 0 && f.source.writes == 0 && !f.engine.isProcessing)
-        if let session { try await f.history.finish(session, outcome: .stopped) }
+        if let session {
+            try await f.history.finish(session, outcome: .stopped)
+        }
     }
 
     @Test("Cancellation before launch closes history without writing contacts", arguments: [false, true])
@@ -456,7 +487,11 @@ struct ContactBatchProcessingTests {
         let f = try BatchFixture(contacts: [])
         defer { f.cleanup() }
         let state = AppState(contactProvider: { f.engine }, requestAccess: { true }, announce: { _ in }, waitForCompletion: {})
-        if clearing { state.performClean() } else { state.execute() }
+        if clearing {
+            state.performClean()
+        } else {
+            state.execute()
+        }
         try await waitUntil { state.lastOutcome == .completed && !state.isProcessing }
         #expect(state.percentage == 100 && state.statusText == ContactOperationOutcome.completed.status)
         #expect(f.source.writes == 0)
@@ -475,7 +510,7 @@ struct ContactBatchProcessingTests {
 
     @Test("Editor saves use the injected history and release the engine for subsequent batches")
     static func editorHistory() async throws {
-        let original = contact(), modified = original.mutableCopy() as! CNMutableContact
+        let original = contact(), modified = try #require(original.mutableCopy() as? CNMutableContact)
         modified.nickname = "Edited nickname"
         let f = try BatchFixture(contacts: [original])
         defer { f.cleanup() }
@@ -507,7 +542,9 @@ struct ContactBatchProcessingTests {
 
     private static func waitUntil(_ condition: () -> Bool) async throws {
         let deadline = ContinuousClock.now + .seconds(5)
-        while !condition(), ContinuousClock.now < deadline { try await Task.sleep(for: .milliseconds(5)) }
+        while !condition(), ContinuousClock.now < deadline {
+            try await Task.sleep(for: .milliseconds(5))
+        }
         try #require(condition(), "Batch worker did not reach the expected save/enumeration boundary")
     }
 }

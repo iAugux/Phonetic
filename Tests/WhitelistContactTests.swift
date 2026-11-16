@@ -46,13 +46,19 @@ struct WhitelistContactTests {
                 resumeOldFetch = continuation
                 signal.yield(())
             }
-            if isLatest() { published = "stale" }
+            if isLatest() {
+                published = "stale"
+            }
         }
         // Wait until the earlier refresh is suspended before requesting another one.
-        for await _ in started { break }
+        for await _ in started {
+            break
+        }
 
         let second = coordinator.schedule { isLatest in
-            if isLatest() { published = "updated" }
+            if isLatest() {
+                published = "updated"
+            }
         }
         await second.value
         resumeOldFetch?.resume()
@@ -66,7 +72,9 @@ struct WhitelistContactTests {
         var didPublish = false
         let task = coordinator.schedule { isLatest in
             await Task.yield()
-            if isLatest() { didPublish = true }
+            if isLatest() {
+                didPublish = true
+            }
         }
         coordinator.cancel()
         await task.value

@@ -85,7 +85,9 @@ final class ContactProcessingTask {
                 let current = Job(id: id, operation: operation, onCancel: onCancel, onSystemTaskAttached: onSystemTaskAttached, work: work, completion: completion)
                 job = current
                 startWork(current)
-                if prepared, let client { submit(current, client: client) }
+                if prepared, let client {
+                    submit(current, client: client)
+                }
             }
         } onCancel: {
             Task { @MainActor in self.cancel(id: id) }
@@ -182,7 +184,9 @@ final class ContactProcessingTask {
         if prepared {
             finishedJobs[id] = (outcome, current.operation, current.checked, current.total)
             finishedIDs.append(id)
-            if finishedIDs.count > 32 { finishedJobs.removeValue(forKey: finishedIDs.removeFirst()) }
+            if finishedIDs.count > 32 {
+                finishedJobs.removeValue(forKey: finishedIDs.removeFirst())
+            }
         }
         cancelRequest(current)
         if current.usesSystemTask {
@@ -235,7 +239,7 @@ private final class SystemContinuedProcessingClient: ContinuedProcessingClient {
         try await Self.submitRequest(id: id, title: title, subtitle: subtitle)
     }
 
-    @concurrent nonisolated private static func submitRequest(id: String, title: String, subtitle: String) async throws {
+    @concurrent private nonisolated static func submitRequest(id: String, title: String, subtitle: String) async throws {
         let request = BGContinuedProcessingTaskRequest(identifier: id, title: title, subtitle: subtitle)
         // The scheduler submission may block. Construct and submit the request off the main actor.
         request.strategy = .fail

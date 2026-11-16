@@ -44,7 +44,7 @@ private func historyFileSize(_ url: URL) throws -> Int64 {
 }
 
 @discardableResult
-private func writeHistory<T: Encodable>(_ value: T, to url: URL, newFileBudget: Int64? = nil) throws -> Int64 {
+private func writeHistory(_ value: some Encodable, to url: URL, newFileBudget: Int64? = nil) throws -> Int64 {
     let data = try JSONEncoder().encode(value)
     if let newFileBudget {
         guard !FileManager.default.fileExists(atPath: url.path) else { throw ContactVersionError.historyUnavailable }
@@ -113,7 +113,7 @@ final class ContactVersionSession: Sendable {
         }
         guard !changes.isEmpty else { return ContactVersionEdit(changes: [], expected: [:]) }
         let expected = try Dictionary(uniqueKeysWithValues: ContactVersionField.allCases.filter { original.isKeyAvailable($0.key) }.map {
-            ($0, try ContactVersionValue.read($0, from: original))
+            try ($0, ContactVersionValue.read($0, from: original))
         })
         return ContactVersionEdit(changes: changes, expected: expected)
     }
@@ -135,15 +135,12 @@ final class ContactVersionSession: Sendable {
                     break
                 } catch let needed as HistorySpaceNeeded {
                     let available: Int64
-                    do { available = try reclaimSpace(max(needed.bytes, state.availableBytes + 1)) }
-                    catch let error as ContactVersionError { throw error }
-                    catch { throw historyFailure("Reclaim history space", error: error) }
+                    do { available = try reclaimSpace(max(needed.bytes, state.availableBytes + 1)) } catch let error as ContactVersionError { throw error } catch { throw historyFailure("Reclaim history space", error: error) }
                     guard available > state.availableBytes else { throw ContactVersionError.storageLimitReached }
                     state.availableBytes = available
                     // Cleanup may take time; recheck external edits before persisting and saving this change.
                     mutable = try mutableContact(for: changes, expected: expected)
-                } catch let error as ContactVersionError { throw error }
-                catch { throw historyFailure("Persist change intent", error: error) }
+                } catch let error as ContactVersionError { throw error } catch { throw historyFailure("Persist change intent", error: error) }
             }
             do { try source.save(mutable) } catch { throw ContactVersionError.saveFailed }
             do {
@@ -171,7 +168,9 @@ final class ContactVersionSession: Sendable {
         return mutable
     }
 
-    fileprivate func close() { state.withLock { $0.closed = true } }
+    fileprivate func close() {
+        state.withLock { $0.closed = true }
+    }
 
     fileprivate static func resolve(_ write: VersionWrite, source: any ContactVersionSource) throws -> VersionWrite {
         guard !write.confirmed, let first = write.changes.first else { return write }
@@ -184,7 +183,9 @@ final class ContactVersionSession: Sendable {
                 return change
             }
             let value = try ContactVersionValue.read(change.field, from: current)
-            if value == change.before { return nil }
+            if value == change.before {
+                return nil
+            }
             var change = change
             change.uncertain = value != change.after
             return change
@@ -200,7 +201,8 @@ actor ContactVersionStore {
     private static let finalizationReserve: Int64 = 16_384
     static let shared = ContactVersionStore(
         root: URL.applicationSupportDirectory.appendingPathComponent("ContactVersions", isDirectory: true),
-        source: SystemContactVersionSource())
+        source: SystemContactVersionSource()
+    )
 
     private let root: URL
     private let source: any ContactVersionSource
@@ -224,8 +226,8 @@ actor ContactVersionStore {
         guard active == nil else { throw ContactVersionError.busy }
         try prepare()
         try maintainStorage()
-        return ContactVersionHistory(versions: try manifests().map(\.version).sorted { $0.ordinal > $1.ordinal },
-                                     usedBytes: try storageUsed(), limitBytes: byteLimit, earliestOrdinal: try boundary().earliestOrdinal)
+        return try ContactVersionHistory(versions: manifests().map(\.version).sorted { $0.ordinal > $1.ordinal },
+                                         usedBytes: storageUsed(), limitBytes: byteLimit, earliestOrdinal: boundary().earliestOrdinal)
     }
 
     func begin(kind: ContactVersionKind, targetOrdinal: Int? = nil, expectedHead: UUID? = nil, checkHead: Bool = false) throws -> ContactVersionSession {
@@ -234,14 +236,18 @@ actor ContactVersionStore {
         try prepare()
         let versions = try manifests().map(\.version)
         let head = versions.max { $0.ordinal < $1.ordinal }
-        if checkHead, head?.id != expectedHead { throw ContactVersionError.historyChanged }
-        if kind == .restore, !checkHead || targetOrdinal == nil { throw ContactVersionError.historyChanged }
+        if checkHead, head?.id != expectedHead {
+            throw ContactVersionError.historyChanged
+        }
+        if kind == .restore, !checkHead || targetOrdinal == nil {
+            throw ContactVersionError.historyChanged
+        }
         let earliest = try boundary().earliestOrdinal
-        if let targetOrdinal, targetOrdinal != earliest && !versions.contains(where: { $0.ordinal == targetOrdinal }) {
+        if let targetOrdinal, targetOrdinal != earliest, !versions.contains(where: { $0.ordinal == targetOrdinal }) {
             throw ContactVersionError.historyChanged
         }
         // Defer eviction until a real contact change needs space; no-op jobs keep older history.
-        let available = byteLimit - (try storageUsed()) - Self.finalizationReserve
+        let available = try byteLimit - storageUsed() - Self.finalizationReserve
         let version = ContactVersion(id: UUID(), ordinal: (head?.ordinal ?? earliest) + 1, createdAt: Date(), kind: kind,
                                      targetOrdinal: targetOrdinal, status: .pending, contactCount: 0, fieldCount: 0)
         let folder = directory(version.id)
@@ -267,11 +273,10 @@ actor ContactVersionStore {
         guard active == session.id else { throw ContactVersionError.busy }
         session.close()
         defer { active = nil }
-        let status: ContactVersionStatus
-        switch outcome {
-        case .completed: status = .completed
-        case .stopped: status = .stopped
-        case .failed: status = .failed
+        let status: ContactVersionStatus = switch outcome {
+        case .completed: .completed
+        case .stopped: .stopped
+        case .failed: .failed
         }
         do { try finalize(folder: session.folder, status: status) } catch { throw historyFailure("Finalize version", error: error) }
     }
@@ -287,7 +292,7 @@ actor ContactVersionStore {
         try prepare()
         try maintainStorage()
         let versions = try manifests().map(\.version).sorted { $0.ordinal > $1.ordinal }
-        guard targetOrdinal == (try boundary().earliestOrdinal) || versions.contains(where: { $0.ordinal == targetOrdinal }) else { throw ContactVersionError.historyChanged }
+        guard try targetOrdinal == (boundary().earliestOrdinal) || versions.contains(where: { $0.ordinal == targetOrdinal }) else { throw ContactVersionError.historyChanged }
         var folded: [String: ContactVersionChange] = [:]
         for version in versions where version.ordinal > targetOrdinal {
             for write in try writes(in: directory(version.id)).sorted(by: { $0.sequence > $1.sequence }) {
@@ -296,7 +301,9 @@ actor ContactVersionStore {
                         folded[change.id] = ContactVersionChange(contactID: change.contactID, contactName: change.contactName,
                                                                  field: change.field, before: change.before, after: later.after,
                                                                  uncertain: change.uncertain || later.uncertain || change.after != later.before)
-                    } else { folded[change.id] = change }
+                    } else {
+                        folded[change.id] = change
+                    }
                 }
             }
         }
@@ -308,7 +315,9 @@ actor ContactVersionStore {
             let displayName = current.flatMap(historyContactName)
             for change in changes {
                 let value = try current.map { try ContactVersionValue.read(change.field, from: $0) }
-                if value == change.before { continue }
+                if value == change.before {
+                    continue
+                }
                 let displayChange = ContactVersionChange(contactID: change.contactID, contactName: displayName ?? change.contactName,
                                                          field: change.field, before: change.before, after: change.after, uncertain: change.uncertain)
                 entries.append(ContactRestoreEntry(change: displayChange, current: value, isConflict: change.uncertain || value != change.after))
@@ -328,7 +337,9 @@ actor ContactVersionStore {
         var skipped = 0
         var checked = 0
         for (identifier, entries) in groups.sorted(by: { $0.key < $1.key }) {
-            if shouldStop() { break }
+            if shouldStop() {
+                break
+            }
             let current = try source.read(identifier: identifier, fields: entries.map { $0.change.field })
             var changes: [ContactVersionChange] = []
             for entry in entries {
@@ -357,19 +368,17 @@ actor ContactVersionStore {
                 guard source.hasAccess() else { throw ContactVersionError.accessNeeded }
                 try finalize(folder: directory(manifest.version.id), status: .interrupted)
             }
-        } catch let error as ContactVersionError { throw error }
-        catch { throw historyFailure("Prepare or recover history", error: error) }
+        } catch let error as ContactVersionError { throw error } catch { throw historyFailure("Prepare or recover history", error: error) }
     }
 
     private func maintainStorage() throws {
         guard try storageUsed() > byteLimit else { return }
-        do { _ = try makeRoom(minimumAvailable: 0) }
-        catch ContactVersionError.storageLimitReached { /* Oversized retained history must remain readable. */ }
+        do { _ = try makeRoom(minimumAvailable: 0) } catch ContactVersionError.storageLimitReached { /* Oversized retained history must remain readable. */ }
     }
 
-    // Idle calls are serialized by the actor. During a job, only its locked session calls this callback;
-    // idle store entry points reject work, and finalization waits until its writer has stopped.
-    nonisolated private func makeRoom(minimumAvailable: Int64, excluding activeID: UUID? = nil) throws -> Int64 {
+    /// Idle calls are serialized by the actor. During a job, only its locked session calls this callback;
+    /// idle store entry points reject work, and finalization waits until its writer has stopped.
+    private nonisolated func makeRoom(minimumAvailable: Int64, excluding activeID: UUID? = nil) throws -> Int64 {
         let used = try storageUsed()
         let available = byteLimit - used - Self.finalizationReserve
         guard available < minimumAvailable else { return available }
@@ -377,7 +386,7 @@ actor ContactVersionStore {
             .prefix { $0.version.id != activeID && $0.version.status != .pending }
         var costs: [(version: ContactVersion, bytes: Int64)] = []
         for candidate in candidates {
-            costs.append((candidate.version, try storageUsed(in: directory(candidate.version.id))))
+            try costs.append((candidate.version, storageUsed(in: directory(candidate.version.id))))
         }
         let reclaimable = costs.reduce(Int64(0)) { $0 + $1.bytes }
         let boundaryReserve = FileManager.default.fileExists(atPath: boundaryURL.path) ? 0 : Self.finalizationReserve
@@ -401,19 +410,26 @@ actor ContactVersionStore {
         return try makeRoom(minimumAvailable: minimumAvailable, excluding: activeID)
     }
 
-    nonisolated private func directory(_ id: UUID) -> URL { root.appendingPathComponent(id.uuidString, isDirectory: true) }
+    private nonisolated func directory(_ id: UUID) -> URL {
+        root.appendingPathComponent(id.uuidString, isDirectory: true)
+    }
 
-    nonisolated private var boundaryURL: URL { root.appendingPathComponent(".boundary.json") }
-    nonisolated private var discardedURL: URL { root.appendingPathComponent(".discarded", isDirectory: true) }
+    private nonisolated var boundaryURL: URL {
+        root.appendingPathComponent(".boundary.json")
+    }
 
-    nonisolated private func boundary() throws -> HistoryBoundary {
+    private nonisolated var discardedURL: URL {
+        root.appendingPathComponent(".discarded", isDirectory: true)
+    }
+
+    private nonisolated func boundary() throws -> HistoryBoundary {
         guard FileManager.default.fileExists(atPath: boundaryURL.path) else { return HistoryBoundary(schema: 1, earliestOrdinal: 0) }
         let value = try JSONDecoder().decode(HistoryBoundary.self, from: Data(contentsOf: boundaryURL))
         guard value.schema == 1, value.earliestOrdinal >= 0 else { throw ContactVersionError.historyUnavailable }
         return value
     }
 
-    nonisolated private func removeDiscardedHistory() throws {
+    private nonisolated func removeDiscardedHistory() throws {
         let earliest = try boundary().earliestOrdinal
         let older = try manifests().filter { $0.version.ordinal <= earliest }
         if !older.isEmpty {
@@ -428,7 +444,7 @@ actor ContactVersionStore {
         }
     }
 
-    nonisolated private func storageUsed(in directory: URL? = nil) throws -> Int64 {
+    private nonisolated func storageUsed(in directory: URL? = nil) throws -> Int64 {
         var scanError: Error?
         guard let files = FileManager.default.enumerator(at: directory ?? root, includingPropertiesForKeys: [.isRegularFileKey], options: [], errorHandler: { _, error in
             scanError = error
@@ -436,13 +452,17 @@ actor ContactVersionStore {
         }) else { throw ContactVersionError.historyUnavailable }
         var bytes: Int64 = 0
         for case let file as URL in files {
-            if try file.resourceValues(forKeys: [.isRegularFileKey]).isRegularFile == true { bytes += try historyFileSize(file) }
+            if try file.resourceValues(forKeys: [.isRegularFileKey]).isRegularFile == true {
+                bytes += try historyFileSize(file)
+            }
         }
-        if let scanError { throw scanError }
+        if let scanError {
+            throw scanError
+        }
         return bytes
     }
 
-    nonisolated private func manifests() throws -> [VersionManifest] {
+    private nonisolated func manifests() throws -> [VersionManifest] {
         try FileManager.default.contentsOfDirectory(at: root, includingPropertiesForKeys: nil, options: .skipsHiddenFiles).compactMap { folder in
             let manifestURL = folder.appendingPathComponent("manifest.json")
             if !FileManager.default.fileExists(atPath: manifestURL.path),
@@ -471,7 +491,9 @@ actor ContactVersionStore {
         for file in try FileManager.default.contentsOfDirectory(at: folder, includingPropertiesForKeys: nil, options: .skipsHiddenFiles) where file.lastPathComponent != "manifest.json" {
             let write = try JSONDecoder().decode(VersionWrite.self, from: Data(contentsOf: file))
             let resolved = try ContactVersionSession.resolve(write, source: source)
-            if !write.confirmed { try writeHistory(resolved, to: file) }
+            if !write.confirmed {
+                try writeHistory(resolved, to: file)
+            }
             changes += resolved.changes
         }
         guard !changes.isEmpty else { try FileManager.default.removeItem(at: folder); return }

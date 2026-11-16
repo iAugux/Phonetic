@@ -54,7 +54,10 @@ final class PhoneticContacts: @unchecked Sendable {
     private let applicationState: @MainActor @Sendable () -> UIApplication.State
     private let backgroundTimeRemaining: @MainActor @Sendable () -> TimeInterval
     private let notificationHandler: (@MainActor @Sendable (String) -> Void)?
-    @MainActor private var processingTask: ContactProcessingTask { injectedProcessingTask ?? .shared }
+    @MainActor private var processingTask: ContactProcessingTask {
+        injectedProcessingTask ?? .shared
+    }
+
     @MainActor var contactsTotalCount: Int = 0
     var keysToFetch: [String] {
         var keys = [CNContactGivenNameKey, CNContactFamilyNameKey, CNContactPhoneticGivenNameKey, CNContactPhoneticFamilyNameKey, CNContactOrganizationNameKey]
@@ -130,16 +133,14 @@ final class PhoneticContacts: @unchecked Sendable {
             let result = await work(session)
             let outcome: ContactOperationOutcome = result.succeeded && (Task.isCancelled || !self.processing.withLock { $0 }) ? .stopped : result
             finalized = true
-            do { try await store.finish(session, outcome: outcome) }
-            catch { return .failed(.historyUnavailable) }
+            do { try await store.finish(session, outcome: outcome) } catch { return .failed(.historyUnavailable) }
             return outcome
         }
-        let outcome: ContactOperationOutcome
-        if kind == .editContact {
+        let outcome: ContactOperationOutcome = if kind == .editContact {
             // A single-contact save does not need a system background-progress presentation.
-            outcome = await recordedWork()
+            await recordedWork()
         } else {
-            outcome = await task.run(operation: operation, onCancel: {
+            await task.run(operation: operation, onCancel: {
                 self.processing.withLock { $0 = false }
             }, onSystemTaskAttached: {
                 self.endBackgroundTask()
@@ -147,8 +148,7 @@ final class PhoneticContacts: @unchecked Sendable {
         }
         // A cancelled scheduler request may never launch its work closure.
         if !finalized {
-            do { try await store.finish(session, outcome: outcome) }
-            catch { return .failed(.historyUnavailable) }
+            do { try await store.finish(session, outcome: outcome) } catch { return .failed(.historyUnavailable) }
         }
         handlingCompletion(aborted: !outcome.succeeded, usedSystemTask: usedSystemTask)
         return outcome
@@ -156,12 +156,10 @@ final class PhoneticContacts: @unchecked Sendable {
 
     @MainActor func saveEditedContact(original: CNContact, modified: CNContact) async -> ContactOperationOutcome {
         let edit: ContactVersionEdit
-        do { edit = try ContactVersionSession.edit(original: original, modified: modified) }
-        catch { return .failed(.historyUnavailable) }
+        do { edit = try ContactVersionSession.edit(original: original, modified: modified) } catch { return .failed(.historyUnavailable) }
         return await performVersionedOperation(kind: .editContact, operation: .editContact) { session in
             guard !Task.isCancelled, self.processing.withLock({ $0 }) else { return .stopped }
-            do { try await self.versionStore.saveEdit(edit, session: session); return .completed }
-            catch { return .failed((error as? ContactVersionError) ?? .saveFailed) }
+            do { try await self.versionStore.saveEdit(edit, session: session); return .completed } catch { return .failed((error as? ContactVersionError) ?? .saveFailed) }
         }
     }
 
@@ -264,8 +262,7 @@ final class PhoneticContacts: @unchecked Sendable {
                     }
 
                     self.addPhoneticNameForQuickSearchIfNeeded(mutableContact, familyBrief: phoneticFamilyBrief, givenBrief: phoneticGivenBrief)
-                    do { try session.save(original: contact, modified: mutableContact) }
-                    catch { outcome = .failed((error as? ContactVersionError) ?? .saveFailed); stop.pointee = true; return }
+                    do { try session.save(original: contact, modified: mutableContact) } catch { outcome = .failed((error as? ContactVersionError) ?? .saveFailed); stop.pointee = true; return }
                     let result = phoneticFamilyResult + " " + phoneticGivenResult
                     continuation.yield(.result(result))
 
@@ -276,8 +273,7 @@ final class PhoneticContacts: @unchecked Sendable {
                             mutableContact.setValue(phoneticCompany.value, forKey: CNContactPhoneticGivenNameKey)
                         }
                         self.addPhoneticNameForQuickSearchIfNeeded(mutableContact, givenBrief: phoneticCompany.brief)
-                        do { try session.save(original: contact, modified: mutableContact) }
-                        catch { outcome = .failed((error as? ContactVersionError) ?? .saveFailed); stop.pointee = true; return }
+                        do { try session.save(original: contact, modified: mutableContact) } catch { outcome = .failed((error as? ContactVersionError) ?? .saveFailed); stop.pointee = true; return }
                         continuation.yield(.result(phoneticCompany.value))
                     }
                 }
@@ -311,8 +307,7 @@ final class PhoneticContacts: @unchecked Sendable {
                     mutableContact.setValue("", forKey: CNContactPhoneticGivenNameKey)
                 }
                 self.removePhoneticKeysIfNeeded(mutableContact)
-                do { try session.save(original: contact, modified: mutableContact) }
-                catch { outcome = .failed((error as? ContactVersionError) ?? .saveFailed); stop.pointee = true; return }
+                do { try session.save(original: contact, modified: mutableContact) } catch { outcome = .failed((error as? ContactVersionError) ?? .saveFailed); stop.pointee = true; return }
             }
             continuation.yield(.visited(checked: index, total: count))
             index += 1
@@ -508,10 +503,14 @@ private extension PhoneticContacts {
         backgroundTask = UIApplication.shared.beginBackgroundTask {
             [weak self] in
             guard let self, self.backgroundTaskToken == token else { return }
-            if !processingTask.isUsingSystemTask { self.isProcessing = false }
+            if !processingTask.isUsingSystemTask {
+                self.isProcessing = false
+            }
             self.endBackgroundTask()
         }
-        if backgroundTask == .invalid { backgroundTaskToken = nil }
+        if backgroundTask == .invalid {
+            backgroundTaskToken = nil
+        }
     }
 
     func endBackgroundTask() {

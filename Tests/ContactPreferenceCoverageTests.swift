@@ -19,7 +19,9 @@ private final class PreferenceFixture {
     init() throws {
         defaults = try #require(UserDefaults(suiteName: suite))
         engine = PhoneticContacts(userDefaults: defaults)
-        for option in cleanOptions { defaults.set(false, forKey: option.key) }
+        for option in cleanOptions {
+            defaults.set(false, forKey: option.key)
+        }
     }
 
     deinit { defaults.removePersistentDomain(forName: suite) }
@@ -27,9 +29,16 @@ private final class PreferenceFixture {
 
 struct ContactPreferenceCoverageTests {
     @Test("Whitelist brief reads the requested contact field without falling back to another",
-          arguments: [CNContactNicknameKey, CNContactNoteKey, CNContactPhoneticMiddleNameKey,
-                      CNContactJobTitleKey, CNContactDepartmentNameKey, CNContactOrganizationNameKey,
-                      CNContactNamePrefixKey, CNContactNameSuffixKey])
+          arguments: [
+              CNContactNicknameKey,
+              CNContactNoteKey,
+              CNContactPhoneticMiddleNameKey,
+              CNContactJobTitleKey,
+              CNContactDepartmentNameKey,
+              CNContactOrganizationNameKey,
+              CNContactNamePrefixKey,
+              CNContactNameSuffixKey,
+          ])
     static func briefFieldLookup(key: String) {
         let contact = CNMutableContact()
         contact.nickname = "Other field"
@@ -79,11 +88,66 @@ struct ContactPreferenceCoverageTests {
           arguments: [false, true])
     static func cleanFieldExtremes(allSelected: Bool) throws {
         let f = try PreferenceFixture()
-        for option in cleanOptions { f.defaults.set(allSelected, forKey: option.key) }
+        for option in cleanOptions {
+            f.defaults.set(allSelected, forKey: option.key)
+        }
         let message = f.engine.messageOfCurrentKeysNeedToBeCleaned
         let paragraphs = message.components(separatedBy: "\n\n")
         #expect(paragraphs.count == (allSelected ? cleanOptions.count + 1 : 1))
         #expect(!message.hasSuffix("\n") && !message.isEmpty)
-        if allSelected { #expect(Array(paragraphs.dropFirst()) == cleanOptions.map { $0.title.key }) }
+        if allSelected {
+            #expect(Array(paragraphs.dropFirst()) == cleanOptions.map { $0.title.key })
+        }
+    }
+}
+
+@MainActor
+struct EditableContactChangeTests {
+    @Test("Existing whitespace does not enable Save, and restoring values clears the dirty state")
+    static func normalizedPhoneticFields() {
+        let contact = CNMutableContact()
+        contact.phoneticFamilyName = " Wang "
+        contact.phoneticGivenName = " Xiao "
+
+        func changed(family: String, given: String) -> Bool {
+            EditableContactView.fieldsHaveChanges(
+                contact: contact,
+                phoneticFamilyName: family,
+                phoneticGivenName: given,
+                quickSearchText: "",
+                quickSearchKey: nil
+            )
+        }
+
+        #expect(!changed(family: " Wang ", given: " Xiao "))
+        #expect(!changed(family: "Wang", given: "Xiao"))
+        #expect(!changed(family: "  Wang  ", given: " Xiao "))
+        #expect(changed(family: "Zhang", given: " Xiao "))
+        #expect(changed(family: " Wang ", given: "Ming"))
+        #expect(!changed(family: " Wang ", given: " Xiao "))
+    }
+
+    @Test("Quick-search changes respect trimmed stored values and the configured field")
+    static func normalizedQuickSearchField() {
+        let contact = CNMutableContact()
+        contact.phoneticFamilyName = "Wang"
+        contact.phoneticGivenName = "Xiao"
+        contact.nickname = " WX "
+
+        func changed(quickSearch: String, key: String?) -> Bool {
+            EditableContactView.fieldsHaveChanges(
+                contact: contact,
+                phoneticFamilyName: "Wang",
+                phoneticGivenName: "Xiao",
+                quickSearchText: quickSearch,
+                quickSearchKey: key
+            )
+        }
+
+        #expect(!changed(quickSearch: " WX ", key: CNContactNicknameKey))
+        #expect(!changed(quickSearch: "WX", key: CNContactNicknameKey))
+        #expect(changed(quickSearch: "WZ", key: CNContactNicknameKey))
+        #expect(!changed(quickSearch: "WX", key: CNContactNicknameKey))
+        #expect(!changed(quickSearch: "WZ", key: nil))
     }
 }

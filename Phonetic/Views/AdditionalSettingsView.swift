@@ -49,7 +49,9 @@ struct AdditionalSettingsView: View {
     private var quickSearchSelection: Binding<QuickSearchSelection> {
         Binding(
             get: {
-                if enableNickname { return .nickname }
+                if enableNickname {
+                    return .nickname
+                }
                 guard enableCustomName else { return .off }
                 return .field(QuickSearch(rawValue: quickSearchKeyRawValue) ?? .notes)
             },
