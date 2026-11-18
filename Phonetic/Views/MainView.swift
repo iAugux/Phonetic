@@ -8,8 +8,6 @@ struct MainView: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
-    @State private var executeButtonOffsetY: CGFloat = 0
-
     var body: some View {
         NavigationStack {
             VStack(spacing: 0) {
@@ -223,7 +221,6 @@ struct MainView: View {
     private var homeActions: some View {
         VStack(spacing: 8) {
             executeButton
-                .offset(y: executeButtonOffsetY)
 
             Button(role: .destructive, action: appState.clean) {
                 Label("Clear Contact Fields", systemImage: "eraser")
@@ -276,34 +273,6 @@ struct MainView: View {
                 Button("Clear Contact Fields") { appState.clean() }
             }
         }
-        .highPriorityGesture(
-            LongPressGesture(minimumDuration: 0.5)
-                .exclusively(before: TapGesture(count: 2).exclusively(before: TapGesture(count: 1)))
-                .onEnded { value in
-                    switch value {
-                    case .first, .second(.first):
-                        appState.clean()
-                    case .second(.second):
-                        appState.execute()
-                    }
-                }
-        )
-        .simultaneousGesture(
-            DragGesture(minimumDistance: 20)
-                .onEnded { value in
-                    if value.translation.height < -30, appState.canAbortProcessing {
-                        if !reduceMotion {
-                            withAnimation(.easeInOut(duration: 0.3)) {
-                                executeButtonOffsetY = -25
-                            }
-                            withAnimation(.easeInOut(duration: 0.2).delay(0.2)) {
-                                executeButtonOffsetY = 0
-                            }
-                        }
-                        appState.showAbortAlert = true
-                    }
-                }
-        )
     }
 
     private var executeButtonTitle: Text {
