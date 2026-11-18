@@ -3,41 +3,6 @@
 
 import Foundation
 
-// Add following code to Xcode Playground and replace "重" with your new polyphonic character
-// to test whether the result is completely correct.
-// Note: guarantee the Pinyin Tone is also correct.
-
-/*
-
- import Foundation
-
- let characterForTesting = "重"
-
- func phonetic(str: String) -> String? {
-
- var source = str.mutableCopy()
-
- CFStringTransform(source as! CFMutableStringRef, nil, kCFStringTransformMandarinLatin, false)
-
- if !(source as! NSString).isEqualToString(str) {
- if source.rangeOfString(" ").location != NSNotFound {
- let phoneticParts = source.componentsSeparatedByString(" ")
-
- source = NSMutableString()
-
- for part in phoneticParts {
- source.appendString(part)
- }
- }
- return source as? String
- }
- return nil
- }
-
- phonetic(characterForTesting)
-
- */
-
 // REFERENCE: http://www.smartisan.com/special/#/duoyinzi
 
 // Some polyphonic characters don't need to be fixed:
@@ -131,9 +96,9 @@ final class Polyphonic: Sendable {
     let pinyin: String
     let key: String
 
-    var on: Bool {
-        guard UserDefaults.standard.value(forKey: key) != nil else { return true }
-        return UserDefaults.standard.bool(forKey: key)
+    func isEnabled(in defaults: UserDefaults) -> Bool {
+        guard defaults.object(forKey: key) != nil else { return true }
+        return defaults.bool(forKey: key)
     }
 
     init(character: String, replacement: String, pinyin: String) {
