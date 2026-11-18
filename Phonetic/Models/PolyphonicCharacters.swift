@@ -96,9 +96,9 @@ final class Polyphonic: Sendable {
     let pinyin: String
     let key: String
 
-    var on: Bool {
-        guard UserDefaults.standard.value(forKey: key) != nil else { return true }
-        return UserDefaults.standard.bool(forKey: key)
+    func isEnabled(in defaults: UserDefaults) -> Bool {
+        guard defaults.object(forKey: key) != nil else { return true }
+        return defaults.bool(forKey: key)
     }
 
     init(character: String, replacement: String, pinyin: String) {
