@@ -5,10 +5,10 @@ import Foundation
 
 // MARK: - Fix polyphonic characters
 extension PhoneticContacts {
-    func manaullyFixPolyphonicCharacters(_ str: String, isEnabled: (Polyphonic) -> Bool = { $0.on }) -> String {
+    func manaullyFixPolyphonicCharacters(_ str: String) -> String {
         var tempString = str
         for element in PolyphonicChar.all {
-            if isEnabled(element), tempString.contains(element.character) {
+            if element.isEnabled(in: userDefaults), tempString.contains(element.character) {
                 tempString = tempString.replacingOccurrences(of: element.character, with: element.replacement)
             }
         }
