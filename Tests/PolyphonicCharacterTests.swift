@@ -65,10 +65,45 @@ struct PolyphonicCharacterTests {
             let override = try #require(PolyphonicChar.all.first { $0.character == fixture.character })
             #expect(override.replacement == fixture.replacement)
             #expect(override.pinyin == fixture.pinyin)
-            #expect(engine.manaullyFixPolyphonicCharacters(fixture.character, isEnabled: { _ in true }) == fixture.replacement)
+            #expect(engine.manaullyFixPolyphonicCharacters(fixture.character) == fixture.replacement)
 
-            let result = try #require(engine.phonetic(fixture.replacement, needFix: false))
+            // Exercise the same override-enabled path used for contact family names.
+            let result = try #require(engine.phonetic(fixture.character, needFix: true))
             #expect(result.value.lowercased() == fixture.pinyin)
+        }
+    }
+
+    @Test("Polyphonic overrides respect per-character preferences in the same UserDefaults suite")
+    static func disabledAndEnabledOverrides() throws {
+        let suiteName = "PolyphonicCharacterPreferences.\(UUID().uuidString)"
+        let defaults = try #require(UserDefaults(suiteName: suiteName))
+        defer { defaults.removePersistentDomain(forName: suiteName) }
+        let engine = PhoneticContacts(userDefaults: defaults)
+
+        // Disable every override first to avoid overlapping rules, such as 单于 and 单.
+        for entry in PolyphonicChar.all {
+            defaults.set(false, forKey: entry.key)
+        }
+
+        for entry in PolyphonicChar.all {
+            #expect(!entry.isEnabled(in: defaults))
+            #expect(engine.manaullyFixPolyphonicCharacters(entry.character) == entry.character)
+
+            let unchanged = try #require(engine.phonetic(entry.character, needFix: false))
+            let disabled = try #require(engine.phonetic(entry.character, needFix: true))
+            #expect(disabled.value == unchanged.value)
+            #expect(disabled.brief == unchanged.brief)
+
+            defaults.set(true, forKey: entry.key)
+            #expect(entry.isEnabled(in: defaults))
+            #expect(engine.manaullyFixPolyphonicCharacters(entry.character) == entry.replacement)
+
+            let replacement = try #require(engine.phonetic(entry.replacement, needFix: false))
+            let enabled = try #require(engine.phonetic(entry.character, needFix: true))
+            #expect(enabled.value == replacement.value)
+            #expect(enabled.brief == replacement.brief)
+
+            defaults.set(false, forKey: entry.key)
         }
     }
 }
