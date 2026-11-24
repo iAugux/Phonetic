@@ -35,7 +35,7 @@ enum PolyphonicChar {
     static let b3 = Polyphonic(character: "卜", replacement: "补", pinyin: "bǔ")
 
     static let c1 = Polyphonic(character: "重", replacement: "虫", pinyin: "chóng")
-    static let c2 = Polyphonic(character: "种", replacement: "虫", pinyin: "chóng", traditional: "種")
+    static let c2 = Polyphonic(character: "种", replacement: "虫", pinyin: "chóng")
     static let c3 = Polyphonic(character: "单于", replacement: "缠于", pinyin: "chán yú", traditional: "單于")
 
     static let d1 = Polyphonic(character: "都", replacement: "嘟", pinyin: "dū")

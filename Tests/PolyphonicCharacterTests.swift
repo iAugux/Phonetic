@@ -87,6 +87,26 @@ struct PolyphonicCharacterTests {
         #expect(engine.manaullyFixPolyphonicCharacters("尉迟") == "尉迟")
     }
 
+    @Test("Enabling the 种 correction preserves the system reading and initial for 種")
+    static func distinctZhongSurname() throws {
+        let suiteName = "DistinctZhongSurname.\(UUID().uuidString)"
+        let defaults = try #require(UserDefaults(suiteName: suiteName))
+        defer { defaults.removePersistentDomain(forName: suiteName) }
+        defaults.set(true, forKey: kUseTones)
+        defaults.set(true, forKey: PolyphonicChar.c2.key)
+        let engine = PhoneticContacts(userDefaults: defaults)
+
+        let corrected = try #require(engine.phonetic("种", needFix: true))
+        #expect(corrected.value.lowercased() == "chóng")
+        #expect(corrected.brief == "C")
+
+        #expect(engine.manaullyFixPolyphonicCharacters("種") == "種")
+        let system = try #require(engine.phonetic("種", needFix: false))
+        let result = try #require(engine.phonetic("種", needFix: true))
+        #expect(result.value == system.value)
+        #expect(result.brief == system.brief)
+    }
+
     @Test("Traditional surname spellings share the simplified rule and its preference")
     static func traditionalSpellings() throws {
         let suiteName = "TraditionalSurnames.\(UUID().uuidString)"
@@ -96,7 +116,7 @@ struct PolyphonicCharacterTests {
         defaults.set(true, forKey: kAlwaysSeparatePinyin)
         let engine = PhoneticContacts(userDefaults: defaults)
         let pairs = [
-            ("种", "種"), ("单于", "單于"), ("盖", "蓋"), ("过", "過"), ("华", "華"),
+            ("单于", "單于"), ("盖", "蓋"), ("过", "過"), ("华", "華"),
             ("纪", "紀"), ("阚", "闞"), ("缪", "繆"), ("万俟", "萬俟"), ("区", "區"),
             ("单", "單"), ("颉", "頡"), ("闫", "閆"), ("员", "員"), ("尉迟", "尉遲"),
         ]
