@@ -22,7 +22,7 @@ enum PolyphonicChar {
         n1,
         o1,
         p1, p2,
-        q1, q2, q3, q4, q5,
+        q2, q3, q4, q5,
         r1,
         s1, s2, s3, s4,
         x1, x2,
@@ -62,7 +62,6 @@ enum PolyphonicChar {
     static let p1 = Polyphonic(character: "朴", replacement: "嫖", pinyin: "piáo")
     static let p2 = Polyphonic(character: "繁", replacement: "婆", pinyin: "pó")
 
-    static let q1 = Polyphonic(character: "戚", replacement: "器", pinyin: "qì")
     static let q2 = Polyphonic(character: "卡", replacement: "酠", pinyin: "qiǎ")
     static let q3 = Polyphonic(character: "乾", replacement: "钱", pinyin: "qián")
     static let q4 = Polyphonic(character: "覃", replacement: "秦", pinyin: "qín")
@@ -81,7 +80,7 @@ enum PolyphonicChar {
     static let y1 = Polyphonic(character: "燕", replacement: "烟", pinyin: "yān")
     static let y2 = Polyphonic(character: "闫", replacement: "颜", pinyin: "yán")
     static let y3 = Polyphonic(character: "员", replacement: "运", pinyin: "yùn")
-    static let y4 = Polyphonic(character: "玉迟", replacement: "玉迟", pinyin: "yù chí")
+    static let y4 = Polyphonic(character: "尉迟", replacement: "玉迟", pinyin: "yù chí", preferenceCharacter: "玉迟")
 
     static let z1 = Polyphonic(character: "曾", replacement: "增", pinyin: "zēng")
     static let z2 = Polyphonic(character: "查", replacement: "渣", pinyin: "zhā")
@@ -101,10 +100,10 @@ final class Polyphonic: Sendable {
         return defaults.bool(forKey: key)
     }
 
-    init(character: String, replacement: String, pinyin: String) {
+    init(character: String, replacement: String, pinyin: String, preferenceCharacter: String? = nil) {
         self.character = character
         self.replacement = replacement
         self.pinyin = pinyin
-        self.key = "kPolyphonicKey+" + character
+        self.key = "kPolyphonicKey+" + (preferenceCharacter ?? character)
     }
 }
