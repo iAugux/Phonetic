@@ -80,6 +80,7 @@ struct PolyphonicView: View {
 }
 
 private struct PolyphonicRowView: View {
+    @Environment(\.locale) private var locale
     let char: Polyphonic
 
     @AppStorage private var isOn: Bool
@@ -92,7 +93,7 @@ private struct PolyphonicRowView: View {
     var body: some View {
         Toggle(isOn: $isOn) {
             HStack(alignment: .firstTextBaseline) {
-                Text(char.character)
+                Text(verbatim: char.displaySpellings(for: locale))
                     .font(.callout)
 
                 Text(verbatim: "『 \(char.pinyin) 』")

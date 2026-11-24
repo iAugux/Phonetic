@@ -96,6 +96,14 @@ final class Polyphonic: Sendable {
     let pinyin: String
     let key: String
 
+    func displaySpellings(for locale: Locale) -> String {
+        guard spellings.count > 1 else { return character }
+        if locale.language.maximalIdentifier.hasPrefix("zh-Hant-") {
+            return spellings.reversed().joined(separator: "／")
+        }
+        return spellings.joined(separator: "／")
+    }
+
     func isEnabled(in defaults: UserDefaults) -> Bool {
         guard defaults.object(forKey: key) != nil else { return true }
         return defaults.bool(forKey: key)

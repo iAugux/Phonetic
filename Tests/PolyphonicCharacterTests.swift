@@ -107,6 +107,22 @@ struct PolyphonicCharacterTests {
         #expect(result.brief == system.brief)
     }
 
+    @Test("Surname labels order the configured spellings for the interface locale")
+    static func localizedSurnameLabels() {
+        for identifier in ["zh-Hans", "zh-CN", "zh-Hans-TW", "en-TW"] {
+            let locale = Locale(identifier: identifier)
+            #expect(PolyphonicChar.o1.displaySpellings(for: locale) == "区／區")
+            #expect(PolyphonicChar.c3.displaySpellings(for: locale) == "单于／單于")
+            #expect(PolyphonicChar.c2.displaySpellings(for: locale) == "种")
+        }
+        for identifier in ["zh-Hant", "zh-TW", "zh-HK", "zh-Hant-CN"] {
+            let locale = Locale(identifier: identifier)
+            #expect(PolyphonicChar.o1.displaySpellings(for: locale) == "區／区")
+            #expect(PolyphonicChar.c3.displaySpellings(for: locale) == "單于／单于")
+            #expect(PolyphonicChar.c2.displaySpellings(for: locale) == "种")
+        }
+    }
+
     @Test("Traditional surname spellings share the simplified rule and its preference")
     static func traditionalSpellings() throws {
         let suiteName = "TraditionalSurnames.\(UUID().uuidString)"
