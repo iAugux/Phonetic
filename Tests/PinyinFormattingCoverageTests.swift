@@ -93,8 +93,18 @@ struct PinyinFormattingCoverageTests {
         }
     }
 
+    @Test("A mixed Han and Latin name still generates pinyin", arguments: [false, true])
+    static func mixedName(useTones: Bool) throws {
+        let fixture = try PinyinFixture()
+        fixture.defaults.set(useTones, forKey: kUseTones)
+        fixture.defaults.set(true, forKey: kAlwaysSeparatePinyin)
+        let result = try #require(fixture.engine.phonetic("林 Ada", needFix: false))
+        #expect(result.value == (useTones ? "Lín Ada" : "Lin Ada"))
+        #expect(result.brief == "LA")
+    }
+
     @Test("Non-Chinese and empty names remain unchanged rather than generating phonetic values",
-          arguments: ["", "Ada", "Ada Lovelace", "1234"], [false, true])
+          arguments: ["", "Ada", "Ada Lovelace", "José", "Renée", "Jose\u{301}", "1234"], [false, true])
     static func unchangedNames(input: String, useTones: Bool) throws {
         let fixture = try PinyinFixture()
         fixture.defaults.set(useTones, forKey: kUseTones)
