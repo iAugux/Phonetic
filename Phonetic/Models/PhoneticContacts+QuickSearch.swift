@@ -10,8 +10,9 @@ extension PhoneticContacts {
      *  "王晓东"、"万孝德" ...
      */
     func addPhoneticNameForQuickSearchIfNeeded(_ mutableContact: CNMutableContact, familyBrief: String = "", givenBrief: String = "") {
-        guard let CNContactQuickSearchKey = ContactKeyForQuickSearch, let originalPhoneticName = mutableContact.value(forKey: CNContactQuickSearchKey) as? String else { return }
         let newPhoneticName = familyBrief + givenBrief
+        guard !newPhoneticName.isEmpty else { return }
+        guard let CNContactQuickSearchKey = ContactKeyForQuickSearch, let originalPhoneticName = mutableContact.value(forKey: CNContactQuickSearchKey) as? String else { return }
         if overwriteExistingName {
             mutableContact.setValue(newPhoneticName, forKey: CNContactQuickSearchKey)
         } else if originalPhoneticName.isEmpty {
