@@ -472,9 +472,11 @@ final class PhoneticContacts: @unchecked Sendable {
         var source = (needFix ? manaullyFixPolyphonicCharacters(str).mutableCopy() : str.mutableCopy()) as AnyObject
         let cfs = source as! CFMutableString
         CFStringTransform(cfs, nil, kCFStringTransformMandarinLatin, false)
-        CFStringTransform(cfs, nil, kCFStringTransformStripCombiningMarks, useTones)
-        var brief: String
         guard !(source as! String).isEqual(str) else { return nil }
+        if !useTones {
+            CFStringTransform(cfs, nil, kCFStringTransformStripCombiningMarks, false)
+        }
+        var brief: String
         if source.range(of: " ").location != NSNotFound {
             let phoneticParts = source.components(separatedBy: " ")
             brief = briefInitial(phoneticParts)

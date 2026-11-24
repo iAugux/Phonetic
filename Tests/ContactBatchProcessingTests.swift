@@ -245,6 +245,26 @@ struct ContactBatchProcessingTests {
         #expect(try await f.history.versions().count == 1)
     }
 
+    @Test("Overwrite preserves existing quick-search text when neither name generates initials", arguments: [false, true])
+    static func overwriteWithoutInitials(useNotes: Bool) async throws {
+        let latin = contact(family: "Lovelace", given: "Ada")
+        latin.nickname = "Ada L."
+        latin.note = "Personal note"
+        let fixture = try BatchFixture(contacts: [latin])
+        defer { fixture.cleanup() }
+        fixture.defaults.set(true, forKey: kOverwriteAlreadyExists)
+        fixture.defaults.set(!useNotes, forKey: kEnableNickname)
+        fixture.defaults.set(useNotes, forKey: kEnableCustomName)
+        fixture.defaults.set(QuickSearch.notes.rawValue, forKey: kQuickSearchKeyRawValue)
+
+        #expect(await fixture.run(clearing: false) == .completed)
+        let saved = try #require(try fixture.source.read(identifier: latin.identifier, fields: []))
+        #expect(saved.nickname == "Ada L.")
+        #expect(saved.note == "Personal note")
+        #expect(fixture.source.writes == 0)
+        #expect(try await fixture.history.versions().isEmpty)
+    }
+
     @Test("Clearing preserves Latin phonetics, unselected fields, and all whitelist values")
     static func clearBatch() async throws {
         let person = contact(), latin = contact(family: "Lovelace", given: "Ada"), protected = contact()

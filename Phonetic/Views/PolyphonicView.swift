@@ -19,7 +19,7 @@ struct PolyphonicView: View {
         ("N", [PolyphonicChar.n1]),
         ("O", [PolyphonicChar.o1]),
         ("P", [PolyphonicChar.p1, PolyphonicChar.p2]),
-        ("Q", [PolyphonicChar.q1, PolyphonicChar.q2, PolyphonicChar.q3, PolyphonicChar.q4, PolyphonicChar.q5]),
+        ("Q", [PolyphonicChar.q2, PolyphonicChar.q3, PolyphonicChar.q4, PolyphonicChar.q5]),
         ("R", [PolyphonicChar.r1]),
         ("S", [PolyphonicChar.s1, PolyphonicChar.s2, PolyphonicChar.s3, PolyphonicChar.s4]),
         ("X", [PolyphonicChar.x1, PolyphonicChar.x2]),
@@ -80,6 +80,7 @@ struct PolyphonicView: View {
 }
 
 private struct PolyphonicRowView: View {
+    @Environment(\.locale) private var locale
     let char: Polyphonic
 
     @AppStorage private var isOn: Bool
@@ -92,7 +93,7 @@ private struct PolyphonicRowView: View {
     var body: some View {
         Toggle(isOn: $isOn) {
             HStack(alignment: .firstTextBaseline) {
-                Text(char.character)
+                Text(verbatim: char.displaySpellings(for: locale))
                     .font(.callout)
 
                 Text(verbatim: "『 \(char.pinyin) 』")
