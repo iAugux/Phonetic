@@ -8,8 +8,9 @@ extension PhoneticContacts {
     func manaullyFixPolyphonicCharacters(_ str: String) -> String {
         var tempString = str
         for element in PolyphonicChar.all {
-            if element.isEnabled(in: userDefaults), tempString.contains(element.character) {
-                tempString = tempString.replacingOccurrences(of: element.character, with: element.replacement)
+            for spelling in element.spellings where tempString.contains(spelling) {
+                guard element.isEnabled(in: userDefaults) else { break }
+                tempString = tempString.replacingOccurrences(of: spelling, with: element.replacement)
             }
         }
         return tempString

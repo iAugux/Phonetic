@@ -35,29 +35,29 @@ enum PolyphonicChar {
     static let b3 = Polyphonic(character: "卜", replacement: "补", pinyin: "bǔ")
 
     static let c1 = Polyphonic(character: "重", replacement: "虫", pinyin: "chóng")
-    static let c2 = Polyphonic(character: "种", replacement: "虫", pinyin: "chóng")
-    static let c3 = Polyphonic(character: "单于", replacement: "缠于", pinyin: "chán yú")
+    static let c2 = Polyphonic(character: "种", replacement: "虫", pinyin: "chóng", traditional: "種")
+    static let c3 = Polyphonic(character: "单于", replacement: "缠于", pinyin: "chán yú", traditional: "單于")
 
     static let d1 = Polyphonic(character: "都", replacement: "嘟", pinyin: "dū")
 
-    static let g1 = Polyphonic(character: "盖", replacement: "哿", pinyin: "gě")
+    static let g1 = Polyphonic(character: "盖", replacement: "哿", pinyin: "gě", traditional: "蓋")
     static let g2 = Polyphonic(character: "句", replacement: "勾", pinyin: "gōu")
     static let g3 = Polyphonic(character: "炅", replacement: "贵", pinyin: "guì")
-    static let g4 = Polyphonic(character: "过", replacement: "锅", pinyin: "guō")
+    static let g4 = Polyphonic(character: "过", replacement: "锅", pinyin: "guō", traditional: "過")
 
-    static let h1 = Polyphonic(character: "华", replacement: "话", pinyin: "huà")
+    static let h1 = Polyphonic(character: "华", replacement: "话", pinyin: "huà", traditional: "華")
 
-    static let j1 = Polyphonic(character: "纪", replacement: "几", pinyin: "jǐ")
+    static let j1 = Polyphonic(character: "纪", replacement: "几", pinyin: "jǐ", traditional: "紀")
     static let j2 = Polyphonic(character: "圈", replacement: "眷", pinyin: "juàn")
 
-    static let k1 = Polyphonic(character: "阚", replacement: "看", pinyin: "kàn")
+    static let k1 = Polyphonic(character: "阚", replacement: "看", pinyin: "kàn", traditional: "闞")
 
-    static let m1 = Polyphonic(character: "缪", replacement: "庙", pinyin: "miào")
-    static let m2 = Polyphonic(character: "万俟", replacement: "莫奇", pinyin: "mò qí")
+    static let m1 = Polyphonic(character: "缪", replacement: "庙", pinyin: "miào", traditional: "繆")
+    static let m2 = Polyphonic(character: "万俟", replacement: "莫奇", pinyin: "mò qí", traditional: "萬俟")
 
     static let n1 = Polyphonic(character: "粘", replacement: "年", pinyin: "nián")
 
-    static let o1 = Polyphonic(character: "区", replacement: "欧", pinyin: "ōu")
+    static let o1 = Polyphonic(character: "区", replacement: "欧", pinyin: "ōu", traditional: "區")
 
     static let p1 = Polyphonic(character: "朴", replacement: "嫖", pinyin: "piáo")
     static let p2 = Polyphonic(character: "繁", replacement: "婆", pinyin: "pó")
@@ -69,18 +69,18 @@ enum PolyphonicChar {
 
     static let r1 = Polyphonic(character: "任", replacement: "人", pinyin: "rén")
 
-    static let s1 = Polyphonic(character: "单", replacement: "善", pinyin: "shàn")
+    static let s1 = Polyphonic(character: "单", replacement: "善", pinyin: "shàn", traditional: "單")
     static let s2 = Polyphonic(character: "召", replacement: "绍", pinyin: "shào")
     static let s3 = Polyphonic(character: "折", replacement: "蛇", pinyin: "shé")
     static let s4 = Polyphonic(character: "沈", replacement: "审", pinyin: "shěn")
 
-    static let x1 = Polyphonic(character: "颉", replacement: "鞋", pinyin: "xié")
+    static let x1 = Polyphonic(character: "颉", replacement: "鞋", pinyin: "xié", traditional: "頡")
     static let x2 = Polyphonic(character: "解", replacement: "谢", pinyin: "xiè")
 
     static let y1 = Polyphonic(character: "燕", replacement: "烟", pinyin: "yān")
-    static let y2 = Polyphonic(character: "闫", replacement: "颜", pinyin: "yán")
-    static let y3 = Polyphonic(character: "员", replacement: "运", pinyin: "yùn")
-    static let y4 = Polyphonic(character: "尉迟", replacement: "玉迟", pinyin: "yù chí", preferenceCharacter: "玉迟")
+    static let y2 = Polyphonic(character: "闫", replacement: "颜", pinyin: "yán", traditional: "閆")
+    static let y3 = Polyphonic(character: "员", replacement: "运", pinyin: "yùn", traditional: "員")
+    static let y4 = Polyphonic(character: "尉迟", replacement: "玉迟", pinyin: "yù chí", preferenceCharacter: "玉迟", traditional: "尉遲")
 
     static let z1 = Polyphonic(character: "曾", replacement: "增", pinyin: "zēng")
     static let z2 = Polyphonic(character: "查", replacement: "渣", pinyin: "zhā")
@@ -91,6 +91,7 @@ enum PolyphonicChar {
 
 final class Polyphonic: Sendable {
     let character: String
+    let spellings: [String]
     let replacement: String
     let pinyin: String
     let key: String
@@ -100,8 +101,9 @@ final class Polyphonic: Sendable {
         return defaults.bool(forKey: key)
     }
 
-    init(character: String, replacement: String, pinyin: String, preferenceCharacter: String? = nil) {
+    init(character: String, replacement: String, pinyin: String, preferenceCharacter: String? = nil, traditional: String? = nil) {
         self.character = character
+        self.spellings = traditional.map { [character, $0] } ?? [character]
         self.replacement = replacement
         self.pinyin = pinyin
         self.key = "kPolyphonicKey+" + (preferenceCharacter ?? character)

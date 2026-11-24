@@ -87,6 +87,41 @@ struct PolyphonicCharacterTests {
         #expect(engine.manaullyFixPolyphonicCharacters("尉迟") == "尉迟")
     }
 
+    @Test("Traditional surname spellings share the simplified rule and its preference")
+    static func traditionalSpellings() throws {
+        let suiteName = "TraditionalSurnames.\(UUID().uuidString)"
+        let defaults = try #require(UserDefaults(suiteName: suiteName))
+        defer { defaults.removePersistentDomain(forName: suiteName) }
+        defaults.set(true, forKey: kUseTones)
+        defaults.set(true, forKey: kAlwaysSeparatePinyin)
+        let engine = PhoneticContacts(userDefaults: defaults)
+        let pairs = [
+            ("种", "種"), ("单于", "單于"), ("盖", "蓋"), ("过", "過"), ("华", "華"),
+            ("纪", "紀"), ("阚", "闞"), ("缪", "繆"), ("万俟", "萬俟"), ("区", "區"),
+            ("单", "單"), ("颉", "頡"), ("闫", "閆"), ("员", "員"), ("尉迟", "尉遲"),
+        ]
+
+        // Isolate each rule so a disabled compound can be checked without a single-character fallback.
+        for rule in PolyphonicChar.all {
+            defaults.set(false, forKey: rule.key)
+        }
+        for (simplified, traditional) in pairs {
+            let rule = try #require(PolyphonicChar.all.first { $0.character == simplified })
+            #expect(engine.manaullyFixPolyphonicCharacters(traditional) == traditional)
+            defaults.set(true, forKey: rule.key)
+            #expect(engine.manaullyFixPolyphonicCharacters(traditional) == rule.replacement)
+            let result = try #require(engine.phonetic(traditional, needFix: true))
+            #expect(result.value.lowercased() == rule.pinyin)
+            defaults.set(false, forKey: rule.key)
+        }
+
+        defaults.set(true, forKey: PolyphonicChar.s1.key)
+        #expect(engine.manaullyFixPolyphonicCharacters("單于") == "善于")
+        defaults.set(true, forKey: PolyphonicChar.c3.key)
+        #expect(engine.manaullyFixPolyphonicCharacters("單于") == "缠于")
+        #expect(engine.manaullyFixPolyphonicCharacters("單") == "善")
+    }
+
     @Test("Polyphonic overrides respect per-character preferences in the same UserDefaults suite")
     static func disabledAndEnabledOverrides() throws {
         let suiteName = "PolyphonicCharacterPreferences.\(UUID().uuidString)"
