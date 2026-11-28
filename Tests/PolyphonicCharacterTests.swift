@@ -168,12 +168,16 @@ struct PolyphonicCharacterTests {
         #expect(disabled.value == system.value)
         #expect(disabled.brief == system.brief)
         #expect(engine.manaullyFixPolyphonicCharacters(" \(surname) ") == " \(surname) ")
+        #expect(engine.manaullyFixPolyphonicCharacters("\(surname)明") == "\(surname)明")
+        #expect(engine.manaullyFixPolyphonicCharacters("\(surname)-\(surname.prefix(1))") == "\(surname)-善")
         #expect(engine.manaullyFixPolyphonicCharacters(String(surname.prefix(1))) == "善")
 
         defaults.set(true, forKey: PolyphonicChar.c3.key)
         let enabled = try #require(engine.phonetic(surname, needFix: true))
         #expect(enabled.value == "Chán Yú")
         #expect(enabled.brief == "CY")
+        #expect(engine.manaullyFixPolyphonicCharacters(" \(surname) ") == " 缠于 ")
+        #expect(engine.manaullyFixPolyphonicCharacters("\(surname)明") == "缠于明")
     }
 
     @Test("Polyphonic overrides respect per-character preferences in the same UserDefaults suite")
