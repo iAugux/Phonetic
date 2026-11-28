@@ -137,7 +137,7 @@ struct PolyphonicCharacterTests {
             ("单", "單"), ("颉", "頡"), ("闫", "閆"), ("员", "員"), ("尉迟", "尉遲"),
         ]
 
-        // Isolate each rule so a disabled compound can be checked without a single-character fallback.
+        // Isolate each rule while checking aliases and their shared preference.
         for rule in PolyphonicChar.all {
             defaults.set(false, forKey: rule.key)
         }
@@ -150,12 +150,34 @@ struct PolyphonicCharacterTests {
             #expect(result.value.lowercased() == rule.pinyin)
             defaults.set(false, forKey: rule.key)
         }
+    }
 
+    @Test("Compound surnames respect their own switch when the single-character rule is on", arguments: ["单于", "單于"])
+    static func compoundSurnameSwitch(surname: String) throws {
+        let suiteName = "CompoundSurnameSwitch.\(UUID().uuidString)"
+        let defaults = try #require(UserDefaults(suiteName: suiteName))
+        defer { defaults.removePersistentDomain(forName: suiteName) }
+        defaults.set(true, forKey: kUseTones)
+        defaults.set(true, forKey: kAlwaysSeparatePinyin)
         defaults.set(true, forKey: PolyphonicChar.s1.key)
-        #expect(engine.manaullyFixPolyphonicCharacters("單于") == "善于")
+        defaults.set(false, forKey: PolyphonicChar.c3.key)
+        let engine = PhoneticContacts(userDefaults: defaults)
+
+        let system = try #require(engine.phonetic(surname, needFix: false))
+        let disabled = try #require(engine.phonetic(surname, needFix: true))
+        #expect(disabled.value == system.value)
+        #expect(disabled.brief == system.brief)
+        #expect(engine.manaullyFixPolyphonicCharacters(" \(surname) ") == " \(surname) ")
+        #expect(engine.manaullyFixPolyphonicCharacters("\(surname)明") == "\(surname)明")
+        #expect(engine.manaullyFixPolyphonicCharacters("\(surname)-\(surname.prefix(1))") == "\(surname)-善")
+        #expect(engine.manaullyFixPolyphonicCharacters(String(surname.prefix(1))) == "善")
+
         defaults.set(true, forKey: PolyphonicChar.c3.key)
-        #expect(engine.manaullyFixPolyphonicCharacters("單于") == "缠于")
-        #expect(engine.manaullyFixPolyphonicCharacters("單") == "善")
+        let enabled = try #require(engine.phonetic(surname, needFix: true))
+        #expect(enabled.value == "Chán Yú")
+        #expect(enabled.brief == "CY")
+        #expect(engine.manaullyFixPolyphonicCharacters(" \(surname) ") == " 缠于 ")
+        #expect(engine.manaullyFixPolyphonicCharacters("\(surname)明") == "缠于明")
     }
 
     @Test("Polyphonic overrides respect per-character preferences in the same UserDefaults suite")
